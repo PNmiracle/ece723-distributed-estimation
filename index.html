@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ECE723 · Communication-Constrained Parameter Estimation From Overlapping Samples</title>
 <style>
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;color:#162339;background:#f7f9fc}
@@ -26,10 +26,10 @@ html[lang="zh-Hans"] [data-l="zh"],html[lang="en"] [data-l="en"]{display:revert}
 <h1>Communication-Constrained Parameter Estimation From Overlapping Samples</h1>
 <p class="sub"><span data-l="zh">阅读资料 · 建议顺序：学习路线 → 通俗精读版 → 英中对照</span><span data-l="en">Reading materials · suggested order: roadmap → guided reading → bilingual side-by-side</span></p>
 <div class="grid">
-<a class="card" data-href-zh="roadmap.html" data-href-en="roadmap-en.html" href="roadmap.html"><span class="n">1</span>
+<a class="card" data-href-zh="roadmap.html" data-href-en="roadmap-en.html" href="roadmap-en.html"><span class="n">1</span>
  <span class="t"><span data-l="zh">术语学习路线（预备笔记）</span><span data-l="en">Learning roadmap (prep notes)</span></span>
  <span class="d"><span data-l="zh">71 步，从基础概念一路推进到下界证明结束；专业解释在前，通俗解释点击展开；概念关系图与前置路线。</span><span data-l="en">71 steps from the basics to the end of the lower-bound proof; rigorous explanation first, plain version on click; concept map and prerequisite paths.</span></span></a>
-<a class="card" data-href-zh="reading.html" data-href-en="reading-en.html" href="reading.html"><span class="n">2</span>
+<a class="card" data-href-zh="reading.html" data-href-en="reading-en.html" href="reading-en.html"><span class="n">2</span>
  <span class="t"><span data-l="zh">通俗精读版</span><span data-l="en">Guided reading</span></span>
  <span class="d"><span data-l="zh">全中文 + 英文术语，保留全部 492 条公式；每节通俗导读、公式后“人话”解读、术语点击弹窗。</span><span data-l="en">The authors' original text with all 492 equations; a plain-language guide for every section, short explanations after key equations, and clickable term popups.</span></span></a>
 <a class="card" data-href-zh="bilingual.html?view=both" data-href-en="bilingual.html?view=both" href="bilingual.html?view=both"><span class="n">3</span>
@@ -49,7 +49,7 @@ html[lang="zh-Hans"] [data-l="zh"],html[lang="en"] [data-l="en"]{display:revert}
   document.querySelectorAll('[data-set]').forEach(b => b.addEventListener('click', () => { set(b.dataset.set, true); history.replaceState(null, '', '#' + b.dataset.set); }));
   let l = location.hash.slice(1);
   if (l !== 'en' && l !== 'zh') { try { l = localStorage.getItem('site-lang'); } catch (_) {} }
-  set(l === 'en' ? 'en' : 'zh', false);
+  set(l === 'zh' ? 'zh' : 'en', false);
 })();
 </script>
 </body></html>
