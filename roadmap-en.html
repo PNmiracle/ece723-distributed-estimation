@@ -55,14 +55,17 @@ h1{font-size:clamp(1.6rem,3vw,2.15rem);margin:.3em 0 .2em}
 .map-head h2{margin:0 0 4px;font-size:1.3rem}
 .map-head p{margin:0 0 10px;color:var(--muted);font-size:.88rem}
 .lg{padding:0 6px;border-radius:4px}.lg.up{background:#dbe8fb;color:#173f72}.lg.down{background:#d9f0e3;color:#145a3d}
-.map-scroll{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fcfdff;max-height:620px}
+.map-scroll{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fcfdff;max-height:80vh}
+.map-tools{display:flex;justify-content:flex-end;margin:-4px 0 8px}
+.map-tools button{padding:4px 11px;border:1px solid #bac9db;border-radius:6px;background:#fff;cursor:pointer;font-size:.84rem;color:var(--ink)}
+.map-tools button:hover{background:#e9f1fc}
 #graph{display:block}
 #graph .col-h{font-size:11px;fill:var(--muted);font-weight:650}
 #graph .col-h2{font-size:12px;fill:var(--ink);font-weight:700}
 #graph .col-bg{fill:#f4f7fb}
 #graph .edge{fill:none;stroke:#b9c6d8;stroke-width:1.1;opacity:.75}
 #graph .node rect{fill:#fff;stroke:#9fb2cc;stroke-width:1.1;rx:6}
-#graph .node text{font-size:11.5px;fill:var(--ink);dominant-baseline:middle;text-anchor:middle;pointer-events:none}
+#graph .node text{font-size:12px;fill:var(--ink);dominant-baseline:middle;text-anchor:middle;pointer-events:none}
 #graph .node{cursor:pointer}
 #graph .node.core rect{stroke:var(--blue);stroke-width:1.6}
 #graph .node.ms rect{stroke:var(--purple);stroke-width:1.8;fill:var(--purple-soft)}
@@ -154,6 +157,10 @@ body.core-only .card[data-core="0"],body.core-only .sb-terms a[data-core="0"]{di
 
 details.more{display:inline-block;font-size:.8rem}details.more summary{color:var(--muted);padding:2px 4px}details.more .chips{margin-top:5px}
 
+.wide{max-width:1320px;margin:auto;padding:0 clamp(14px,3vw,34px)}
+.wide .hero{max-width:900px}
+.wide .map-wrap{margin:22px 0 6px}
+
 .langsw{display:inline-flex;border:1px solid #bac9db;border-radius:7px;overflow:hidden;background:#fff;flex:none}
 .langsw a{padding:4px 10px;font-size:.84rem;text-decoration:none;color:#566579;line-height:1.4}
 .langsw a.on{background:#255ca7;color:#fff;font-weight:650}
@@ -171,9 +178,7 @@ details.more{display:inline-block;font-size:.8rem}details.more summary{color:var
   <a class="tbtn" href="reading-en.html" target="_blank">Open the reading version ↗</a>
   <div class="langsw" role="group" aria-label="Language"><a href="roadmap.html" class="" data-lang-link>中</a><a href="roadmap-en.html" class="on" data-lang-link>EN</a></div>
  </div></div></header>
-<div class="layout">
-<aside class="sidebar"><details open><summary>Roadmap</summary><div class="sb-stage"><a class="sb-st" href="#s0">Stop 0 · Reading the notation</a><div class="sb-terms"><a href="#c-risk-order" data-sb="risk-order">Risk order</a><a href="#c-bit-nat" data-sb="bit-nat">Nat</a></div></div><div class="sb-stage"><a class="sb-st" href="#s1">Stop 1 · Estimation and risk</a><div class="sb-terms"><a href="#c-estimator" data-sb="estimator">Estimator</a><a href="#c-sq-risk" data-sb="sq-risk">Squared-error risk</a><a href="#c-minimax" data-sb="minimax">Minimax risk</a><a href="#c-prior" data-sb="prior">Prior distribution</a><a href="#c-bayes-risk" data-sb="bayes-risk">Bayes risk</a><a href="#c-cond-exp" data-sb="cond-exp">Conditional expectation</a><a href="#c-posterior" data-sb="posterior">Posterior law</a><a href="#c-gauss-mean" data-sb="gauss-mean">Gaussian mean estimation</a></div></div><div class="sb-stage"><a class="sb-st" href="#s2">Stop 2 · Probability toolbox</a><div class="sb-terms"><a href="#c-cond-indep" data-sb="cond-indep">Conditional independence</a><a href="#c-jensen-cs" data-sb="jensen-cs">Jensen / Cauchy–Schwarz</a><a href="#c-ibp" data-sb="ibp">Integration by parts</a><a href="#c-mgf" data-sb="mgf">Moment-generating function</a><a href="#c-subgauss" data-sb="subgauss">Sub-Gaussian</a><a href="#c-hoeffding" data-sb="hoeffding">Hoeffding inequality</a><a href="#c-bernoulli" data-sb="bernoulli">Bernoulli observations</a><a href="#c-binomial" data-sb="binomial">Binomial count</a><a href="#c-empirical" data-sb="empirical">Empirical moments</a><a href="#c-sufficient" data-sb="sufficient">Sufficient statistic</a><a href="#c-kernel" data-sb="kernel">Random kernel</a></div></div><div class="sb-stage"><a class="sb-st" href="#s3">Stop 3 · Score and Fisher information</a><div class="sb-terms"><a href="#c-regularity" data-sb="regularity">Regularity</a><a href="#c-score" data-sb="score">Score</a><a href="#c-fisher" data-sb="fisher">Fisher information</a><a href="#c-block-score" data-sb="block-score">Block score</a><a href="#c-bernstein" data-sb="bernstein">Bernstein condition</a><a href="#c-dpi" data-sb="dpi">Data-processing inequality</a></div></div><div class="sb-stage"><a class="sb-st" href="#s4">Stop 4 · Information theory</a><div class="sb-terms"><a href="#c-entropy" data-sb="entropy">Entropy</a><a href="#c-self-info" data-sb="self-info">Self-information</a><a href="#c-mutual-info" data-sb="mutual-info">Mutual information</a><a href="#c-diff-entropy" data-sb="diff-entropy">Differential entropy</a><a href="#c-kl-tv" data-sb="kl-tv">Total variation distance</a></div></div><div class="sb-stage"><a class="sb-st" href="#s5">Stop 5 · The model</a><div class="sb-terms"><a href="#c-distributed" data-sb="distributed">Distributed estimation</a><a href="#c-pool" data-sb="pool">Observation pool</a><a href="#c-sampling" data-sb="sampling">Sampling design</a><a href="#c-local-data" data-sb="local-data">Local data</a><a href="#c-shared-obs" data-sb="shared-obs">Shared observations</a><a href="#c-private-obs" data-sb="private-obs">Private observations / blocks</a><a href="#c-fusion" data-sb="fusion">Fusion center</a><a href="#c-seeds" data-sb="seeds">Public / private seeds</a><a href="#c-side-info" data-sb="side-info">Side information</a><a href="#c-noninteractive" data-sb="noninteractive">Noninteractive protocol</a><a href="#c-blackboard" data-sb="blackboard">Blackboard protocol</a><a href="#c-transcript" data-sb="transcript">Transcript</a><a href="#c-budget" data-sb="budget">Communication budget</a></div></div><div class="sb-stage"><a class="sb-st" href="#s6">Stop 6 · Main results</a><div class="sb-terms"><a href="#c-local-refine" data-sb="local-refine">Localization &amp; refinement</a><a href="#c-surplus" data-sb="surplus">Localization surplus</a><a href="#c-aB" data-sb="aB">Bit floor a_B</a><a href="#c-envelope" data-sb="envelope">Lower / upper envelope</a><a href="#c-lower-upper" data-sb="lower-upper">Achievability &amp; converse</a><a href="#c-rbar-term" data-sb="rbar-term">Shared term r̄</a><a href="#c-m-thm1" data-sb="m-thm1">Theorem 1: uniform envelopes</a><a href="#c-poly-exp" data-sb="poly-exp">Polynomial couplings &amp; exponential rate</a><a href="#c-critical" data-sb="critical">Critical window</a><a href="#c-intermediate" data-sb="intermediate">Intermediate overlap</a></div></div><div class="sb-stage"><a class="sb-st" href="#s7">Stop 7 · How the lower bound is proved</a><div class="sb-terms"><a href="#c-score-identity" data-sb="score-identity">Score identity</a><a href="#c-chain-rule" data-sb="chain-rule">Chain rule (Fisher information)</a><a href="#c-van-trees" data-sb="van-trees">van Trees inequality</a><a href="#c-m-lb-easy" data-sb="m-lb-easy">Two elementary lower bounds</a><a href="#c-event-score" data-sb="event-score">Score on an event</a><a href="#c-rectangle" data-sb="rectangle">Rectangle property</a><a href="#c-m-thm2" data-sb="m-thm2">Theorem 2: additive shared-observation bound</a><a href="#c-entropy-budget" data-sb="entropy-budget">Entropy budget</a><a href="#c-m-lb-assembly" data-sb="m-lb-assembly">Assembling the main lower bound (III-E)</a><a href="#c-m-lb-gauss" data-sb="m-lb-gauss">Explicit Gaussian lower bound</a><a href="#c-m-lb-map" data-sb="m-lb-map">Lower-bound proof map</a></div></div><div class="sb-stage"><a class="sb-st" href="#s8">Stop 8 · How the upper bound is built</a><div class="sb-terms"><a href="#c-resampling" data-sb="resampling">Exact resampling</a><a href="#c-moment-map" data-sb="moment-map">Moment map</a><a href="#c-smoothing" data-sb="smoothing">Smoothing step</a><a href="#c-charfn" data-sb="charfn">One-bit characteristic-function measurement</a><a href="#c-collision" data-sb="collision">Collision-free coupling</a></div></div></details></aside>
-<main id="top">
+<div class="wide" id="top">
 <header class="hero">
 <div class="kicker">ECE723 · Foundations before reading the paper</div>
 <h1>Learning roadmap: from zero to the lower-bound proof</h1>
@@ -187,9 +192,15 @@ details.more{display:inline-block;font-size:.8rem}details.more summary{color:var
 <nav class="strip" aria-label="Stops"><a class="strip-st" href="#s0"><b>Stop 0</b><span>Reading the notation</span><small>10 min</small></a><a class="strip-st" href="#s1"><b>Stop 1</b><span>Estimation and risk</span><small>40 min</small></a><a class="strip-st" href="#s2"><b>Stop 2</b><span>Probability toolbox</span><small>45 min</small></a><a class="strip-st" href="#s3"><b>Stop 3</b><span>Score and Fisher information</span><small>45 min</small></a><a class="strip-st" href="#s4"><b>Stop 4</b><span>Information theory</span><small>40 min</small></a><a class="strip-st" href="#s5"><b>Stop 5</b><span>The model</span><small>40 min</small></a><a class="strip-st" href="#s6"><b>Stop 6</b><span>Main results</span><small>50 min</small></a><a class="strip-st" href="#s7"><b>Stop 7</b><span>How the lower bound is proved</span><small>60 min</small></a><a class="strip-st opt" href="#s8"><b>Stop 8</b><span>How the upper bound is built</span><small>50 min</small></a></nav>
 </header>
 <section class="map-wrap" id="map">
-<div class="map-head"><h2>Concept map</h2><p>Scroll sideways. Arrows point from prerequisite to follow-up. Click a node to highlight <span class="lg up">what it needs</span> and <span class="lg down">what it unlocks</span>; click again to jump to its card.</p></div>
+<div class="map-head"><h2>Concept map</h2><p>Arrows point from prerequisite to follow-up. Click a node to highlight <span class="lg up">what it needs</span> and <span class="lg down">what it unlocks</span>; click again to jump to its card.</p></div>
+<div class="map-tools"><button type="button" id="map-fit" data-fit="Fit to width" data-actual="Actual size (scroll sideways)"></button></div>
 <div class="map-scroll"><svg id="graph" role="img" aria-label="Concept dependency graph"></svg></div>
 </section>
+</div>
+<div class="layout">
+<aside class="sidebar"><details open><summary>Roadmap</summary><div class="sb-stage"><a class="sb-st" href="#s0">Stop 0 · Reading the notation</a><div class="sb-terms"><a href="#c-risk-order" data-sb="risk-order">Risk order</a><a href="#c-bit-nat" data-sb="bit-nat">Nat</a></div></div><div class="sb-stage"><a class="sb-st" href="#s1">Stop 1 · Estimation and risk</a><div class="sb-terms"><a href="#c-estimator" data-sb="estimator">Estimator</a><a href="#c-sq-risk" data-sb="sq-risk">Squared-error risk</a><a href="#c-minimax" data-sb="minimax">Minimax risk</a><a href="#c-prior" data-sb="prior">Prior distribution</a><a href="#c-bayes-risk" data-sb="bayes-risk">Bayes risk</a><a href="#c-cond-exp" data-sb="cond-exp">Conditional expectation</a><a href="#c-posterior" data-sb="posterior">Posterior law</a><a href="#c-gauss-mean" data-sb="gauss-mean">Gaussian mean estimation</a></div></div><div class="sb-stage"><a class="sb-st" href="#s2">Stop 2 · Probability toolbox</a><div class="sb-terms"><a href="#c-cond-indep" data-sb="cond-indep">Conditional independence</a><a href="#c-jensen-cs" data-sb="jensen-cs">Jensen / Cauchy–Schwarz</a><a href="#c-ibp" data-sb="ibp">Integration by parts</a><a href="#c-mgf" data-sb="mgf">Moment-generating function</a><a href="#c-subgauss" data-sb="subgauss">Sub-Gaussian</a><a href="#c-hoeffding" data-sb="hoeffding">Hoeffding inequality</a><a href="#c-bernoulli" data-sb="bernoulli">Bernoulli observations</a><a href="#c-binomial" data-sb="binomial">Binomial count</a><a href="#c-empirical" data-sb="empirical">Empirical moments</a><a href="#c-sufficient" data-sb="sufficient">Sufficient statistic</a><a href="#c-kernel" data-sb="kernel">Random kernel</a></div></div><div class="sb-stage"><a class="sb-st" href="#s3">Stop 3 · Score and Fisher information</a><div class="sb-terms"><a href="#c-regularity" data-sb="regularity">Regularity</a><a href="#c-score" data-sb="score">Score</a><a href="#c-fisher" data-sb="fisher">Fisher information</a><a href="#c-block-score" data-sb="block-score">Block score</a><a href="#c-bernstein" data-sb="bernstein">Bernstein condition</a><a href="#c-dpi" data-sb="dpi">Data-processing inequality</a></div></div><div class="sb-stage"><a class="sb-st" href="#s4">Stop 4 · Information theory</a><div class="sb-terms"><a href="#c-entropy" data-sb="entropy">Entropy</a><a href="#c-self-info" data-sb="self-info">Self-information</a><a href="#c-mutual-info" data-sb="mutual-info">Mutual information</a><a href="#c-diff-entropy" data-sb="diff-entropy">Differential entropy</a><a href="#c-kl-tv" data-sb="kl-tv">Total variation distance</a></div></div><div class="sb-stage"><a class="sb-st" href="#s5">Stop 5 · The model</a><div class="sb-terms"><a href="#c-distributed" data-sb="distributed">Distributed estimation</a><a href="#c-pool" data-sb="pool">Observation pool</a><a href="#c-sampling" data-sb="sampling">Sampling design</a><a href="#c-local-data" data-sb="local-data">Local data</a><a href="#c-shared-obs" data-sb="shared-obs">Shared observations</a><a href="#c-private-obs" data-sb="private-obs">Private observations / blocks</a><a href="#c-fusion" data-sb="fusion">Fusion center</a><a href="#c-seeds" data-sb="seeds">Public / private seeds</a><a href="#c-side-info" data-sb="side-info">Side information</a><a href="#c-noninteractive" data-sb="noninteractive">Noninteractive protocol</a><a href="#c-blackboard" data-sb="blackboard">Blackboard protocol</a><a href="#c-transcript" data-sb="transcript">Transcript</a><a href="#c-budget" data-sb="budget">Communication budget</a></div></div><div class="sb-stage"><a class="sb-st" href="#s6">Stop 6 · Main results</a><div class="sb-terms"><a href="#c-local-refine" data-sb="local-refine">Localization &amp; refinement</a><a href="#c-surplus" data-sb="surplus">Localization surplus</a><a href="#c-aB" data-sb="aB">Bit floor a_B</a><a href="#c-envelope" data-sb="envelope">Lower / upper envelope</a><a href="#c-lower-upper" data-sb="lower-upper">Achievability &amp; converse</a><a href="#c-rbar-term" data-sb="rbar-term">Shared term r̄</a><a href="#c-m-thm1" data-sb="m-thm1">Theorem 1: uniform envelopes</a><a href="#c-poly-exp" data-sb="poly-exp">Polynomial couplings &amp; exponential rate</a><a href="#c-critical" data-sb="critical">Critical window</a><a href="#c-intermediate" data-sb="intermediate">Intermediate overlap</a></div></div><div class="sb-stage"><a class="sb-st" href="#s7">Stop 7 · How the lower bound is proved</a><div class="sb-terms"><a href="#c-score-identity" data-sb="score-identity">Score identity</a><a href="#c-chain-rule" data-sb="chain-rule">Chain rule (Fisher information)</a><a href="#c-van-trees" data-sb="van-trees">van Trees inequality</a><a href="#c-m-lb-easy" data-sb="m-lb-easy">Two elementary lower bounds</a><a href="#c-event-score" data-sb="event-score">Score on an event</a><a href="#c-rectangle" data-sb="rectangle">Rectangle property</a><a href="#c-m-thm2" data-sb="m-thm2">Theorem 2: additive shared-observation bound</a><a href="#c-entropy-budget" data-sb="entropy-budget">Entropy budget</a><a href="#c-m-lb-assembly" data-sb="m-lb-assembly">Assembling the main lower bound (III-E)</a><a href="#c-m-lb-gauss" data-sb="m-lb-gauss">Explicit Gaussian lower bound</a><a href="#c-m-lb-map" data-sb="m-lb-map">Lower-bound proof map</a></div></div><div class="sb-stage"><a class="sb-st" href="#s8">Stop 8 · How the upper bound is built</a><div class="sb-terms"><a href="#c-resampling" data-sb="resampling">Exact resampling</a><a href="#c-moment-map" data-sb="moment-map">Moment map</a><a href="#c-smoothing" data-sb="smoothing">Smoothing step</a><a href="#c-charfn" data-sb="charfn">One-bit characteristic-function measurement</a><a href="#c-collision" data-sb="collision">Collision-free coupling</a></div></div></details></aside>
+<main>
+
 <section class="stage" id="s0">
 <div class="stage-head"><div class="stage-name">Stop 0 · Reading the notation</div>
 <div class="stage-meta">2 concepts · about 10 min</div></div>
@@ -1873,41 +1884,65 @@ document.querySelectorAll('.sb-terms a').forEach(a => {
 /* ---------- graph ---------- */
 const svg = document.getElementById('graph');
 const NS = 'http://www.w3.org/2000/svg';
-const COLW = 158, NW = 128, NH = 26, GAP = 10, TOP = 46, LEFT = 14;
+const IS_EN = document.documentElement.lang === 'en';
+const NW = IS_EN ? 150 : 128, COLW = NW + 34, GAP = 10, LEFT = 14, LH = 14;
+// wrap a label into lines (English by words, Chinese by characters)
+function wrap(text, max, maxLines) {
+  const lines = [];
+  if (/[一-鿿]/.test(text)) {
+    for (let i = 0; i < text.length; i += max) lines.push(text.slice(i, i + max));
+  } else {
+    let cur = '';
+    for (const w of text.split(/\s+/)) {
+      if (!cur) cur = w; else if ((cur + ' ' + w).length <= max) cur += ' ' + w; else { lines.push(cur); cur = w; }
+    }
+    if (cur) lines.push(cur);
+  }
+  if (lines.length > maxLines) { const keep = lines.slice(0, maxLines); keep[maxLines - 1] = keep[maxLines - 1].replace(/.?$/, '…'); return keep; }
+  return lines;
+}
+const LABMAX = IS_EN ? 20 : 9;
+G.nodes.forEach(n => { n._lines = wrap(n.label, LABMAX, 3); n._h = 12 + n._lines.length * LH; });
+const HDMAX = IS_EN ? 20 : 10;
+G.stages.forEach(s => { s._lines = wrap(s.name, HDMAX, 3); });
+const HEAD = 24 + Math.max(...G.stages.map(s => s._lines.length)) * 15;
+const TOP = HEAD + 8;
 const cols = G.stages.map(s => G.nodes.filter(n => n.stage === s.id));
 const P = new Map();
-// order inside each column by barycenter of prerequisites
 cols.forEach((col, ci) => {
   if (ci > 0) {
     col.forEach((n, k) => {
       const ys = n.pre.filter(p => P.has(p)).map(p => P.get(p).y);
       n._b = ys.length ? ys.reduce((a, b) => a + b, 0) / ys.length : 1e6 + k;
     });
-    // keep within-stage dependency order: sort by barycenter but stable for same-stage prereqs
     col.sort((a, b) => a._b - b._b);
     const ordered = []; const placed = new Set();
     const visit = n => { if (placed.has(n.id)) return; n.pre.filter(p => col.some(c => c.id === p)).forEach(p => visit(col.find(c => c.id === p))); placed.add(n.id); ordered.push(n); };
     col.forEach(visit); col.splice(0, col.length, ...ordered);
   }
-  col.forEach((n, k) => P.set(n.id, {x: LEFT + ci * COLW, y: TOP + k * (NH + GAP)}));
+  let y = TOP;
+  col.forEach(n => { P.set(n.id, {x: LEFT + ci * COLW, y, h: n._h}); y += n._h + GAP; });
+  col._end = y;
 });
-const H = TOP + Math.max(...cols.map(c => c.length)) * (NH + GAP) + 10;
+const H = Math.max(...cols.map(c => c._end)) + 6;
 const W = LEFT * 2 + G.stages.length * COLW - (COLW - NW) + 8;
-svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+svg.dataset.w = W; svg.dataset.h = H;
 const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; };
 G.stages.forEach((s, ci) => {
   el('rect', {x: LEFT + ci * COLW - 6, y: 4, width: NW + 12, height: H - 8, rx: 8, class: 'col-bg'});
-  el('text', {x: LEFT + ci * COLW, y: 18, class: 'col-h'}).textContent = s.no;
-  el('text', {x: LEFT + ci * COLW, y: 34, class: 'col-h2'}).textContent = s.name;
+  el('text', {x: LEFT + ci * COLW, y: 20, class: 'col-h'}).textContent = s.no;
+  s._lines.forEach((ln, k) => { el('text', {x: LEFT + ci * COLW, y: 37 + k * 15, class: 'col-h2'}).textContent = ln; });
 });
 const edgeG = el('g', {}), nodeG = el('g', {});
 const edges = [];
 G.nodes.forEach(n => n.pre.forEach(p => {
   const a = P.get(p), b = P.get(n.id);
   let d;
-  if (a.x === b.x) { const x = a.x + NW, y1 = a.y + NH / 2, y2 = b.y + NH / 2, bend = 18 + Math.min(40, Math.abs(y2 - y1) / 6);
+  const y1 = a.y + a.h / 2, y2 = b.y + b.h / 2;
+  if (a.x === b.x) { const x = a.x + NW, bend = 18 + Math.min(40, Math.abs(y2 - y1) / 6);
     d = `M${x},${y1} C${x + bend},${y1} ${x + bend},${y2} ${x},${y2}`; }
-  else { const x1 = a.x + NW, y1 = a.y + NH / 2, x2 = b.x, y2 = b.y + NH / 2, mx = (x1 + x2) / 2;
+  else { const x1 = a.x + NW, x2 = b.x, mx = (x1 + x2) / 2;
     d = `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`; }
   edges.push({from: p, to: n.id, e: el('path', {d, class: 'edge'}, edgeG)});
 }));
@@ -1915,13 +1950,25 @@ const nodeEls = new Map();
 G.nodes.forEach(n => {
   const p = P.get(n.id);
   const g = el('g', {class: 'node ' + n.kind, transform: `translate(${p.x},${p.y})`, tabindex: 0, role: 'button'}, nodeG);
-  el('rect', {width: NW, height: NH, rx: 6}, g);
-  const t = el('text', {x: NW / 2, y: NH / 2 + 1}, g); t.textContent = n.label.length > 10 ? n.label.slice(0, 10) + '…' : n.label;
+  el('rect', {width: NW, height: p.h, rx: 6}, g);
+  n._lines.forEach((ln, k) => { const t = el('text', {x: NW / 2, y: 6 + LH / 2 + k * LH + 1}, g); t.textContent = ln; });
   el('title', {}, g).textContent = n.label;
   g.addEventListener('click', () => select(n.id));
   g.addEventListener('keydown', e => { if (e.key === 'Enter') select(n.id); });
   nodeEls.set(n.id, g);
 });
+// fit-to-width vs actual size
+const mapWrap = document.querySelector('.map-scroll');
+const fitBtn = document.getElementById('map-fit');
+let fit = true;
+try { fit = localStorage.getItem('rm-map-fit') !== '0'; } catch (_) {}
+function applyFit() {
+  if (fit) { svg.setAttribute('width', '100%'); svg.removeAttribute('height'); svg.style.minWidth = Math.min(W, 640) + 'px'; }
+  else { svg.setAttribute('width', W); svg.setAttribute('height', H); svg.style.minWidth = ''; }
+  if (fitBtn) { fitBtn.textContent = fit ? fitBtn.dataset.actual : fitBtn.dataset.fit; fitBtn.setAttribute('aria-pressed', fit); }
+}
+if (fitBtn) fitBtn.addEventListener('click', () => { fit = !fit; try { localStorage.setItem('rm-map-fit', fit ? '1' : '0'); } catch (_) {} applyFit(); });
+applyFit();
 function closure(id, rel) { const out = new Set(), st = [...rel(id)]; while (st.length) { const x = st.pop(); if (out.has(x)) continue; out.add(x); st.push(...rel(x)); } return out; }
 let selected = null;
 function select(id) {

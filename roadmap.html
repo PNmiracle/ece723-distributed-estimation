@@ -55,14 +55,17 @@ h1{font-size:clamp(1.6rem,3vw,2.15rem);margin:.3em 0 .2em}
 .map-head h2{margin:0 0 4px;font-size:1.3rem}
 .map-head p{margin:0 0 10px;color:var(--muted);font-size:.88rem}
 .lg{padding:0 6px;border-radius:4px}.lg.up{background:#dbe8fb;color:#173f72}.lg.down{background:#d9f0e3;color:#145a3d}
-.map-scroll{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fcfdff;max-height:620px}
+.map-scroll{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fcfdff;max-height:80vh}
+.map-tools{display:flex;justify-content:flex-end;margin:-4px 0 8px}
+.map-tools button{padding:4px 11px;border:1px solid #bac9db;border-radius:6px;background:#fff;cursor:pointer;font-size:.84rem;color:var(--ink)}
+.map-tools button:hover{background:#e9f1fc}
 #graph{display:block}
 #graph .col-h{font-size:11px;fill:var(--muted);font-weight:650}
 #graph .col-h2{font-size:12px;fill:var(--ink);font-weight:700}
 #graph .col-bg{fill:#f4f7fb}
 #graph .edge{fill:none;stroke:#b9c6d8;stroke-width:1.1;opacity:.75}
 #graph .node rect{fill:#fff;stroke:#9fb2cc;stroke-width:1.1;rx:6}
-#graph .node text{font-size:11.5px;fill:var(--ink);dominant-baseline:middle;text-anchor:middle;pointer-events:none}
+#graph .node text{font-size:12px;fill:var(--ink);dominant-baseline:middle;text-anchor:middle;pointer-events:none}
 #graph .node{cursor:pointer}
 #graph .node.core rect{stroke:var(--blue);stroke-width:1.6}
 #graph .node.ms rect{stroke:var(--purple);stroke-width:1.8;fill:var(--purple-soft)}
@@ -154,6 +157,10 @@ body.core-only .card[data-core="0"],body.core-only .sb-terms a[data-core="0"]{di
 
 details.more{display:inline-block;font-size:.8rem}details.more summary{color:var(--muted);padding:2px 4px}details.more .chips{margin-top:5px}
 
+.wide{max-width:1320px;margin:auto;padding:0 clamp(14px,3vw,34px)}
+.wide .hero{max-width:900px}
+.wide .map-wrap{margin:22px 0 6px}
+
 .langsw{display:inline-flex;border:1px solid #bac9db;border-radius:7px;overflow:hidden;background:#fff;flex:none}
 .langsw a{padding:4px 10px;font-size:.84rem;text-decoration:none;color:#566579;line-height:1.4}
 .langsw a.on{background:#255ca7;color:#fff;font-weight:650}
@@ -171,9 +178,7 @@ details.more{display:inline-block;font-size:.8rem}details.more summary{color:var
   <a class="tbtn" href="reading.html" target="_blank">打开通俗精读版 ↗</a>
   <div class="langsw" role="group" aria-label="Language"><a href="roadmap.html" class="on" data-lang-link>中</a><a href="roadmap-en.html" class="" data-lang-link>EN</a></div>
  </div></div></header>
-<div class="layout">
-<aside class="sidebar"><details open><summary>学习路线</summary><div class="sb-stage"><a class="sb-st" href="#s0">第 0 站 · 读懂记号</a><div class="sb-terms"><a href="#c-risk-order" data-sb="risk-order">风险量级</a><a href="#c-bit-nat" data-sb="bit-nat">纳特</a></div></div><div class="sb-stage"><a class="sb-st" href="#s1">第 1 站 · 估计与风险</a><div class="sb-terms"><a href="#c-estimator" data-sb="estimator">估计器</a><a href="#c-sq-risk" data-sb="sq-risk">平方误差风险</a><a href="#c-minimax" data-sb="minimax">极小极大风险</a><a href="#c-prior" data-sb="prior">先验分布</a><a href="#c-bayes-risk" data-sb="bayes-risk">贝叶斯风险</a><a href="#c-cond-exp" data-sb="cond-exp">条件期望</a><a href="#c-posterior" data-sb="posterior">后验分布</a><a href="#c-gauss-mean" data-sb="gauss-mean">高斯均值估计</a></div></div><div class="sb-stage"><a class="sb-st" href="#s2">第 2 站 · 概率工具箱</a><div class="sb-terms"><a href="#c-cond-indep" data-sb="cond-indep">条件独立性</a><a href="#c-jensen-cs" data-sb="jensen-cs">Jensen 不等式</a><a href="#c-ibp" data-sb="ibp">分部积分</a><a href="#c-mgf" data-sb="mgf">矩母函数</a><a href="#c-subgauss" data-sb="subgauss">次高斯</a><a href="#c-hoeffding" data-sb="hoeffding">Hoeffding 不等式</a><a href="#c-bernoulli" data-sb="bernoulli">伯努利观测</a><a href="#c-binomial" data-sb="binomial">二项计数</a><a href="#c-empirical" data-sb="empirical">经验矩</a><a href="#c-sufficient" data-sb="sufficient">充分统计量</a><a href="#c-kernel" data-sb="kernel">随机核</a></div></div><div class="sb-stage"><a class="sb-st" href="#s3">第 3 站 · 得分与费舍尔信息</a><div class="sb-terms"><a href="#c-regularity" data-sb="regularity">正则性</a><a href="#c-score" data-sb="score">得分函数</a><a href="#c-fisher" data-sb="fisher">费舍尔信息</a><a href="#c-block-score" data-sb="block-score">样本块得分</a><a href="#c-bernstein" data-sb="bernstein">伯恩斯坦条件</a><a href="#c-dpi" data-sb="dpi">数据处理不等式</a></div></div><div class="sb-stage"><a class="sb-st" href="#s4">第 4 站 · 信息论</a><div class="sb-terms"><a href="#c-entropy" data-sb="entropy">熵</a><a href="#c-self-info" data-sb="self-info">自信息</a><a href="#c-mutual-info" data-sb="mutual-info">互信息</a><a href="#c-diff-entropy" data-sb="diff-entropy">微分熵</a><a href="#c-kl-tv" data-sb="kl-tv">全变差距离</a></div></div><div class="sb-stage"><a class="sb-st" href="#s5">第 5 站 · 本文的模型</a><div class="sb-terms"><a href="#c-distributed" data-sb="distributed">分布式估计</a><a href="#c-pool" data-sb="pool">观测池</a><a href="#c-sampling" data-sb="sampling">抽样设计</a><a href="#c-local-data" data-sb="local-data">局部数据</a><a href="#c-shared-obs" data-sb="shared-obs">共享观测</a><a href="#c-private-obs" data-sb="private-obs">私有观测</a><a href="#c-fusion" data-sb="fusion">融合中心</a><a href="#c-seeds" data-sb="seeds">随机种子</a><a href="#c-side-info" data-sb="side-info">辅助信息</a><a href="#c-noninteractive" data-sb="noninteractive">非交互协议</a><a href="#c-blackboard" data-sb="blackboard">黑板协议</a><a href="#c-transcript" data-sb="transcript">通信记录</a><a href="#c-budget" data-sb="budget">通信预算</a></div></div><div class="sb-stage"><a class="sb-st" href="#s6">第 6 站 · 主要结论</a><div class="sb-terms"><a href="#c-local-refine" data-sb="local-refine">粗定位与精细估计</a><a href="#c-surplus" data-sb="surplus">定位余量</a><a href="#c-aB" data-sb="aB">比特底线 a_B</a><a href="#c-envelope" data-sb="envelope">包络</a><a href="#c-lower-upper" data-sb="lower-upper">可达性与下界证明</a><a href="#c-rbar-term" data-sb="rbar-term">共享项 r̄</a><a href="#c-m-thm1" data-sb="m-thm1">定理 1：上下界一致包络</a><a href="#c-poly-exp" data-sb="poly-exp">多项式耦合与指数率</a><a href="#c-critical" data-sb="critical">临界窗口</a><a href="#c-intermediate" data-sb="intermediate">中等重叠</a></div></div><div class="sb-stage"><a class="sb-st" href="#s7">第 7 站 · 下界怎么证</a><div class="sb-terms"><a href="#c-score-identity" data-sb="score-identity">得分恒等式</a><a href="#c-chain-rule" data-sb="chain-rule">链式法则</a><a href="#c-van-trees" data-sb="van-trees">van Trees 不等式</a><a href="#c-m-lb-easy" data-sb="m-lb-easy">两个简单下界</a><a href="#c-event-score" data-sb="event-score">事件上的得分</a><a href="#c-rectangle" data-sb="rectangle">矩形性质</a><a href="#c-m-thm2" data-sb="m-thm2">定理 2：共享观测的加法信息上界</a><a href="#c-entropy-budget" data-sb="entropy-budget">熵预算</a><a href="#c-m-lb-assembly" data-sb="m-lb-assembly">主下界的组装（III-E）</a><a href="#c-m-lb-gauss" data-sb="m-lb-gauss">高斯情形的显式下界</a><a href="#c-m-lb-map" data-sb="m-lb-map">下界证明全景回顾</a></div></div><div class="sb-stage"><a class="sb-st" href="#s8">第 8 站 · 上界怎么造</a><div class="sb-terms"><a href="#c-resampling" data-sb="resampling">精确重抽样</a><a href="#c-moment-map" data-sb="moment-map">矩映射</a><a href="#c-smoothing" data-sb="smoothing">平滑步骤</a><a href="#c-charfn" data-sb="charfn">一比特特征函数测量</a><a href="#c-collision" data-sb="collision">无碰撞耦合</a></div></div></details></aside>
-<main id="top">
+<div class="wide" id="top">
 <header class="hero">
 <div class="kicker">ECE723 · 读论文前的基础准备</div>
 <h1>术语学习路线：从零走到下界证明</h1>
@@ -187,9 +192,15 @@ details.more{display:inline-block;font-size:.8rem}details.more summary{color:var
 <nav class="strip" aria-label="Stops"><a class="strip-st" href="#s0"><b>第 0 站</b><span>读懂记号</span><small>10 分钟</small></a><a class="strip-st" href="#s1"><b>第 1 站</b><span>估计与风险</span><small>40 分钟</small></a><a class="strip-st" href="#s2"><b>第 2 站</b><span>概率工具箱</span><small>45 分钟</small></a><a class="strip-st" href="#s3"><b>第 3 站</b><span>得分与费舍尔信息</span><small>45 分钟</small></a><a class="strip-st" href="#s4"><b>第 4 站</b><span>信息论</span><small>40 分钟</small></a><a class="strip-st" href="#s5"><b>第 5 站</b><span>本文的模型</span><small>40 分钟</small></a><a class="strip-st" href="#s6"><b>第 6 站</b><span>主要结论</span><small>50 分钟</small></a><a class="strip-st" href="#s7"><b>第 7 站</b><span>下界怎么证</span><small>60 分钟</small></a><a class="strip-st opt" href="#s8"><b>第 8 站</b><span>上界怎么造</span><small>50 分钟</small></a></nav>
 </header>
 <section class="map-wrap" id="map">
-<div class="map-head"><h2>概念关系图</h2><p>可左右滚动。箭头从“前置”指向“后续”。点一个节点：<span class="lg up">它需要的前置</span>、<span class="lg down">它解锁的后续</span> 会高亮；再点一次跳到卡片。</p></div>
+<div class="map-head"><h2>概念关系图</h2><p>箭头从“前置”指向“后续”。点一个节点：<span class="lg up">它需要的前置</span>、<span class="lg down">它解锁的后续</span> 会高亮；再点一次跳到卡片。</p></div>
+<div class="map-tools"><button type="button" id="map-fit" data-fit="适应宽度" data-actual="实际大小（可左右滚动）"></button></div>
 <div class="map-scroll"><svg id="graph" role="img" aria-label="Concept dependency graph"></svg></div>
 </section>
+</div>
+<div class="layout">
+<aside class="sidebar"><details open><summary>学习路线</summary><div class="sb-stage"><a class="sb-st" href="#s0">第 0 站 · 读懂记号</a><div class="sb-terms"><a href="#c-risk-order" data-sb="risk-order">风险量级</a><a href="#c-bit-nat" data-sb="bit-nat">纳特</a></div></div><div class="sb-stage"><a class="sb-st" href="#s1">第 1 站 · 估计与风险</a><div class="sb-terms"><a href="#c-estimator" data-sb="estimator">估计器</a><a href="#c-sq-risk" data-sb="sq-risk">平方误差风险</a><a href="#c-minimax" data-sb="minimax">极小极大风险</a><a href="#c-prior" data-sb="prior">先验分布</a><a href="#c-bayes-risk" data-sb="bayes-risk">贝叶斯风险</a><a href="#c-cond-exp" data-sb="cond-exp">条件期望</a><a href="#c-posterior" data-sb="posterior">后验分布</a><a href="#c-gauss-mean" data-sb="gauss-mean">高斯均值估计</a></div></div><div class="sb-stage"><a class="sb-st" href="#s2">第 2 站 · 概率工具箱</a><div class="sb-terms"><a href="#c-cond-indep" data-sb="cond-indep">条件独立性</a><a href="#c-jensen-cs" data-sb="jensen-cs">Jensen 不等式</a><a href="#c-ibp" data-sb="ibp">分部积分</a><a href="#c-mgf" data-sb="mgf">矩母函数</a><a href="#c-subgauss" data-sb="subgauss">次高斯</a><a href="#c-hoeffding" data-sb="hoeffding">Hoeffding 不等式</a><a href="#c-bernoulli" data-sb="bernoulli">伯努利观测</a><a href="#c-binomial" data-sb="binomial">二项计数</a><a href="#c-empirical" data-sb="empirical">经验矩</a><a href="#c-sufficient" data-sb="sufficient">充分统计量</a><a href="#c-kernel" data-sb="kernel">随机核</a></div></div><div class="sb-stage"><a class="sb-st" href="#s3">第 3 站 · 得分与费舍尔信息</a><div class="sb-terms"><a href="#c-regularity" data-sb="regularity">正则性</a><a href="#c-score" data-sb="score">得分函数</a><a href="#c-fisher" data-sb="fisher">费舍尔信息</a><a href="#c-block-score" data-sb="block-score">样本块得分</a><a href="#c-bernstein" data-sb="bernstein">伯恩斯坦条件</a><a href="#c-dpi" data-sb="dpi">数据处理不等式</a></div></div><div class="sb-stage"><a class="sb-st" href="#s4">第 4 站 · 信息论</a><div class="sb-terms"><a href="#c-entropy" data-sb="entropy">熵</a><a href="#c-self-info" data-sb="self-info">自信息</a><a href="#c-mutual-info" data-sb="mutual-info">互信息</a><a href="#c-diff-entropy" data-sb="diff-entropy">微分熵</a><a href="#c-kl-tv" data-sb="kl-tv">全变差距离</a></div></div><div class="sb-stage"><a class="sb-st" href="#s5">第 5 站 · 本文的模型</a><div class="sb-terms"><a href="#c-distributed" data-sb="distributed">分布式估计</a><a href="#c-pool" data-sb="pool">观测池</a><a href="#c-sampling" data-sb="sampling">抽样设计</a><a href="#c-local-data" data-sb="local-data">局部数据</a><a href="#c-shared-obs" data-sb="shared-obs">共享观测</a><a href="#c-private-obs" data-sb="private-obs">私有观测</a><a href="#c-fusion" data-sb="fusion">融合中心</a><a href="#c-seeds" data-sb="seeds">随机种子</a><a href="#c-side-info" data-sb="side-info">辅助信息</a><a href="#c-noninteractive" data-sb="noninteractive">非交互协议</a><a href="#c-blackboard" data-sb="blackboard">黑板协议</a><a href="#c-transcript" data-sb="transcript">通信记录</a><a href="#c-budget" data-sb="budget">通信预算</a></div></div><div class="sb-stage"><a class="sb-st" href="#s6">第 6 站 · 主要结论</a><div class="sb-terms"><a href="#c-local-refine" data-sb="local-refine">粗定位与精细估计</a><a href="#c-surplus" data-sb="surplus">定位余量</a><a href="#c-aB" data-sb="aB">比特底线 a_B</a><a href="#c-envelope" data-sb="envelope">包络</a><a href="#c-lower-upper" data-sb="lower-upper">可达性与下界证明</a><a href="#c-rbar-term" data-sb="rbar-term">共享项 r̄</a><a href="#c-m-thm1" data-sb="m-thm1">定理 1：上下界一致包络</a><a href="#c-poly-exp" data-sb="poly-exp">多项式耦合与指数率</a><a href="#c-critical" data-sb="critical">临界窗口</a><a href="#c-intermediate" data-sb="intermediate">中等重叠</a></div></div><div class="sb-stage"><a class="sb-st" href="#s7">第 7 站 · 下界怎么证</a><div class="sb-terms"><a href="#c-score-identity" data-sb="score-identity">得分恒等式</a><a href="#c-chain-rule" data-sb="chain-rule">链式法则</a><a href="#c-van-trees" data-sb="van-trees">van Trees 不等式</a><a href="#c-m-lb-easy" data-sb="m-lb-easy">两个简单下界</a><a href="#c-event-score" data-sb="event-score">事件上的得分</a><a href="#c-rectangle" data-sb="rectangle">矩形性质</a><a href="#c-m-thm2" data-sb="m-thm2">定理 2：共享观测的加法信息上界</a><a href="#c-entropy-budget" data-sb="entropy-budget">熵预算</a><a href="#c-m-lb-assembly" data-sb="m-lb-assembly">主下界的组装（III-E）</a><a href="#c-m-lb-gauss" data-sb="m-lb-gauss">高斯情形的显式下界</a><a href="#c-m-lb-map" data-sb="m-lb-map">下界证明全景回顾</a></div></div><div class="sb-stage"><a class="sb-st" href="#s8">第 8 站 · 上界怎么造</a><div class="sb-terms"><a href="#c-resampling" data-sb="resampling">精确重抽样</a><a href="#c-moment-map" data-sb="moment-map">矩映射</a><a href="#c-smoothing" data-sb="smoothing">平滑步骤</a><a href="#c-charfn" data-sb="charfn">一比特特征函数测量</a><a href="#c-collision" data-sb="collision">无碰撞耦合</a></div></div></details></aside>
+<main>
+
 <section class="stage" id="s0">
 <div class="stage-head"><div class="stage-name">第 0 站 · 读懂记号</div>
 <div class="stage-meta">2 个概念 · 约 10 分钟</div></div>
@@ -1866,41 +1877,65 @@ document.querySelectorAll('.sb-terms a').forEach(a => {
 /* ---------- graph ---------- */
 const svg = document.getElementById('graph');
 const NS = 'http://www.w3.org/2000/svg';
-const COLW = 158, NW = 128, NH = 26, GAP = 10, TOP = 46, LEFT = 14;
+const IS_EN = document.documentElement.lang === 'en';
+const NW = IS_EN ? 150 : 128, COLW = NW + 34, GAP = 10, LEFT = 14, LH = 14;
+// wrap a label into lines (English by words, Chinese by characters)
+function wrap(text, max, maxLines) {
+  const lines = [];
+  if (/[一-鿿]/.test(text)) {
+    for (let i = 0; i < text.length; i += max) lines.push(text.slice(i, i + max));
+  } else {
+    let cur = '';
+    for (const w of text.split(/\s+/)) {
+      if (!cur) cur = w; else if ((cur + ' ' + w).length <= max) cur += ' ' + w; else { lines.push(cur); cur = w; }
+    }
+    if (cur) lines.push(cur);
+  }
+  if (lines.length > maxLines) { const keep = lines.slice(0, maxLines); keep[maxLines - 1] = keep[maxLines - 1].replace(/.?$/, '…'); return keep; }
+  return lines;
+}
+const LABMAX = IS_EN ? 20 : 9;
+G.nodes.forEach(n => { n._lines = wrap(n.label, LABMAX, 3); n._h = 12 + n._lines.length * LH; });
+const HDMAX = IS_EN ? 20 : 10;
+G.stages.forEach(s => { s._lines = wrap(s.name, HDMAX, 3); });
+const HEAD = 24 + Math.max(...G.stages.map(s => s._lines.length)) * 15;
+const TOP = HEAD + 8;
 const cols = G.stages.map(s => G.nodes.filter(n => n.stage === s.id));
 const P = new Map();
-// order inside each column by barycenter of prerequisites
 cols.forEach((col, ci) => {
   if (ci > 0) {
     col.forEach((n, k) => {
       const ys = n.pre.filter(p => P.has(p)).map(p => P.get(p).y);
       n._b = ys.length ? ys.reduce((a, b) => a + b, 0) / ys.length : 1e6 + k;
     });
-    // keep within-stage dependency order: sort by barycenter but stable for same-stage prereqs
     col.sort((a, b) => a._b - b._b);
     const ordered = []; const placed = new Set();
     const visit = n => { if (placed.has(n.id)) return; n.pre.filter(p => col.some(c => c.id === p)).forEach(p => visit(col.find(c => c.id === p))); placed.add(n.id); ordered.push(n); };
     col.forEach(visit); col.splice(0, col.length, ...ordered);
   }
-  col.forEach((n, k) => P.set(n.id, {x: LEFT + ci * COLW, y: TOP + k * (NH + GAP)}));
+  let y = TOP;
+  col.forEach(n => { P.set(n.id, {x: LEFT + ci * COLW, y, h: n._h}); y += n._h + GAP; });
+  col._end = y;
 });
-const H = TOP + Math.max(...cols.map(c => c.length)) * (NH + GAP) + 10;
+const H = Math.max(...cols.map(c => c._end)) + 6;
 const W = LEFT * 2 + G.stages.length * COLW - (COLW - NW) + 8;
-svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', W); svg.setAttribute('height', H);
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+svg.dataset.w = W; svg.dataset.h = H;
 const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; };
 G.stages.forEach((s, ci) => {
   el('rect', {x: LEFT + ci * COLW - 6, y: 4, width: NW + 12, height: H - 8, rx: 8, class: 'col-bg'});
-  el('text', {x: LEFT + ci * COLW, y: 18, class: 'col-h'}).textContent = s.no;
-  el('text', {x: LEFT + ci * COLW, y: 34, class: 'col-h2'}).textContent = s.name;
+  el('text', {x: LEFT + ci * COLW, y: 20, class: 'col-h'}).textContent = s.no;
+  s._lines.forEach((ln, k) => { el('text', {x: LEFT + ci * COLW, y: 37 + k * 15, class: 'col-h2'}).textContent = ln; });
 });
 const edgeG = el('g', {}), nodeG = el('g', {});
 const edges = [];
 G.nodes.forEach(n => n.pre.forEach(p => {
   const a = P.get(p), b = P.get(n.id);
   let d;
-  if (a.x === b.x) { const x = a.x + NW, y1 = a.y + NH / 2, y2 = b.y + NH / 2, bend = 18 + Math.min(40, Math.abs(y2 - y1) / 6);
+  const y1 = a.y + a.h / 2, y2 = b.y + b.h / 2;
+  if (a.x === b.x) { const x = a.x + NW, bend = 18 + Math.min(40, Math.abs(y2 - y1) / 6);
     d = `M${x},${y1} C${x + bend},${y1} ${x + bend},${y2} ${x},${y2}`; }
-  else { const x1 = a.x + NW, y1 = a.y + NH / 2, x2 = b.x, y2 = b.y + NH / 2, mx = (x1 + x2) / 2;
+  else { const x1 = a.x + NW, x2 = b.x, mx = (x1 + x2) / 2;
     d = `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`; }
   edges.push({from: p, to: n.id, e: el('path', {d, class: 'edge'}, edgeG)});
 }));
@@ -1908,13 +1943,25 @@ const nodeEls = new Map();
 G.nodes.forEach(n => {
   const p = P.get(n.id);
   const g = el('g', {class: 'node ' + n.kind, transform: `translate(${p.x},${p.y})`, tabindex: 0, role: 'button'}, nodeG);
-  el('rect', {width: NW, height: NH, rx: 6}, g);
-  const t = el('text', {x: NW / 2, y: NH / 2 + 1}, g); t.textContent = n.label.length > 10 ? n.label.slice(0, 10) + '…' : n.label;
+  el('rect', {width: NW, height: p.h, rx: 6}, g);
+  n._lines.forEach((ln, k) => { const t = el('text', {x: NW / 2, y: 6 + LH / 2 + k * LH + 1}, g); t.textContent = ln; });
   el('title', {}, g).textContent = n.label;
   g.addEventListener('click', () => select(n.id));
   g.addEventListener('keydown', e => { if (e.key === 'Enter') select(n.id); });
   nodeEls.set(n.id, g);
 });
+// fit-to-width vs actual size
+const mapWrap = document.querySelector('.map-scroll');
+const fitBtn = document.getElementById('map-fit');
+let fit = true;
+try { fit = localStorage.getItem('rm-map-fit') !== '0'; } catch (_) {}
+function applyFit() {
+  if (fit) { svg.setAttribute('width', '100%'); svg.removeAttribute('height'); svg.style.minWidth = Math.min(W, 640) + 'px'; }
+  else { svg.setAttribute('width', W); svg.setAttribute('height', H); svg.style.minWidth = ''; }
+  if (fitBtn) { fitBtn.textContent = fit ? fitBtn.dataset.actual : fitBtn.dataset.fit; fitBtn.setAttribute('aria-pressed', fit); }
+}
+if (fitBtn) fitBtn.addEventListener('click', () => { fit = !fit; try { localStorage.setItem('rm-map-fit', fit ? '1' : '0'); } catch (_) {} applyFit(); });
+applyFit();
 function closure(id, rel) { const out = new Set(), st = [...rel(id)]; while (st.length) { const x = st.pop(); if (out.has(x)) continue; out.add(x); st.push(...rel(x)); } return out; }
 let selected = null;
 function select(id) {
