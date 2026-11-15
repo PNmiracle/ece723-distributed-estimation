@@ -179,6 +179,20 @@ body.no-marks .gl-term{text-decoration:none;cursor:auto;background:none}
 .langsw a{padding:4px 10px;font-size:.84rem;text-decoration:none;color:#566579;line-height:1.4}
 .langsw a.on{background:#255ca7;color:#fff;font-weight:650}
 .langsw a:not(.on):hover{background:#e9f1fc}
+</style><style>.edit-btn{border:1px solid #cfd8e6;background:#fff;color:#2f4a70;border-radius:8px;padding:4px 10px;font:600 .82rem/1.4 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;cursor:pointer;margin-right:6px}
+.edit-btn:hover{background:#f2f6fc}
+body.edit-on .edit-btn{background:#2f6fd0;color:#fff;border-color:#2f6fd0}
+body.edit-on [contenteditable="true"]{outline:1px dashed #a9c0e6;outline-offset:2px;border-radius:3px;cursor:text}
+body.edit-on [contenteditable="true"]:focus{outline:2px solid #2f6fd0;background:#fbfdff}
+.edited{background:linear-gradient(transparent 60%,rgba(255,214,102,.45) 60%)}
+body.edit-on .edited{background:rgba(255,236,170,.45)}
+.edit-panel{position:fixed;left:50%;transform:translateX(-50%);bottom:14px;z-index:60;display:flex;flex-wrap:wrap;align-items:center;gap:8px;max-width:calc(100vw - 24px);background:#1f2a3a;color:#fff;padding:8px 12px;border-radius:12px;box-shadow:0 10px 30px rgba(10,20,40,.25);font:.84rem/1.4 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}
+.edit-panel[hidden]{display:none!important}
+.edit-panel .ep-n{opacity:.75}
+.edit-panel button{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:7px;padding:3px 9px;font:inherit;cursor:pointer}
+.edit-panel button:hover{background:rgba(255,255,255,.12)}
+.edit-panel .ep-done{background:#2f6fd0;border-color:#2f6fd0}
+@media print{.edit-btn,.edit-panel{display:none!important}}
 </style></head>
 <body>
 <div class="progress" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
@@ -2128,6 +2142,73 @@ fromHash(); addEventListener('hashchange', fromHash);
     try { localStorage.setItem('site-lang', a.textContent.trim() === 'EN' ? 'en' : 'zh'); } catch (_) {}
     if (h) { e.preventDefault(); location.href = base + h; }
   }));
+})();
+</script>
+<script>/* ---------- edit while reading: edits are kept in this browser (localStorage) ---------- */
+(() => {
+  const PAGE = (location.pathname.split('/').pop() || 'index.html');
+  const EN = (document.documentElement.lang || '').startsWith('en');
+  const T = EN ? {btn: '✎ Edit', on: '✓ Done editing', panel: 'Editing: click text to change it; saved automatically', n: 'edited', exp: 'Export', imp: 'Import', reset: 'Undo all edits', sure: 'Click again to confirm', done: 'Done', imported: 'Imported'}
+                 : {btn: '✎ 编辑', on: '✓ 完成编辑', panel: '编辑中：点文字直接改，自动保存', n: '处已修改', exp: '导出', imp: '导入', reset: '还原全部', sure: '再点一次确认还原', done: '完成', imported: '已导入'};
+  const KEY = 'pageEdits:' + PAGE;
+  let store = {}; try { store = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { store = {}; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+  const hash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return h.toString(36) + ':' + s.length; };
+  const SCOPE = document.querySelector('main') || document.querySelector('.content') || document.body;
+  const SEL = 'p, li, h1, h2, h3, h4, .pp, .wwh-v, td, th, figcaption, .stage-goal, .stage-intro, .bridge, .sym-m';
+  const BAD = '.katex, svg, script, style, .topbar, .pop, .gloss, .xpop, figure.equation, .chips, .card-foot, .sidebar, .edit-panel, summary';
+  const blocks = [...SCOPE.querySelectorAll(SEL)].filter(el => !el.querySelector(SEL) && !el.closest(BAD) && el.textContent.trim());
+  const count = {}; const orig = new Map();
+  blocks.forEach(el => {
+    const anc = el.parentElement.closest('[id]'); const a = anc ? anc.id : '_';
+    count[a] = (count[a] || 0) + 1;
+    el.dataset.ek = a + '#' + count[a];
+    orig.set(el, el.innerHTML);
+    const s = store[el.dataset.ek];
+    if (s && s.h === hash(el.innerHTML)) { el.innerHTML = s.html; el.classList.add('edited'); }
+  });
+  const lockMath = el => el.querySelectorAll('.katex, svg, a.eqlink').forEach(k => k.setAttribute('contenteditable', 'false'));
+  let on = false, timer = null;
+  function record(el) {
+    const k = el.dataset.ek, o = orig.get(el);
+    if (el.innerHTML === o) { delete store[k]; el.classList.remove('edited'); }
+    else { store[k] = {h: hash(o), html: el.innerHTML, t: Date.now()}; el.classList.add('edited'); }
+    save(); upd();
+  }
+  // ---- UI ----
+  const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'edit-btn'; btn.textContent = T.btn;
+  const host = document.querySelector('.langsw'); if (host) host.parentNode.insertBefore(btn, host); else document.body.appendChild(btn);
+  const panel = document.createElement('div'); panel.className = 'edit-panel'; panel.hidden = true;
+  panel.innerHTML = `<span class="ep-t">${T.panel}</span><span class="ep-n"></span><button type="button" data-a="exp">${T.exp}</button><button type="button" data-a="imp">${T.imp}</button><button type="button" data-a="reset">${T.reset}</button><button type="button" data-a="done" class="ep-done">${T.done}</button><input type="file" accept=".json,application/json" hidden>`;
+  document.body.appendChild(panel);
+  const upd = () => { panel.querySelector('.ep-n').textContent = Object.keys(store).length + ' ' + T.n; };
+  function setOn(v) {
+    on = v; document.body.classList.toggle('edit-on', on); panel.hidden = !on; btn.textContent = on ? T.on : T.btn;
+    blocks.forEach(el => { if (on) { el.setAttribute('contenteditable', 'true'); lockMath(el); } else el.removeAttribute('contenteditable'); });
+    upd();
+  }
+  btn.addEventListener('click', () => setOn(!on));
+  SCOPE.addEventListener('input', e => { const el = e.target.closest('[data-ek]'); if (!el) return; clearTimeout(timer); timer = setTimeout(() => record(el), 400); });
+  SCOPE.addEventListener('click', e => { if (on && e.target.closest('[data-ek] a')) { e.preventDefault(); e.stopPropagation(); } }, true);
+  const file = panel.querySelector('input[type=file]');
+  let armed = false;
+  panel.addEventListener('click', e => {
+    const a = e.target.dataset.a; if (!a) return;
+    if (a === 'done') setOn(false);
+    if (a === 'exp') {
+      const blob = new Blob([JSON.stringify({page: PAGE, edits: store}, null, 1)], {type: 'application/json'});
+      const u = URL.createObjectURL(blob); const l = document.createElement('a'); l.href = u; l.download = 'edits-' + PAGE.replace(/\.html$/, '') + '.json'; l.click(); setTimeout(() => URL.revokeObjectURL(u), 1000);
+    }
+    if (a === 'imp') file.click();
+    if (a === 'reset') {
+      if (!armed) { armed = true; e.target.textContent = T.sure; setTimeout(() => { armed = false; e.target.textContent = T.reset; }, 3000); return; }
+      store = {}; save(); blocks.forEach(el => { if (el.classList.contains('edited')) { el.innerHTML = orig.get(el); el.classList.remove('edited'); if (on) lockMath(el); } }); armed = false; e.target.textContent = T.reset; upd();
+    }
+  });
+  file.addEventListener('change', () => {
+    const f = file.files[0]; if (!f) return;
+    f.text().then(t => { try { const j = JSON.parse(t); Object.assign(store, j.edits || j); save(); location.reload(); } catch (err) {} });
+  });
 })();
 </script>
 </body></html>
