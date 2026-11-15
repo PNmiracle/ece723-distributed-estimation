@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECE723 上节课复习 · Lecture Review — Distributed Estimation from Overlapping Samples</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#f7f6f2; --card:#ffffff; --ink:#1d2327; --muted:#5b6670; --line:#e3e0d8;
+  --accent:#0f6b6b; --accent-soft:#e3f1f0; --warn:#9a5b00; --warn-soft:#fdf3e2;
+  --en:#3d5a80; --en-soft:#eef3f9; --done:#2e7d32;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif}
+a{color:var(--accent)}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:32px;max-width:1180px;margin:0 auto;padding:24px}
+@media (max-width:900px){.layout{grid-template-columns:1fr;padding:14px}.toc{position:static!important;max-height:none!important}}
+/* language switching */
+body[data-lang="zh"] .en{display:none!important}
+body[data-lang="en"] .zh{display:none!important}
+body[data-lang="both"] div.en, body[data-lang="both"] p.en, body[data-lang="both"] li .en{color:var(--en)}
+body[data-lang="both"] p.en, body[data-lang="both"] div.en{border-left:3px solid var(--en-soft);padding-left:10px;font-size:.95em}
+body[data-lang="both"] li span.en{display:block;font-size:.93em}
+body[data-lang="both"] .t .en{display:block;font-size:.62em;font-weight:500;color:var(--muted);margin-top:2px}
+/* toc */
+.toc{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow:auto;
+  background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.toc h3{margin:0 0 8px;font-size:14px;color:var(--muted);letter-spacing:.04em}
+.toc ol{list-style:none;margin:0;padding:0}
+.toc li{margin:2px 0}
+.toc a{display:flex;gap:8px;text-decoration:none;color:var(--ink);font-size:14px;padding:5px 8px;border-radius:7px}
+.toc a:hover{background:var(--accent-soft)}
+.toc .dot{flex:none;width:9px;height:9px;border-radius:50%;border:2px solid var(--line);margin-top:7px}
+.toc li.done .dot{background:var(--done);border-color:var(--done)}
+.toc .tm{display:block;font-size:11px;color:var(--muted)}
+.progress{margin:12px 0 4px;font-size:13px;color:var(--muted)}
+.bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--done);transition:width .3s}
+.home{display:block;font-size:13px;text-decoration:none;margin:0 0 10px}
+.home:hover{text-decoration:underline}
+.langsw{display:flex;gap:4px;margin-bottom:14px;background:var(--bg);padding:3px;border-radius:9px}
+.langsw button{flex:1;border:0;background:transparent;padding:6px 4px;border-radius:7px;cursor:pointer;font:inherit;font-size:13px;color:var(--muted)}
+.langsw button.on{background:var(--card);color:var(--accent);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+/* header */
+header.hero{background:linear-gradient(135deg,#0f6b6b,#174b62);color:#fff;border-radius:16px;padding:28px 30px;margin-bottom:24px}
+header.hero h1{margin:0 0 6px;font-size:26px;line-height:1.35}
+header.hero .sub{opacity:.9;font-size:15px}
+header.hero .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px}
+header.hero .meta span{background:rgba(255,255,255,.15);padding:3px 10px;border-radius:20px;font-size:13px}
+/* cards */
+section.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 28px;margin-bottom:22px;scroll-margin-top:16px}
+section.card h2.t{margin:0 0 4px;font-size:22px;line-height:1.35}
+.time{display:inline-block;font:600 12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--accent);background:var(--accent-soft);padding:5px 8px;border-radius:6px;margin-bottom:10px}
+h3.k{display:flex;align-items:center;gap:8px;font-size:16px;margin:22px 0 8px;color:var(--accent)}
+h3.k .ic{width:24px;height:24px;border-radius:6px;background:var(--accent-soft);display:grid;place-items:center;font-size:13px}
+.plain{background:var(--warn-soft);border-radius:10px;padding:12px 16px}
+.plain h3.k{color:var(--warn);margin-top:4px}
+.plain h3.k .ic{background:#f7e2bd}
+ul.pts{padding-left:20px;margin:6px 0}
+ul.pts li{margin:6px 0}
+table{width:100%;border-collapse:collapse;font-size:14.5px;margin:6px 0}
+th,td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#faf9f6;font-weight:600;color:var(--muted);font-size:13px}
+td.ph{font-weight:600;color:var(--en);white-space:normal;min-width:180px}
+td.ph q{quotes:none}
+.formula{background:#fbfbf9;border:1px solid var(--line);border-radius:10px;padding:8px 14px;overflow-x:auto;margin:10px 0}
+details.q{border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;background:#fcfcfa}
+details.q summary{cursor:pointer;font-weight:600}
+details.q[open] summary{margin-bottom:6px}
+.donebtn{margin-top:18px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 14px;cursor:pointer;font:inherit;font-size:14px;color:var(--muted)}
+section.done .donebtn{background:#e8f5e9;border-color:#a5d6a7;color:var(--done);font-weight:600}
+.note{font-size:13px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;border-radius:5px;padding:1px 7px;background:var(--accent-soft);color:var(--accent);margin-right:4px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin:10px 0}
+.mini{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fcfcfa}
+.mini b{color:var(--accent)}
+@media print{.toc,.donebtn,.langsw{display:none}.layout{display:block}section.card{break-inside:avoid-page}details.q{display:block}details.q>*{display:block}}
+</style>
+</head>
+<body data-lang="both">
+<div class="layout">
+
+<nav class="toc" aria-label="目录 Contents">
+  <a class="home" href="index.html">← <span class="zh">学习网站首页</span><span class="en"> Study guide home</span></a>
+  <div class="langsw" role="group" aria-label="Language">
+    <button data-l="both" class="on">双语 Both</button>
+    <button data-l="zh">中文</button>
+    <button data-l="en">EN</button>
+  </div>
+  <h3><span class="zh">目录</span><span class="en"> Contents</span></h3>
+  <ol id="tocList">
+    <li><a href="#glance"><span class="dot"></span><span>速览 At a glance</span></a></li>
+    <li data-sec="s1"><a href="#s1"><span class="dot"></span><span>1 · 项目调整 Project<span class="tm">00:00–20:28</span></span></a></li>
+    <li data-sec="s2"><a href="#s2"><span class="dot"></span><span>2 · 模型与协议 Model<span class="tm">20:28–36:53</span></span></a></li>
+    <li data-sec="s3"><a href="#s3"><span class="dot"></span><span>3 · Minimax 风险 Risk<span class="tm">36:53–50:10</span></span></a></li>
+    <li data-sec="s4"><a href="#s4"><span class="dot"></span><span>4 · 上下界 Bounds<span class="tm">50:10–1:14:47</span></span></a></li>
+    <li data-sec="s5"><a href="#s5"><span class="dot"></span><span>5 · 开放问题 The gap<span class="tm">1:14:47–1:24:09</span></span></a></li>
+    <li data-sec="s6"><a href="#s6"><span class="dot"></span><span>6 · Fisher 与正则条件<span class="tm">1:24:09–1:32:49</span></span></a></li>
+    <li data-sec="s7"><a href="#s7"><span class="dot"></span><span>7 · 收尾分工 Wrap-up<span class="tm">1:32:49–1:38:01</span></span></a></li>
+    <li><a href="#glossary"><span class="dot"></span><span>术语表 Glossary</span></a></li>
+    <li><a href="#todo"><span class="dot"></span><span>下周待办 To-do</span></a></li>
+  </ol>
+  <div class="progress"><span class="zh">复习进度</span><span class="en"> Progress</span> <b id="progTxt">0/7</b></div>
+  <div class="bar"><i id="progBar"></i></div>
+</nav>
+
+<main>
+<header class="hero">
+  <h1><span class="zh">上节课复习：重叠样本下的通信受限参数估计</span><br><span style="font-size:.72em;font-weight:500;opacity:.92">Lecture Review — Communication-Constrained Parameter Estimation from Overlapping Samples</span></h1>
+  <div class="sub"><span class="zh">按录音时间分成 7 段：每段有总结、通俗解释、可积累的点、课上的英文表达和自测题。</span><span class="en"> Seven segments following the recording, each with a summary, a plain-language explanation, takeaways, English expressions from class, and self-check questions.</span></div>
+  <div class="meta"><span>ECE 723</span><span>⏱ 1:38:01</span><span><span class="zh">下次课：第 III 节 Converse</span><span class="en"> Next: Section III (Converse)</span></span></div>
+</header>
+
+<!-- ================= AT A GLANCE ================= -->
+<section class="card" id="glance">
+  <h2 class="t"><span class="zh">一页速览</span><span class="en">At a glance</span></h2>
+  <div class="grid2">
+    <div class="mini"><b class="zh">项目怎么变了</b><b class="en">What changed</b>
+      <p class="zh">个人项目取消。全班一起研读、核查和修订老师用 AI 生成的工作论文，目标是投稿，参与者共同署名。</p>
+      <p class="en">Individual projects are cancelled. The class will study, check and revise one AI-generated working paper together, aiming to submit it with everyone as co-authors.</p></div>
+    <div class="mini"><b class="zh">问题是什么</b><b class="en">The problem</b>
+      <p class="zh">$n$ 台机器从同一个大小为 $N$ 的样本池各抽 $m$ 个样本（可能重叠），每台只能发 $k$ 比特。融合中心最好能把 $\theta$ 估计到多准？</p>
+      <p class="en">$n$ machines each draw $m$ samples from one shared pool of size $N$, so their samples may overlap. Each machine can send only $k$ bits. How well can the fusion center estimate $\theta$?</p></div>
+    <div class="mini"><b class="zh">主要结果</b><b class="en">Main result</b>
+      <p class="zh">下界（BB 协议）和上界（NI 协议）是四项取最大，只有第四项相差 $\bar r$。所以在大多数区间里，交互不会改善误差的量级。</p>
+      <p class="en">The lower bound (BB) and upper bound (NI) are both a max of four terms, and only the fourth term differs, by $\bar r$. In most regimes, interaction does not improve the order of the error.</p></div>
+    <div class="mini"><b class="zh">你的两项任务</b><b class="en">Your two tasks</b>
+      <p class="zh">① 读懂并核查第 III 节，下周汇报；② 用 AI 尝试闭合临界窗口里的 gap，部分进展也写成 PDF 分享。</p>
+      <p class="en">① Understand and check Section III, then present it next week. ② Try to close the gap in the critical window with AI, and write up partial progress as a PDF to share.</p></div>
+  </div>
+  <div class="formula">
+  $$\underbrace{c\,L}_{\text{Sec. III}}\;\le\; R^*_{\mathrm{BB}} \;\le\; R^*_{\mathrm{NI}} \;\le\; \underbrace{C\,U}_{\text{Sec. IV}}$$
+  $$L = d\max\Big\{\tfrac1N,\ \tfrac1{nm},\ a_B,\ \tfrac{1}{m(1+s_+)+\bar r}\Big\},\qquad U = d\max\Big\{\tfrac1N,\ \tfrac1{nm},\ a_B,\ \tfrac{1}{m(1+s_+)}\Big\}$$
+  </div>
+  <p class="note">$B=nk,\ a_B=2^{-2B/d},\ s=\tfrac{B}{d}-\tfrac12\log_2 m,\ s_+=\max(s,0)$；<span class="zh">$\bar r$ 为至少被两台处理器看到的不同样本的期望数。</span><span class="en"> $\bar r$ is the expected number of distinct samples seen by at least two processors.</span></p>
+</section>
+
+<!-- ================= S1 ================= -->
+<section class="card" id="s1" data-sec="s1">
+  <span class="time">00:00:00 – 00:20:28</span>
+  <h2 class="t"><span class="zh">1 · 课程项目调整、章节分工、AI 与汇报</span><span class="en">Project restructuring, section assignments, AI and presentations</span></h2>
+
+  <h3 class="k"><span class="ic">📝</span><span class="zh">总结</span><span class="en">Summary</span></h3>
+  <p class="zh">老师根据上节课的问题设定，用 GPT-6 生成了一篇工作论文。初版不到 10 页，他扩写到约 35 页，补了很多细节，方便大家读懂；之后要压缩到约 25 页再投稿。论文已经给出风险的渐近上下界。除一个区间外两者同阶，在量级上完整刻画了问题。课程项目改为全班共同研读这篇论文：第 III 节讲 Converse（下界），第 IV 节讲 Achievability（上界），第 V 节讲例子。每人负责一到两节，可以合作。下周由在场的两位同学讲第 III 节。</p>
+  <p class="en">Using GPT-6 and last lecture's problem formulation, the professor generated a working paper. The first draft was under 10 pages; he expanded it to about 35 pages with extra detail so it is easier to follow, and plans to compress it to about 25 for submission. The paper already gives asymptotic upper and lower bounds on the risk, and they match in order everywhere except one regime, so the problem is fully characterized at the scaling level. The course project is now a joint reading of this paper: Section III is the converse (lower bound), Section IV is achievability (upper bound), and Section V covers examples. Each student takes one or two sections and may collaborate. Next week the two students present were assigned Section III.</p>
+  <p class="zh">两项任务：<b>① 尝试闭合 gap</b>，可以用任何模型，用不同模型能带来多样性，部分进展也写成 PDF 分享；<b>② 准备汇报并核查证明</b>，AI 不完全可靠，正确与否由你判断。老师对之前的汇报不满意：不要照抄公式，要既有全局图景又有细节。</p>
+  <p class="en">Two tasks: <b>① try to close the gap</b> with any model you like, since different models add diversity, and write up partial progress as a PDF; <b>② prepare the presentation and check the proofs</b>. AI is not fully reliable, so you decide what is correct. The professor was disappointed with earlier presentations: don't copy equations; give the big picture and the details.</p>
+
+  <div class="plain">
+    <h3 class="k"><span class="ic">💡</span><span class="zh">通俗解释</span><span class="en">In plain words</span></h3>
+    <p class="zh">老师已经把这张“地图”画好了。你们要亲自把每条路走一遍（核查证明），再带别人走一遍（汇报）。地图上还剩一块空白（gap），有余力就去探一探。</p>
+    <p class="en">The professor has already drawn the map. Your job is to walk every road yourself (check the proofs), guide others along it (present), and, if you can, explore the one blank area still on the map (the gap).</p>
+  </div>
+
+  <h3 class="k"><span class="ic">📌</span><span class="zh">可积累的点</span><span class="en">Takeaways</span></h3>
+  <ul class="pts">
+    <li><span class="zh"><b>研究级问题 ≠ 课程项目。</b>做仿真、得几条结论，算不上研究级；研究级问题要有清晰的形式化和可证明的基本极限。</span><span class="en"><b>Research-level ≠ course project.</b> Running simulations and drawing a few conclusions is not research level. A research problem needs a precise formulation and a provable fundamental limit.</span></li>
+    <li><span class="zh"><b>AI 既缩小差距也放大差距。</b>数学不强的人也能借 AI 证明难的结果；会用 AI 的人则能产出多得多的成果。</span><span class="en"><b>AI both narrows and widens the gap.</b> People who are weaker at math can prove hard results with it, and people who use it well can produce far more.</span></li>
+    <li><span class="zh"><b>阅读依赖：</b>第 III、IV 节基本可以独立阅读；第 V 节只需要主定理的<em>陈述</em>，不需要它的证明。</span><span class="en"><b>Reading dependencies:</b> Sections III and IV can mostly be read independently. Section V needs only the <em>statement</em> of the main theorem, not its proof.</span></li>
+    <li><span class="zh"><b>好汇报</b> = 全局图景 + 关键细节 + 直觉，讲得“接地气”。</span><span class="en"><b>A good presentation</b> = big picture + key details + intuition, explained in a down-to-earth way.</span></li>
+  </ul>
+
+  <h3 class="k"><span class="ic">🗣️</span><span class="zh">课上的英文表达</span><span class="en">English expressions from class</span></h3>
+  <table><thead><tr><th>Expression</th><th>中文</th><th><span class="zh">用法 / 场景</span><span class="en">Usage</span></th></tr></thead><tbody>
+    <tr><td class="ph">close the gap</td><td>闭合（上下界之间的）差距</td><td><span class="zh">理论论文里指让上界与下界匹配</span><span class="en">Make the upper and lower bounds match</span></td></tr>
+    <tr><td class="ph">a complete characterization, at least in terms of scaling</td><td>至少在量级上完整刻画</td><td><span class="zh">常数不管，只看阶</span><span class="en">Ignore constants and compare orders only</span></td></tr>
+    <tr><td class="ph">it always makes some progress, but never conclusive</td><td>总有进展，但没有定论</td><td><span class="zh">描述部分结果</span><span class="en">Describing partial results</span></td></tr>
+    <tr><td class="ph">create some diversity</td><td>增加多样性</td><td><span class="zh">用不同模型或角度尝试</span><span class="en">Trying different models or angles</span></td></tr>
+    <tr><td class="ph">trim down / compress it down to 25 pages</td><td>删减 / 压缩到 25 页</td><td><span class="zh">修改论文篇幅</span><span class="en">Shortening a manuscript</span></td></tr>
+    <tr><td class="ph">you take responsibility</td><td>由你负责（正确性）</td><td><span class="zh">AI 说对不算数</span><span class="en">"AI said so" doesn't count</span></td></tr>
+    <tr><td class="ph">explain things in a more down-to-earth fashion</td><td>讲得更接地气</td><td><span class="zh">汇报要求</span><span class="en">Presentation expectation</span></td></tr>
+    <tr><td class="ph">this is not what I call a genuine understanding</td><td>这不算真正理解</td><td><span class="zh">批评照本宣科</span><span class="en">Criticizing reading off the slides</span></td></tr>
+  </tbody></table>
+
+  <h3 class="k"><span class="ic">❓</span><span class="zh">自测</span><span class="en">Self-check</span></h3>
+  <details class="q"><summary><span class="zh">第 III、IV、V 节分别讲什么？讲第 V 节需要懂前两节的证明吗？</span><span class="en">What do Sections III, IV and V cover? Do you need the proofs of III–IV for Section V?</span></summary>
+    <p class="zh">III = Converse（风险下界），IV = Achievability（可达上界），V = 例子。第 V 节只需要主定理的陈述，把它套到高斯均值、Bernoulli 等具体模型上即可。</p>
+    <p class="en">III = converse (lower bound), IV = achievability (upper bound), V = examples. Section V only needs the theorem statement, applied to concrete models such as the Gaussian mean or Bernoulli.</p></details>
+  <button class="donebtn" data-sec="s1">✓ <span class="zh">标记为已复习</span><span class="en">Mark as reviewed</span></button>
+</section>
+
+<!-- ================= S2 ================= -->
+<section class="card" id="s2" data-sec="s2">
+  <span class="time">00:20:28 – 00:36:53</span>
+  <h2 class="t"><span class="zh">2 · 公共样本池、重叠与通信协议</span><span class="en">Common pool, overlap and communication protocols</span></h2>
+
+  <h3 class="k"><span class="ic">📝</span><span class="zh">总结</span><span class="en">Summary</span></h3>
+  <p class="zh">分布 $P_\theta$ 的参数 $\theta\in\mathbb{R}^d$ 未知，$d$ 固定，例如方差已知的高斯 $\mathcal N(\theta,\sigma^2)$。系统按以下流程工作：</p>
+  <p class="en">The distribution $P_\theta$ has an unknown parameter $\theta\in\mathbb{R}^d$ with $d$ fixed, e.g. a Gaussian $\mathcal N(\theta,\sigma^2)$ with known variance. The system works as follows:</p>
+  <ul class="pts">
+    <li><span class="zh">公共池里有 $N$ 个 i.i.d. 样本 $X_1,\dots,X_N$。</span><span class="en">The common pool holds $N$ i.i.d. samples $X_1,\dots,X_N$.</span></li>
+    <li><span class="zh">$n$ 个处理单元各自从 $\binom{N}{m}$ 个子集中均匀随机选一个，下载 $m$ 个样本；各单元的选择相互独立，所以<b>可能重叠</b>。</span><span class="en">Each of $n$ units picks one of the $\binom{N}{m}$ subsets uniformly at random and downloads its $m$ samples. Units choose independently, so their samples <b>can overlap</b>.</span></li>
+    <li><span class="zh">每个单元把观测压缩成至多 $k$ 比特，发给<b>融合中心（fusion center）</b>，由它输出 $\hat\theta$。</span><span class="en">Each unit compresses its observations into at most $k$ bits and sends them to the <b>fusion center</b>, which outputs $\hat\theta$.</span></li>
+    <li><span class="zh"><b>抽样设计</b> $S=(S_1,\dots,S_n)$，即谁下载了哪些<em>索引</em>，对所有单元和融合中心公开；样本的<em>内容</em>只有下载者自己知道。</span><span class="en">The <b>sampling design</b> $S=(S_1,\dots,S_n)$, i.e. which <em>indices</em> each unit downloaded, is known to every unit and to the fusion center. The sample <em>values</em> are known only to the units that downloaded them.</span></li>
+    <li><span class="zh">允许随机化：<b>公共随机种子</b> $R_0$ 对所有单元和融合中心可见，各单元另有<b>私有随机种子</b>。形式化允许这些随机性，但不代表一定用得上。</span><span class="en">Randomization is allowed: a <b>common random seed</b> $R_0$ visible to all units and the fusion center, plus a <b>private seed</b> at each unit. The formulation allows them; that doesn't mean they are needed.</span></li>
+  </ul>
+  <p class="zh"><b>两种协议。</b>非交互（NI）：每台一次性发出自己的 $k$ 比特。黑板（BB）：比特一位一位写在公开的“黑板”上，下一位由谁写取决于已写下的历史，但每台累计仍至多 $k$ 比特。BB 包含 NI，所以 BB 更强。可论文表明，对论文研究的所有情形（除 gap 区间外），两者在量级上一样强：<b>下界对 BB 成立，上界由 NI 达到</b>，两界同阶。</p>
+  <p class="en"><b>Two protocols.</b> Non-interactive (NI): each unit sends its $k$ bits in one shot. Blackboard (BB): bits are written one at a time on a public "blackboard", the next writer depends on the history so far, and each unit still writes at most $k$ bits. BB contains NI, so it is stronger. Yet the paper shows the two are equally strong in scaling for every case it studies (outside the gap regime): <b>the lower bound holds for BB and NI achieves the upper bound</b>, and the two bounds have the same order.</p>
+
+  <div class="plain">
+    <h3 class="k"><span class="ic">💡</span><span class="zh">通俗解释</span><span class="en">In plain words</span></h3>
+    <p class="zh">想象一个有 $N$ 本书的图书馆，$n$ 个学生各自随机借 $m$ 本，可能借到同一本。借书登记表大家都能看到，所以你知道“他借了 2、3、8 号”，但不知道那几本书写了什么。每个学生只能给老师发一条很短的短信（$k$ 比特）。登记表很有用：如果我们借的书完全一样，就该分工，各报一部分；如果完全不重叠，就可以各报各的。黑板协议像课堂轮流发言：每人说一个字，大家都听得见，再决定下一个谁说。</p>
+    <p class="en">Picture a library with $N$ books. Each of $n$ students randomly borrows $m$ of them, and two students may borrow the same book. The borrowing log is public, so you know "he took books 2, 3 and 8" but not what is inside them. Each student can send the teacher only one short text ($k$ bits). The log is useful: if we borrowed exactly the same books, we should split up who reports what; if there is no overlap, each can report independently. The blackboard protocol is like taking turns in class: each person says one word, everyone hears it, and then the group decides who speaks next.</p>
+  </div>
+
+  <h3 class="k"><span class="ic">📌</span><span class="zh">可积累的点</span><span class="en">Takeaways</span></h3>
+  <ul class="pts">
+    <li><span class="zh"><b>形式化要严谨：</b>把所有隐含假设写清楚（谁知道什么、什么是随机的），否则无法做严格分析。</span><span class="en"><b>Be rigorous in the formulation:</b> state every implicit assumption (who knows what, what is random), or rigorous analysis is impossible.</span></li>
+    <li><span class="zh"><b>证明策略：</b>对更强的模型（BB）证下界，用更弱的模型（NI）达到上界。两者匹配时，同时说明了“交互没用”。</span><span class="en"><b>Proof strategy:</b> prove the lower bound for the stronger model (BB) and achieve the upper bound with the weaker one (NI). When they match, this also shows that interaction doesn't help.</span></li>
+    <li><span class="zh">要区分“形式化允许”和“方案需要”，随机性就是一例。</span><span class="en">Distinguish what the formulation <em>allows</em> from what a scheme <em>needs</em>; randomness is an example.</span></li>
+  </ul>
+
+  <h3 class="k"><span class="ic">🗣️</span><span class="zh">课上的英文表达</span><span class="en">English expressions from class</span></h3>
+  <table><thead><tr><th>Expression</th><th>中文</th><th><span class="zh">用法 / 场景</span><span class="en">Usage</span></th></tr></thead><tbody>
+    <tr><td class="ph">uniformly at random / a uniform distribution over all $\binom{N}{m}$ choices</td><td>均匀随机 / 在所有组合上均匀分布</td><td><span class="zh">描述抽样方式</span><span class="en">Describing the sampling</span></td></tr>
+    <tr><td class="ph">independent across the local units</td><td>各本地单元之间相互独立</td><td><span class="zh">描述独立性结构</span><span class="en">Independence structure</span></td></tr>
+    <tr><td class="ph">partially overlap with each other</td><td>彼此部分重叠</td><td><span class="zh">论文标题中的 overlapping</span><span class="en">The "overlapping" in the title</span></td></tr>
+    <tr><td class="ph">we know the index, not the content</td><td>知道索引，不知道内容</td><td><span class="zh">信息结构的关键区分</span><span class="en">The key distinction in the information structure</span></td></tr>
+    <tr><td class="ph">common randomness vs. private randomness</td><td>公共随机性 vs 私有随机性</td><td><span class="zh">信息论标准术语</span><span class="en">Standard information-theory terms</span></td></tr>
+    <tr><td class="ph">send k bits in one shot</td><td>一次性发送 k 比特</td><td><span class="zh">对照交互式发送</span><span class="en">As opposed to sending interactively</span></td></tr>
+    <tr><td class="ph">equally strong in terms of scaling law</td><td>在量级（标度律）上同样强</td><td><span class="zh">比较两种协议</span><span class="en">Comparing two protocols</span></td></tr>
+    <tr><td class="ph">make all the implicit assumptions clear</td><td>把所有隐含假设讲清楚</td><td><span class="zh">写论文 / 汇报都适用</span><span class="en">For both papers and talks</span></td></tr>
+  </tbody></table>
+
+  <h3 class="k"><span class="ic">❓</span><span class="zh">自测</span><span class="en">Self-check</span></h3>
+  <details class="q"><summary><span class="zh">为什么“BB 的下界 + NI 的上界同阶”就能说明交互没有帮助？</span><span class="en">Why do "a BB lower bound + an NI upper bound of the same order" show interaction doesn't help?</span></summary>
+    <p class="zh">NI 是 BB 的特例，所以 $R^*_{\mathrm{BB}}\le R^*_{\mathrm{NI}}$。又有 $cL\le R^*_{\mathrm{BB}}$ 和 $R^*_{\mathrm{NI}}\le CU$。若 $L\asymp U$，两者就被夹在同一量级，交互最多只改进常数。</p>
+    <p class="en">NI is a special case of BB, so $R^*_{\mathrm{BB}}\le R^*_{\mathrm{NI}}$. Combined with $cL\le R^*_{\mathrm{BB}}$ and $R^*_{\mathrm{NI}}\le CU$, if $L\asymp U$ both are squeezed to the same order, so interaction can improve at most the constant.</p></details>
+  <details class="q"><summary><span class="zh">知道别人下载的索引（但不知道内容）有什么用？</span><span class="en">What good is knowing others' indices without their values?</span></summary>
+    <p class="zh">它能让大家协调。重叠的样本是同一份观测，不能当成两份独立数据；知道重叠情况后，可以避免重复发送同样的信息，或者分工编码。</p>
+    <p class="en">It enables coordination. An overlapping sample is a single observation and must not be counted as two independent ones. Knowing the overlap lets units avoid sending the same information twice, or split up the encoding.</p></details>
+  <button class="donebtn" data-sec="s2">✓ <span class="zh">标记为已复习</span><span class="en">Mark as reviewed</span></button>
+</section>
+
+<!-- ================= S3 ================= -->
+<section class="card" id="s3" data-sec="s3">
+  <span class="time">00:36:53 – 00:50:10</span>
+  <h2 class="t"><span class="zh">3 · 平方损失、最坏情况与 minimax</span><span class="en">Squared loss, worst case and minimax</span></h2>
+
+  <h3 class="k"><span class="ic">📝</span><span class="zh">总结</span><span class="en">Summary</span></h3>
+  <p class="zh">误差用平方损失 $\mathbb{E}_\theta\|\hat\theta-\theta\|_2^2$ 衡量。固定 $\theta$ 时，$\hat\theta$ 仍然是随机的，随机性有四个来源：<b>数据</b>、<b>抽样设计（下载了哪 $m$ 个）</b>、<b>私有随机性</b>、<b>公共随机性</b>，期望对它们全部取平均。</p>
+  <p class="en">Error is measured by the squared loss $\mathbb{E}_\theta\|\hat\theta-\theta\|_2^2$. With $\theta$ fixed, $\hat\theta$ is still random, and the randomness has four sources: <b>the data</b>, <b>the sampling design (which $m$ samples were downloaded)</b>, <b>private randomness</b>, and <b>common randomness</b>. The expectation averages over all of them.</p>
+  <p class="zh">但“对每个 $\theta$ 都最小化”是<b>不良定义</b>的。反例：一个融合中心不看数据、总是输出 $\theta_0$，另一个总是输出 $\theta_1$。前者在 $\theta=\theta_0$ 处误差为零，后者在 $\theta_1$ 处为零，谁也无法支配（dominate）对方。所以要比较<b>最坏情况</b>表现，并寻找最坏情况最好的方案：</p>
+  <p class="en">But "minimize it for every $\theta$" is <b>not well defined</b>. Counterexample: one fusion center ignores the data and always outputs $\theta_0$; another always outputs $\theta_1$. The first has zero error at $\theta=\theta_0$, the second at $\theta_1$, and neither dominates the other. So we compare <b>worst-case</b> performance and look for the scheme whose worst case is best:</p>
+  <div class="formula">$$R^* \;=\; \inf_{\text{protocol},\,\hat\theta}\ \sup_{\theta\in\Theta}\ \mathbb{E}_\theta\big\|\hat\theta-\theta\big\|_2^2$$</div>
+  <p class="zh">这一段还讲了汇报要求：不要逐行照抄，要在细节和全局之间取得平衡；目标是投稿，证明错了要自己负责，所以要仔细核查；某段看不懂就换个角度再问 AI。</p>
+  <p class="en">This segment also covered presentation expectations: don't copy line by line, and balance details against the big picture. The goal is submission and you are accountable if a proof is wrong, so check carefully; if an explanation doesn't land, ask the AI again from a different angle.</p>
+
+  <div class="plain">
+    <h3 class="k"><span class="ic">💡</span><span class="zh">通俗解释</span><span class="en">In plain words</span></h3>
+    <p class="zh">就像选一个“没有短板”的学生，而不是某一科满分、别的科不及格的偏科生。$\sup_\theta$ 先找出每个方案最差的那一科，$\inf$ 再挑出最差成绩最好的那个方案。</p>
+    <p class="en">It's like picking the student with no weak subject rather than one who aces one subject and fails the rest. $\sup_\theta$ finds each scheme's worst subject; $\inf$ then picks the scheme whose worst score is best.</p>
+  </div>
+
+  <h3 class="k"><span class="ic">📌</span><span class="zh">可积累的点</span><span class="en">Takeaways</span></h3>
+  <ul class="pts">
+    <li><span class="zh">参数未知时，<b>不存在一致最优</b>的估计器，这就是 minimax（或 Bayes）准则存在的原因。</span><span class="en">When the parameter is unknown, <b>no estimator is uniformly best</b>. That is why minimax (or Bayes) criteria exist.</span></li>
+    <li><span class="zh">“常数估计器”是检验一个准则是否合理的经典反例。</span><span class="en">The constant estimator is the classic counterexample for testing whether a criterion makes sense.</span></li>
+    <li><span class="zh">理论研究最难的往往是<b>形式化</b>本身。有了 AI，求解变得容易了，但仍需要理解解法。</span><span class="en">In theory research the hardest part is often the <b>formulation</b>. AI makes solving easier, but you still need to understand the solution.</span></li>
+  </ul>
+
+  <h3 class="k"><span class="ic">🗣️</span><span class="zh">课上的英文表达</span><span class="en">English expressions from class</span></h3>
+  <table><thead><tr><th>Expression</th><th>中文</th><th><span class="zh">用法 / 场景</span><span class="en">Usage</span></th></tr></thead><tbody>
+    <tr><td class="ph">this is not well defined / not well formulated</td><td>这个定义不良 / 问题提得不对</td><td><span class="zh">指出形式化问题</span><span class="en">Pointing out a formulation issue</span></td></tr>
+    <tr><td class="ph">uniformly the best for all parameters</td><td>对所有参数一致最优</td><td><span class="zh">统计学术语</span><span class="en">Statistics term</span></td></tr>
+    <tr><td class="ph">no estimator can dominate …</td><td>没有估计器能支配……</td><td><span class="zh">dominate = 处处不差且某处更好</span><span class="en">dominate = never worse and strictly better somewhere</span></td></tr>
+    <tr><td class="ph">the best worst-case performance</td><td>最好的最坏情况表现</td><td><span class="zh">一句话解释 minimax</span><span class="en">Minimax in one phrase</span></td></tr>
+    <tr><td class="ph">the supremum gives you the worst-case scenario</td><td>上确界给出最坏情况</td><td><span class="zh">解释 $\sup$</span><span class="en">Explaining $\sup$</span></td></tr>
+    <tr><td class="ph">don't get lost in the details</td><td>别迷失在细节里</td><td><span class="zh">汇报建议</span><span class="en">Presentation advice</span></td></tr>
+    <tr><td class="ph">try a different angle</td><td>换个角度试试</td><td><span class="zh">提问 AI 或理解受阻时</span><span class="en">When an explanation doesn't work</span></td></tr>
+  </tbody></table>
+
+  <h3 class="k"><span class="ic">❓</span><span class="zh">自测</span><span class="en">Self-check</span></h3>
+  <details class="q"><summary><span class="zh">固定 $\theta$ 后，$\hat\theta$ 的随机性来自哪里？</span><span class="en">With $\theta$ fixed, where does the randomness in $\hat\theta$ come from?</span></summary>
+    <p class="zh">四个来源：样本 $X_i$、抽样设计 $S$、各单元的私有随机性、公共随机性 $R_0$。</p>
+    <p class="en">Four sources: the samples $X_i$, the sampling design $S$, each unit's private randomness, and the common randomness $R_0$.</p></details>
+  <button class="donebtn" data-sec="s3">✓ <span class="zh">标记为已复习</span><span class="en">Mark as reviewed</span></button>
+</section>
+
+<!-- ================= S4 ================= -->
+<section class="card" id="s4" data-sec="s4">
+  <span class="time">00:50:10 – 01:14:47</span>
+  <h2 class="t"><span class="zh">4 · Converse、Achievability 与四项界</span><span class="en">Converse, achievability and the four-term bounds</span></h2>
+
+  <h3 class="k"><span class="ic">📝</span><span class="zh">总结</span><span class="en">Summary</span></h3>
+  <p class="zh">证明一个<b>基本极限（fundamental limit）</b>要两步：<b>Achievability</b>，构造一个方案达到这个性能；<b>Converse</b>，证明任何方案都无法超越它。只有可达性，说明这个性能能达到，但不一定最好；只有逆定理，说明不能更好，但可能根本达不到。两者合在一起才是完整的故事。</p>
+  <p class="en">Establishing a <b>fundamental limit</b> takes two parts. <b>Achievability</b>: construct a scheme that reaches the performance. <b>Converse</b>: prove no scheme can beat it. Achievability alone says the performance is reachable, not that it's the best; a converse alone says nothing can do better, not that the limit is reachable. Together they give the complete story.</p>
+  <div class="formula">
+  $$L = d\max\Big\{\tfrac1N,\ \tfrac1{nm},\ a_B,\ \tfrac{1}{m(1+s_+)+\bar r}\Big\}\quad\text{(Sec. III, any BB protocol)}$$
+  $$U = d\max\Big\{\tfrac1N,\ \tfrac1{nm},\ a_B,\ \tfrac{1}{m(1+s_+)}\Big\}\quad\text{(Sec. IV, an NI scheme)}$$
+  $$B=nk,\qquad a_B=2^{-2B/d},\qquad s=\frac{B}{d}-\frac12\log_2 m,\qquad s_+=\max(s,0)$$
+  </div>
+  <table><thead><tr><th><span class="zh">项</span><span class="en">Term</span></th><th><span class="zh">瓶颈</span><span class="en">Bottleneck</span></th><th><span class="zh">直觉</span><span class="en">Intuition</span></th></tr></thead><tbody>
+    <tr><td>$d/N$</td><td><span class="zh">公共池大小</span><span class="en">Pool size</span></td><td><span class="zh">融合中心直接拿到全部 $N$ 个样本时（集中式）的经典速率。$d$ 越大要估的数越多，$N$ 越大越准。</span><span class="en">The classical centralized rate when the fusion center sees all $N$ samples. Larger $d$ means more numbers to estimate; larger $N$ means more accuracy.</span></td></tr>
+    <tr><td>$d/(nm)$</td><td><span class="zh">总访问量</span><span class="en">Total access</span></td><td><span class="zh">假设没有比特限制、各单元拿到的样本也全都独立，最多也只有 $nm$ 个样本。因为重叠，$nm$ 可以大于 $N$，所以两项都要保留。</span><span class="en">Even with no bit limit and all accessed samples independent, there are at most $nm$ samples. Because of overlap, $nm$ can exceed $N$, so both terms are kept.</span></td></tr>
+    <tr><td>$d\,a_B$</td><td><span class="zh">比特瓶颈</span><span class="en">Bit budget</span></td><td><span class="zh">总比特 $B$ 平均分给 $d$ 个坐标，每维 $B/d$ 比特。量化理论：每维 $b$ 比特，平方误差约 $2^{-2b}$。</span><span class="en">The total budget $B$ is shared across $d$ coordinates, giving $B/d$ bits each. Quantization theory: $b$ bits per coordinate give squared error about $2^{-2b}$.</span></td></tr>
+    <tr><td>$\dfrac{d}{m(1+s_+)}$</td><td><span class="zh">定位 + 细化</span><span class="en">Localization + refinement</span></td><td><span class="zh">单台机器有 $m$ 个样本，误差约 $1/m$。要把这个精度传出去，每维约需 $\tfrac12\log_2 m$ 比特；多出来的 $s$ 比特（surplus）用于进一步细化。</span><span class="en">One machine with $m$ samples gets error about $1/m$. Transmitting that precision costs about $\tfrac12\log_2 m$ bits per dimension; the extra $s$ bits (the surplus) refine further.</span></td></tr>
+  </tbody></table>
+  <p class="zh">为什么定位需要 $\tfrac12\log_2 m$ 比特？标准差约为 $1/\sqrt m$；要让量化步长 $2^{-b}$ 达到这个尺度，需要 $2^{-b}\approx m^{-1/2}$，即 $b\approx\tfrac12\log_2 m$。</p>
+  <p class="en">Why $\tfrac12\log_2 m$ bits for localization? The standard deviation is about $1/\sqrt m$. For the quantization step $2^{-b}$ to reach that scale we need $2^{-b}\approx m^{-1/2}$, i.e. $b\approx\tfrac12\log_2 m$.</p>
+  <p class="zh"><b>第四项最难：</b>作为上界，“只用一台机器”就可以达到；但作为下界，不能假定对方只用一台机器，下界必须对<b>所有</b> BB 协议成立。只对某个具体方案成立的下界没有意义。下界里多出的 $\bar r$ 记录的是“共享样本”带来的额外信息，这使现有下界变弱。</p>
+  <p class="en"><b>The fourth term is the hardest.</b> As an upper bound, "use one machine" achieves it. As a lower bound, you can't assume the opponent uses only one machine: it must hold for <b>every</b> BB protocol, and a lower bound for one particular scheme is useless. The extra $\bar r$ in the lower bound accounts for the information carried by shared samples, and it is what makes the current lower bound weaker.</p>
+
+  <div class="plain">
+    <h3 class="k"><span class="ic">💡</span><span class="zh">通俗解释</span><span class="en">In plain words</span></h3>
+    <p class="zh">把它想成一根水管上的四个阀门：池子大小、总访问量、比特带宽、单机精度。水流（估计精度）由最窄的那个阀门决定，所以误差取四项的 <b>max</b>。第四项说的是：先花 $\tfrac12\log_2 m$ 比特把答案“定位”到一台机器的精度，剩下的比特再用来“细化”。</p>
+    <p class="en">Think of four valves on one pipe: pool size, total access, bit bandwidth and single-machine precision. The flow (estimation accuracy) is set by the narrowest valve, so the error is the <b>max</b> of the four terms. The fourth term says: spend $\tfrac12\log_2 m$ bits to "localize" the answer to one machine's precision, then use the leftover bits to "refine" it.</p>
+  </div>
+
+  <h3 class="k"><span class="ic">📌</span><span class="zh">可积累的点</span><span class="en">Takeaways</span></h3>
+  <ul class="pts">
+    <li><span class="zh"><b>Achievability + Converse = 基本极限。</b>这是信息论和统计学习里的通用结构。</span><span class="en"><b>Achievability + converse = fundamental limit.</b> This structure is standard across information theory and statistical learning.</span></li>
+    <li><span class="zh">四项里前三项基本是经典结果：$d/N$ 是教科书级的参数估计，$a_B$ 来自量化。真正新的是第四项和 $\bar r$。</span><span class="en">The first three terms are essentially classical: $d/N$ is textbook parameter estimation and $a_B$ comes from quantization. What's new is the fourth term and $\bar r$.</span></li>
+    <li><span class="zh">下界必须是<b>普适的（universal）</b>：对所有协议成立，不能对方案做任何假设。</span><span class="en">A lower bound must be <b>universal</b>: it holds for all protocols and assumes nothing about the scheme.</span></li>
+  </ul>
+
+  <h3 class="k"><span class="ic">🗣️</span><span class="zh">课上的英文表达</span><span class="en">English expressions from class</span></h3>
+  <table><thead><tr><th>Expression</th><th>中文</th><th><span class="zh">用法 / 场景</span><span class="en">Usage</span></th></tr></thead><tbody>
+    <tr><td class="ph">fundamental limit</td><td>基本极限</td><td><span class="zh">信息论核心概念</span><span class="en">Core information-theory concept</span></td></tr>
+    <tr><td class="ph">nothing can beat this limit</td><td>没有方案能突破这个极限</td><td><span class="zh">解释 converse</span><span class="en">Explaining the converse</span></td></tr>
+    <tr><td class="ph">these two pieces together give a complete story</td><td>两部分合起来才完整</td><td><span class="zh">总结上下界关系</span><span class="en">Summarizing upper vs lower bound</span></td></tr>
+    <tr><td class="ph">this term dominates</td><td>这一项占主导</td><td><span class="zh">讨论 max 中哪项最大</span><span class="en">Which term in the max is largest</span></td></tr>
+    <tr><td class="ph">bit bottleneck / the pipeline has a very small bandwidth</td><td>比特瓶颈 / 管道带宽很小</td><td><span class="zh">通信约束的比喻</span><span class="en">Metaphor for the communication limit</span></td></tr>
+    <tr><td class="ph">surplus (extra bits)</td><td>盈余（多出的比特）</td><td><span class="zh">$s_+$ 的含义</span><span class="en">Meaning of $s_+$</span></td></tr>
+    <tr><td class="ph">localization and refinement</td><td>定位与细化</td><td><span class="zh">第四项的结构</span><span class="en">Structure of the fourth term</span></td></tr>
+    <tr><td class="ph">a lower bound for this particular protocol is not useful</td><td>只对某个协议成立的下界没用</td><td><span class="zh">强调普适性</span><span class="en">Stressing universality</span></td></tr>
+  </tbody></table>
+
+  <h3 class="k"><span class="ic">❓</span><span class="zh">自测</span><span class="en">Self-check</span></h3>
+  <details class="q"><summary><span class="zh">为什么 $d/(nm)$ 有时比 $d/N$ 小，两项都要保留？</span><span class="en">Why can $d/(nm)$ be smaller than $d/N$, so both terms are needed?</span></summary>
+    <p class="zh">因为样本会重叠：单元多、每台下载得多时，$nm$ 可以远大于 $N$。这时真正独立的样本最多 $N$ 个，$d/N$ 是更紧的限制；反过来 $nm &lt; N$ 时，$d/(nm)$ 更紧。</p>
+    <p class="en">Because samples overlap: with many units each downloading a lot, $nm$ can far exceed $N$. Then there are at most $N$ independent samples and $d/N$ is the tighter limit. When $nm &lt; N$, $d/(nm)$ is tighter.</p></details>
+  <details class="q"><summary><span class="zh">$s_+=0$ 时第四项变成什么？代表什么？</span><span class="en">What does the fourth term become when $s_+=0$, and what does it mean?</span></summary>
+    <p class="zh">变成 $d/m$，即只用一台机器的 $m$ 个样本时的误差。比特刚够“定位”，没有余量做细化。</p>
+    <p class="en">It becomes $d/m$, the error from a single machine's $m$ samples. There are just enough bits to localize, with nothing left for refinement.</p></details>
+  <button class="donebtn" data-sec="s4">✓ <span class="zh">标记为已复习</span><span class="en">Mark as reviewed</span></button>
+</section>
+
+<!-- ================= S5 ================= -->
+<section class="card" id="s5" data-sec="s5">
+  <span class="time">01:14:47 – 01:24:09</span>
+  <h2 class="t"><span class="zh">5 · 临界窗口与开放问题</span><span class="en">The critical window and the open problem</span></h2>
+
+  <h3 class="k"><span class="ic">📝</span><span class="zh">总结</span><span class="en">Summary</span></h3>
+  <p class="zh">上下界只在第四项相差 $\bar r$。<b>只有 $s_+>0$ 并不足以说明两界不同阶</b>，gap 只出现在论文第 VI 节标出的临界窗口：</p>
+  <p class="en">The bounds differ only by $\bar r$ in the fourth term. <b>$s_+>0$ alone does not make the bounds differ in order</b>; the gap appears only in the critical window marked in Section VI of the paper:</p>
+  <div class="formula">$$s\to\infty,\qquad s=o(n),\qquad ms\ \ll\ N\ \ll\ \frac{n^2 m}{s}$$</div>
+  <ul class="pts">
+    <li><span class="zh">$N\lesssim ms$：池子本身是瓶颈，两界都是 $d/N$ 量级，问题退化为集中式。</span><span class="en">$N\lesssim ms$: the pool itself is the bottleneck, both bounds are of order $d/N$, and the problem reduces to the centralized one.</span></li>
+    <li><span class="zh">$N\gtrsim n^2m/s$：共享项可以控制住，两界都是 $d/(ms)$ 量级，相当于已解决的独立样本问题（课上提到 Cai 和 Wei 的工作）。</span><span class="en">$N\gtrsim n^2m/s$: the shared term is under control, both bounds are of order $d/(ms)$, and this matches the already-solved independent-sample problem (the class mentioned work by Cai and Wei).</span></li>
+    <li><span class="zh">中间段：重叠<b>既不能忽略、也不占主导</b>，这正是论文的新意所在，目前仍未解决。</span><span class="en">In between, the overlap is <b>neither negligible nor dominant</b>. This is where the paper's novelty lies, and it is still unsolved.</span></li>
+  </ul>
+  <p class="zh">三种可能：① 下界是紧的，那就要找更好的方案把上界压下来；② 上界是紧的，那就要改进下界；③ 两个都不紧，需要两边一起收紧，在中间相遇。老师认为这个问题“不是没希望”，需要的是一些技术上的创新，没有超出现有技术的能力。建议多换模型、来回交叉讨论，并把部分进展整理成 PDF 分享。</p>
+  <p class="en">Three possibilities: ① the lower bound is tight, so a better scheme must bring the upper bound down; ② the upper bound is tight, so the lower bound must improve; ③ neither is tight, and both must move to meet in the middle. The professor thinks the problem is "not hopeless": it needs some technical innovation, not something beyond current techniques. His advice: try different models, pass ideas back and forth between them, and write partial progress up as a PDF to share.</p>
+
+  <div class="plain">
+    <h3 class="k"><span class="ic">💡</span><span class="zh">通俗解释</span><span class="en">In plain words</span></h3>
+    <p class="zh">池子太小，大家借的书几乎一样，就等于一个人在估计；池子极大，几乎没人借到同一本，就是老问题。偏偏池子“不大不小”时，有些书被好几个人同时借到，这些重复既不能当没看见，也没有多到决定一切，现有工具在这里还不够用。</p>
+    <p class="en">If the pool is tiny, everyone borrows nearly the same books and it's like one person estimating alone. If it's huge, almost no two people get the same book, which is the old, solved problem. When the pool is "medium-sized", some books are borrowed by several people at once: the duplicates can't be ignored, but they don't decide everything either, and existing tools aren't enough here.</p>
+  </div>
+
+  <h3 class="k"><span class="ic">📌</span><span class="zh">可积累的点</span><span class="en">Takeaways</span></h3>
+  <ul class="pts">
+    <li><span class="zh">判断一篇论文的新意：看哪些结果能从已有结果“推出来”，哪些只在新模型里才出现。</span><span class="en">To judge a paper's novelty, ask which results follow from known work and which only appear in the new model.</span></li>
+    <li><span class="zh">上下界之间有 gap 时，先想清楚三种可能，再决定攻哪一边。</span><span class="en">When upper and lower bounds have a gap, lay out the three possibilities before deciding which side to attack.</span></li>
+    <li><span class="zh">用 AI 做研究：结果取决于提示词和对话历史；不同模型的结果互相喂给对方，能产生多样性。</span><span class="en">Doing research with AI: results depend on the prompt and the conversation history, and feeding one model's output to another creates diversity.</span></li>
+  </ul>
+
+  <h3 class="k"><span class="ic">🗣️</span><span class="zh">课上的英文表达</span><span class="en">English expressions from class</span></h3>
+  <table><thead><tr><th>Expression</th><th>中文</th><th><span class="zh">用法 / 场景</span><span class="en">Usage</span></th></tr></thead><tbody>
+    <tr><td class="ph">the lower bound is probably tight</td><td>下界可能是紧的</td><td><span class="zh">tight = 可以被达到</span><span class="en">tight = attainable</span></td></tr>
+    <tr><td class="ph">improve both to let them meet at the middle point</td><td>两边一起收紧，在中间相遇</td><td><span class="zh">第三种可能</span><span class="en">The third possibility</span></td></tr>
+    <tr><td class="ph">transition regime</td><td>过渡区间</td><td><span class="zh">两种极端之间</span><span class="en">Between two extremes</span></td></tr>
+    <tr><td class="ph">this overlap cannot be ignored</td><td>这个重叠不可忽略</td><td><span class="zh">gap 的根源</span><span class="en">The source of the gap</span></td></tr>
+    <tr><td class="ph">reduce it to a problem that has already been solved</td><td>归约为已解决的问题</td><td><span class="zh">证明常用手法</span><span class="en">A common proof move</span></td></tr>
+    <tr><td class="ph">it's not hopeless; we need some technical innovation</td><td>不是没希望，需要一些技术创新</td><td><span class="zh">评估问题难度</span><span class="en">Assessing difficulty</span></td></tr>
+    <tr><td class="ph">way beyond the current technique</td><td>远超现有技术</td><td><span class="zh">与上一条对照</span><span class="en">The contrast case</span></td></tr>
+  </tbody></table>
+
+  <h3 class="k"><span class="ic">❓</span><span class="zh">自测</span><span class="en">Self-check</span></h3>
+  <details class="q"><summary><span class="zh">为什么说没有公共池时就不会出现这个 gap？</span><span class="en">Why does this gap not arise without a common pool?</span></summary>
+    <p class="zh">没有公共池时，每台机器的样本相互独立，$\bar r=0$，上下界的第四项完全相同。$d/N$ 项也不会出现，问题已被现有文献完整解决。</p>
+    <p class="en">Without a common pool every machine's samples are independent, so $\bar r=0$ and the fourth terms coincide. The $d/N$ term doesn't appear either, and existing work already solves the problem completely.</p></details>
+  <button class="donebtn" data-sec="s5">✓ <span class="zh">标记为已复习</span><span class="en">Mark as reviewed</span></button>
+</section>
+
+<!-- ================= S6 ================= -->
+<section class="card" id="s6" data-sec="s6">
+  <span class="time">01:24:09 – 01:32:49</span>
+  <h2 class="t"><span class="zh">6 · Fisher 信息、正则条件与投稿讨论</span><span class="en">Fisher information, regularity conditions and submission</span></h2>
+
+  <h3 class="k"><span class="ic">📝</span><span class="zh">总结</span><span class="en">Summary</span></h3>
+  <p class="zh"><b>正则条件（regularity conditions）</b>，比如 Lipschitz 连续、连续可微、可交换求导与积分次序，是让证明成立的技术条件，但不是重点。实际研究中，往往先写出推导，再把用到的条件收集起来写进定理陈述。汇报时在用到的地方点一下即可，甚至可以假设很强的条件（如无穷可微），对高斯均值这些条件都自然成立。</p>
+  <p class="en"><b>Regularity conditions</b> (Lipschitz continuity, continuous differentiability, swapping derivative and integral) are technical conditions that make the proof work, but they aren't the focus. In practice you write the derivation first, then collect the conditions you used into the theorem statement. In the talk, just mention them where they are used; you may even assume very strong conditions (e.g. infinitely differentiable), and for the Gaussian mean they all hold anyway.</p>
+  <p class="zh"><b>重点</b>是讲清 score 与 Fisher 信息怎样连到 minimax 风险：</p>
+  <p class="en"><b>The focus</b> is how the score and Fisher information connect to the minimax risk:</p>
+  <div class="formula">$$\text{score: } \nabla_\theta \log p_\theta(X),\qquad I(\theta)=\mathbb{E}_\theta\!\big[\nabla_\theta\log p_\theta(X)\,\nabla_\theta\log p_\theta(X)^{\!\top}\big]$$
+  $$\text{Gaussian: } X\sim\mathcal N(\theta,\sigma^2 I_d)\ \Rightarrow\ \nabla_\theta\log p_\theta(X)=\frac{X-\theta}{\sigma^2},\quad I(\theta)=\frac{I_d}{\sigma^2},\quad \frac{\operatorname{tr}\big(I(\theta)^{-1}\big)}{N}=\frac{d\,\sigma^2}{N}$$</div>
+  <p class="zh">最后一式正是 $d/N$ 的来源。在第 III 节，融合中心只看到通信记录，所以要用“给定记录下的条件 score”的 Fisher 信息，再用 van Trees 不等式把信息的上限转成风险的下限。</p>
+  <p class="en">The last expression is exactly where $d/N$ comes from. In Section III the fusion center sees only the transcript, so we use the Fisher information of the score conditioned on the transcript, and the van Trees inequality turns an upper bound on information into a lower bound on risk.</p>
+  <p class="zh"><b>关于稿件：</b>老师要的是期刊稿，初版不到 10 页，没有附录，他逐节扩写到现在的篇幅。他也坦言：如果闭合不了 gap，这篇工作更像<b>增量式</b>的，即把已知技巧搬到新模型上。即便在 $N$ 很大的区间，也要严格论证“碰撞”（重叠）的小概率不影响渐近行为，这需要分析，但不是主要创新点。</p>
+  <p class="en"><b>On the manuscript:</b> he asked for a journal paper. The first draft was under 10 pages with no appendix, and he expanded it section by section. He was candid: without closing the gap, the work is more <b>incremental</b>, adapting known techniques to a new model. Even when $N$ is large, you must rigorously show that the small chance of a collision (overlap) doesn't affect the asymptotics. That takes analysis but isn't the main novelty.</p>
+
+  <div class="plain">
+    <h3 class="k"><span class="ic">💡</span><span class="zh">通俗解释</span><span class="en">In plain words</span></h3>
+    <p class="zh">正则条件就像“路面平整”的假设，保证你能放心求导、交换积分次序。汇报该讲的是车怎么开，不是路面的施工规范。Fisher 信息衡量数据对 $\theta$ 的微小变化有多“敏感”：越敏感，信息越多，误差下限大约是 $1/\text{信息量}$。</p>
+    <p class="en">Regularity conditions are like assuming the road is paved, so you can safely differentiate and swap integrals. The talk should be about how to drive the car, not the road-construction code. Fisher information measures how sensitive the data are to a tiny change in $\theta$: more sensitivity means more information, and the error floor is roughly $1/\text{information}$.</p>
+  </div>
+
+  <h3 class="k"><span class="ic">📌</span><span class="zh">可积累的点</span><span class="en">Takeaways</span></h3>
+  <ul class="pts">
+    <li><span class="zh"><b>真实的证明流程：</b>先推导，再收集需要的假设写进定理。定理不是先列好条件再去证的。</span><span class="en"><b>How proofs really get written:</b> derive first, then collect the needed assumptions into the theorem. Conditions aren't listed up front.</span></li>
+    <li><span class="zh">下界的经典链条：score → Fisher 信息 → Cramér–Rao / van Trees → 风险下界。</span><span class="en">The classic lower-bound chain: score → Fisher information → Cramér–Rao / van Trees → risk lower bound.</span></li>
+    <li><span class="zh">“增量式工作”（incremental work）是审稿时常见的负面评价，指把已知结果搬到稍有不同的模型上。</span><span class="en">"Incremental work" is a common reviewer criticism: reproducing known results in a slightly different model.</span></li>
+  </ul>
+
+  <h3 class="k"><span class="ic">🗣️</span><span class="zh">课上的英文表达</span><span class="en">English expressions from class</span></h3>
+  <table><thead><tr><th>Expression</th><th>中文</th><th><span class="zh">用法 / 场景</span><span class="en">Usage</span></th></tr></thead><tbody>
+    <tr><td class="ph">regularity conditions</td><td>正则条件</td><td><span class="zh">统计 / 分析常用</span><span class="en">Common in statistics and analysis</span></td></tr>
+    <tr><td class="ph">technical conditions that make the proof work</td><td>让证明成立的技术条件</td><td><span class="zh">点到即止</span><span class="en">Mention briefly</span></td></tr>
+    <tr><td class="ph">change the order of integrals / differentiation</td><td>交换积分（求导）次序</td><td><span class="zh">需要正则条件的典型步骤</span><span class="en">A typical step that needs regularity</span></td></tr>
+    <tr><td class="ph">this is not the focus</td><td>这不是重点</td><td><span class="zh">控制汇报篇幅</span><span class="en">Managing talk time</span></td></tr>
+    <tr><td class="ph">incremental work</td><td>增量式工作</td><td><span class="zh">评价新意不足</span><span class="en">Judging limited novelty</span></td></tr>
+    <tr><td class="ph">adapt known proof techniques to a new model</td><td>把已知证明技巧搬到新模型</td><td><span class="zh">描述论文贡献</span><span class="en">Describing a contribution</span></td></tr>
+    <tr><td class="ph">with high probability there is no overlap</td><td>以高概率不出现重叠</td><td><span class="zh">概率论常用</span><span class="en">Common probabilistic phrasing</span></td></tr>
+    <tr><td class="ph">does not affect the asymptotic behavior</td><td>不影响渐近行为</td><td><span class="zh">论证小概率事件可忽略</span><span class="en">Arguing a rare event is negligible</span></td></tr>
+  </tbody></table>
+
+  <h3 class="k"><span class="ic">❓</span><span class="zh">自测</span><span class="en">Self-check</span></h3>
+  <details class="q"><summary><span class="zh">定义 score 为什么需要正则条件？</span><span class="en">Why does defining the score need regularity conditions?</span></summary>
+    <p class="zh">score 要对密度 $p_\theta$ 关于 $\theta$ 求导，需要可微性；证明 $\mathbb{E}_\theta[\text{score}]=0$ 等性质时，还要交换求导与积分的次序。</p>
+    <p class="en">The score differentiates the density $p_\theta$ with respect to $\theta$, which needs differentiability. Proving properties such as $\mathbb{E}_\theta[\text{score}]=0$ also requires swapping differentiation and integration.</p></details>
+  <button class="donebtn" data-sec="s6">✓ <span class="zh">标记为已复习</span><span class="en">Mark as reviewed</span></button>
+</section>
+
+<!-- ================= S7 ================= -->
+<section class="card" id="s7" data-sec="s7">
+  <span class="time">01:32:49 – 01:38:01</span>
+  <h2 class="t"><span class="zh">7 · 分工、联系同学与备课范围</span><span class="en">Assignments, contacting classmates and reading scope</span></h2>
+
+  <h3 class="k"><span class="ic">📝</span><span class="zh">总结</span><span class="en">Summary</span></h3>
+  <p class="zh">每人大约负责两节，两两合作。下周两位同学合讲第 III 节，可以在中间做过渡，但<b>两人都必须理解整节</b>，因为后半依赖前半。要联系没来上课的 Daniel 和另一位同学，可能建一个 Teams 群。下周读到第 III 节结束即可，但每天都要投入时间。老师会读同一部分，汇报时会“帮忙也会批评”。最终投稿时，教科书级的背景推导会删掉、改为引用。</p>
+  <p class="en">Each student takes about two sections, working in pairs. Next week the two students co-present Section III and may hand over in the middle, but <b>both must understand the whole section</b>, because the second half builds on the first. Someone needs to contact Daniel and the other classmate, who were absent, perhaps through a Teams group. Reading through the end of Section III is enough for next week, but put in time every day. The professor will read the same part and will "help you but also criticize" during the talk. In the final submission, textbook-level background derivations will be replaced by references.</p>
+
+  <div class="plain">
+    <h3 class="k"><span class="ic">💡</span><span class="zh">通俗解释</span><span class="en">In plain words</span></h3>
+    <p class="zh">分工是为了汇报，不是为了“只懂一半”。即使你只讲前半，也要能回答关于后半的问题。</p>
+    <p class="en">Splitting the work is for the presentation, not so each person understands half. Even if you present only the first half, you should be able to answer questions about the second.</p>
+  </div>
+
+  <h3 class="k"><span class="ic">🗣️</span><span class="zh">课上的英文表达</span><span class="en">English expressions from class</span></h3>
+  <table><thead><tr><th>Expression</th><th>中文</th><th><span class="zh">用法 / 场景</span><span class="en">Usage</span></th></tr></thead><tbody>
+    <tr><td class="ph">take care of two sections</td><td>负责两节</td><td><span class="zh">分工</span><span class="en">Dividing work</span></td></tr>
+    <tr><td class="ph">provide a transition in the middle</td><td>在中间做个过渡</td><td><span class="zh">两人合讲</span><span class="en">Co-presenting</span></td></tr>
+    <tr><td class="ph">reach out to Daniel</td><td>联系 Daniel</td><td><span class="zh">reach out = 主动联系</span><span class="en">reach out = get in touch</span></td></tr>
+    <tr><td class="ph">I will help you but also criticize</td><td>我会帮你们，也会批评</td><td><span class="zh">预期管理</span><span class="en">Setting expectations</span></td></tr>
+    <tr><td class="ph">this is textbook level</td><td>这是教科书级内容</td><td><span class="zh">指经典已知结果</span><span class="en">A classical, known result</span></td></tr>
+    <tr><td class="ph">just provide a reference</td><td>直接给引用</td><td><span class="zh">压缩篇幅</span><span class="en">Shortening the paper</span></td></tr>
+  </tbody></table>
+  <button class="donebtn" data-sec="s7">✓ <span class="zh">标记为已复习</span><span class="en">Mark as reviewed</span></button>
+</section>
+
+<!-- ================= GLOSSARY ================= -->
+<section class="card" id="glossary">
+  <h2 class="t"><span class="zh">术语表</span><span class="en">Glossary</span></h2>
+  <table><thead><tr><th>English</th><th>中文</th><th><span class="zh">一句话</span><span class="en">One line</span></th></tr></thead><tbody>
+    <tr><td class="ph">fusion center</td><td>融合中心</td><td><span class="zh">汇总各单元比特、输出估计</span><span class="en">Collects all bits and outputs the estimate</span></td></tr>
+    <tr><td class="ph">common pool</td><td>公共样本池</td><td><span class="zh">大小为 $N$ 的共享数据集</span><span class="en">The shared dataset of size $N$</span></td></tr>
+    <tr><td class="ph">sampling design</td><td>抽样设计</td><td><span class="zh">谁下载了哪些索引，公开</span><span class="en">Who downloaded which indices; public</span></td></tr>
+    <tr><td class="ph">noninteractive (NI) protocol</td><td>非交互协议</td><td><span class="zh">一次性各发 $k$ 比特</span><span class="en">Each sends $k$ bits in one shot</span></td></tr>
+    <tr><td class="ph">blackboard (BB) protocol</td><td>黑板协议</td><td><span class="zh">按公开历史轮流写比特</span><span class="en">Bits written in turn based on public history</span></td></tr>
+    <tr><td class="ph">minimax risk</td><td>极小极大风险</td><td><span class="zh">最好的最坏情况误差</span><span class="en">The best worst-case error</span></td></tr>
+    <tr><td class="ph">converse</td><td>逆定理（下界）</td><td><span class="zh">任何方案都超越不了</span><span class="en">No scheme can beat it</span></td></tr>
+    <tr><td class="ph">achievability</td><td>可达性（上界）</td><td><span class="zh">存在方案能达到</span><span class="en">Some scheme reaches it</span></td></tr>
+    <tr><td class="ph">scaling law / order</td><td>标度律 / 量级</td><td><span class="zh">忽略常数比较阶</span><span class="en">Compare orders, ignoring constants</span></td></tr>
+    <tr><td class="ph">regime</td><td>区间（参数区域）</td><td><span class="zh">参数之间的某种相对大小关系</span><span class="en">A relative-size relation among parameters</span></td></tr>
+    <tr><td class="ph">tight bound</td><td>紧的界</td><td><span class="zh">能被达到的界</span><span class="en">A bound that can be attained</span></td></tr>
+    <tr><td class="ph">bit budget</td><td>比特预算</td><td><span class="zh">$B=nk$</span><span class="en">$B=nk$</span></td></tr>
+    <tr><td class="ph">quantization</td><td>量化</td><td><span class="zh">$b$ 比特 → 误差约 $2^{-2b}$</span><span class="en">$b$ bits → error about $2^{-2b}$</span></td></tr>
+    <tr><td class="ph">score function</td><td>得分函数（score）</td><td><span class="zh">$\nabla_\theta\log p_\theta$</span><span class="en">$\nabla_\theta\log p_\theta$</span></td></tr>
+    <tr><td class="ph">Fisher information</td><td>Fisher 信息</td><td><span class="zh">score 的二阶矩</span><span class="en">Second moment of the score</span></td></tr>
+    <tr><td class="ph">regularity conditions</td><td>正则条件</td><td><span class="zh">让证明成立的技术假设</span><span class="en">Technical assumptions that make proofs work</span></td></tr>
+    <tr><td class="ph">critical window</td><td>临界窗口</td><td><span class="zh">上下界尚未匹配的区间</span><span class="en">The regime where the bounds don't yet match</span></td></tr>
+  </tbody></table>
+</section>
+
+<!-- ================= TODO ================= -->
+<section class="card" id="todo">
+  <h2 class="t"><span class="zh">下周待办</span><span class="en">To-do before next class</span></h2>
+  <ul class="pts">
+    <li><span class="zh">读完第 I–II 节，能用自己的话讲清模型、两种协议和 minimax 风险。</span><span class="en">Finish Sections I–II and be able to explain the model, both protocols and the minimax risk in your own words.</span></li>
+    <li><span class="zh">读完第 III 节（PDF 第 8–17 页），顺序：条件 score 与 Fisher 信息 → Bernstein 集中性与熵预算 → 重叠如何进入（揭示共享观测）→ 合并得到含 $s_+$ 和 $\bar r$ 的项。</span><span class="en">Read Section III (PDF pp. 8–17) in this order: conditional score and Fisher information → Bernstein concentration and the entropy budget → how overlap enters (revealing shared observations) → combining everything into the term with $s_+$ and $\bar r$.</span></li>
+    <li><span class="zh">对疑似错误，记下式号、所需假设和有疑问的一步，两人一起复核。</span><span class="en">For any suspected error, note the equation number, the assumptions involved and the questionable step, and check it together.</span></li>
+    <li><span class="zh">用 AI 尝试临界窗口 $ms\ll N\ll n^2m/s$，部分进展也整理成 PDF。</span><span class="en">Try the critical window $ms\ll N\ll n^2m/s$ with AI, and write partial progress up as a PDF.</span></li>
+    <li><span class="zh">联系 Daniel 和另一位同学，确认后续分工。</span><span class="en">Contact Daniel and the other classmate to confirm later assignments.</span></li>
+  </ul>
+  <p class="note"><span class="zh">公式符号按工作论文与课堂笔记核对；课程安排以录音为准。</span><span class="en">Notation was checked against the working paper and class notes; logistics follow the recording.</span></p>
+</section>
+</main>
+</div>
+
+<script>
+(function(){
+  var KEY_L='ece723-review-lang', KEY_D='ece723-review-done';
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  // language
+  var btns=document.querySelectorAll('.langsw button');
+  function setLang(l){document.body.setAttribute('data-lang',l);
+    document.documentElement.lang = l==='en'?'en':'zh-CN';
+    btns.forEach(function(b){b.classList.toggle('on',b.dataset.l===l)});set(KEY_L,l);}
+  btns.forEach(function(b){b.addEventListener('click',function(){setLang(b.dataset.l)})});
+  var q=null; try{q=new URLSearchParams(location.search).get('lang')}catch(e){}
+  var saved=(q==='zh'||q==='en'||q==='both')?q:get(KEY_L); if(saved==='zh'||saved==='en'||saved==='both') setLang(saved);
+  // reviewed state
+  var done={}; try{done=JSON.parse(get(KEY_D)||'{}')||{}}catch(e){done={}}
+  var secs=['s1','s2','s3','s4','s5','s6','s7'];
+  function render(){var c=0;secs.forEach(function(id){var on=!!done[id];if(on)c++;
+      var s=document.getElementById(id); if(s) s.classList.toggle('done',on);
+      var li=document.querySelector('#tocList li[data-sec="'+id+'"]'); if(li) li.classList.toggle('done',on);});
+    document.getElementById('progTxt').textContent=c+'/'+secs.length;
+    document.getElementById('progBar').style.width=(100*c/secs.length)+'%';}
+  document.querySelectorAll('.donebtn').forEach(function(b){b.addEventListener('click',function(){
+    var id=b.dataset.sec; done[id]=!done[id]; set(KEY_D,JSON.stringify(done)); render();})});
+  render();
+  // math
+  function math(){ if(window.renderMathInElement){ renderMathInElement(document.body,{
+      delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false}); } }
+  if(document.readyState==='complete') math(); else window.addEventListener('load',math);
+})();
+</script>
+</body>
+</html>
