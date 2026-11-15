@@ -124,12 +124,24 @@ nav a.active{background:#edf3fc;color:#173f72}
  .pair,.column-key{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:20px}
  .pair,.equation{break-inside:avoid}
 }
+
+.bar-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.langsw{display:inline-flex;border:1px solid #bac9db;border-radius:7px;overflow:hidden;background:#fff}
+.langsw a{padding:4px 10px;font-size:.84rem;text-decoration:none;color:#536479;line-height:1.4;white-space:nowrap}
+.langsw a.on{background:#255ca7;color:#fff;font-weight:650}
+.langsw a:not(.on):hover{background:#e9f1fc}
+body.view-en .column.chinese,body.view-zh .column.english,body.view-en .column-key span:last-child,body.view-zh .column-key span:first-child{display:none!important}
+body.view-en .pair,body.view-zh .pair,body.view-en .column-key,body.view-zh .column-key{grid-template-columns:minmax(0,1fr)!important}
+body.view-en .pair::after,body.view-zh .pair::after{display:none}
+body.view-en main{max-width:700px}body.view-zh main{max-width:820px}
+@media print{.bar-tools .langsw{display:none}}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="bar-content">
-  <div class="brand"><a href="#paper-top">论文对照</a><small>英左 · 中右</small></div>
-  <form id="equation-jump"><label for="eq-input">跳到公式</label><input id="eq-input" type="number" inputmode="numeric" min="1" max="492" step="1" placeholder="1–492" required><button type="submit">跳转</button></form>
+  <div class="brand"><a href="index.html" title="Home">⌂</a> <a href="#paper-top">论文对照</a><small>英左 · 中右</small></div>
+  <div class="bar-tools"><div class="langsw" role="group" aria-label="显示语言 / View"><a href="#" data-view="both" class="on">中 + EN</a><a href="#" data-view="en">EN</a><a href="#" data-view="zh">中</a></div>
+  <form id="equation-jump"><label for="eq-input">跳到公式</label><input id="eq-input" type="number" inputmode="numeric" min="1" max="492" step="1" placeholder="1–492" required><button type="submit">跳转</button></form></div>
 </div></header>
 <div class="layout">
   <aside class="sidebar"><details id="sections" open><summary>章节目录</summary><nav aria-label="章节目录"><div class="toc-group"><a class="toc-l1" href="#sec-i">I. 引言</a></div><div class="toc-group"><a class="toc-l1" href="#sec-ii">II. 模型与主要结果</a><div class="toc-sub"><a href="#sec-ii-a" title="A. Sampling and Communication">A. 抽样与通信</a><a href="#sec-ii-b" title="B. Statistical Assumptions">B. 统计假设</a><a href="#sec-ii-c" title="C. Uniform Envelopes">C. 一致包络</a></div></div><div class="toc-group"><a class="toc-l1" href="#sec-iii">III. 下界证明</a><div class="toc-sub"><a href="#sec-iii-a" title="A. Score Identities and a Bayesian Inequality">A. 得分恒等式与贝叶斯不等式</a><a href="#sec-iii-b" title="B. Concentration of a Block Score">B. 样本块得分集中性</a><a href="#sec-iii-c" title="C. Independent Private Blocks">C. 独立私有样本块</a><a href="#sec-iii-d" title="D. The Additive Shared-Observation Bound">D. 共享观测的加性信息上界</a><a href="#sec-iii-e" title="E. Proof of the Main Lower Bound">E. 主下界的证明</a></div></div><div class="toc-group"><a class="toc-l1" href="#sec-iv">IV. 可达性／上界构造</a><div class="toc-sub"><a href="#sec-iv-a" title="A. Exact Resampling From a Random Subset">A. 从随机子集精确重抽样</a><a href="#sec-iv-b" title="B. Large Blocks: Smoothed Binomial Statistics">B. 大样本块：平滑的二项统计量</a><a href="#sec-iv-c" title="C. Small Blocks: A Direct One-Bit Construction">C. 小样本块：直接的一比特构造</a><a href="#sec-iv-d" title="D. Moment Inversion and Completion of the Proof">D. 矩反演与完成证明</a></div></div><div class="toc-group"><a class="toc-l1" href="#sec-v">V. 高斯均值之外的例子</a><div class="toc-sub"><a href="#sec-v-a" title="A. Gaussian Means and Discrete Models">A. 高斯均值与离散模型</a><a href="#sec-v-b" title="B. Bounded-Statistic Exponential Families and Logistic Regression">B. 统计量有界的指数族与逻辑回归</a><a href="#sec-v-c" title="C. Poisson and Exponential Models">C. 泊松模型与指数模型</a><a href="#sec-v-d" title="D. Gaussian Covariance Estimation">D. 高斯协方差估计</a></div></div><div class="toc-group"><a class="toc-l1" href="#sec-vi">VI. 讨论与结论</a></div><div class="toc-group"><a class="toc-l1" href="#appendix">附录：无碰撞耦合与统计速率</a></div><div class="toc-group"><a class="toc-l1" href="#references">参考文献</a></div></nav></details></aside>
@@ -1538,6 +1550,29 @@ for(const t of targets){if(t.getBoundingClientRect().top<=y)cur=t;else break;}
 links.forEach(a=>a.classList.remove('active'));if(cur){const a=map.get(cur.id);a.classList.add('active');
 const sb=document.querySelector('.sidebar');if(sb&&sb.scrollHeight>sb.clientHeight){const r=a.getBoundingClientRect(),q=sb.getBoundingClientRect();if(r.top<q.top||r.bottom>q.bottom)a.scrollIntoView({block:'nearest'});}}};
 let raf=0;addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;update();});},{passive:true});update();})();
+</script>
+<script>
+(() => {
+  const sw = document.querySelector('.langsw'); if (!sw) return;
+  function set(v) {
+    document.body.classList.remove('view-en', 'view-zh');
+    if (v !== 'both') document.body.classList.add('view-' + v);
+    sw.querySelectorAll('a').forEach(a => a.classList.toggle('on', a.dataset.view === v));
+    try { localStorage.setItem('bilingual-view', v); } catch (_) {}
+  }
+  sw.addEventListener('click', e => {
+    const a = e.target.closest('a[data-view]'); if (!a) return; e.preventDefault();
+    // keep the reader at the same paragraph
+    const pairs = document.querySelectorAll('.pair, figure.equation'); let anchor = null;
+    for (const p of pairs) { const r = p.getBoundingClientRect(); if (r.bottom > 90) { anchor = p; break; } }
+    const off = anchor ? anchor.getBoundingClientRect().top : 0;
+    set(a.dataset.view);
+    if (anchor) window.scrollBy(0, anchor.getBoundingClientRect().top - off);
+  });
+  let v = null; try { v = localStorage.getItem('bilingual-view'); } catch (_) {}
+  const q = new URLSearchParams(location.search).get('view');
+  set(q || v || 'both');
+})();
 </script>
 </body>
 </html>

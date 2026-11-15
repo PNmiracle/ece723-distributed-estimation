@@ -153,17 +153,23 @@ body.core-only .card[data-core="0"],body.core-only .sb-terms a[data-core="0"]{di
 @media print{.topbar,.sidebar,.progress,.map-wrap,.plain-btn,.card-foot{display:none!important}.layout{display:block}.plain{display:block!important}.card{break-inside:avoid}}
 
 details.more{display:inline-block;font-size:.8rem}details.more summary{color:var(--muted);padding:2px 4px}details.more .chips{margin-top:5px}
+
+.langsw{display:inline-flex;border:1px solid #bac9db;border-radius:7px;overflow:hidden;background:#fff;flex:none}
+.langsw a{padding:4px 10px;font-size:.84rem;text-decoration:none;color:#566579;line-height:1.4}
+.langsw a.on{background:#255ca7;color:#fff;font-weight:650}
+.langsw a:not(.on):hover{background:#e9f1fc}
 </style></head>
 <body>
 <div class="progress"><div class="progress-bar" id="pbar"></div></div>
 <header class="topbar"><div class="bar">
- <div class="brand"><a href="index.html" title="首页">⌂</a> <a href="#top">论文预备笔记</a><small>术语学习路线</small></div>
+ <div class="brand"><a href="index.html#zh" title="Home">⌂</a> <a href="#top">论文预备笔记</a><small>术语学习路线</small></div>
  <div class="tools">
   <input id="q" type="search" placeholder="搜索概念（中/英）">
   <button type="button" id="core-only" aria-pressed="false">只看核心</button>
   <button type="button" id="plain-all" aria-pressed="false">通俗全部展开</button>
   <span class="mastery" id="mastery">已掌握 0/71</span>
   <a class="tbtn" href="reading.html" target="_blank">打开通俗精读版 ↗</a>
+  <div class="langsw" role="group" aria-label="Language"><a href="roadmap.html" class="on" data-lang-link>中</a><a href="roadmap-en.html" class="" data-lang-link>EN</a></div>
  </div></div></header>
 <div class="layout">
 <aside class="sidebar"><details open><summary>学习路线</summary><div class="sb-stage"><a class="sb-st" href="#s0">第 0 站 · 读懂记号</a><div class="sb-terms"><a href="#c-risk-order" data-sb="risk-order">风险量级</a><a href="#c-bit-nat" data-sb="bit-nat">纳特</a></div></div><div class="sb-stage"><a class="sb-st" href="#s1">第 1 站 · 估计与风险</a><div class="sb-terms"><a href="#c-estimator" data-sb="estimator">估计器</a><a href="#c-sq-risk" data-sb="sq-risk">平方误差风险</a><a href="#c-minimax" data-sb="minimax">极小极大风险</a><a href="#c-prior" data-sb="prior">先验分布</a><a href="#c-bayes-risk" data-sb="bayes-risk">贝叶斯风险</a><a href="#c-cond-exp" data-sb="cond-exp">条件期望</a><a href="#c-posterior" data-sb="posterior">后验分布</a><a href="#c-gauss-mean" data-sb="gauss-mean">高斯均值估计</a></div></div><div class="sb-stage"><a class="sb-st" href="#s2">第 2 站 · 概率工具箱</a><div class="sb-terms"><a href="#c-cond-indep" data-sb="cond-indep">条件独立性</a><a href="#c-jensen-cs" data-sb="jensen-cs">Jensen 不等式</a><a href="#c-ibp" data-sb="ibp">分部积分</a><a href="#c-mgf" data-sb="mgf">矩母函数</a><a href="#c-subgauss" data-sb="subgauss">次高斯</a><a href="#c-hoeffding" data-sb="hoeffding">Hoeffding 不等式</a><a href="#c-bernoulli" data-sb="bernoulli">伯努利观测</a><a href="#c-binomial" data-sb="binomial">二项计数</a><a href="#c-empirical" data-sb="empirical">经验矩</a><a href="#c-sufficient" data-sb="sufficient">充分统计量</a><a href="#c-kernel" data-sb="kernel">随机核</a></div></div><div class="sb-stage"><a class="sb-st" href="#s3">第 3 站 · 得分与费舍尔信息</a><div class="sb-terms"><a href="#c-regularity" data-sb="regularity">正则性</a><a href="#c-score" data-sb="score">得分函数</a><a href="#c-fisher" data-sb="fisher">费舍尔信息</a><a href="#c-block-score" data-sb="block-score">样本块得分</a><a href="#c-bernstein" data-sb="bernstein">伯恩斯坦条件</a><a href="#c-dpi" data-sb="dpi">数据处理不等式</a></div></div><div class="sb-stage"><a class="sb-st" href="#s4">第 4 站 · 信息论</a><div class="sb-terms"><a href="#c-entropy" data-sb="entropy">熵</a><a href="#c-self-info" data-sb="self-info">自信息</a><a href="#c-mutual-info" data-sb="mutual-info">互信息</a><a href="#c-diff-entropy" data-sb="diff-entropy">微分熵</a><a href="#c-kl-tv" data-sb="kl-tv">全变差距离</a></div></div><div class="sb-stage"><a class="sb-st" href="#s5">第 5 站 · 本文的模型</a><div class="sb-terms"><a href="#c-distributed" data-sb="distributed">分布式估计</a><a href="#c-pool" data-sb="pool">观测池</a><a href="#c-sampling" data-sb="sampling">抽样设计</a><a href="#c-local-data" data-sb="local-data">局部数据</a><a href="#c-shared-obs" data-sb="shared-obs">共享观测</a><a href="#c-private-obs" data-sb="private-obs">私有观测</a><a href="#c-fusion" data-sb="fusion">融合中心</a><a href="#c-seeds" data-sb="seeds">随机种子</a><a href="#c-side-info" data-sb="side-info">辅助信息</a><a href="#c-noninteractive" data-sb="noninteractive">非交互协议</a><a href="#c-blackboard" data-sb="blackboard">黑板协议</a><a href="#c-transcript" data-sb="transcript">通信记录</a><a href="#c-budget" data-sb="budget">通信预算</a></div></div><div class="sb-stage"><a class="sb-st" href="#s6">第 6 站 · 主要结论</a><div class="sb-terms"><a href="#c-local-refine" data-sb="local-refine">粗定位与精细估计</a><a href="#c-surplus" data-sb="surplus">定位余量</a><a href="#c-aB" data-sb="aB">比特底线 a_B</a><a href="#c-envelope" data-sb="envelope">包络</a><a href="#c-lower-upper" data-sb="lower-upper">可达性与下界证明</a><a href="#c-rbar-term" data-sb="rbar-term">共享项 r̄</a><a href="#c-m-thm1" data-sb="m-thm1">定理 1：上下界一致包络</a><a href="#c-poly-exp" data-sb="poly-exp">多项式耦合与指数率</a><a href="#c-critical" data-sb="critical">临界窗口</a><a href="#c-intermediate" data-sb="intermediate">中等重叠</a></div></div><div class="sb-stage"><a class="sb-st" href="#s7">第 7 站 · 下界怎么证</a><div class="sb-terms"><a href="#c-score-identity" data-sb="score-identity">得分恒等式</a><a href="#c-chain-rule" data-sb="chain-rule">链式法则</a><a href="#c-van-trees" data-sb="van-trees">van Trees 不等式</a><a href="#c-m-lb-easy" data-sb="m-lb-easy">两个简单下界</a><a href="#c-event-score" data-sb="event-score">事件上的得分</a><a href="#c-rectangle" data-sb="rectangle">矩形性质</a><a href="#c-m-thm2" data-sb="m-thm2">定理 2：共享观测的加法信息上界</a><a href="#c-entropy-budget" data-sb="entropy-budget">熵预算</a><a href="#c-m-lb-assembly" data-sb="m-lb-assembly">主下界的组装（III-E）</a><a href="#c-m-lb-gauss" data-sb="m-lb-gauss">高斯情形的显式下界</a><a href="#c-m-lb-map" data-sb="m-lb-map">下界证明全景回顾</a></div></div><div class="sb-stage"><a class="sb-st" href="#s8">第 8 站 · 上界怎么造</a><div class="sb-terms"><a href="#c-resampling" data-sb="resampling">精确重抽样</a><a href="#c-moment-map" data-sb="moment-map">矩映射</a><a href="#c-smoothing" data-sb="smoothing">平滑步骤</a><a href="#c-charfn" data-sb="charfn">一比特特征函数测量</a><a href="#c-collision" data-sb="collision">无碰撞耦合</a></div></div></details></aside>
@@ -176,13 +182,13 @@ details.more{display:inline-block;font-size:.8rem}details.more summary{color:var
 <p>这是一份<b>读完整论文之前的预备笔记</b>：不按论文顺序，而是按“先会什么才能懂什么”排列，一步步推进到<b>第 III 节下界证明结束</b>。第 8 站（上界构造）是选读。</p>
 <ul><li>每张卡片<b>先给专业解释</b>（定义、公式、论文里的式号），点 <span class="kbd">通俗解释 ▸</span> 才展开大白话版本。</li>
 <li>“先学”是它的前置概念，“学完可以学”是它解锁的概念；“完整前置路线”列出从零到这里的全部步骤。</li>
-<li>“在论文中”和“式 (n)”会在新标签页打开<b>通俗精读版</b>的对应位置（两个文件需放在同一个文件夹）。</li>
+<li>“在论文中”和“式 (n)”会在新标签页打开<b>通俗精读版</b>的对应位置。</li>
 <li>勾选“掌握了”会记录进度；关系图里已掌握的节点会变成实心。</li></ul></div>
-<nav class="strip" aria-label="学习站点"><a class="strip-st" href="#s0"><b>第 0 站</b><span>读懂记号</span><small>10 分钟</small></a><a class="strip-st" href="#s1"><b>第 1 站</b><span>估计与风险</span><small>40 分钟</small></a><a class="strip-st" href="#s2"><b>第 2 站</b><span>概率工具箱</span><small>45 分钟</small></a><a class="strip-st" href="#s3"><b>第 3 站</b><span>得分与费舍尔信息</span><small>45 分钟</small></a><a class="strip-st" href="#s4"><b>第 4 站</b><span>信息论</span><small>40 分钟</small></a><a class="strip-st" href="#s5"><b>第 5 站</b><span>本文的模型</span><small>40 分钟</small></a><a class="strip-st" href="#s6"><b>第 6 站</b><span>主要结论</span><small>50 分钟</small></a><a class="strip-st" href="#s7"><b>第 7 站</b><span>下界怎么证</span><small>60 分钟</small></a><a class="strip-st opt" href="#s8"><b>第 8 站</b><span>上界怎么造</span><small>50 分钟</small></a></nav>
+<nav class="strip" aria-label="Stops"><a class="strip-st" href="#s0"><b>第 0 站</b><span>读懂记号</span><small>10 分钟</small></a><a class="strip-st" href="#s1"><b>第 1 站</b><span>估计与风险</span><small>40 分钟</small></a><a class="strip-st" href="#s2"><b>第 2 站</b><span>概率工具箱</span><small>45 分钟</small></a><a class="strip-st" href="#s3"><b>第 3 站</b><span>得分与费舍尔信息</span><small>45 分钟</small></a><a class="strip-st" href="#s4"><b>第 4 站</b><span>信息论</span><small>40 分钟</small></a><a class="strip-st" href="#s5"><b>第 5 站</b><span>本文的模型</span><small>40 分钟</small></a><a class="strip-st" href="#s6"><b>第 6 站</b><span>主要结论</span><small>50 分钟</small></a><a class="strip-st" href="#s7"><b>第 7 站</b><span>下界怎么证</span><small>60 分钟</small></a><a class="strip-st opt" href="#s8"><b>第 8 站</b><span>上界怎么造</span><small>50 分钟</small></a></nav>
 </header>
 <section class="map-wrap" id="map">
 <div class="map-head"><h2>概念关系图</h2><p>可左右滚动。箭头从“前置”指向“后续”。点一个节点：<span class="lg up">它需要的前置</span>、<span class="lg down">它解锁的后续</span> 会高亮；再点一次跳到卡片。</p></div>
-<div class="map-scroll"><svg id="graph" role="img" aria-label="概念依赖关系图"></svg></div>
+<div class="map-scroll"><svg id="graph" role="img" aria-label="Concept dependency graph"></svg></div>
 </section>
 <section class="stage" id="s0">
 <div class="stage-head"><div class="stage-name">第 0 站 · 读懂记号</div>
@@ -1841,8 +1847,10 @@ c-1 5-5 9-11 9h-2L532 67 19 159h-2c-5 0-9-4-11-9l-5-22c-1-6 2-12 8-13z"/></svg><
 <footer class="end"><p>主线到此结束。准备好之后，打开 <a href="reading.html" target="_blank">通俗精读版</a> 从头读论文；遇到不熟的术语可以随时回到这里。</p></footer>
 </main></div>
 <script type="application/json" id="graph-data">{"stages": [{"id": "s0", "name": "读懂记号", "no": "第 0 站"}, {"id": "s1", "name": "估计与风险", "no": "第 1 站"}, {"id": "s2", "name": "概率工具箱", "no": "第 2 站"}, {"id": "s3", "name": "得分与费舍尔信息", "no": "第 3 站"}, {"id": "s4", "name": "信息论", "no": "第 4 站"}, {"id": "s5", "name": "本文的模型", "no": "第 5 站"}, {"id": "s6", "name": "主要结论", "no": "第 6 站"}, {"id": "s7", "name": "下界怎么证", "no": "第 7 站"}, {"id": "s8", "name": "上界怎么造", "no": "第 8 站"}], "nodes": [{"id": "risk-order", "label": "风险量级", "stage": "s0", "pre": [], "kind": "n"}, {"id": "bit-nat", "label": "纳特", "stage": "s0", "pre": [], "kind": "n"}, {"id": "estimator", "label": "估计器", "stage": "s1", "pre": [], "kind": "n"}, {"id": "sq-risk", "label": "平方误差风险", "stage": "s1", "pre": ["estimator"], "kind": "n"}, {"id": "minimax", "label": "极小极大风险", "stage": "s1", "pre": ["sq-risk"], "kind": "core"}, {"id": "prior", "label": "先验分布", "stage": "s1", "pre": [], "kind": "n"}, {"id": "bayes-risk", "label": "贝叶斯风险", "stage": "s1", "pre": ["minimax", "prior"], "kind": "n"}, {"id": "cond-exp", "label": "条件期望", "stage": "s1", "pre": [], "kind": "n"}, {"id": "posterior", "label": "后验分布", "stage": "s1", "pre": ["prior", "cond-exp"], "kind": "opt"}, {"id": "gauss-mean", "label": "高斯均值估计", "stage": "s1", "pre": ["estimator", "sq-risk"], "kind": "n"}, {"id": "cond-indep", "label": "条件独立性", "stage": "s2", "pre": [], "kind": "n"}, {"id": "jensen-cs", "label": "Jensen 不等式", "stage": "s2", "pre": [], "kind": "n"}, {"id": "ibp", "label": "分部积分", "stage": "s2", "pre": [], "kind": "opt"}, {"id": "mgf", "label": "矩母函数", "stage": "s2", "pre": [], "kind": "n"}, {"id": "subgauss", "label": "次高斯", "stage": "s2", "pre": ["mgf"], "kind": "n"}, {"id": "hoeffding", "label": "Hoeffding 不等式", "stage": "s2", "pre": ["subgauss"], "kind": "opt"}, {"id": "bernoulli", "label": "伯努利观测", "stage": "s2", "pre": [], "kind": "n"}, {"id": "binomial", "label": "二项计数", "stage": "s2", "pre": ["bernoulli"], "kind": "n"}, {"id": "empirical", "label": "经验矩", "stage": "s2", "pre": ["estimator"], "kind": "n"}, {"id": "sufficient", "label": "充分统计量", "stage": "s2", "pre": ["estimator"], "kind": "n"}, {"id": "kernel", "label": "随机核", "stage": "s2", "pre": [], "kind": "opt"}, {"id": "regularity", "label": "正则性", "stage": "s3", "pre": [], "kind": "opt"}, {"id": "score", "label": "得分函数", "stage": "s3", "pre": ["regularity"], "kind": "core"}, {"id": "fisher", "label": "费舍尔信息", "stage": "s3", "pre": ["score"], "kind": "core"}, {"id": "block-score", "label": "样本块得分", "stage": "s3", "pre": ["score"], "kind": "n"}, {"id": "bernstein", "label": "伯恩斯坦条件", "stage": "s3", "pre": ["subgauss", "score"], "kind": "n"}, {"id": "dpi", "label": "数据处理不等式", "stage": "s3", "pre": ["fisher", "kernel", "cond-exp"], "kind": "core"}, {"id": "entropy", "label": "熵", "stage": "s4", "pre": ["bit-nat"], "kind": "core"}, {"id": "self-info", "label": "自信息", "stage": "s4", "pre": ["entropy"], "kind": "opt"}, {"id": "mutual-info", "label": "互信息", "stage": "s4", "pre": ["entropy"], "kind": "n"}, {"id": "diff-entropy", "label": "微分熵", "stage": "s4", "pre": ["entropy"], "kind": "n"}, {"id": "kl-tv", "label": "全变差距离", "stage": "s4", "pre": ["mutual-info"], "kind": "opt"}, {"id": "distributed", "label": "分布式估计", "stage": "s5", "pre": ["estimator"], "kind": "n"}, {"id": "pool", "label": "观测池", "stage": "s5", "pre": ["distributed"], "kind": "core"}, {"id": "sampling", "label": "抽样设计", "stage": "s5", "pre": ["pool"], "kind": "core"}, {"id": "local-data", "label": "局部数据", "stage": "s5", "pre": ["sampling"], "kind": "n"}, {"id": "shared-obs", "label": "共享观测", "stage": "s5", "pre": ["local-data"], "kind": "core"}, {"id": "private-obs", "label": "私有观测", "stage": "s5", "pre": ["shared-obs"], "kind": "n"}, {"id": "fusion", "label": "融合中心", "stage": "s5", "pre": ["distributed"], "kind": "n"}, {"id": "seeds", "label": "随机种子", "stage": "s5", "pre": [], "kind": "n"}, {"id": "side-info", "label": "辅助信息", "stage": "s5", "pre": ["sampling", "seeds"], "kind": "n"}, {"id": "noninteractive", "label": "非交互协议", "stage": "s5", "pre": ["fusion", "local-data"], "kind": "core"}, {"id": "blackboard", "label": "黑板协议", "stage": "s5", "pre": ["noninteractive"], "kind": "core"}, {"id": "transcript", "label": "通信记录", "stage": "s5", "pre": ["noninteractive", "blackboard"], "kind": "core"}, {"id": "budget", "label": "通信预算", "stage": "s5", "pre": ["transcript", "bit-nat"], "kind": "core"}, {"id": "local-refine", "label": "粗定位与精细估计", "stage": "s6", "pre": ["budget", "sq-risk"], "kind": "core"}, {"id": "surplus", "label": "定位余量", "stage": "s6", "pre": ["local-refine"], "kind": "core"}, {"id": "aB", "label": "比特底线 a_B", "stage": "s6", "pre": ["budget"], "kind": "core"}, {"id": "envelope", "label": "包络", "stage": "s6", "pre": ["surplus", "aB", "risk-order", "minimax"], "kind": "core"}, {"id": "lower-upper", "label": "可达性与下界证明", "stage": "s6", "pre": ["minimax", "envelope"], "kind": "core"}, {"id": "rbar-term", "label": "共享项 r̄", "stage": "s6", "pre": ["shared-obs", "envelope"], "kind": "core"}, {"id": "m-thm1", "label": "定理 1：上下界一致包络", "stage": "s6", "pre": ["lower-upper", "envelope", "rbar-term"], "kind": "ms"}, {"id": "poly-exp", "label": "多项式耦合与指数率", "stage": "s6", "pre": ["envelope"], "kind": "n"}, {"id": "critical", "label": "临界窗口", "stage": "s6", "pre": ["surplus", "envelope"], "kind": "n"}, {"id": "intermediate", "label": "中等重叠", "stage": "s6", "pre": ["critical", "rbar-term"], "kind": "core"}, {"id": "score-identity", "label": "得分恒等式", "stage": "s7", "pre": ["score", "kernel", "cond-exp"], "kind": "n"}, {"id": "chain-rule", "label": "链式法则", "stage": "s7", "pre": ["fisher"], "kind": "n"}, {"id": "van-trees", "label": "van Trees 不等式", "stage": "s7", "pre": ["fisher", "bayes-risk", "ibp", "jensen-cs"], "kind": "core"}, {"id": "m-lb-easy", "label": "两个简单下界", "stage": "s7", "pre": ["van-trees", "dpi", "diff-entropy", "mutual-info", "sampling"], "kind": "ms"}, {"id": "event-score", "label": "事件上的得分", "stage": "s7", "pre": ["block-score", "bernstein", "self-info"], "kind": "n"}, {"id": "rectangle", "label": "矩形性质", "stage": "s7", "pre": ["blackboard", "transcript", "cond-indep"], "kind": "core"}, {"id": "m-thm2", "label": "定理 2：共享观测的加法信息上界", "stage": "s7", "pre": ["rectangle", "chain-rule", "private-obs", "side-info", "rbar-term"], "kind": "ms"}, {"id": "entropy-budget", "label": "熵预算", "stage": "s7", "pre": ["entropy", "transcript", "van-trees"], "kind": "core"}, {"id": "m-lb-assembly", "label": "主下界的组装（III-E）", "stage": "s7", "pre": ["m-thm2", "entropy-budget", "m-lb-easy", "self-info", "surplus"], "kind": "ms"}, {"id": "m-lb-gauss", "label": "高斯情形的显式下界", "stage": "s7", "pre": ["m-lb-assembly", "gauss-mean"], "kind": "ms"}, {"id": "m-lb-map", "label": "下界证明全景回顾", "stage": "s7", "pre": ["m-lb-assembly"], "kind": "ms"}, {"id": "resampling", "label": "精确重抽样", "stage": "s8", "pre": ["sampling", "cond-indep", "empirical"], "kind": "core"}, {"id": "moment-map", "label": "矩映射", "stage": "s8", "pre": ["empirical", "bernoulli"], "kind": "core"}, {"id": "smoothing", "label": "平滑步骤", "stage": "s8", "pre": ["binomial", "kl-tv", "gauss-mean"], "kind": "n"}, {"id": "charfn", "label": "一比特特征函数测量", "stage": "s8", "pre": ["binomial", "mgf", "local-refine"], "kind": "n"}, {"id": "collision", "label": "无碰撞耦合", "stage": "s8", "pre": ["shared-obs"], "kind": "opt"}]}</script>
+<script type="application/json" id="i18n">{"plainOpen": "通俗解释 ▸", "plainClose": "收起通俗解释 ▾", "allOpen": "通俗全部展开", "allClose": "通俗全部收起", "mastered": "已掌握"}</script>
 <script>(() => {
 const G = JSON.parse(document.getElementById('graph-data').textContent);
+const I = JSON.parse(document.getElementById('i18n').textContent);
 const byId = new Map(G.nodes.map(n => [n.id, n]));
 const NEXT = new Map(G.nodes.map(n => [n.id, []]));
 G.nodes.forEach(n => n.pre.forEach(p => NEXT.get(p).push(n.id)));
@@ -1938,12 +1946,12 @@ document.addEventListener('click', e => {
 /* ---------- plain toggles ---------- */
 function setPlain(btn, open) {
   const p = document.getElementById('p-' + btn.dataset.plain);
-  p.hidden = !open; btn.setAttribute('aria-expanded', open); btn.textContent = open ? '收起通俗解释 ▾' : '通俗解释 ▸';
+  p.hidden = !open; btn.setAttribute('aria-expanded', open); btn.textContent = open ? I.plainClose : I.plainOpen;
 }
 document.querySelectorAll('.plain-btn').forEach(b => b.addEventListener('click', () => setPlain(b, b.getAttribute('aria-expanded') !== 'true')));
 const pa = document.getElementById('plain-all');
 pa.addEventListener('click', () => { const on = pa.getAttribute('aria-pressed') !== 'true'; pa.setAttribute('aria-pressed', on);
-  pa.textContent = on ? '通俗全部收起' : '通俗全部展开'; document.querySelectorAll('.plain-btn').forEach(b => setPlain(b, on)); });
+  pa.textContent = on ? I.allClose : I.allOpen; document.querySelectorAll('.plain-btn').forEach(b => setPlain(b, on)); });
 
 /* ---------- core-only ---------- */
 const co = document.getElementById('core-only');
@@ -1965,7 +1973,7 @@ q.addEventListener('keydown', e => { if (e.key === 'Enter') { const c = cards.fi
 /* ---------- mastery ---------- */
 const total = cards.length;
 function paint() {
-  document.getElementById('mastery').textContent = `已掌握 ${done.size}/${total}`;
+  document.getElementById('mastery').textContent = `${I.mastered} ${done.size}/${total}`;
   document.querySelectorAll('[data-done]').forEach(cb => { cb.checked = done.has(cb.dataset.done); cb.closest('.card').classList.toggle('is-done', cb.checked); });
   document.querySelectorAll('.sb-terms a').forEach(a => a.classList.toggle('done', done.has(a.dataset.sb)));
   document.querySelectorAll('.chip[data-goto]').forEach(a => a.classList.toggle('done-chip', done.has(a.dataset.goto)));
@@ -1989,6 +1997,27 @@ function update() {
 addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); }); }, {passive: true});
 update();
 if (location.hash.startsWith('#c-')) setTimeout(() => goto(location.hash.slice(3)), 50);
+})();
+</script>
+<script>(() => {
+  // Keep the reader's place when switching language: carry the current anchor over.
+  function currentAnchor() {
+    const cands = document.querySelectorAll('section.unit[id], section.overview[id], section.recap[id], article.card[id], section.stage[id], figure.equation[id], .pair[id]');
+    let best = null;
+    for (const el of cands) {
+      if (el.offsetParent === null) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top <= 140) best = el; else break;
+    }
+    return best ? '#' + best.id : '';
+  }
+  document.querySelectorAll('[data-lang-link]').forEach(a => a.addEventListener('click', e => {
+    if (a.classList.contains('on')) { e.preventDefault(); return; }
+    const base = a.getAttribute('href').split('#')[0];
+    const h = currentAnchor();
+    try { localStorage.setItem('site-lang', a.textContent.trim() === 'EN' ? 'en' : 'zh'); } catch (_) {}
+    if (h) { e.preventDefault(); location.href = base + h; }
+  }));
 })();
 </script>
 </body></html>
