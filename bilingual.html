@@ -1574,5 +1574,25 @@ let raf=0;addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(()=>{
   set(q || v || 'both');
 })();
 </script>
+<script>
+(() => {
+  // English interface when the English-only view is selected
+  const EN = {"sec-i": "I. Introduction", "sec-ii": "II. Model and Main Results", "sec-ii-a": "A. Sampling and Communication", "sec-ii-b": "B. Statistical Assumptions", "sec-ii-c": "C. Uniform Envelopes", "sec-iii": "III. Converse", "sec-iii-a": "A. Score Identities and a Bayesian Inequality", "sec-iii-b": "B. Concentration of a Block Score", "sec-iii-c": "C. Independent Private Blocks", "sec-iii-d": "D. The Additive Shared-Observation Bound", "sec-iii-e": "E. Proof of the Main Lower Bound", "sec-iv": "IV. Achievability", "sec-iv-a": "A. Exact Resampling From a Random Subset", "sec-iv-b": "B. Large Blocks: Smoothed Binomial Statistics", "sec-iv-c": "C. Small Blocks: A Direct One-Bit Construction", "sec-iv-d": "D. Moment Inversion and Completion of the Proof", "sec-v": "V. Examples Beyond Gaussian Means", "sec-v-a": "A. Gaussian Means and Discrete Models", "sec-v-b": "B. Bounded-Statistic Exponential Families and Logistic Regression", "sec-v-c": "C. Poisson and Exponential Models", "sec-v-d": "D. Gaussian Covariance Estimation", "sec-vi": "VI. Discussion and Conclusion", "appendix": "Appendix: Collision-Free Couplings and Statistical Rates", "references": "References"};
+  const UI = [['.brand a[href="#paper-top"]', 'Paper', '论文对照'], ['.brand small', 'English · Chinese', '英左 · 中右'],
+              ['#equation-jump label', 'Equation', '跳到公式'], ['#equation-jump button', 'Go', '跳转'], ['#sections summary', 'Contents', '章节目录']];
+  const navLinks = [...document.querySelectorAll('#sections nav a')];
+  navLinks.forEach(a => { a.dataset.zh = a.textContent; });
+  UI.forEach(([sel]) => { const e = document.querySelector(sel); if (e) e.dataset.zh = e.textContent; });
+  function ui(lang) {
+    document.documentElement.lang = lang === 'en' ? 'en' : 'zh-Hans';
+    UI.forEach(([sel, en, zh]) => { const e = document.querySelector(sel); if (e) e.textContent = lang === 'en' ? en : e.dataset.zh; });
+    navLinks.forEach(a => { const id = a.getAttribute('href').slice(1); a.textContent = lang === 'en' && EN[id] ? (a.classList.contains('toc-l1') ? EN[id] : EN[id]) : a.dataset.zh; });
+    document.title = lang === 'en' ? 'Communication-Constrained Parameter Estimation From Overlapping Samples · original text with Chinese translation' : document.title;
+  }
+  const obs = new MutationObserver(() => ui(document.body.classList.contains('view-en') ? 'en' : 'zh'));
+  obs.observe(document.body, {attributes: true, attributeFilter: ['class']});
+  ui(document.body.classList.contains('view-en') ? 'en' : 'zh');
+})();
+</script>
 </body>
 </html>
