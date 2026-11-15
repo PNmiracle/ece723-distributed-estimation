@@ -6,7 +6,7 @@ This site extracts the knowledge the paper relies on — every concept, symbol a
 
 | Page | What it is |
 |---|---|
-| [Learning path](https://pnmiracle.github.io/ece723-distributed-estimation/roadmap-en.html) | 84 cards in dependency order, from math notation to the end of the lower-bound proof. Rigorous explanation first, a table explaining every symbol, and a plain-language “what / why / how” on click. Includes a clickable concept map. |
+| [Learning path](https://pnmiracle.github.io/ece723-distributed-estimation/roadmap-en.html) | 86 cards in dependency order, from math notation to the end of the lower-bound proof. Rigorous explanation first, a table explaining every symbol, and a plain-language “what / why / how” on click. Includes a clickable concept map. |
 | [Guided reading](https://pnmiracle.github.io/ece723-distributed-estimation/reading-en.html) | The original paper text with all 492 equations, a one-page overview, a guide for every section, and clickable term definitions. |
 | [Original + Chinese translation](https://pnmiracle.github.io/ece723-distributed-estimation/bilingual.html?view=en) | Scanned original pages next to a Chinese translation; switch between English only, both, or Chinese only. |
 
