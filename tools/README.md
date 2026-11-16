@@ -81,3 +81,16 @@ python3 tools/videos/inject.py
 The script is idempotent: inserted HTML sits between `<!--vid:…-->` / `<!--/vid-->` markers and is
 replaced on every run. Boxes carry `data-hl-ui` (ignored by the highlighter) and their own `id`, so
 existing highlights and saved in-page edits keep their anchors.
+
+## Sub-heading guides (`subguide/`)
+
+Every sub-heading (`<h4 class="sub-h">`, 61 on each reading page, numbered and unnumbered) is followed by a
+small blue **本段导读 / Guide** box: *这段干什么 / What this part does* + *核心 / Key point*. Text lives in
+`subguide/subguide.json` (keyed by the heading id; zh and en ids are identical). After editing:
+
+```bash
+node tools/subguide/inject.js      # idempotent; keeps the box directly under the heading
+python3 tools/videos/inject.py     # (optional) video boxes then follow the guide
+```
+
+If headings are renumbered with `tools/toc/subheads.py`, check that the ids in `subguide.json` still match.
