@@ -304,7 +304,10 @@ def reading_fine(path, L, roadmap_href):
         m = re.search(r'<h4 class="sub-h" id="' + re.escape(sub) + r'">.*?</h4>', t, re.S)
         assert m, sub
         b = box(sub, 'vids-sub', r['sub'] if d['items'] else r['none'], d['items'], L, intro=d.get('intro_' + L, ''))
-        t = t[:m.end()] + wrap('sub-' + sub, b) + t[m.end():]
+        at = m.end()
+        if t.startswith('<!--sg-->', at):  # keep the blue sub-heading guide directly under the heading
+            at = t.index('<!--/sg-->', at) + len('<!--/sg-->')
+        t = t[:at] + wrap('sub-' + sub, b) + t[at:]
         n_sub += 1
     for n, rows in EQS.items():
         m = re.search(r'<figure class="equation" id="eq-%d">.*?</figure>' % n, t, re.S)
