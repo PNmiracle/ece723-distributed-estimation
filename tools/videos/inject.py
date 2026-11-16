@@ -259,6 +259,10 @@ def totals(rows, L):
     opt = sum(BYID[i]['minutes'] or 0 for i, *_ in rows if BYID[i].get('opt'))
     unk = any(BYID[i]['minutes'] is None for i, *_ in rows)
     r = R[L]
+    if core == 0 and opt and not unk:
+        return ('均为选看，约 ' if L == 'zh' else 'all optional, ≈ ') + fmt_min(opt, L)
+    if core == 0 and unk:
+        return ('时长未计' if L == 'zh' else 'untimed') + (r['tot_opt'].format(opt=fmt_min(opt, L)) if opt else '')
     out = r['tot'].format(core=fmt_min(core, L))
     if opt:
         out += r['tot_opt'].format(opt=fmt_min(opt, L))
