@@ -123,7 +123,7 @@ def item(s, L, note=None, link_step=True, roadmap_href=''):
     body = f'<div class="vid-part">▶ {E(s["part_" + L])}</div>'
     why = f'<div class="vid-why">{E(note) if note else E(s["why_" + L])}</div>'
     step = ''
-    if link_step:
+    if link_step and s['id'] in ORDER:
         step = f' <a class="vstep" href="{roadmap_href}#vp-{s["id"]}">{t["step"].format(n=ORDER[s["id"]])}</a>'
     return f'<li>{head}{body}{why}{extra_links(s, L)}<div class="vids-more">{step}</div></li>'
 

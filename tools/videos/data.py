@@ -10,8 +10,6 @@ YT = 'https://www.youtube.com/watch?v='
 BILI_HDP = 'https://www.bilibili.com/video/BV1gZ4y1W7ED'   # 滕佳烨《高维概率》合集（此链接是第 2 集）
 BILI_IT = 'https://www.bilibili.com/video/BV1kE411E7HX'    # 上海交大 程帆《信息论》2020 春（分 P）
 MIT650 = 'https://ocw.mit.edu/courses/18-650-statistics-for-applications-fall-2016/resources/lecture-6-video/'
-EE378C14 = 'https://web.stanford.edu/class/ee378c/lecture14_annotated.pdf'
-EE378C2 = 'https://web.stanford.edu/class/ee378c/lecture2_annotated.pdf'
 
 # Each step: one concrete video (or slide range) and the exact part to watch.
 #   minutes : what to budget (None = unknown, shown as "—")
@@ -38,7 +36,7 @@ STEPS = [
        part_en='first half only: “E[X|Y] is itself a random variable” and the law of iterated expectations; skip the second half (sum of a random number of variables)',
        why_zh='论文式 (75) 的核心一句话是“通信记录的 score = 原始 score 在给定记录下的条件期望”。先把“条件期望是随机变量”想清楚，III-A 就读得懂了。',
        why_en='Eq. (75) says “the score of the transcript is the conditional expectation of the raw score given the transcript”. Once “a conditional expectation is a random variable” clicks, III-A reads easily.',
-       cards=['cond-exp', 'score-identity']),
+       cards=['cond-exp', 'score-identity', 'event-score']),
 
   # ---------- B. 集中不等式 ----------
   dict(id='hdp2', phase='B', lang='zh', minutes=14,
@@ -96,8 +94,17 @@ STEPS = [
        part_en='27:08–32:36: asymptotic variance of the MLE = inverse Fisher information, squared risk ≈ 1/(n·I). Stop at 32:36 (method of moments)',
        why_zh='“风险 ≈ 1 / 总 Fisher 信息”是整条下界证明的直觉。van Trees 不等式把它变成对所有估计器、所有协议都成立的下界。',
        why_en='“Risk ≈ 1 / total Fisher information” is the intuition behind the whole lower bound; the van Trees inequality turns it into a bound valid for every estimator and protocol.',
-       cards=['fisher', 'risk-order', 'gauss-mean', 'sq-risk', 'van-trees']),
+       cards=['fisher', 'risk-order', 'gauss-mean', 'sq-risk', 'van-trees', 'm-lb-easy']),
 
+  dict(id='fithian-minimax', phase='C', lang='en', minutes=None,
+       url='https://simons.berkeley.edu/talks/statistical-inference-i',
+       src_zh='Simons Institute 2018 数据科学基础 Boot Camp · Will Fithian', src_en='Simons Institute 2018 Data Science Boot Camp · Will Fithian',
+       title_zh='Statistical Inference I（约 56 分钟）', title_en='Statistical Inference I (≈56 min)',
+       part_zh='只看 “Binomial estimators” 和 “Minimax risk” 两段（视频 8 段里的第 4、5 段）',
+       part_en='only the “Binomial estimators” and “Minimax risk” parts (parts 4–5 of 8)',
+       why_zh='用二项分布的两个估计器说明：哪个估计器更好，要看比平均风险还是比最坏风险。minimax 风险 = 先取最坏参数、再挑最好的方案，正对应式 (12)。',
+       why_en='Two binomial estimators show that which one is “better” depends on average versus worst-case risk. Minimax risk = worst parameter first, then the best scheme — exactly Eq. (12).',
+       cards=['minimax', 'sq-risk', 'bayes-risk', 'lower-upper']),
   # ---------- D. 信息论 ----------
   dict(id='it-p3', phase='D', lang='zh', minutes=59,
        url=BILI_IT + '?p=3', alt=dict(zh='英文替代：MacKay Lecture 2（51:08）', en='English alternative: MacKay Lecture 2 (51:08)', url='https://new.videolectures.net/videos/mackay_course_02', lang='en'),
@@ -137,26 +144,17 @@ STEPS = [
        cards=['diff-entropy', 'prior']),
 
   # ---------- E. 通信协议与 rectangle ----------
-  dict(id='ee378c14-setup', phase='E', lang='en', minutes=10, approx=True, slides=True,
-       url=EE378C14,
-       src_zh='Stanford EE378C · 韩彦骏（讲义）', src_en='Stanford EE378C · Yanjun Han (slides)',
-       title_zh='Lecture 14: Communication/privacy constrained estimation', title_en='Lecture 14: Communication/privacy constrained estimation',
-       part_zh='讲义第 4–5 页（页脚 4/26–5/26）：分布式估计的 minimax 问题；非交互（SMP）、顺序交互、黑板三种协议',
-       part_en='slides 4–5 (footer 4/26–5/26): the distributed minimax problem; noninteractive (SMP), sequential and blackboard protocols',
-       why_zh='一页图就把“n 台机器各发 k 比特 → 融合中心估计”的标准设定和三种协议摆清楚了，正好对应论文 II-A。',
-       why_en='One picture lays out the standard “n machines, k bits each → fusion center” setting and the three protocol types — exactly Section II-A.',
-       cards=['distributed', 'noninteractive', 'blackboard', 'fusion', 'budget', 'minimax']),
-  dict(id='ee378c2', phase='E', lang='en', minutes=5, approx=True, slides=True,
-       url=EE378C2,
-       src_zh='Stanford EE378C · 韩彦骏（讲义）', src_en='Stanford EE378C · Yanjun Han (slides)',
-       title_zh='Lecture 2: Importance of Problem Structure', title_en='Lecture 2: Importance of Problem Structure',
-       part_zh='讲义第 4 页（页脚 4/16）“Blackboard communication protocol”：协议树，树深 = 比特数',
-       part_en='slide 4 (footer 4/16) “Blackboard communication protocol”: the protocol tree, depth = number of bits',
-       why_zh='把黑板协议画成二叉树：每个节点由谁发言只取决于已公开的历史。读论文黑板协议的定义和引理 3 前先看这一页。',
-       why_en='Draws a blackboard protocol as a binary tree where who speaks next depends only on the public history. Look at it before the blackboard definition and Lemma 3.',
-       cards=['blackboard', 'transcript']),
+  dict(id='odonnell-basics', phase='E', lang='en', minutes=None,
+       url=YT + 'mQQ36cDnmR8',
+       src_zh='CMU CS Theory Toolkit · Ryan O’Donnell', src_en='CMU CS Theory Toolkit · Ryan O’Donnell',
+       title_zh='Communication Complexity: Basics', title_en='Communication Complexity: Basics',
+       part_zh='全片：两方通信模型、什么是协议、什么是通信记录（transcript）',
+       part_en='whole video: the two-party model, what a protocol is, what a transcript is',
+       why_zh='论文的非交互协议和黑板协议都是“多方通信协议”。先在最简单的两方模型里弄清两件事：协议按公开历史决定谁发什么，记录就是发出的全部比特。',
+       why_en='The paper’s noninteractive and blackboard protocols are multi-party communication protocols. Learn in the simplest two-party model that a protocol decides who sends what from the public history, and that the transcript is all bits sent.',
+       cards=['noninteractive', 'blackboard', 'transcript', 'budget']),
   dict(id='odonnell23b', phase='E', lang='en', minutes=37,
-       url=YT + 'zFHWmmThdT4', alt=dict(zh='预热：同系列 Communication complexity basics', en='warm-up: Communication complexity basics (same series)', url=YT + 'mQQ36cDnmR8', lang='en'),
+       url=YT + 'zFHWmmThdT4',
        src_zh='CMU CS Theory Toolkit · Ryan O’Donnell', src_en='CMU CS Theory Toolkit · Ryan O’Donnell',
        title_zh='Lecture 23b: Deterministic Communication Complexity（37 分钟）', title_en='Lecture 23b: Deterministic Communication Complexity (37 min)',
        part_zh='从开头看到 “Combinatorial Rectangle / Mondrian style” 讲完；最后的 log-rank 猜想可以跳过',
@@ -166,24 +164,24 @@ STEPS = [
        cards=['rectangle', 'transcript', 'blackboard']),
 
   # ---------- F. 把工具拼成下界 ----------
-  dict(id='ee378c14-lb', phase='F', lang='en', minutes=30, approx=True, slides=True,
-       url=EE378C14,
-       src_zh='Stanford EE378C · 韩彦骏（讲义）', src_en='Stanford EE378C · Yanjun Han (slides)',
-       title_zh='Lecture 14（续）：Tool II = 量化 Fisher 信息 + van Trees', title_en='Lecture 14 (cont.): Tool II = quantized Fisher information + van Trees',
-       part_zh='讲义第 16–20 页：16 量化 Fisher 信息（输出 Y 的 score = 原始 score 的条件期望）→ 17 van Trees 不等式 → 18 推论与交互协议下的张量化 → 19 次高斯 score 时的 Fisher 信息上界 → 20 高斯均值 k 比特的下界',
-       part_en='slides 16–20: 16 quantized Fisher information (score of Y = conditional expectation of the raw score) → 17 van Trees → 18 corollaries and tensorization under interaction → 19 Fisher bounds for sub-Gaussian scores → 20 the k-bit Gaussian-mean lower bound',
-       why_zh='这五页就是论文第 III 节的“独立样本块、单台机器”简化版。先过一遍，再读 III-A 到 III-C 会顺很多；论文的新东西（共享观测、定位成本）则在 III-D、III-E。',
-       why_en='These five slides are the “independent blocks” version of Section III. Read them first and III-A to III-C become much easier; what is new in the paper (shared observations, localization cost) is in III-D and III-E.',
-       cards=['score-identity', 'van-trees', 'chain-rule', 'prior', 'bayes-risk', 'm-lb-easy', 'event-score', 'm-lb-gauss', 'm-lb-assembly', 'bernstein']),
-  dict(id='canonne', phase='F', lang='en', minutes=None, opt=True,
+  dict(id='canonne', phase='F', lang='en', minutes=None,
        url='https://www.itsoc.org/video/estimation-and-hypothesis-testing-under-information-constraints-part-13',
        src_zh='IEEE 信息论学会 · Clément Canonne（2021 港中文 Croucher 暑期课）', src_en='IEEE ITSoc · Clément Canonne (2021 Croucher Summer Course, CUHK)',
        title_zh='Estimation and Hypothesis Testing under Information Constraints（1/3）', title_en='Estimation and Hypothesis Testing under Information Constraints (1/3)',
-       part_zh='第 1 讲（共 3 讲）。进阶选看，适合读完第 III 节之后',
-       part_en='part 1 of 3. Advanced and optional — best after you have read Section III',
-       why_zh='系统介绍通信、本地隐私等信息约束下证 minimax 下界的通用方法，覆盖非交互和交互两种设定。可以用来回答“这篇论文的下界方法和别的方法比怎么样”这类追问。',
-       why_en='A systematic tutorial on proving minimax lower bounds under communication and local-privacy constraints, both noninteractive and interactive. Good preparation for questions like “how does this lower-bound technique compare with others?”.',
-       cards=['minimax', 'lower-upper', 'm-lb-map', 'distributed']),
+       part_zh='第 1 讲（共 3 讲）。建议读完第 II 节、开始读第 III 节时看',
+       part_en='part 1 of 3. Best watched after Section II, as you start Section III',
+       why_zh='这一领域最贴近本文的视频：多台机器在通信、本地隐私等信息约束下做分布式估计，系统介绍证 minimax 下界的通用方法，覆盖非交互和交互两种设定。专讲 van Trees 的好视频没有找到，这一讲是最接近的替代。',
+       why_en='The closest video to this paper: distributed estimation under communication and local-privacy constraints, with general methods for minimax lower bounds in noninteractive and interactive settings. No good video on van Trees itself exists; this is the nearest substitute.',
+       cards=['distributed', 'fusion', 'noninteractive', 'minimax', 'lower-upper', 'm-lb-map', 'm-lb-assembly']),
+  dict(id='loh-lb', phase='F', lang='en', minutes=66, opt=True,
+       url='https://simons.berkeley.edu/talks/title-tba-3',
+       src_zh='Simons Institute 2021 Boot Camp · Po-Ling Loh', src_en='Simons Institute 2021 Boot Camp · Po-Ling Loh',
+       title_zh='Lower Bounds on Statistical Estimation Rates Under Various Constraints（1:06:26）', title_en='Lower Bounds on Statistical Estimation Rates Under Various Constraints (1:06:26)',
+       part_zh='全片：Le Cam、Assouad、Fano 三种下界方法，以及它们在隐私、稳健性等约束下的推广',
+       part_en='whole talk: Le Cam, Assouad and Fano, and their extensions under privacy, robustness and other constraints',
+       why_zh='本文走的是 van Trees（Fisher 信息）路线；这三种是另一大类证下界的方法。看完能回答“为什么不用 Fano 或 Assouad”。',
+       why_en='The paper takes the van Trees (Fisher information) route; these three are the other big family of lower-bound methods. Afterwards you can answer “why not Fano or Assouad?”.',
+       cards=['minimax', 'lower-upper', 'm-lb-map']),
 ]
 
 PHASES = {
@@ -196,13 +194,13 @@ PHASES = {
 }
 
 # Shortest useful path if time is tight.
-QUICK = ['hdp3', 'mit650a', 'mit650c', 'it-p3', 'odonnell23b', 'ee378c14-lb']
+QUICK = ['hdp3', 'mit650a', 'mit650c', 'it-p3', 'odonnell23b']
 
 # Reading page: which steps to show under each section guide, with a section-specific note.
 SECTIONS = {
   'sec-ii-a': [
-    ('ee378c14-setup', '先看这两页图，再读本节的抽样与协议定义。', 'Look at these two slides before reading the sampling and protocol definitions.'),
-    ('ee378c2', '本节黑板协议定义的树状图。', 'A tree picture for this section’s blackboard protocol.'),
+    ('canonne', '这一领域的标准设定：多台机器各发有限比特给中心，非交互与交互协议的区别。', 'The standard setting: machines send few bits to a center; noninteractive vs interactive protocols.'),
+    ('odonnell-basics', '协议和通信记录在最简单的两方模型里是什么意思。', 'What protocols and transcripts mean in the simplest two-party model.'),
   ],
   'sec-ii-b': [
     ('mit650a', '本节开头 score（式 (15) 前后）和 Fisher 信息的定义。', 'The definitions of the score (around Eq. (15)) and Fisher information at the start of this section.'),
@@ -215,12 +213,12 @@ SECTIONS = {
   ],
   'sec-iii-a': [
     ('tsitsiklis12', '式 (75)：记录的 score = 原始 score 的条件期望。', 'Eq. (75): the transcript’s score is a conditional expectation of the raw score.'),
-    ('ee378c14-lb', '第 16–18 页对应本节的得分恒等式和 van Trees (96)–(102)。', 'Slides 16–18 match the score identity and van Trees (96)–(102).'),
+    ('stat110-l28', 'van Trees 的证明核心：(98) 分部积分后，用一次 Cauchy–Schwarz 得到 (101)。', 'The heart of van Trees: after integrating by parts in (98), one Cauchy–Schwarz gives (101).'),
     ('bayes3b1b', '先验、后验是什么（选看）。', 'What prior and posterior mean (optional).'),
   ],
   'sec-iii-b': [
     ('hdp3', '引理 2 控制 Bernstein 条件多出来的平方项。', 'Lemma 2 controls the extra quadratic term of the Bernstein condition.'),
-    ('ee378c14-lb', '第 19 页：次高斯 score 时 Fisher 信息的上界，是本节的简化版。', 'Slide 19: Fisher bounds for sub-Gaussian scores — a simplified version of this section.'),
+    ('hdp2', 'b = 0 的次高斯情形：引理 2 的平方项消失，(137) 只剩熵那一项。', 'The sub-Gaussian case b = 0: Lemma 2’s quadratic term vanishes and (137) keeps only the entropy term.'),
   ],
   'sec-iii-c': [
     ('odonnell23b', '引理 3 的 rectangle 性质。', 'The rectangle property behind Lemma 3.'),
@@ -232,7 +230,7 @@ SECTIONS = {
   ],
   'sec-iii-e': [
     ('it-p3', '熵预算 (118)：H(T|W) = I(Θ;T|W) + H(T|Θ,W)。', 'The entropy budget (118): H(T|W) = I(Θ;T|W) + H(T|Θ,W).'),
-    ('ee378c14-lb', '第 20 页：独立样本时高斯均值的 k 比特下界，可与本节结果对照。', 'Slide 20: the k-bit Gaussian-mean bound with independent samples, to compare with this section.'),
+    ('mit650c', '把“误差 ≳ 1/总信息”和熵预算合在一起，就是本节的主下界。', 'Combine “error ≳ 1/total information” with the entropy budget and you get this section’s main bound.'),
     ('it-p14', '先验的微分熵（选看）。', 'Differential entropy of the prior (optional).'),
   ],
   'sec-iv-b': [
@@ -311,11 +309,6 @@ CLIPS = [
        title_zh='P15 lec-7 Part2：最大熵、Hadamard 不等式等（1:07:36）', title_en='P15 lec-7 Part 2: maximum entropy, Hadamard inequality, … (1:07:36)',
        part_zh='只看开头的“最大熵”部分', part_en='only the maximum-entropy part at the start',
        why_zh='“给定二阶矩，高斯的熵最大”。', why_en='“Given the second moment, the Gaussian has the largest entropy.”'),
-  dict(id='ee378c14-mi', lang='en', minutes=3, approx=True, slides=True, url=EE378C14,
-       src_zh='Stanford EE378C · 韩彦骏（讲义）', src_en='Stanford EE378C · Yanjun Han (slides)',
-       title_zh='Lecture 14 讲义第 8 页：为什么用互信息', title_en='Lecture 14, slide 8: why mutual information',
-       part_zh='第 8 页（页脚 8/26）', part_en='slide 8 (footer 8/26)',
-       why_zh='k 比特的消息，携带的互信息至多 k 比特。', why_en='A k-bit message carries at most k bits of mutual information.'),
 ]
 
 # Short segment label shown in the compact lists (zh, en).
@@ -325,19 +318,19 @@ SEG = {
   'hdp67': ('第 6、7 集（在右侧合集列表选）', 'eps. 6–7 (pick them in the collection list)'),
   'mit650a': ('0:33–17:06', '0:33–17:06'), 'mit650b': ('17:06–27:08', '17:06–27:08'), 'mit650c': ('27:08–32:36', '27:08–32:36'),
   'it-p3': ('P3 全集', 'part 3'), 'it-p4': ('P4 全集', 'part 4'), 'it-p5': ('P5，重点是数据处理不等式', 'part 5, the data-processing part'),
-  'it-p14': ('P14 全集', 'part 14'), 'ee378c14-setup': ('讲义第 4–5 页', 'slides 4–5'), 'ee378c2': ('讲义第 4 页', 'slide 4'),
-  'odonnell23b': ('开头到 rectangle 部分讲完', 'start through the rectangle part'), 'ee378c14-lb': ('讲义第 16–20 页', 'slides 16–20'),
+  'it-p14': ('P14 全集', 'part 14'),
+  'odonnell23b': ('开头到 rectangle 部分讲完', 'start through the rectangle part'),
   'canonne': ('第 1 讲', 'part 1'),
 }
 
 # Chapter-level (h2) guide boxes.
 CHAPTERS = {
-  'sec-i': [('ee378c14-setup', '两页图看懂“分布式估计 + 比特约束”的标准设定。', 'Two slides that set up distributed estimation under bit constraints.'),
-            ('canonne', '这一领域下界方法的全景（进阶，选看）。', 'A panorama of lower-bound methods in this area (advanced, optional).')],
-  'sec-ii': [('ee378c14-setup', 'II-A 的模型和协议。', 'The model and protocols of II-A.'),
+  'sec-i': [('canonne', '这一领域的全景：设定、协议和常见的下界方法。', 'A panorama of the area: setting, protocols, common lower-bound methods.'),
+            ('odonnell-basics', '“协议”和“通信记录”这两个词的含义。', 'What “protocol” and “transcript” mean.')],
+  'sec-ii': [('odonnell-basics', 'II-A 的协议与通信记录。', 'Protocols and transcripts in II-A.'),
              ('mit650a', 'II-B 的 score 与 Fisher 信息。', 'The score and Fisher information of II-B.'),
              ('hdp3', 'II-B 的 Bernstein 假设 (19)。', 'The Bernstein assumption (19) of II-B.')],
-  'sec-iii': [('ee378c14-lb', '整章的“独立样本”简化版：先看它，本章骨架就清楚了。', 'The independent-samples version of this whole chapter; read it first and the skeleton is clear.'),
+  'sec-iii': [('mit650c', '整章的直觉：误差 ≳ 1/(总 Fisher 信息)。本章就是在通信约束下给“总信息”找上界。', 'The intuition of the chapter: error ≳ 1/(total Fisher information); the chapter upper-bounds that information under communication constraints.'),
               ('tsitsiklis12', 'III-A 起点：条件期望。', 'Starting point of III-A: conditional expectation.'),
               ('it-p3', 'III-A、III-C、III-E 的熵和链式法则。', 'Entropy and the chain rule used in III-A, III-C and III-E.'),
               ('odonnell23b', 'III-C 的 rectangle 性质。', 'The rectangle property in III-C.')],
@@ -351,8 +344,9 @@ CHAPTERS = {
 
 # Subsection-level boxes, shown right under the sub-heading, in viewing order.
 SUBS = {
-  'sec-ii-a-s3': dict(items=[('ee378c14-setup', '第 5 页：非交互（SMP）协议和公共 / 私有随机性。', 'Slide 5: noninteractive (SMP) protocols and public / private randomness.')]),
-  'sec-ii-a-s4': dict(items=[('ee378c2', '先看协议树。', 'Look at the protocol tree first.'),
+  'sec-ii-a-s3': dict(items=[('odonnell-basics', '协议 = 每方按自己的输入和公开信息决定发什么；非交互就是大家同时各发一次、互不相看。', 'A protocol: each party decides what to send from its input and public information; noninteractive = everyone sends once, simultaneously, without looking.'),
+                             ('canonne', '非交互 vs 交互、公共 vs 私有随机性在这一领域里的作用。', 'Noninteractive vs interactive, public vs private randomness in this area.')]),
+  'sec-ii-a-s4': dict(items=[('odonnell-basics', '先在两方模型里看“按公开历史决定谁发言”。', 'First see “who speaks next depends on the public history” in the two-party model.'),
                              ('odonnell23b', '再看“协议 = 不断切分输入空间”。', 'Then “a protocol keeps splitting the input space”.')]),
   'sec-ii-b-s1': dict(items=[('mit650-reg', '对照 (16) 的“求导积分可交换”。', 'Compare with swapping derivative and integral in (16).'),
                              ('mit650-proof', '为什么可交换就推出 score 均值为零 (15)。', 'Why that swap gives a mean-zero score (15).')]),
@@ -368,23 +362,23 @@ SUBS = {
              ('stat110-18', '⑦ 选看：算一遍正态的 MGF，验证高斯 score 正好是 b = 0、v = 1。', '⑦ Optional: compute the Normal MGF and check that the Gaussian score has b = 0, v = 1.')]),
   'sec-ii-b-s3': dict(items=[('mit650-mom', '“有界识别矩”= 矩估计里那个能反解出参数的矩。', 'Bounded identifying moments = the moments you can invert in the method of moments.')]),
   'sec-iii-a-s1': dict(items=[('tsitsiklis12', '先把“条件期望是随机变量”想清楚。', 'First make “a conditional expectation is a random variable” clear.'),
-                              ('ee378c14-lb', '讲义第 16 页：同一个恒等式（量化 Fisher 信息）。', 'Slide 16: the same identity (quantized Fisher information).')]),
+                              ('stat110-l27', '“taking out what’s known”：推导 (75) 时把只依赖记录的量提出条件期望。', '“Taking out what’s known”: in deriving (75), pull out quantities that depend only on the transcript.')]),
   'sec-iii-a-s2': dict(items=[('it-p5', '数据处理不等式：(79) 是它的 Fisher 版本。', 'The data-processing inequality; (79) is its Fisher version.'),
-                              ('ee378c14-lb', '讲义第 18 页：交互协议下 Fisher 信息的张量化（链式法则）。', 'Slide 18: tensorization (chain rule) of Fisher information under interaction.')]),
+                              ('it-p3', '熵的链式法则；(80)–(84) 的 Fisher 信息链式法则是同一个结构。', 'The chain rule for entropy; the Fisher-information chain rule in (80)–(84) has the same structure.')]),
   'sec-iii-a-s3': dict(items=[('bayes3b1b', '先验是什么（选看）。', 'What a prior is (optional).'),
                               ('mit650-int', '(86)–(89) 算先验的 Fisher 信息用的就是这个积分。', '(86)–(89) compute the prior’s Fisher information with exactly this integral.'),
                               ('it-p14', '(90)–(95) 算先验的微分熵。', '(90)–(95) compute the prior’s differential entropy.')]),
-  'sec-iii-a-s4': dict(items=[('ee378c14-lb', '讲义第 17 页：van Trees 不等式本身。', 'Slide 17: the van Trees inequality itself.'),
+  'sec-iii-a-s4': dict(items=[('stat110-l28', '(98) 分部积分得到“误差 × score 的平均 = 1”，再用 Cauchy–Schwarz 就出 (101)。专讲 van Trees 的好视频没有找到，这是证明里唯一需要补的工具。', '(98) integrates by parts to get “E[error × score] = 1”; Cauchy–Schwarz then gives (101). No good video on van Trees itself exists; this is the only tool the proof needs.'),
                               ('mit650-asym', '“风险 ≈ 1/信息”的直觉，(101) 是它的非渐近版本。', 'The “risk ≈ 1/information” intuition; (101) is a non-asymptotic version.')]),
   'sec-iii-a-s6': dict(items=[('it-p15', '(109)：给定二阶矩时高斯熵最大。', '(109): the Gaussian maximizes entropy for a given second moment.'),
                               ('it-p4', '(111)：互信息 = 先验熵 − 剩余熵。', '(111): mutual information = prior entropy − remaining entropy.')]),
-  'sec-iii-a-s7': dict(items=[('ee378c14-mi', '(113)：B 比特至多带 B 比特信息。', '(113): B bits carry at most B bits of information.'),
-                              ('it-p3', '(117)–(118)：链式法则拆出熵预算。', '(117)–(118): the chain rule splits off the entropy budget.')]),
+  'sec-iii-a-s7': dict(items=[('it-p3', '(113)：记录最多 2^B 种取值，熵 ≤ B·ln2；(117)–(118)：链式法则拆出熵预算。', '(113): at most 2^B transcripts, so entropy ≤ B·ln2; (117)–(118): the chain rule splits off the entropy budget.'),
+                              ('it-p4', '(113) 的 I ≤ H：互信息不超过熵。', 'The I ≤ H step in (113): mutual information never exceeds entropy.')]),
   'sec-iii-b-s1': dict(items=[('stat110-17', '(120)：独立样本的对数矩母函数相加。', '(120): log-MGFs of independent samples add.'),
                               ('hdp3', '(126)–(134)：用 Bernstein 型 MGF 界选最优的 λ。', '(126)–(134): optimize λ under a Bernstein-type MGF bound.')]),
   'sec-iii-b-s2': dict(items=[('it-p3', '自信息 −log p 的平均就是熵。', 'The average of the self-information −log p is the entropy.')]),
   'sec-iii-d-s1': dict(items=[('it-p4', '条件互信息：多知道共享观测后，记录的熵能少多少。', 'Conditional mutual information: how much transcript entropy is left once the shared data are known.')]),
-  'sec-iii-e-s1': dict(items=[('ee378c14-lb', '讲义第 20 页：独立样本下的同类结论，可对照。', 'Slide 20: the analogous result with independent samples, for comparison.')]),
+  'sec-iii-e-s1': dict(items=[('mit650c', '合并后就是“误差 ≥ d² / 总信息”，再代入熵预算。', 'Combined, this is “error ≥ d² / total information”, then plug in the entropy budget.')]),
   'sec-iv-b-s2': dict(items=[('hdp2', '(265)：用 Hoeffding 控制平均值的波动。', '(265): Hoeffding controls the fluctuation of an average.')]),
   'sec-iv-c-s1': dict(items=[('hdp2', '(323)：Hoeffding 控制一比特测量的误差。', '(323): Hoeffding controls the one-bit measurement error.')]),
 }
@@ -402,15 +396,15 @@ EQS = {
   23: [('stat110-17', '独立样本的 MGF 相乘、对数 MGF 相加。', 'MGFs of independent samples multiply; log-MGFs add.')],
   28: [('mit650-mom', '“由矩反解参数”的原型。', 'The prototype of “invert the moments to get the parameter”.')],
   75: [('tsitsiklis12', '条件期望作为随机变量。', 'Conditional expectation as a random variable.'),
-       ('ee378c14-lb', '讲义第 16 页是同一个恒等式。', 'Slide 16 states the same identity.')],
+       ('stat110-l27', '把只依赖记录的量提出条件期望。', 'Pull quantities that depend only on the transcript out of the conditional expectation.')],
   79: [('it-p5', '熵版本的数据处理不等式，结构相同。', 'The entropy version of data processing has the same structure.')],
   89: [('mit650-int', 'Fisher 信息 = score 平方的积分。', 'Fisher information = integral of the squared score.')],
   95: [('it-p14', '微分熵的定义与计算。', 'Definition and computation of differential entropy.')],
-  101: [('ee378c14-lb', '讲义第 17 页：van Trees 不等式。', 'Slide 17: the van Trees inequality.'),
+  101: [('stat110-l28', '(98) 之后用一次 Cauchy–Schwarz 就得到 (101)。', 'One Cauchy–Schwarz after (98) gives (101).'),
         ('mit650-asym', '直觉：风险 ≈ 1 / 总信息。', 'Intuition: risk ≈ 1 / total information.')],
   109: [('it-p15', '给定二阶矩，高斯熵最大。', 'For a given second moment the Gaussian has maximal entropy.')],
   111: [('it-p4', '互信息 = 熵 − 条件熵。', 'Mutual information = entropy − conditional entropy.')],
-  113: [('ee378c14-mi', 'k 比特 → 至多 k 比特信息。', 'k bits → at most k bits of information.')],
+  113: [('it-p3', '熵 ≤ log(取值个数)：B 比特的记录至多 2^B 种。', 'Entropy ≤ log(number of values): a B-bit transcript takes at most 2^B values.')],
   118: [('it-p3', '链式法则拆出的熵预算。', 'The entropy budget from the chain rule.')],
   120: [('stat110-17', '独立和的对数 MGF 相加。', 'Log-MGFs of independent sums add.')],
   150: [('odonnell23b', 'rectangle 性质。', 'The rectangle property.')],
@@ -460,13 +454,6 @@ CLIPS += [
        title_zh='Lecture 4：全变差距离（TV）与 KL 散度', title_en='Lecture 4: total variation distance and KL divergence',
        part_zh='39:55 TV 的定义 → 46:48 TV 的性质 → 讲座末尾（约 1:05）引出 KL', part_en='39:55 definition of TV → 46:48 its properties → KL near the end (≈1:05)',
        why_zh='', why_en=''),
-  dict(id='berkeley-minimax', lang='en', minutes=15, approx=True, slides=True,
-       url='https://stat210a.berkeley.edu/fall-2025/reader/minimax-estimation.html',
-       src_zh='UC Berkeley Stat 210A 讲义（文字）', src_en='UC Berkeley Stat 210A reader (text)',
-       title_zh='Minimax Estimation', title_en='Minimax Estimation',
-       part_zh='第 1 节“Minimax risk and estimator”与“最不利先验”部分（没有找到讲得好的视频，用讲义代替）',
-       part_en='section 1 “Minimax risk and estimator” and the least-favorable-prior part (no good video found, so a reader instead)',
-       why_zh='', why_en=''),
   _s110(3, 'LZ5Wergp_PA', 'Birthday Problem, Properties of Probability', '开头的生日问题，以及后面的容斥原理', 'the birthday problem at the start, then inclusion–exclusion', '', '', minutes=None),
   _s110(5, 'JzDvVgNDxo8', 'Conditioning Continued, Law of Total Probability', '后半部分的“条件独立（conditional independence）”', 'the conditional-independence part in the second half', '', ''),
   _s110(7, 'PNrqCdslGi4', 'Gambler’s Ruin and Random Variables', '后半部分：随机变量、伯努利分布、二项分布', 'second half: random variables, Bernoulli, Binomial', '', ''),
@@ -503,15 +490,14 @@ SUBS.update({
   'sec-ii-a-s2': dict(items=[('stat110-l8', '(2)：每台机器从 N 条里不放回地取 m 条。', '(2): each machine draws m of the N items without replacement.'),
                              ('stat110-l3', '不同机器的子集会“撞车”，和生日问题一样，重叠比直觉来得早。', 'Subsets of different machines collide; as in the birthday problem, overlaps appear earlier than intuition says.')]),
   'sec-ii-a-s5': dict(items=[('mit650-l4risk', '先弄清单个估计器的平方风险。', 'First, the squared risk of a single estimator.'),
-                             ('berkeley-minimax', '(12) 的 inf–sup 顺序：先对每个方案取最坏参数，再挑最好的方案；以及“贝叶斯风险 ≤ 最坏风险”，这正是第 III 节下界的起点。', 'The inf–sup order in (12): worst parameter for each scheme, then the best scheme; and “Bayes risk ≤ worst-case risk”, the starting point of Section III.')]),
+                             ('fithian-minimax', '(12) 的 inf–sup 顺序：先对每个方案取最坏参数，再挑最好的方案。', 'The inf–sup order in (12): worst parameter for each scheme, then the best scheme.')]),
   'sec-ii-b-s4': dict(items=[('hdp3', '下界只用 (19) 这类 score 条件。', 'The lower bound only uses score conditions like (19).'),
                              ('mit650-mom', '上界只用 (24) 的有界识别矩。', 'The upper bound only uses the identifying moments (24).')]),
-  'sec-ii-c-s1': dict(items=[('mit650c', '直觉：m 条样本能把每维定位到约 1/√m 的精度；把一个数描述到这个精度大约需要 ½·log₂ m 比特，所以 s = B/d − ½·log₂ m 是“定位完还剩多少比特”。', 'Intuition: m samples localize each coordinate to ≈ 1/√m; describing a number to that precision costs ≈ ½·log₂ m bits, so s = B/d − ½·log₂ m is “bits left after localizing”.'),
-                             ('ee378c14-lb', '讲义第 20 页：独立样本时 k 比特高斯均值的结论，可与 a_B = 2^{−2B/d} 对照。', 'Slide 20: the k-bit Gaussian-mean result with independent samples, to compare with a_B = 2^{−2B/d}.')]),
-  'sec-ii-c-s2': dict(items=[('mit650c', '包络里的 1/N、1/(nm) 两项就是“风险 ≈ 1/样本数”。', 'The 1/N and 1/(nm) terms are “risk ≈ 1/sample size”.'),
-                             ('ee378c14-lb', '讲义第 20 页：比特项的来源。', 'Slide 20: where the bit term comes from.')]),
-  'sec-ii-c-s3': dict(items=[('berkeley-minimax', '“上下界同阶”就是 minimax 速率被确定了。', '“Upper and lower bounds of the same order” means the minimax rate is pinned down.'),
-                             ('canonne', '这一领域里上下界通常怎样配对（选看）。', 'How upper and lower bounds are usually matched in this area (optional).')]),
+  'sec-ii-c-s1': dict(items=[('mit650c', '直觉：m 条样本能把每维定位到约 1/√m 的精度；把一个数描述到这个精度大约需要 ½·log₂ m 比特，所以 s = B/d − ½·log₂ m 是“定位完还剩多少比特”。', 'Intuition: m samples localize each coordinate to ≈ 1/√m; describing a number to that precision costs ≈ ½·log₂ m bits, so s = B/d − ½·log₂ m is “bits left after localizing”.')]),
+  'sec-ii-c-s2': dict(items=[('mit650c', '包络里的 1/N、1/(nm) 两项就是“风险 ≈ 1/样本数”。', 'The 1/N and 1/(nm) terms are “risk ≈ 1/sample size”.')]),
+  'sec-ii-c-s3': dict(items=[('fithian-minimax', '“上下界同阶”就是 minimax 速率被确定了。', '“Upper and lower bounds of the same order” means the minimax rate is pinned down.'),
+                             ('canonne', '这一领域里上下界通常怎样配对。', 'How upper and lower bounds are usually matched in this area.'),
+                             ('loh-lb', '选看：其他证下界的方法（Le Cam、Assouad、Fano）。', 'Optional: other lower-bound methods (Le Cam, Assouad, Fano).')]),
   'sec-ii-c-s4': dict(items=[],
       intro_zh='这一小节只是把 m ≍ n^α、N ≍ n^β 代入四项包络，比较哪一项最大，没有对口的视频。建议自己选一组 α、β（例如 α = 1、β = 3）代入 (35)–(42) 算一遍，比看任何视频都快。',
       intro_en='This subsection only plugs m ≍ n^α, N ≍ n^β into the four-term envelope and compares terms; there is no matching video. Pick one α, β (e.g. α = 1, β = 3) and work through (35)–(42) yourself — faster than any video.'),
@@ -523,8 +509,7 @@ SUBS.update({
       intro_zh='这一步是纯代数：把 (203) 两边整理成 2/(Ax) ≤ 2s·ln2 + … + ln x，再利用左边随 x 递减、右边随 x 递增来“取逆”。没有对口的视频，建议在纸上画出两边关于 x 的曲线，看交点在哪里。',
       intro_en='This step is pure algebra: rearrange (203) into 2/(Ax) ≤ 2s·ln2 + … + ln x and invert using that the left side decreases and the right side increases in x. No matching video — sketch both sides as functions of x and look at where they cross.'),
   'sec-iii-e-s3': dict(items=[('hdp3', '被去掉的二次修正项来自 Bernstein 条件里的 b；b = 0（次高斯）时它本来就不存在。', 'The quadratic correction comes from b in the Bernstein condition; with b = 0 (sub-Gaussian) it is absent.')]),
-  'sec-iii-e-s4': dict(items=[('stat110-18', '高斯情形 b = 0、v = 1，常数可以算到底。', 'In the Gaussian case b = 0, v = 1, so constants can be computed explicitly.'),
-                              ('ee378c14-lb', '讲义第 20 页：独立样本时高斯均值的对应结果。', 'Slide 20: the corresponding Gaussian-mean result with independent samples.')]),
+  'sec-iii-e-s4': dict(items=[('stat110-18', '高斯情形 b = 0、v = 1，常数可以算到底。', 'In the Gaussian case b = 0, v = 1, so constants can be computed explicitly.')]),
   'sec-iv-a-s1': dict(items=[('stat110-l8', '(231)–(234)：在自己的子集里不放回地抽编号。', '(231)–(234): draw indices without replacement inside one’s own subset.')]),
   'sec-iv-a-s2': dict(items=[('stat110-l5', '“固定池子后各台独立”= 条件独立；它不等于无条件独立。', '“Independent once the pool is fixed” = conditional independence, which is not unconditional independence.'),
                              ('stat110-l27', '对池子取条件、再求平均的套路（Adam’s law）。', 'Condition on the pool, then average (Adam’s law).')]),
@@ -542,7 +527,7 @@ SUBS.update({
 
 EQS.update({
   2: [('stat110-l8', '均匀的 m 子集 = 不放回抽样。', 'A uniform m-subset = sampling without replacement.')],
-  12: [('berkeley-minimax', 'inf–sup 的读法。', 'How to read the inf–sup.')],
+  12: [('fithian-minimax', 'inf–sup 的读法。', 'How to read the inf–sup.')],
   26: [('stat110-l21', '独立平均的方差 = 单条方差 / N。', 'Variance of an independent average = single variance / N.')],
   35: [('stat110-l9', '指示变量 + 线性性。', 'Indicators + linearity.'), ('stat110-l7', '方括号 = P(Bin(n, m/N) ≥ 2)。', 'The bracket = P(Bin(n, m/N) ≥ 2).')],
   78: [('stat110-l28', '(条件) Jensen 不等式。', '(Conditional) Jensen’s inequality.')],
