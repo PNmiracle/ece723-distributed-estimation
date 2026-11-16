@@ -44,6 +44,9 @@ T = {
              bili_search='', hr='h'),
 }
 
+HINT = {'zh': '{n} 条 · 点击展开', 'en': '{n} items · click to open'}
+HINT0 = {'zh': '点击展开', 'en': 'click to open'}
+
 CSS = """<style id="vid-css">
 .vids{margin:12px 0 4px;border:1px solid #e3d9f3;background:#faf7ff;border-radius:10px;padding:8px 12px 6px;font-size:.9rem;line-height:1.6}
 .vids .vids-h{font-size:.78rem;font-weight:700;letter-spacing:.06em;color:#6b3fa0;margin-bottom:2px}
@@ -68,6 +71,14 @@ CSS = """<style id="vid-css">
 .vids .vk{font-weight:700;color:#6b3fa0;margin-right:2px}
 .vids-eq{margin:8px 0 14px;font-size:.86rem;background:#fcfaff}
 .vids-sub{margin:6px 0 12px}
+details.vids>summary{cursor:pointer;list-style:none;display:block}
+details.vids>summary::-webkit-details-marker{display:none}
+details.vids>summary::before{content:'▸';display:inline-block;width:1em;color:#6b3fa0;transition:transform .15s}
+details.vids[open]>summary::before{transform:rotate(90deg)}
+details.vids:not([open]){padding-bottom:8px}
+details.vids>summary:hover{color:#3d2a6b}
+.vids-hint{font-weight:400;color:#8a7fa3;margin-left:6px;font-size:.74rem;letter-spacing:0}
+details.vids[open] .vids-hint{display:none}
 </style>"""
 
 
@@ -181,8 +192,9 @@ def roadmap(path, L):
         j = t.find('<div class="rels">', m.end())
         nxt = t.find('<article', m.end())
         assert j != -1 and (nxt == -1 or j < nxt), c
-        box = (f'<div class="vids" id="v-{c}" data-hl-ui><div class="vids-h">📺 {tx["vids"]}</div><ol>'
-               + ''.join(item(s, L) for s in ss) + '</ol></div>')
+        box = (f'<details class="vids" id="v-{c}" data-hl-ui><summary class="vids-h">📺 {tx["vids"]}'
+               f'<span class="vids-hint">{HINT[L].format(n=len(ss))}</span></summary><ol>'
+               + ''.join(item(s, L) for s in ss) + '</ol></details>')
         t = t[:j] + wrap('c-' + c, box) + t[j:]
         count += 1
     open(path, 'w', encoding='utf-8').write(t)
@@ -213,8 +225,9 @@ def reading(path, L, roadmap_href):
         ge = t.find('</aside>', g)
         lis = ''.join(item(BYID[sid], L, note=(zh if L == 'zh' else en), roadmap_href=roadmap_href).replace(
             '<a class="vstep" href=', '<a class="vstep" target="_blank" href=') for sid, zh, en in rows)
-        box = (f'<div class="vids" id="v-{sec}" data-hl-ui><div class="vids-h">📺 {tx["sec_title"]}</div><ol>{lis}</ol>'
-               f'<div class="vids-more"><a href="{roadmap_href}#videos" target="_blank">{tx["path"]}</a></div></div>')
+        box = (f'<details class="vids" id="v-{sec}" data-hl-ui><summary class="vids-h">📺 {tx["sec_title"]}'
+               f'<span class="vids-hint">{HINT[L].format(n=len(rows))}</span></summary><ol>{lis}</ol>'
+               f'<div class="vids-more"><a href="{roadmap_href}#videos" target="_blank">{tx["path"]}</a></div></details>')
         t = t[:ge] + wrap(sec, box) + t[ge:]
         count += 1
     open(path, 'w', encoding='utf-8').write(t)
@@ -222,9 +235,9 @@ def reading(path, L, roadmap_href):
 
 
 R = {
-  'zh': dict(ch='本章配套视频（按顺序看）', sub='读这一小节前，按顺序看', eq='看不懂式 ({n})？按顺序看',
+  'zh': dict(ch='本章配套视频（按顺序看）', sec='本节配套视频（按顺序看）', none='这一小节没有对口视频：怎么读', sub='读这一小节前，按顺序看', eq='看不懂式 ({n})？按顺序看',
              watch='看哪部分', why='为什么看', tot='必看约 {core}', tot_opt='，选看另约 {opt}', untimed='，另有未计时的片段'),
-  'en': dict(ch='Companion videos for this chapter (in order)', sub='Before reading this subsection, watch in order', eq='Stuck on Eq. ({n})? Watch in order',
+  'en': dict(ch='Companion videos for this chapter (in order)', sec='Companion videos for this section (in order)', none='No matching video for this subsection: how to read it', sub='Before reading this subsection, watch in order', eq='Stuck on Eq. ({n})? Watch in order',
              watch='Watch', why='Why', tot='core ≈ {core}', tot_opt=', optional ≈ {opt}', untimed=', plus some untimed parts'),
 }
 
@@ -256,12 +269,16 @@ def totals(rows, L):
 
 def box(key, cls, title, rows, L, intro='', roadmap_href=''):
     lis = ''.join(rich(i, L, zh if L == 'zh' else en) for i, zh, en in rows)
-    tot = totals(rows, L)
-    paren = f'（{tot}）' if L == 'zh' else f' ({tot})'
+    paren = ''
+    if rows:
+        tot = totals(rows, L)
+        paren = f'（{tot}）' if L == 'zh' else f' ({tot})'
+    hint = HINT[L].format(n=len(rows)) if rows else HINT0[L]
     intro_html = f'<div class="vids-intro">{E(intro)}</div>' if intro else ''
     more = f'<div class="vids-more"><a href="{roadmap_href}#videos" target="_blank">{T[L]["path"]}</a></div>' if roadmap_href else ''
-    return (f'<div class="vids {cls}" id="v-{key}" data-hl-ui><div class="vids-h">📺 {E(title)}{E(paren)}</div>'
-            f'{intro_html}<ol>{lis}</ol>{more}</div>')
+    ol = f'<ol>{lis}</ol>' if rows else ''
+    return (f'<details class="vids {cls}" id="v-{key}" data-hl-ui><summary class="vids-h">📺 {E(title)}{E(paren)}'
+            f'<span class="vids-hint">{hint}</span></summary>{intro_html}{ol}{more}</details>')
 
 
 def reading_fine(path, L, roadmap_href):
@@ -276,12 +293,13 @@ def reading_fine(path, L, roadmap_href):
         if g == -1 or (nxt != -1 and g > nxt):
             print('  no chapter guide for', sec); continue
         ge = t.find('</aside>', g)
-        t = t[:ge] + wrap('ch-' + sec, box('ch-' + sec, 'vids-ch', r['ch'], rows, L, roadmap_href=roadmap_href)) + t[ge:]
+        title = r['ch'] if 'unit-h2' in m.group(0) else r['sec']
+        t = t[:ge] + wrap('ch-' + sec, box('ch-' + sec, 'vids-ch', title, rows, L, roadmap_href=roadmap_href)) + t[ge:]
         n_ch += 1
     for sub, d in SUBS.items():
         m = re.search(r'<h4 class="sub-h" id="' + re.escape(sub) + r'">.*?</h4>', t, re.S)
         assert m, sub
-        b = box(sub, 'vids-sub', r['sub'], d['items'], L, intro=d.get('intro_' + L, ''))
+        b = box(sub, 'vids-sub', r['sub'] if d['items'] else r['none'], d['items'], L, intro=d.get('intro_' + L, ''))
         t = t[:m.end()] + wrap('sub-' + sub, b) + t[m.end():]
         n_sub += 1
     for n, rows in EQS.items():
