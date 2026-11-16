@@ -32,6 +32,7 @@ body.edit-on .hl-ui-float{display:none!important}
 .hl-saved{font-size:.75rem;color:#1f7a55;opacity:0;transition:opacity .3s}.hl-saved.on{opacity:1}
 .hl-open{margin-right:6px}
 .hl-open b{display:inline-block;min-width:1.2em;margin-left:3px;padding:0 5px;border-radius:9px;background:#ffe98a;color:#5a4300;font-size:.75rem}
+button.hl-mode[aria-pressed=true]{background:#ffe98a;color:#5a4300;border-color:#d8ae38}
 .hl-panel{position:fixed;top:0;right:0;bottom:0;z-index:41;width:min(420px,100vw);background:#fff;border-left:1px solid var(--line,#dde5ef);box-shadow:-10px 0 30px rgba(20,40,80,.12);display:flex;flex-direction:column}
 .hl-panel header{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line,#dde5ef)}
 .hl-panel header h3{margin:0;font-size:1rem;flex:1}
@@ -52,4 +53,4 @@ body.edit-on .hl-ui-float{display:none!important}
 .hl-panel footer{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line,#dde5ef)}
 .hl-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:50;background:#1f2a3c;color:#fff;border-radius:9px;padding:7px 14px;font:.86rem/1.4 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;box-shadow:0 8px 24px rgba(10,20,40,.25)}
 @media (max-width:640px){.hl-panel{top:auto;height:78vh;width:100vw;border-left:0;border-top:1px solid var(--line,#dde5ef);border-radius:14px 14px 0 0}}
-@media print{.hl-ui,.hl-badge,.hl-plus{display:none!important}mark.hl{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+@media print{.hl-ui,.hl-badge,.hl-plus,.hl-mode{display:none!important}mark.hl{-webkit-print-color-adjust:exact;print-color-adjust:exact}}

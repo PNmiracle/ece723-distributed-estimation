@@ -7,6 +7,7 @@
   const EN = (document.documentElement.lang || '').startsWith('en');
   const T = EN ? {
     btn: '🖍 Notes', title: 'My highlights & notes', note: 'Note', add: '＋ Note', ph: 'Write a note… (saved automatically)',
+    auto: 'Auto highlight', autoTip: 'Toggle continuous yellow highlighting (Shift+Q)',
     del: 'Delete', copy: 'Copy text', close: 'Close', saved: 'Saved', md: 'Export Markdown', cp: 'Copy all', bak: 'Back up (JSON)',
     imp: 'Restore', clr: 'Clear all', sure: 'Click again to clear', onlyN: 'With notes only', all: 'All',
     empty: 'Nothing yet. Select any text to highlight it, or hover over a formula / scanned paragraph and click “＋ Note”.<br>Shortcuts with text selected: <b>H</b> highlight, <b>N</b> highlight + note.',
@@ -14,6 +15,7 @@
     hdr: 'My notes', src: 'Source', when: 'Exported', none: '(no note)', jump: 'open'
   } : {
     btn: '🖍 笔记', title: '我的高亮与笔记', note: '笔记', add: '＋ 笔记', ph: '写点笔记…（自动保存）',
+    auto: '连续高亮', autoTip: '开关连续黄色高亮（Shift+Q）',
     del: '删除', copy: '复制原文', close: '关闭', saved: '已保存', md: '导出 Markdown', cp: '复制全部', bak: '备份 (JSON)',
     imp: '恢复备份', clr: '清空', sure: '再点一次确认清空', onlyN: '只看有笔记的', all: '全部',
     empty: '还没有内容。选中任意文字即可高亮；把鼠标移到公式或扫描段落上，点“＋ 笔记”即可给整块加笔记。<br>选中文字后的快捷键：<b>H</b> 高亮，<b>N</b> 高亮并写笔记。',
@@ -176,9 +178,23 @@
     el.style.left = x + 'px'; el.style.top = y + 'px';
   };
 
-  /* ---------- selection → toolbar ---------- */
-  let selRange = null;
+  /* ---------- selection → toolbar or continuous highlight ---------- */
+  let selRange = null, continuous = false, selT;
+  const mode = mk('button', 'hl-mode', T.auto);
+  mode.type = 'button'; mode.title = T.autoTip;
+  mode.setAttribute('aria-keyshortcuts', 'Shift+Q');
+  mode.setAttribute('aria-pressed', 'false');
+  function setContinuous(on) {
+    continuous = on;
+    mode.setAttribute('aria-pressed', String(on));
+    clearTimeout(selT);
+    bar.hidden = true; selRange = null;
+    if (currentRange()) getSelection().removeAllRanges();
+  }
+  mode.addEventListener('click', () => setContinuous(!continuous));
+
   function currentRange() {
+    if (document.body.classList.contains('edit-on')) return null;
     const s = getSelection(); if (!s || s.isCollapsed || !s.rangeCount) return null;
     const r = s.getRangeAt(0);
     if (!MAIN.contains(r.commonAncestorContainer)) return null;
@@ -187,21 +203,32 @@
     if (!s.toString().trim()) return null;
     return r;
   }
-  function showBar() {
-    if (document.body.classList.contains('edit-on')) return;
+  function finishSelection() {
     const r = currentRange(); if (!r) { bar.hidden = true; return; }
+    if (continuous) return create('y', false, r);
     selRange = r.cloneRange();
     const rects = r.getClientRects(); const rect = rects.length ? rects[rects.length - 1] : r.getBoundingClientRect();
     const touch = matchMedia('(pointer:coarse)').matches;
     placeAt(bar, touch ? r.getBoundingClientRect() : rect, touch);
   }
-  let selT; const queueBar = () => { clearTimeout(selT); selT = setTimeout(showBar, 180); };
-  document.addEventListener('mouseup', e => { if (!tgt(e).closest('[data-hl-ui]')) queueBar(); });
-  document.addEventListener('keyup', e => { if (e.shiftKey || e.key.startsWith('Arrow')) queueBar(); });
-  document.addEventListener('selectionchange', () => { if (matchMedia('(pointer:coarse)').matches) queueBar(); else if (getSelection().isCollapsed) bar.hidden = true; });
+  const queueSelection = () => {
+    clearTimeout(selT);
+    // Let the mouse click finish before clearing the selection, and give touch
+    // readers time to adjust the native selection handles.
+    const delay = continuous ? (matchMedia('(pointer:coarse)').matches ? 400 : 35) : 180;
+    selT = setTimeout(finishSelection, delay);
+  };
+  document.addEventListener('mouseup', e => { if (e.button === 0 && !tgt(e).closest('[data-hl-ui]')) queueSelection(); });
+  document.addEventListener('keyup', e => {
+    if (continuous ? e.key === 'Shift' : (e.shiftKey || e.key.startsWith('Arrow'))) queueSelection();
+  });
+  document.addEventListener('selectionchange', () => {
+    if (getSelection().isCollapsed) bar.hidden = true;
+    else if (matchMedia('(pointer:coarse)').matches) queueSelection();
+  });
 
-  function create(color, withNote) {
-    const r = selRange || currentRange(); if (!r) return;
+  function create(color, withNote, r = selRange || currentRange()) {
+    if (!r) return;
     const root = anchorOf(r.commonAncestorContainer);
     const start = posOf(root, r.startContainer, r.startOffset), end = posOf(root, r.endContainer, r.endOffset);
     const txt = fullText(root); const text = txt.slice(start, end);
@@ -219,9 +246,13 @@
     if (a.dataset.a === 'copy') { const t = (selRange || currentRange() || '').toString(); copyText(t); bar.hidden = true; }
   });
   document.addEventListener('keydown', e => {
-    if (tgt(e).closest('input, textarea, [contenteditable="true"]')) return;
-    if (e.key === 'Escape') { bar.hidden = true; pop.hidden = true; plus.hidden = true; if (!panel.hidden) closePanel(); return; }
+    if (e.isComposing || tgt(e).closest('input, textarea, select, [contenteditable="true"]')) return;
+    if (e.key === 'Escape') { if (continuous) setContinuous(false); bar.hidden = true; pop.hidden = true; plus.hidden = true; if (!panel.hidden) closePanel(); return; }
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.shiftKey && e.key.toLowerCase() === 'q') {
+      if (!e.repeat) { e.preventDefault(); setContinuous(!continuous); }
+      return;
+    }
     if ((e.key === 'h' || e.key === 'H' || e.key === 'n' || e.key === 'N') && currentRange()) { e.preventDefault(); selRange = currentRange().cloneRange(); create('y', e.key.toLowerCase() === 'n'); }
   });
 
@@ -290,7 +321,7 @@
   /* ---------- notes panel ---------- */
   const open = mk('button', 'hl-open', `${T.btn}<b>0</b>`); open.type = 'button';
   const host = document.querySelector('.langsw');
-  if (host) host.parentNode.insertBefore(open, host); else document.body.appendChild(open);
+  if (host) { host.before(open, mode); } else document.body.append(open, mode);
   function updCount() { open.querySelector('b').textContent = items.length; }
   const panel = mk('div', 'hl-ui hl-panel', `<header><h3>${T.title}</h3><button type="button" class="hl-btn" data-a="close">✕</button></header>
     <div class="hl-filters"><button type="button" class="hl-btn" data-f="all">${T.all}</button>${dots()}<label><input type="checkbox" data-f="notes"> ${T.onlyN}</label></div>
