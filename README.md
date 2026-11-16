@@ -7,7 +7,7 @@ This site extracts the knowledge the paper relies on — every concept, symbol a
 | Page | What it is |
 |---|---|
 | [Learning path](https://pnmiracle.github.io/ece723-distributed-estimation/roadmap-en.html) | 86 cards in dependency order, from math notation to the end of the lower-bound proof. Plain-language “what / why / how” first, then a rigorous explanation with prerequisites and step-by-step derivations, and a table of every symbol. Includes a clickable concept map. |
-| [Guided reading](https://pnmiracle.github.io/ece723-distributed-estimation/reading-en.html) | The original paper text with all 492 equations, a one-page overview, a guide for every section, and clickable term definitions. |
+| [Guided reading](https://pnmiracle.github.io/ece723-distributed-estimation/reading-en.html) | The paper text as real, selectable text in the paper's own typeface (inline math in KaTeX; copying gives `$TeX$`) with all 492 equations, a one-page overview, a guide for every section, foldable plain-word boxes with English/Chinese symbol readings, intuition notes on the hardest paragraphs, clickable term definitions, a multi-level contents tree with every subheading, and ⌘K / Ctrl+K to jump to any equation or heading. |
 | [Original + Chinese translation](https://pnmiracle.github.io/ece723-distributed-estimation/bilingual.html?view=en) | Scanned original pages next to a Chinese translation; switch between English only, both, or Chinese only. |
 | [Lecture review](https://pnmiracle.github.io/ece723-distributed-estimation/lecture-review.html?lang=en) | The lecture that introduced the paper, split into seven segments with summaries, plain-language explanations, takeaways, English expressions from class and self-check questions (English / Chinese / both). |
 

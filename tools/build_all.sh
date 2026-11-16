@@ -4,6 +4,7 @@
 #                         bash tools/build_all.sh sec-v-c    # just one section
 set -e
 cd "$(dirname "$0")/.."
+ONLY="$1"
 
 # section            next anchor   data file              PART (only for sec-vi.js)
 SECTIONS="
@@ -30,10 +31,10 @@ appendix             recap         sec-vi.js              app
 
 echo "$SECTIONS" | while read -r sec next data part; do
   [ -z "$sec" ] && continue
-  [ -n "$1" ] && [ "$1" != "$sec" ] && continue
+  [ -n "$ONLY" ] && [ "$ONLY" != "$sec" ] && continue
   [ "$part" = "-" ] && part=""
   for pair in "reading.html zh" "reading-en.html en"; do
-    set -- $pair
-    PART="$part" node tools/build.js "$1" "$2" "$sec" "$next" "tools/data/$data"
+    page=${pair% *}; lang=${pair#* }
+    PART="$part" node tools/build.js "$page" "$lang" "$sec" "$next" "tools/data/$data"
   done
 done

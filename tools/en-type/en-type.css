@@ -1,0 +1,44 @@
+/* English page: the paper's own typeface (Times / Nimbus Roman → TeX Gyre Termes) everywhere, math stays in KaTeX's
+   Computer Modern like the PDF. Sizes are in rem/em so they follow browser zoom and the reader's text-size setting. */
+@font-face{font-family:"TeX Gyre Termes";src:url(fonts/termes-regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"TeX Gyre Termes";src:url(fonts/termes-italic.woff) format("woff");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"TeX Gyre Termes";src:url(fonts/termes-bold.woff) format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"TeX Gyre Termes";src:url(fonts/termes-bolditalic.woff) format("woff");font-weight:700;font-style:italic;font-display:swap}
+:root{--serif:"TeX Gyre Termes","Nimbus Roman","Nimbus Roman No9 L","Times New Roman",Times,serif}
+html[lang="en"] body,html[lang="en"] body *:not(.katex):not(.katex *){font-family:var(--serif)!important}
+html[lang="en"] .katex{font-size:1.04em}
+html[lang="en"] main{max-width:44rem}
+/* paper text */
+html[lang="en"] .paper,html[lang="en"] .overview,html[lang="en"] .recap{font-size:1.125rem;line-height:1.6;color:#141c2a}
+.para.english p{margin:0 0 .8em;text-align:justify;hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
+.para.english .katex-display{margin:.5em 0}
+.para.english .reference{font-size:1rem;line-height:1.5;text-align:left}
+.para.abstract p,.para.index-terms p{font-size:1.0625rem}
+.qed{float:right;margin-left:.6em;font-size:.95em}
+.paper-table{margin:1.1em auto 1.5em;border-collapse:collapse;font-size:1rem}
+.paper-table caption{caption-side:top;font-size:.92rem;font-variant:small-caps;letter-spacing:.02em;line-height:1.45;margin-bottom:.55em;padding:0 1em}
+.paper-table .tcap-n{display:block;font-variant:normal;letter-spacing:.06em;margin-bottom:.15em}
+.paper-table th,.paper-table td{padding:.3em 1em;text-align:left;vertical-align:baseline}
+.paper-table th{font-weight:700}
+.paper-table thead tr{border-top:1.5px solid #222;border-bottom:1px solid #222}
+.paper-table tbody tr:last-child{border-bottom:1.5px solid #222}
+/* headings */
+html[lang="en"] .unit-h2>.sec-h{font-size:1.6rem;font-variant:small-caps;letter-spacing:.02em}
+html[lang="en"] .unit-h3>.sec-h{font-size:1.3rem;font-style:italic}
+/* guides and plain-word boxes */
+html[lang="en"] .guide{font-size:1.0625rem;line-height:1.6}
+html[lang="en"] .plain{font-size:1.0625rem;line-height:1.6}
+html[lang="en"] .plain-syms{font-size:.95em}
+html[lang="en"] .sym-say{font-size:.86em}
+html[lang="en"] .plain-sub{font-size:.8rem;letter-spacing:.06em}
+html[lang="en"] .guide-tag,html[lang="en"] .plain-tag{font-size:.8rem;letter-spacing:.05em}
+html[lang="en"] .howto{font-size:1rem;line-height:1.6}
+html[lang="en"] .ov-card{font-size:1.0625rem;line-height:1.6}
+html[lang="en"] .ov-table{font-size:1rem}
+/* chrome */
+html[lang="en"] .sidebar{font-size:.95rem}
+html[lang="en"] .tools button,html[lang="en"] .tools input,html[lang="en"] .tlink{font-size:.92rem}
+html[lang="en"] .brand small{font-size:.85rem}
+html[lang="en"] .tools{gap:6px}
+html[lang="en"] .tools button{padding:4px 8px}
+@media (max-width:1500px){html[lang="en"] .brand small{display:none}}

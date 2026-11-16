@@ -24,7 +24,7 @@
   const CC = {y: '#ffd84a', g: '#86d993', b: '#8fc0ff', p: '#ff9cc2'};
   const CNAME = EN ? {y: 'yellow', g: 'green', b: 'blue', p: 'pink'} : {y: '黄', g: '绿', b: '蓝', p: '粉'};
   const SKIP = '.katex-mathml, script, style, [data-hl-ui], .hl-ui';
-  const BLOCKS = 'figure.equation, .english-scan';
+  const BLOCKS = 'figure.equation';
 
   /* ---------- storage ---------- */
   let items = [];
@@ -317,6 +317,7 @@
   function jumpTo(it) {
     const el = it.kind === 'block' ? blockEl(it) : document.querySelector(`[data-hl="${it.id}"]`);
     if (!el) return;
+    const fold = el.closest && el.closest('.plain.folded'); if (fold) fold.classList.remove('folded');
     el.scrollIntoView({block: 'center', behavior: 'smooth'});
     const fl = it.kind === 'block' ? [el] : [...document.querySelectorAll(`[data-hl="${it.id}"]`)];
     fl.forEach(x => { x.classList.remove('hl-flash'); void x.offsetWidth; x.classList.add('hl-flash'); });

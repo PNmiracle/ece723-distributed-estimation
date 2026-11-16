@@ -1,0 +1,21 @@
+/* subheadings inside the paper text: own line, larger, bold */
+.sub-h{display:block;font-size:1.12em;font-weight:700;line-height:1.4;margin:1.5em 0 .45em;color:var(--ink);scroll-margin-top:calc(var(--bar) + 18px)}
+.sub-h.minor{font-size:1em;font-style:italic;margin:1.15em 0 .3em;color:#2b3a52}
+html:not([lang="en"]) .sub-h{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+html:not([lang="en"]) .sub-h.minor{font-style:normal}
+.sub-h:target{color:var(--blue)}
+/* multi-level contents */
+#sections nav{padding-left:16px}
+#sections .toc-group,#sections .toc-node{position:relative}
+.toc-tw{position:absolute;left:-17px;top:4px;width:16px;height:20px;padding:0;border:0;background:none;color:var(--muted);cursor:pointer;font-size:.7rem;line-height:20px;text-align:center;border-radius:4px}
+.toc-tw:hover{background:var(--blue-soft);color:#173f72}
+.toc-tw::before{content:"▾"}
+.closed>.toc-tw::before{content:"▸"}
+#sections .closed>.toc-sub,#sections .closed>.toc-kids{display:none}
+#sections nav a.toc-l1{font-size:.92rem;font-weight:700;color:var(--ink);margin-top:4px}
+#sections .toc-sub>a,#sections .toc-sub>.toc-node>a{font-size:.85rem;font-weight:500;color:#33435c}
+#sections .toc-kids{display:grid;gap:0;margin:0 0 3px 9px;padding-left:6px;border-left:1px dotted #c8d3e2}
+#sections nav a.toc-l3{font-size:.79rem;font-weight:400;color:var(--muted);padding:3px 8px;line-height:1.35}
+#sections nav a.toc-l4{font-size:.76rem;font-style:italic;color:#7a8698;padding:2px 8px;line-height:1.35}
+html:not([lang="en"]) #sections nav a.toc-l4{font-style:normal}
+#sections nav a.active{background:var(--blue-soft);color:#173f72}

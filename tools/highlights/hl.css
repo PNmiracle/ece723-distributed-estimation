@@ -8,7 +8,6 @@ mark.hl.hl-flash,.katex.hl-flash,.hl-block.hl-flash{animation:hlflash 1.2s ease 
 .hl-block{outline:3px solid transparent;outline-offset:3px;border-radius:6px;position:relative}
 .hl-block.hl-c-y{background:transparent;outline-color:#ffd84a}.hl-block.hl-c-g{background:transparent;outline-color:#86d993}
 .hl-block.hl-c-b{background:transparent;outline-color:#8fc0ff}.hl-block.hl-c-p{background:transparent;outline-color:#ff9cc2}
-.english-scan .hl-badge{left:auto;right:4px}
 .hl-badge{position:absolute;top:4px;left:4px;z-index:2;font:600 .72rem/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#fff;border:1px solid #d8c27a;color:#7a5a00;border-radius:10px;padding:3px 7px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)}
 body.edit-on .hl-ui-float{display:none!important}
 .hl-ui{font:.88rem/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink,#162339)}
