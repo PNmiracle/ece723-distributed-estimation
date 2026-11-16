@@ -63,6 +63,10 @@ and paper sections it supports. `videos/inject.py` writes them into the pages:
   a top-bar link, and a "Recommended videos" box in each related card;
 - **reading.html / reading-en.html** — a "Companion videos" box at the end of the related section guides,
   a pointer in the one-page overview and a top-bar link.
+  Finer-grained boxes too: chapter guides (`CHAPTERS`), right under sub-headings (`SUBS`, an ordered
+  prerequisite list, e.g. `sec-ii-b-s2` for the Bernstein score condition) and right under the
+  plain-language box of key equations (`EQS`). Each item says what to watch, how long, and why.
+  Extra clips used only on the reading pages live in `CLIPS`.
 
 After editing `data.py`:
 

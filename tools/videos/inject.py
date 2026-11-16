@@ -17,9 +17,9 @@ import html, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE)
-from data import STEPS, PHASES, QUICK, SECTIONS  # noqa: E402
+from data import STEPS, PHASES, QUICK, SECTIONS, CLIPS, CHAPTERS, SUBS, EQS  # noqa: E402
 
-BYID = {s['id']: s for s in STEPS}
+BYID = {s['id']: s for s in STEPS + CLIPS}
 ORDER = {s['id']: i + 1 for i, s in enumerate(STEPS)}
 E = html.escape
 
@@ -64,6 +64,10 @@ CSS = """<style id="vid-css">
 .vp-n{font-weight:800;font-size:1.1rem;color:#6b3fa0;text-align:right}
 .vp-body .chips{margin-top:4px}
 .vp-k{font-size:.74rem;font-weight:700;color:#8a7fa3;margin-right:4px}
+.vids-intro{margin:2px 0 4px;color:#3d3650}
+.vids .vk{font-weight:700;color:#6b3fa0;margin-right:2px}
+.vids-eq{margin:8px 0 14px;font-size:.86rem;background:#fcfaff}
+.vids-sub{margin:6px 0 12px}
 </style>"""
 
 
@@ -217,9 +221,88 @@ def reading(path, L, roadmap_href):
     print(f'{path}: {count} sections')
 
 
+R = {
+  'zh': dict(ch='本章配套视频（按顺序看）', sub='读这一小节前，按顺序看', eq='看不懂式 ({n})？按顺序看',
+             watch='看哪部分', why='为什么看', tot='必看约 {core}', tot_opt='，选看另约 {opt}', untimed='，另有未计时的片段'),
+  'en': dict(ch='Companion videos for this chapter (in order)', sub='Before reading this subsection, watch in order', eq='Stuck on Eq. ({n})? Watch in order',
+             watch='Watch', why='Why', tot='core ≈ {core}', tot_opt=', optional ≈ {opt}', untimed=', plus some untimed parts'),
+}
+
+
+def rich(sid, L, note):
+    s = BYID[sid]
+    r = R[L]
+    head = (f'<a class="vt" href="{E(s["url"])}" target="_blank" rel="noopener">{E(s["title_" + L])}</a>'
+            f'{badges(s, L)}<div class="vid-src">{E(s["src_" + L])}</div>')
+    part = f'<div class="vid-part"><span class="vk">▶ {r["watch"]}：</span>{E(s["part_" + L])}</div>' if L == 'zh' else \
+           f'<div class="vid-part"><span class="vk">▶ {r["watch"]}:</span> {E(s["part_" + L])}</div>'
+    sep = '：' if L == 'zh' else ': '
+    why = f'<div class="vid-why"><span class="vk">💡 {r["why"]}{sep}</span>{E(note)}</div>'
+    return f'<li>{head}{part}{why}{extra_links(s, L)}</li>'
+
+
+def totals(rows, L):
+    core = sum(BYID[i]['minutes'] or 0 for i, *_ in rows if not BYID[i].get('opt'))
+    opt = sum(BYID[i]['minutes'] or 0 for i, *_ in rows if BYID[i].get('opt'))
+    unk = any(BYID[i]['minutes'] is None for i, *_ in rows)
+    r = R[L]
+    out = r['tot'].format(core=fmt_min(core, L))
+    if opt:
+        out += r['tot_opt'].format(opt=fmt_min(opt, L))
+    if unk:
+        out += r['untimed']
+    return out
+
+
+def box(key, cls, title, rows, L, intro='', roadmap_href=''):
+    lis = ''.join(rich(i, L, zh if L == 'zh' else en) for i, zh, en in rows)
+    tot = totals(rows, L)
+    paren = f'（{tot}）' if L == 'zh' else f' ({tot})'
+    intro_html = f'<div class="vids-intro">{E(intro)}</div>' if intro else ''
+    more = f'<div class="vids-more"><a href="{roadmap_href}#videos" target="_blank">{T[L]["path"]}</a></div>' if roadmap_href else ''
+    return (f'<div class="vids {cls}" id="v-{key}" data-hl-ui><div class="vids-h">📺 {E(title)}{E(paren)}</div>'
+            f'{intro_html}<ol>{lis}</ol>{more}</div>')
+
+
+def reading_fine(path, L, roadmap_href):
+    t = open(path, encoding='utf-8').read()
+    r = R[L]
+    n_ch = n_sub = n_eq = 0
+    for sec, rows in CHAPTERS.items():
+        m = re.search(r'<section class="unit[^"]*" id="' + re.escape(sec) + r'"[^>]*>', t)
+        assert m, sec
+        g = t.find('<aside class="guide">', m.end())
+        nxt = t.find('<section class="unit', m.end())
+        if g == -1 or (nxt != -1 and g > nxt):
+            print('  no chapter guide for', sec); continue
+        ge = t.find('</aside>', g)
+        t = t[:ge] + wrap('ch-' + sec, box('ch-' + sec, 'vids-ch', r['ch'], rows, L, roadmap_href=roadmap_href)) + t[ge:]
+        n_ch += 1
+    for sub, d in SUBS.items():
+        m = re.search(r'<h4 class="sub-h" id="' + re.escape(sub) + r'">.*?</h4>', t, re.S)
+        assert m, sub
+        b = box(sub, 'vids-sub', r['sub'], d['items'], L, intro=d.get('intro_' + L, ''))
+        t = t[:m.end()] + wrap('sub-' + sub, b) + t[m.end():]
+        n_sub += 1
+    for n, rows in EQS.items():
+        m = re.search(r'<figure class="equation" id="eq-%d">.*?</figure>' % n, t, re.S)
+        assert m, n
+        end = m.end()
+        a = re.match(r'\s*<aside class="plain">.*?</aside>', t[end:], re.S)
+        if a:
+            end += a.end()
+        b = box('eq-%d' % n, 'vids-eq', r['eq'].format(n=n), rows, L)
+        t = t[:end] + wrap('eq-%d' % n, b) + t[end:]
+        n_eq += 1
+    open(path, 'w', encoding='utf-8').write(t)
+    print(f'{path}: +{n_ch} chapters, {n_sub} subsections, {n_eq} equations')
+
+
 if __name__ == '__main__':
     os.chdir(ROOT)
     roadmap('roadmap.html', 'zh')
     roadmap('roadmap-en.html', 'en')
     reading('reading.html', 'zh', 'roadmap.html')
     reading('reading-en.html', 'en', 'roadmap-en.html')
+    reading_fine('reading.html', 'zh', 'roadmap.html')
+    reading_fine('reading-en.html', 'en', 'roadmap-en.html')
