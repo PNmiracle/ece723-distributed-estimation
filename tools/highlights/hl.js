@@ -7,7 +7,7 @@
   const EN = (document.documentElement.lang || '').startsWith('en');
   const T = EN ? {
     btn: '🖍 Notes', title: 'My highlights & notes', note: 'Note', add: '＋ Note', ph: 'Write a note… (saved automatically)',
-    auto: 'Auto highlight', autoTip: 'Toggle continuous yellow highlighting (Shift+Q)',
+    auto: 'Auto highlight', autoTip: 'Toggle continuous yellow highlighting (Option+Q / Alt+Q)',
     del: 'Delete', copy: 'Copy text', close: 'Close', saved: 'Saved', md: 'Export Markdown', cp: 'Copy all', bak: 'Back up (JSON)',
     imp: 'Restore', clr: 'Clear all', sure: 'Click again to clear', onlyN: 'With notes only', all: 'All',
     empty: 'Nothing yet. Select any text to highlight it, or hover over a formula / scanned paragraph and click “＋ Note”.<br>Shortcuts with text selected: <b>H</b> highlight, <b>N</b> highlight + note.',
@@ -15,7 +15,7 @@
     hdr: 'My notes', src: 'Source', when: 'Exported', none: '(no note)', jump: 'open'
   } : {
     btn: '🖍 笔记', title: '我的高亮与笔记', note: '笔记', add: '＋ 笔记', ph: '写点笔记…（自动保存）',
-    auto: '连续高亮', autoTip: '开关连续黄色高亮（Shift+Q）',
+    auto: '连续高亮', autoTip: '开关连续黄色高亮（Option+Q / Alt+Q）',
     del: '删除', copy: '复制原文', close: '关闭', saved: '已保存', md: '导出 Markdown', cp: '复制全部', bak: '备份 (JSON)',
     imp: '恢复备份', clr: '清空', sure: '再点一次确认清空', onlyN: '只看有笔记的', all: '全部',
     empty: '还没有内容。选中任意文字即可高亮；把鼠标移到公式或扫描段落上，点“＋ 笔记”即可给整块加笔记。<br>选中文字后的快捷键：<b>H</b> 高亮，<b>N</b> 高亮并写笔记。',
@@ -182,7 +182,7 @@
   let selRange = null, continuous = false, selT;
   const mode = mk('button', 'hl-mode', T.auto);
   mode.type = 'button'; mode.title = T.autoTip;
-  mode.setAttribute('aria-keyshortcuts', 'Shift+Q');
+  mode.setAttribute('aria-keyshortcuts', 'Alt+Q');
   mode.setAttribute('aria-pressed', 'false');
   function setContinuous(on) {
     continuous = on;
@@ -248,11 +248,13 @@
   document.addEventListener('keydown', e => {
     if (e.isComposing || tgt(e).closest('input, textarea, select, [contenteditable="true"]')) return;
     if (e.key === 'Escape') { if (continuous) setContinuous(false); bar.hidden = true; pop.hidden = true; plus.hidden = true; if (!panel.hidden) closePanel(); return; }
-    if (e.metaKey || e.ctrlKey || e.altKey) return;
-    if (e.shiftKey && e.key.toLowerCase() === 'q') {
-      if (!e.repeat) { e.preventDefault(); setContinuous(!continuous); }
+    // Option may change the character (for example Q becomes œ on a US Mac).
+    if (e.altKey && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.code === 'KeyQ') {
+      e.preventDefault();
+      if (!e.repeat) setContinuous(!continuous);
       return;
     }
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
     if ((e.key === 'h' || e.key === 'H' || e.key === 'n' || e.key === 'N') && currentRange()) { e.preventDefault(); selRange = currentRange().cloneRange(); create('y', e.key.toLowerCase() === 'n'); }
   });
 
