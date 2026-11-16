@@ -52,3 +52,24 @@ After editing `hl.js` / `hl.css`, re-insert them (idempotent):
 ```bash
 python3 tools/highlights/inject.py reading.html reading-en.html
 ```
+
+## Recommended videos (`videos/`)
+
+`videos/data.py` lists 17 recommended videos (or slide ranges) in viewing order. For each one it gives
+the exact episode or time range, the duration, the language, the reason to watch, and the roadmap cards
+and paper sections it supports. `videos/inject.py` writes them into the pages:
+
+- **roadmap.html / roadmap-en.html** — a "📺 Video path" section above the concept map (`#videos`),
+  a top-bar link, and a "Recommended videos" box in each related card;
+- **reading.html / reading-en.html** — a "Companion videos" box at the end of the related section guides,
+  a pointer in the one-page overview and a top-bar link.
+
+After editing `data.py`:
+
+```bash
+python3 tools/videos/inject.py
+```
+
+The script is idempotent: inserted HTML sits between `<!--vid:…-->` / `<!--/vid-->` markers and is
+replaced on every run. Boxes carry `data-hl-ui` (ignored by the highlighter) and their own `id`, so
+existing highlights and saved in-page edits keep their anchors.
