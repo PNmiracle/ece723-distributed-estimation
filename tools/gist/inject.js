@@ -3,7 +3,7 @@
 // Data: tools/gist/gist.json  { zh: { n: [what, why] }, en: { n: [what, why] } }  ($...$ = inline math)
 // Usage (repo root):  node tools/gist/inject.js            # both reading pages
 // Idempotent: the reading priority and gist are replaced together on every run.
-// Both stay visible when folded and are excluded from highlight anchors.
+// Both stay visible when folded; only the explanation text is highlightable.
 const fs = require('fs');
 const path = require('path');
 let katex;
@@ -29,8 +29,8 @@ const render = (lang, n) => {
   const [a, b] = LBL[lang];
   const rank = level(Number(n));
   return `<!--gist--><span class="eq-level eq-level-${rank}" data-hl-ui>${LEVELS[lang][rank]}</span>` +
-    `<span class="plain-gist" data-hl-ui><span class="gist-row"><span class="gist-k">${a}</span>${inline(what)}</span>` +
-    `<span class="gist-row"><span class="gist-k">${b}</span>${inline(why)}</span></span><!--/gist-->`;
+    `<span class="plain-gist"><span class="gist-row"><span class="gist-k" data-hl-ui>${a}</span>${inline(what)}</span>` +
+    `<span class="gist-row"><span class="gist-k" data-hl-ui>${b}</span>${inline(why)}</span></span><!--/gist-->`;
 };
 
 const CSS = `<style id="gist-css">

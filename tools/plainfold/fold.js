@@ -15,7 +15,12 @@
     tag.setAttribute('role', 'button'); tag.tabIndex = 0; tag.title = T.tip; tag.setAttribute('aria-expanded', 'true');
     tag.addEventListener('click', e => { e.stopPropagation(); setBox(b, !b.classList.contains('folded')); });
     tag.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tag.click(); } });
-    b.addEventListener('click', () => { if (b.classList.contains('folded')) setBox(b, false); });
+    b.addEventListener('click', () => {
+      if (!b.classList.contains('folded')) return;
+      const s = getSelection();
+      if (s && !s.isCollapsed && s.rangeCount && s.getRangeAt(0).intersectsNode(b)) return;
+      setBox(b, false);
+    });
   });
   // one button in the top bar folds or unfolds every box; the choice is remembered in this browser
   const marks = document.getElementById('toggle-marks');

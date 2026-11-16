@@ -47,7 +47,7 @@ To add a pronunciation, add a row to the `D` list in `say.js` (regex on the TeX,
 ## Highlights & notes (`highlights/`)
 
 `hl.js` + `hl.css` add highlighting and note-taking to the reading pages:
-select text → color toolbar (or press **H** / **N**); hover a formula or scanned paragraph → "＋ 笔记";
+select paper text, an equation explanation or a section guide → color toolbar (or press **H** / **N**); hover a formula → "＋ 笔记";
 "🖍 笔记" in the top bar opens the list with filters, jump-to, Markdown export and JSON backup/restore.
 Everything is stored in the reader's browser (`localStorage`, key `notes:<page>`); highlights are anchored by
 section id + text offsets with a quote/context fallback, so they survive regenerated callouts.

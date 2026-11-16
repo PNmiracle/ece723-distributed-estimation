@@ -3,8 +3,8 @@
 // Data: tools/subguide/subguide.json  { "<h4 id>": { zh: [does, core], en: [does, core] } }  ($...$ = inline math)
 // Usage (repo root):  node tools/subguide/inject.js
 // Idempotent: boxes sit between <!--sg--> … <!--/sg--> and are replaced on every run. They come
-// directly after the heading (before any video box), carry their own id (so ✎ edit keys of the
-// surrounding text don't shift) and data-hl-ui (so highlight anchors don't shift).
+// directly after the heading (before any video box), carry their own id, and
+// expose the guide text rather than its labels to the highlighter.
 const fs = require('fs');
 const path = require('path');
 let katex;
@@ -34,8 +34,8 @@ for (const [file, lang] of [['reading.html', 'zh'], ['reading-en.html', 'en']]) 
     seen.add(id); n++;
     const [tag, a, b] = L[lang];
     const [does, core] = d[lang];
-    return h + `<!--sg--><aside class="guide sub-guide" id="sg-${id}" data-hl-ui><div class="guide-tag">${tag}</div>` +
-      `<div class="sg-row"><b>${a}</b>${inline(does)}</div><div class="sg-row"><b>${b}</b>${inline(core)}</div></aside><!--/sg-->`;
+    return h + `<!--sg--><aside class="guide sub-guide" id="sg-${id}"><div class="guide-tag" data-hl-ui>${tag}</div>` +
+      `<div class="sg-row"><b data-hl-ui>${a}</b>${inline(does)}</div><div class="sg-row"><b data-hl-ui>${b}</b>${inline(core)}</div></aside><!--/sg-->`;
   });
   const missing = Object.keys(D).filter(k => !seen.has(k));
   if (missing.length) throw new Error(`${file}: headings not found: ${missing.join(', ')}`);

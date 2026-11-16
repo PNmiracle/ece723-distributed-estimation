@@ -24,6 +24,9 @@
   const CC = {y: '#ffd84a', g: '#86d993', b: '#8fc0ff', p: '#ff9cc2'};
   const CNAME = EN ? {y: 'yellow', g: 'green', b: 'blue', p: 'pink'} : {y: '黄', g: '绿', b: '蓝', p: '粉'};
   const SKIP = '.katex-mathml, script, style, [data-hl-ui], .hl-ui';
+  // Older highlights counted neither guide nor summary text in their offsets.
+  const LEGACY_SKIP = SKIP + ', .plain-gist, .sub-guide';
+  const TEXT_MODEL = 2;
   const BLOCKS = 'figure.equation';
 
   /* ---------- storage ---------- */
@@ -36,13 +39,13 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
 
   /* ---------- text model: visible text of a root, skipping hidden MathML and our UI ---------- */
-  function textNodes(root) {
+  function textNodes(root, skip = SKIP) {
     const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode: n => (n.parentElement && n.parentElement.closest(SKIP)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+      acceptNode: n => (n.parentElement && n.parentElement.closest(skip)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
     });
     const out = []; let n; while ((n = w.nextNode())) out.push(n); return out;
   }
-  const fullText = root => textNodes(root).map(n => n.data).join('');
+  const fullText = (root, skip) => textNodes(root, skip).map(n => n.data).join('');
   function posOf(root, container, offset) {
     const r = document.createRange(); r.setStart(container, offset); r.collapse(true);
     let base = 0;
@@ -63,18 +66,19 @@
   function paintText(it) {
     let root = document.getElementById(it.anchor);
     if (!root || !MAIN.contains(root)) root = MAIN;
+    const skip = it.model === TEXT_MODEL ? SKIP : LEGACY_SKIP;
     let s = it.start, e = it.end;
-    let txt = fullText(root);
+    let txt = fullText(root, skip);
     if (txt.slice(s, e) !== it.text) {
       const found = locate(txt, it);
-      if (found < 0 && root !== MAIN) { root = MAIN; txt = fullText(MAIN); }
+      if (found < 0 && root !== MAIN) { root = MAIN; txt = fullText(MAIN, skip); }
       const f2 = found >= 0 ? found : locate(txt, it);
       if (f2 < 0) { it.orphan = true; return false; }
       s = f2; e = f2 + it.text.length;
     }
     it.orphan = false;
     let base = 0; const segs = []; const kats = new Set();
-    for (const n of textNodes(root)) {
+    for (const n of textNodes(root, skip)) {
       const len = n.data.length, a = Math.max(s, base), b = Math.min(e, base + len);
       if (a < b) {
         const k = n.parentElement.closest('.katex');
@@ -202,7 +206,7 @@
     const start = posOf(root, r.startContainer, r.startOffset), end = posOf(root, r.endContainer, r.endOffset);
     const txt = fullText(root); const text = txt.slice(start, end);
     if (!text.trim()) return;
-    const it = {id: uid(), kind: 'text', color, note: '', anchor: root.id || 'top', start, end, text, pre: txt.slice(Math.max(0, start - 32), start), suf: txt.slice(end, end + 32), t: Date.now()};
+    const it = {id: uid(), kind: 'text', model: TEXT_MODEL, color, note: '', anchor: root.id || 'top', start, end, text, pre: txt.slice(Math.max(0, start - 32), start), suf: txt.slice(end, end + 32), t: Date.now()};
     items.push(it); getSelection().removeAllRanges(); bar.hidden = true; selRange = null;
     paint(it); save(); renderPanel();
     if (withNote) openPop(it.id);
