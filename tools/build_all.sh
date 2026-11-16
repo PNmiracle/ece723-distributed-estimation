@@ -41,3 +41,4 @@ done
 
 # re-add the one-line "what / why" gists at the top of every callout (build.js rewrites the callouts)
 node tools/gist/inject.js
+node tools/notes/inject-bridges.js

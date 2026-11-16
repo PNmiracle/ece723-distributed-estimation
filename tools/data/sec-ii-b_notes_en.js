@@ -2,11 +2,11 @@ const T = String.raw;
 module.exports = {
   14: [
     T`$\xi_\theta(x)$ is the <b>score</b>: how much the log-likelihood of this data point changes when you nudge $\theta$ slightly. Think of it as the data point "voting" for the direction in which $\theta$ looks more plausible.`,
-    T`$I_X(\theta)$ is the <b>Fisher information</b>: how forceful those votes are on average (the covariance matrix of the score). The more information, the better one observation separates two nearby values of $\theta$, and the smaller the achievable error (in one dimension, roughly $\mathbb E(\widehat\theta-\theta)^2 \gtrsim 1/(N\, I_X)$).`,
+    T`$I_X(\theta)$ is the <b>Fisher information</b>: the covariance matrix of those mean-zero votes. Along a unit direction, it is the average squared size of the vote in that direction. It measures local sensitivity; Section III uses van Trees to turn an information cap into a risk floor.`,
   ],
   15: [
-    T`Two requirements. <b>Left</b>: the score has finite mean square, so votes are never infinitely large and the Fisher information is a finite number. <b>Right</b>: at the true parameter the score averages to zero, so the data do not systematically push $\theta$ to one side.`,
-    T`Intuition: the true parameter is the "balance point" of the likelihood. Some data push left, some push right, and on average they cancel.`,
+    T`Two requirements. <b>Left</b>: the score has finite mean square, so votes may be unbounded, but their average squared size and Fisher information are finite. <b>Right</b>: at the true parameter the score averages to zero, so the data do not systematically push $\theta$ to one side.`,
+    T`Average over repeated draws from the true model. An individual likelihood need not peak at the true parameter; it is the average of the pushes that is zero.`,
   ],
   16: [
     T`Total probability is always 1, whatever $\theta$ is. So "integrate first, then differentiate" is the derivative of the constant 1, which is 0. If you may swap differentiation and integration, "differentiate first, then integrate" is also 0.`,
@@ -24,7 +24,7 @@ module.exports = {
   19: [
     T`The paper's core assumption on the score. The left side is the log moment-generating function (log-MGF) of the score in direction $u$; it measures how heavy the score's tails are.`,
     T`For small $u$ the right side is $\approx \tfrac{v}{2}\|u\|^2$, as for a Gaussian with variance at most $v$. With $b=0$ this is <b>sub-Gaussian</b>; $b>0$ allows heavier, exponential-type tails (sub-exponential), which covers Poisson, exponential and covariance-estimation models.`,
-    T`In one sentence: each observation's "vote" on $\theta$ is of size about $\sqrt v$, and extremely large votes are rare. Later, $v$ becomes the per-observation cap on information.`,
+    T`Look at the denominator: $b=0$ puts no restriction on the tilt; with $b>0$ the bound holds for $b\|u\|<1$. The value $v$ caps directional variance; it need not describe the actual size of a typical vote.`,
   ],
   20: [
     T`Split $u$ in (19) into "direction × step": $u = t\,a$, where $a$ is a unit vector and $t$ a scalar. Then $\|u\|=|t|$, and (19) becomes this one-dimensional statement.`,
@@ -41,13 +41,13 @@ module.exports = {
   ],
   23: [
     T`Add up the scores of the $q$ independent observations in a block to get the block score $A_q$. Log-MGFs of independent variables add, so the variance factor becomes $qv$ while the tail-shape parameter $b$ stays the same.`,
-    T`In plain words: $q$ observations together behave like one big observation with information $qv$.`,
-    T`What it is for: later we need to control the conditional mean of the block score given some communication event $E$. This tail bound keeps that conditional mean under control even when $E$ is rare: it is of order $\sqrt{qv\log(1/\mathbb P(E))}$ (plus a term $b\log(1/\mathbb P(E))$ when $b>0$).`,
+    T`In plain words: The $q$ independent observations carry at most $qv$ information in each unit direction. Receiving $q$ copies of one observation would not give this sum.`,
+    T`What it is for: later we need to control the conditional mean of the block score given some communication event $E$. This tail bound keeps that conditional mean under control even when $E$ is rare: its norm is bounded by a constant times $\sqrt{qv\log(1/\mathbb P(E))}$ (plus a term $b\log(1/\mathbb P(E))$ when $b>0$).`,
   ],
   24: [
     T`Line 1: $\mu(\theta)$ is the expectation of the statistic $\psi$; think of it as the parameter's "fingerprint". Because $\psi$ takes values in $[0,1]^d$, it is easy to estimate and easy to compress into bits.`,
-    T`Line 2 (inverse Lipschitz): if two parameters have close fingerprints, the parameters themselves must be close, with the distance inflated by at most a factor $L$. So estimating $\mu$ to accuracy $\varepsilon$ gives $\theta$ to accuracy $L\varepsilon$.`,
-    T`Example: in the Bernoulli model $X\sim\mathrm{Bern}(\theta)$, take $\psi(x)=x$; then $\mu(\theta)=\theta$ and $L=1$. This is the <b>only</b> assumption used for the upper bound; the upper bound does not need (19).`,
+    T`Line 2 (inverse Lipschitz): if two parameters have close fingerprints, the parameters themselves must be close, with the distance inflated by at most a factor $L$. So estimating $\mu$ to accuracy $\varepsilon$ gives $\theta$ to accuracy $L\varepsilon$ when the input is itself a valid moment. For a noisy moment, decode first as in (28); (29) gives the final bound.`,
+    T`Example: in the Bernoulli model $X\sim\mathrm{Bern}(\theta)$, take $\psi(x)=x$; then $\mu(\theta)=\theta$ and $L=1$. The upper bound uses this moment condition; it does not need the score-tail condition (19).`,
   ],
   25: [
     T`Compute $\psi$ once for each of the $N$ observations in the pool, then average.`,
@@ -55,12 +55,12 @@ module.exports = {
   ],
   26: [
     T`The variance of an average of independent samples is the single-sample variance divided by $N$; then sum over the $d$ coordinates. A variable taking values in $[0,1]$ has variance at most $\tfrac14$ (reached when it is 0 or 1 with equal probability), so the total error is $\le d/(4N)$.`,
-    T`In plain words: even with all the data in one place, you would still have this much error. It is the unavoidable <b>"pool error"</b>, and no amount of communication removes it. Total error of a distributed method = pool error + extra error caused by limited communication.`,
+    T`In plain words: this is an <b>upper bound</b> for the full-pool moment estimator. Even a perfect report of that moment may differ from its population value. See (257) for combining sampling and communication errors, and (107) for the separate universal sampling lower bound.`,
     T`Note that this identity does not need the coordinates of $\psi$ to be independent: the squared errors of the coordinates simply add.`,
   ],
   27: [
     T`Draw a uniform random number $V\in[0,1]$, independent of $X$. Record 1 if $V\le\psi_j(X)$ and 0 otherwise. Given $X$, the probability of recording 1 is exactly $\psi_j(X)$; averaging over $X$ gives $\mu_j(\theta)$.`,
-    T`In plain words: a continuous number in $[0,1]$ becomes a <b>coin</b> whose probability of heads is exactly the moment we want to estimate. Each observation needs to send only 1 bit and the information about the mean is kept (at the cost of a little extra Bernoulli noise; the variance is still $\le\tfrac14$).`,
+    T`In plain words: a continuous number in $[0,1]$ becomes a <b>coin</b> whose probability of heads is exactly the moment we want to estimate. The randomized report takes one bit and preserves the mean in expectation (at the cost of a little extra Bernoulli noise; the variance is still $\le\tfrac14$).`,
     T`This step lets Section IV reduce the general problem to distributed Bernoulli estimation.`,
   ],
   28: [

@@ -6,7 +6,10 @@ Every equation (1)–(492) on the two reading pages is followed by a green callo
 - **符号速查 / Symbol cheat sheet** — each symbol in the equation, explained plainly;
 - **读法 / Say** — pronunciation for hard-to-read symbols (added automatically from `say.js`);
 - **是什么 / 有什么用 · What / Why it matters** — a one-line gist at the very top (stays visible when the callout is folded);
+- **必读 / Core**, **关键推导 / Proof step**, or **推导细节 / Detail** — a suggested reading priority, also visible when folded;
 - **这条式子在说什么 / What it says** — the plain explanation.
+
+Selected paragraphs also end with a small **举个例子 / Example** button. It opens a short example in the existing note popover.
 
 The callouts are generated from the data files here and written straight into the HTML,
 so the published site needs no build step.
@@ -16,7 +19,8 @@ so the published site needs no build step.
 | File | What it is |
 |---|---|
 | `data/sec-*.js` | The content, one file per section. Each exports `{ zh: { notes, syms }, en: { notes, syms } }`. `notes[n]` is a list of paragraphs; `syms[n]` is a list of `[TeX, meaning]` rows. Text can contain inline math as `$...$` and `<b>` tags. |
-| `gist/gist.json` + `gist/inject.js` | The one-line gists (`[what, why]` per equation, zh and en). `node tools/gist/inject.js` writes them into both pages (idempotent); `build_all.sh` runs it at the end. |
+| `gist/gist.json`, `gist/levels.js`, `gist/inject.js` | Bilingual quick explanations (`[what, why]` per equation) and suggested priorities. `node tools/gist/inject.js` writes them into both pages. |
+| `notes/bridges.js` + `notes/inject-bridges.js` | Short examples in both languages, keyed by the numbered equation that follows the original prose. `node tools/notes/inject-bridges.js` updates the note buttons and their popovers. |
 | `say.js` | Pronunciation dictionary (Greek letters, script letters, ⪯, ≍, ⊗, sup/inf, hat/tilde, …). A symbol's reading is shown the first time it appears in a callout. |
 | `build.js` | Rebuilds the callouts of one section on one page (replaces existing ones, inserts missing ones, keeps the CSS in sync). |
 | `build_all.sh` | Runs `build.js` for every section on both pages. |
@@ -25,7 +29,7 @@ so the published site needs no build step.
 
 ## Editing an explanation
 
-1. Find the equation number in `data/` (e.g. eq. 434 is in `data/sec-v-c.js`) and edit the `zh` and/or `en` entry.
+1. For the short explanation or the priority label, edit `gist/gist.json` or `gist/levels.js`. For expanded explanations, find the equation in `data/` (e.g. eq. 434 is in `data/sec-v-c.js`) and edit the `zh` and/or `en` entry.
 2. Rebuild that section (or everything):
 
    ```bash
