@@ -1,0 +1,23 @@
+.plain > .plain-zh { margin: 4px 0 3px; cursor: auto; }
+.plain.folded > .plain-zh { display: block !important; }
+.plain-zh > summary {
+  width: fit-content;
+  min-height: 24px;
+  padding: 2px 4px;
+  color: #22624a;
+  cursor: pointer;
+  font: 650 .82rem/1.5 "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+}
+.plain-zh > summary:hover { text-decoration: underline; }
+.plain-zh > summary:focus-visible { outline: 2px solid #22624a; outline-offset: 2px; border-radius: 3px; }
+.plain-zh-content {
+  margin: 4px 0 9px;
+  padding: 9px 12px;
+  border: 1px solid #cfe6d8;
+  border-radius: 6px;
+  background: #fafffc;
+  font: .94rem/1.7 "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  overflow-wrap: anywhere;
+}
+.plain-zh-content > .plain-gist { margin-top: 0; }
+@media print { .plain.folded > .plain-zh, .plain > .plain-zh { display: none !important; } }

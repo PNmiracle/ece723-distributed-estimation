@@ -45,3 +45,6 @@ node tools/notes/inject-bridges.js
 
 # Refresh the inline Chinese terminology annotations on the English page.
 python3 tools/term-zh/inject.py
+
+# Refresh the Chinese equation explanations available inside the English cards.
+python3 tools/plain-zh/inject.py
