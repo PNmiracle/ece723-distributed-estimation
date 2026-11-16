@@ -67,6 +67,8 @@ and paper sections it supports. `videos/inject.py` writes them into the pages:
   prerequisite list, e.g. `sec-ii-b-s2` for the Bernstein score condition) and right under the
   plain-language box of key equations (`EQS`). Each item says what to watch, how long, and why.
   Extra clips used only on the reading pages live in `CLIPS`.
+  Every section and sub-heading has a box; where no video fits, the box (`items=[]`) says how to read
+  that part instead. All video boxes are `<details>` and start folded; the Video-path section stays open.
 
 After editing `data.py`:
 
