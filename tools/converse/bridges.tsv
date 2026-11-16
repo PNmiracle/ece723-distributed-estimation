@@ -1,0 +1,158 @@
+# The number is the equation the bridge leads into; each line connects it to the preceding equation.
+74	Now ask how the message probability changes when we nudge the parameter.	知道消息的概率后，下一步是问：参数轻轻一动，消息概率怎么变？
+75	The derivative is still written using raw data. Divide by the message probability to rewrite it using only data compatible with that message.	导数里还有原始数据。除以消息概率，就能只在支持这条消息的数据里做平均。
+76	If the raw data are independent, we can first build the full score from one small piece per sample.	如果原始数据独立，就先把每条样本的得分拼成整批数据的得分。
+77	The same score now has a before and an after. Pick one direction so we can compare them as numbers.	同一个得分有了处理前、处理后两版。选一个方向，把它们化成两个数来比。
+78	The message replaces many possible raw scores with one average. What happens when we square that average?	一条消息把许多可能的原始得分压成一个均值。把这个均值平方，会发生什么？
+79	Because the comparison holds in any direction, it also compares the two full information matrices.	这笔账在任意方向都成立，于是可以比较两整个信息矩阵。
+80	Processing can lose information. To track how much a second observation adds, split the joint score into two stages.	处理会丢信息。反过来想知道第二次观测添了多少，先把总得分拆成两步。
+81	The second score is computed after the first observation is fixed; check what that conditional score averages to.	第二步是在第一步已经知道的情况下做的，先看看这时的得分平均起来是多少。
+82	That zero mean tells us what happens to the mixed term when we multiply the two scores.	有了这个零均值，就能判断两段得分相乘的交叉项去哪儿了。
+83	With the mixed term gone, each stage can pay its own share of the information bill.	没有交叉项，两步各自贡献多少信息就能分开记账了。
+84	The matrix keeps track of directions. For a single number, add up the contributions along the coordinate axes.	矩阵记着不同方向的信息。想要一个总数，就把坐标方向上的贡献加起来。
+85	To turn information into a risk bound, choose a prior for the unknown parameter that behaves well at the edges.	要把信息换算成误差下界，先给未知参数选一个在边界好处理的先验。
+86	This prior will enter the information bill too. Measure its own score before we bring in any data.	先验也会进入信息账本；先不看数据，算一算先验自己的得分。
+87	Before using that score, check that our chosen prior really integrates to one.	用先验得分之前，先确认选的密度加起来真的是 1。
+88	Now that the density is normalized, take its log derivative to get the one-coordinate score.	密度合格后，就能对它取对数再求导，得到一维得分。
+89	A squared score looks messy until we weight it by the same density that produced it.	得分平方看着复杂，但乘回产生它的密度，有些因子就会消掉。
+90	The information calculation is done. For the bit bound we also need entropy, so we need an integral with a logarithm.	先验信息算完了；比特下限还要用先验熵，所以接下来轮到带对数的积分。
+91	Rather than integrate the logarithm head-on, connect powers of sine so we can differentiate that relationship.	不直接硬算对数，把不同次幂的正弦积分连起来，再对这个关系求导。
+92	The recurrence needs a starting slope. Symmetry gives a shortcut to the log-sine integral at power zero.	递推还差一个起点的斜率；利用对称性，可以走捷径算零次幂处的对数正弦积分。
+93	Use the starting slope and the power relation to move from power zero to power two.	有了起点，就用次幂之间的关系，从零次幂走到二次幂。
+94	Power two is the one inside the prior, so read the integral we need off that slope.	先验用的正好是二次幂，因此这里的斜率就是算先验所需积分的入口。
+95	Only one constant remains to be included before this integral becomes the prior entropy.	把密度前面的常数也算进去，就得到先验熵。
+96	With the prior’s two quantities ready, define the error averaged over both the parameter and the experiment.	先验的两笔量都准备好了，现在把参数和实验一起平均，定义要控制的误差。
+97	The experiment and prior form one joint law. Its score is the one we can pair with that error.	先验和实验合成一个联合分布；接下来拿它的得分来和误差配对。
+98	Why pair score with error? Integration by parts exposes a fixed contribution from each coordinate.	为什么把得分和误差配在一起？分部积分会让每个坐标都露出一个固定贡献。
+99	Once every coordinate contributes one, compare the total to the typical sizes of the error and score.	每个坐标都贡献 1；把它们加起来，再比较误差和得分通常有多大。
+100	To evaluate the score size, reopen the joint score and see whether its two sources mix.	要算联合得分有多大，再拆开看看先验和数据的得分会不会产生交叉项。
+101	Now the score side is known. Solve the inequality for the unknown quantity: estimation error.	得分这边已经有了表达式；把不等式挪一挪，解出真正关心的估计误差。
+102	This was an average over parameters. The hardest parameter for a scheme cannot be easier than that average.	刚才算的是平均难度；对任何方案来说，最难的参数不会比平均更容易。
+103	First apply the risk inequality to a physical limit: a sample nobody sees cannot help the estimator.	先把风险不等式用到一个很实际的限制：谁都没见过的样本帮不了估计。
+104	Turn the all-miss probability into a hit probability, then add one contribution for each pool ID.	把「全都没见到」改成「至少被见到一次」，再把所有样本编号的贡献加起来。
+105	What matters now is not how often an ID appears, but how many independent draws the record could have used.	接下来关心的不是同一编号出现几次，而是通信记录最多能用多少条独立样本。
+106	The bound was for one fixed set of lists and seeds. Average without giving those random choices credit for parameter information.	刚才固定了抽样清单和种子；现在对它们取平均，但不把这些随机选择算成参数信息。
+107	Put the data budget into the risk inequality to see what limited visibility alone rules out.	把可见样本的信息预算代入风险不等式，看看单是样本不够就会卡在哪里。
+108	Sample counts gave one limit; now ask how much uncertainty the transcript must erase to achieve a given error.	样本数给了一道限制；接下来问，要做到某个误差，通信记录必须消除多少不确定性。
+109	For one observed record, center the parameter at the estimate and use the resulting spread to control uncertainty.	先固定一条记录，把参数分布平移到估计值附近，用误差散得多开来控制不确定性。
+110	The bound so far is record by record. Average it, then move from a log of each error to a log of the overall error.	目前的界是逐条记录的；先平均，再把「各条误差取对数」换成用总误差来界。
+111	Now compare what we knew before the record with what can still be uncertain afterward.	现在就能比较「读记录之前」和「读完之后」还剩多少不确定性。
+112	This is an information demand. Separate the public setup from the actual message to see what can meet it.	前面得到的是信息需求；把公共设置和真正的消息拆开，看看谁能满足它。
+113	Once the setup is fixed, the message’s total uncertainty caps how much it can tell us.	公共设置固定后，消息本身有多少不确定性，就限制了它最多能透露多少。
+114	Compare the information needed for accuracy with the information a fixed-length budget can supply.	把「达到精度需要多少信息」和「有限比特最多能给多少信息」放在一起。
+115	The prior calculation from earlier now turns the general prefactor into a concrete number.	把前面算过的先验熵代进去，抽象的前置常数就有了具体数值。
+116	Bits can describe the parameter or reflect changing samples. Give the leftover variability a name.	比特可能用来透露参数，也可能只是反映样本在变；给后面这部分剩余波动取个名字。
+117	The two uses of transcript entropy now fit into one accounting identity.	通信记录熵的两种用途，可以写成同一条记账等式。
+118	Spend enough entropy to reach the target error; whatever remains bounds the sample-driven variability.	先扣掉实现目标精度需要的熵，剩余部分才是样本波动能用的空间。
+119	That leftover budget matters only if it limits how much a message can shift a score. Start with one block.	剩下的熵之所以有用，是因为它能限制消息改变得分的幅度；先看一个样本块。
+120	Adding scores is easy; controlling large fluctuations of the sum is what requires independence.	得分直接相加不难；要控制总和的大波动，才要用到独立性。
+121	Use the tail control to ask a new question: after we learn an event happened, how far might the average move?	有了尾部控制，换个问题：知道某件事发生后，得分均值最多会挪多远？
+122	Information will involve squared slopes, so turn the movement bound into a squared bound.	后面的信息量用的是得分平方，因此这里也把偏移量的界变成平方界。
+123	Notice what simplifies when the extra Bernstein tail cost disappears.	接着看看，如果 Bernstein 尾部的额外代价没有了，界会简化成什么样。
+124	To see where these bounds come from, name the event’s surprise and its conditional score shift.	回过头来看这些界是怎么来的：先给事件的惊讶度和条件得分偏移记个号。
+125	A whole vector can be awkward to bound. Aim the measuring direction along the shift itself.	整个向量不太好界；把量尺对准偏移本身的方向。
+126	Now the problem is one-dimensional, and an exponential turns the conditional mean into something the tail bound can reach.	变成一维后，用指数把条件均值接到前面已经有的尾部界上。
+127	The conditional average still only sees the selected event. Relate it to the full average we know how to bound.	条件平均只见到事件内的结果；把它接回我们会界的全体平均。
+128	Taking logs makes the cost of restricting to the event separate from the usual tail bound.	取对数后，「只留这一事件」的代价和普通尾部代价就分开了。
+129	Here is another way to read that first cost: how much we changed the distribution by keeping only the event.	第一笔代价也可以读成：只保留该事件，把原分布改动了多少。
+130	Regardless of the interpretation, the tilt is still ours to choose. Too small and too large each cost something.	不管怎样解释，倾斜幅度仍然由我们选。太小、太大各有各的代价。
+131	Choose the natural balance point, then pull it back so it also obeys Bernstein’s allowed range.	先找两项自然平衡的位置，再往回收一点，让它落在 Bernstein 允许的范围。
+132	Before substituting the choice, verify it really stays away from the forbidden endpoint.	把这个选择代回去之前，先确认它没有踩到不允许的端点。
+133	Use that choice in the first term and see which part comes from surprise and which from the tail correction.	把它代进第一项，分清惊讶度和尾部修正分别留下了什么。
+134	Do the same for the other term; the earlier adjustment was chosen to make these factors cancel.	另一项也代进去；前面特意做的调整，正好让这里的因子抵消。
+135	Combine the pieces into a form with separate linear and quadratic costs in surprise.	把两项合起来，整理成对惊讶度分别按一次和二次收费的形式。
+136	Replace “an event” by “a possible message” and average over which message actually arrives.	把「某个事件」换成「某条可能的消息」，再按消息实际出现的概率平均。
+137	In the simpler tail case, the only average we need is ordinary message entropy.	在尾部更规整的情形，只需要算普通的消息熵。
+138	In the general case, entropy alone does not cover the squared cost. Look at surprise as a random quantity.	一般情形还有平方代价，只有熵不够；现在把惊讶度本身当成随机量。
+139	A bit budget bounds the number of possible transcripts. Can that also cap a second moment despite tiny probabilities?	比特预算限制了可能的记录数。即使某些记录概率很小，也能控制惊讶度的二阶矩吗？
+140	Count only the ultra-rare records and add up how much probability they could carry.	只数那些特别稀有的记录，看看它们加起来最多有多少概率。
+141	For low thresholds the counting bound can be too generous. Use the trivial probability cap there instead.	阈值小时，靠计数得到的界可能太宽；这时直接用概率不超过 1。
+142	Now translate a bound on exceeding each threshold into the squared average we were after.	现在把「超过每个阈值的概率界」换成一开始要找的平方平均。
+143	Insert the two regimes for the tail and split the integral at the point where they meet.	把两段尾概率界代进去，在它们交接的阈值把积分分开。
+144	The upper piece is easier after shifting the threshold to zero.	上面那段把坐标原点移到阈值处，剩下的积分就好算了。
+145	The counting argument did not depend on the particular public setup, so we can use it under conditioning too.	计数时没有依赖某个特定的公共设置，因此条件化以后也可以用这条界。
+146	We have the cost for one block and the message budget. Now see how an interactive record can combine separate blocks.	单块代价和消息预算都有了；现在看交互式通信记录怎样组合多个独立块。
+147	The local blocks have a size ceiling. The next bound pairs that ceiling with how surprising the transcript is.	每台机器的私有块有大小上限；下一步把这个上限和记录的惊讶度配在一起。
+148	As before, a lighter tail drops the second-moment correction, which will simplify the final risk bound.	和单块时一样，尾部规整就能去掉二阶矩修正，最后的误差界也会更干净。
+149	To prove the bound, freeze a candidate transcript and write the tests each machine must pass locally.	要证明这个界，先拿一条候选记录，把每台机器在本地必须通过的检查列出来。
+150	The focus starts here: the local checklists are ready. Do they reconstruct exactly the same full transcript?	重点从这里开始：各台机器的检查清单已经列出，现在看它们能不能拼回同一条完整记录。
+151	Think of the transcript as an intersection of local tests. Name the probability of each test before combining them.	现在把整条记录看成各台机器都通过检查。合起来算之前，先给每道检查通过的概率记个号。
+152	Independence is what lets us multiply those probabilities. A logarithm then turns the product into an additive bill.	各台机器的样本独立，检查通过的概率才能相乘。再取对数，乘法就变成逐台记账。
+153	Probabilities factor before seeing the record. Check whether they still factor after we learn which record occurred.	看到记录前，各块概率能拆开；知道是哪条记录后，还能不能拆开？
+154	That factorization is useful because we can ask how one machine’s score changes, one block at a time.	有了这个拆分，就能逐台去问：看到记录以后，这一块的得分变了多少？
+155	For this machine’s new average, do we have to know all the other checklists, or just its own?	算这台机器的新平均时，要参考所有检查清单，还是只看它自己的就够？
+156	We eventually need to square a sum across machines. First work out what happens to one pair of conditional scores.	后面会把各台机器的得分相加再平方；先看看一对机器的条件得分相乘时会发生什么。
+157	The factorization holds for each record. Average back over records to see whether a mixed contribution remains.	拆分对每条记录都成立；现在对所有记录平均，看两台机器的交叉贡献还剩不剩。
+158	The mixed terms are under control. Return to the transcript score and express it using the block averages we just studied.	交叉项已经处理好；回到整条记录，把它的得分写成刚才研究的各块平均。
+159	Fisher information uses the square of that total score. We can now square without paying for cross terms on average.	费舍尔信息用的是总得分平方。现在平方并平均，交叉项就不必付费了。
+160	We are left with one squared shift per machine. Its local test is exactly the kind of event bounded in III-B.	现在只剩每台机器的一份偏移平方。它通过本地检查，正是 III-B 已经会处理的一种事件。
+161	Bring those one-block bounds back into the sum, using the largest private-block size as a common cap.	把单块的界带回总和，用最大的私有块大小给每台机器设同一上限。
+162	The first cost is linear in surprise, so combine the local bills before averaging.	第一笔代价跟惊讶度成正比，可以先把各台机器的账加起来，再取平均。
+163	The second cost squares surprise. Can we cap it without tracking a separate square for every machine?	第二笔代价要算惊讶度平方。能不能不逐台算平方，也把总账界住？
+164	Now both costs refer to the whole record, rather than to private inputs we cannot see.	两笔账现在都能用整条记录来表示，不用知道各台机器看不到的私有数据。
+165	The entropy term will stay in the proof. The squared term can be bounded just by counting possible transcripts.	熵这笔账先保留；平方项可以直接用可能的记录条数来压住。
+166	Everything so far used a fixed seed. Put randomness back without counting the seed as evidence about the parameter.	到这里种子一直是固定的。现在把随机性加回去，但种子本身不能算参数证据。
+167	The information bound is averaged over seeds, so its entropy term has to be averaged in the same way.	信息界要对种子平均，因此里面的熵也得按同一方式平均。
+168	With a sub-Gaussian score we can return to the single-block step and use the sharper bound from III-B.	如果得分是次高斯的，就回到单块这一步，换用 III-B 给出的更紧的界。
+169	The sharper bound has only the linear surprise bill. Sum it again to see what disappears from the transcript bound.	更紧的界只按惊讶度收一次账；沿刚才的步骤加起来，看整条记录的界少了哪一项。
+170	Real machines can see some of the same samples. Separate those shared IDs before reusing the private-block result.	真实机器可能看到同一份样本。要接着用私有块的结论，先把共享编号单独挑出来。
+171	The sets tell us which IDs belong where. Now name the data in those sets and count their sizes.	集合只告诉我们编号归哪边；接着记下对应的样本值，再数每组有多少。
+172	This split matters because independent pool draws stay independent across groups made of disjoint IDs.	这样拆的关键是组与组没有重复编号；池里原本独立的抽样，拆完仍然独立。
+173	Before bounding information, relate the largest private group to the number of samples each machine actually sees.	开始界信息之前，先把最大私有块和每台机器实际看到的样本数联系起来。
+174	We can charge shared draws once, then use the private-block result on what the transcript adds after those draws are known.	共享样本单独记一次账；知道它们的值以后，记录还能补多少信息，再用私有块的结论。
+175	The exact split is useful for the proof. For a simpler statement we can use larger budgets we already know.	精确拆分便于证明；想把式子写简单，也可以换成手边已有的、更大的预算。
+176	The simpler tail case changes the private calculation. The shared draws still contribute exactly the same type of term.	次高斯情形简化的是私有部分；共享样本仍按同样的方式单独记账。
+177	Gaussian means give a concrete example: each draw has a known score covariance, so the constants become visible.	用高斯均值做个具体例子：每条样本的得分协方差已知，常数就不必藏着了。
+178	Why is it legitimate to charge the shared values directly? Imagine giving them to the estimator for free.	为什么能把共享样本值单独记账？想象把它们免费告诉估计器，再比较信息量。
+179	In that easier experiment, read the shared values first and then ask what new information the transcript supplies.	在这个信息更充分的实验里，先读共享值，再问通信记录究竟补了什么。
+180	The first bill is for raw shared data. Count distinct draws rather than the number of machines holding copies.	第一笔账只算共享的原始数据：数独立的抽样，不数多少台机器拿到了副本。
+181	That accounts for the directly revealed part. Use the enlarged experiment as a ceiling for the original one.	直接揭晓的部分已经算完；把扩展实验的信息量当作原实验的上限。
+182	The remaining bill is conditional on the shared values. Make sure revealing them has not destroyed private-block independence.	剩下的账是在共享值已知时算的。先确认揭晓共享值不会打破私有块之间的独立性。
+183	Once the shared inputs are fixed, we can replay the protocol using just the private blocks as its remaining input.	固定共享输入后，就能重跑协议；此时唯一还会改变的输入就是各台机器的私有块。
+184	This is the same independent-block setting as III-C, now with the shared values held fixed.	这就回到了 III-C 的独立块设定，只不过把共享样本值当作了已知条件。
+185	The previous step used one fixed set of shared values. Average over the values we might actually observe.	刚才只算了一组固定共享值；现在把可能实际看到的共享值都平均进去。
+186	The private bill is finally in a usable form. Add it to the direct shared-data contribution.	私有部分的账已经整理好；现在可以跟共享数据直接贡献的信息加起来了。
+187	We still used one fixed seed. Average again to return to the experiment that includes the public randomness.	刚才还是固定种子；再平均一次，回到带公共随机性的原设定。
+188	Why condition on the shared values? Quantify how much they reduce transcript uncertainty before moving on.	为什么熵要在共享值已知时计算？先量一下这些值能少掉多少记录的不确定性。
+189	The conditioning is the same in the lighter-tail case. Only the price of the private bill changes.	在轻尾情形，条件还是同一组共享值；变的只是私有部分的计费方式。
+190	To apply the sharper result to Gaussian means, check the score of one Gaussian observation directly.	想把更紧的界用到高斯均值，就先直接算一条高斯观测的得分。
+191	At the opposite extreme from III-C, suppose no machine has any private data left. What survives in the bound?	看看与 III-C 相反的极端：如果完全没有私有数据，信息界还剩下什么？
+192	The overlap count we used came from a particular set of lists. Let the sampling design be random again.	我们用的共享数来自一份指定的抽样清单；现在让抽样设计也恢复随机。
+193	The risk proof uses a random parameter from the prior. Take the information bound to that same average.	风险证明要用从先验抽来的参数，所以信息界也得放到同一个先验下取平均。
+194	We've capped what the protocol can learn. Now name the error and entropy quantities needed to turn that cap into a risk floor.	协议最多能学到多少已经有了上限。接下来给误差和剩余熵记号，把信息上限换成误差下限。
+195	Start by bringing the three pieces of the information ceiling into the same line: shared, private, and tail correction.	先把信息上限的三笔账写到一处：共享样本、私有部分，还有尾部修正。
+196	Only one of those terms depends on the leftover entropy. Group everything else so we can isolate it.	里面只有一项跟剩余熵有关；把其它项归在一起，给它单独留位置。
+197	Now compare that information ceiling to what van Trees says any estimator needs for error this small.	现在拿这个信息上限去和范特里斯不等式比：误差要这么小，至少得有多少信息？
+198	There is still an unknown entropy in the comparison. Return to the bit budget to bound it in terms of error.	比较式里还留着一个未知的熵；回到比特预算，用误差去界它。
+199	The prior was chosen to make this step explicit. Substitute its entropy and gather the fixed constants.	前面特意选了可直接计算的先验；代入先验熵，把固定的数字收在一块。
+200	The error still carries units and dimension. Compare its per-coordinate value to one machine’s natural scale.	现在的误差还带着维数和尺度；把每坐标误差跟单台机器的自然尺度比较一下。
+201	Two quantities now have useful splits: bits into localization and surplus, error into scale and ratio. Write both in logarithmic form.	有两样东西可以拆：比特拆成定位和余量，误差拆成尺度和比例。把它们都写进对数里。
+202	The point of using the local scale was to make the localization terms cancel. Look at what is left.	特意用单机尺度，就是为了让定位的项相互抵消。现在看看还剩什么。
+203	The leftover budget is now explicit in terms of the relative error. Plug it into the information comparison.	剩余预算现在只需知道相对误差就能界住；把它代回信息比较式。
+204	The comparison still mixes several scales. Divide them out to expose the basic conflict between inverse error and its logarithm.	比较式里混着不同尺度；把共同尺度除掉，露出误差倒数和对数之间的矛盾。
+205	It is easier to cap a positive precision measure than to chase a small error through both sides. Name the inverse.	与其在等式两边追一个很小的误差，不如给它的倒数取名，转而去界最大精度。
+206	Rewrite both appearances of error in this new variable, then move everything involving it to the left.	把两处的误差都换成新变量，再把含它的项挪到左边。
+207	Now inspect the right-hand side. The constant bundle still hides several different sources of information.	现在只看右边：打包的常数里，还藏着几笔来源不同的信息。
+208	The shared and prior pieces are transparent. Simplify the only messy quantity, the bound on squared surprise.	共享项和先验项已经清楚；就剩一项还比较绕，把惊讶度平方的界化简一下。
+209	The right-hand side can now be described with a single positive scale built out of those same pieces.	右边的各项都看清了，可以把它们收进同一个正的尺度里。
+210	Check that this scale actually dominates all of the terms that were left on the right.	接下来检查：收出来的这个尺度，确实能盖住右边剩下的每一项吗？
+211	The left still contains a logarithm. Split at one so we only drop it when doing so is safe.	左边还有个对数。按 1 分情况，只有确认对数非负时才把它丢掉。
+212	Inverting the precision cap gives an error bound; keep track of the extra correction we have not removed yet.	精度上限一取倒数，就变成误差下界；但还要记得分母里多出来的修正项。
+213	The theorem’s refinement term has no squared-bit correction. The remaining job is to see when it actually matters.	定理里的精修项没有比特平方修正。剩下要说明的是：这项什么时候真的会碍事？
+214	Start where each machine sees many samples. Compare the squared communication budget directly to a single block size.	先看每台机器样本很多的情形，把通信预算的平方和一个样本块的大小直接比较。
+215	If the correction is no larger than an existing term up to a constant, it can be absorbed into that term.	如果修正项最多只是已有项的常数倍，就能把它并进已有项。
+216	Now take the other case. Local blocks are smaller, which means fewer bits are needed just to find the right neighborhood.	再看另一种情形。单机样本块没那么大，光是找对参数所在的范围，不用花那么多定位比特。
+217	Localization grows only logarithmically here. Compare it with the linear bit supply to see what is left over.	这里定位成本只按对数长，比特供给却线性增长；比一下就知道能剩多少。
+218	With that much surplus, check whether the new refinement bound says anything stronger than the access bound we already have.	有这么多余量，看看新推的精修下界会不会比早已拿到的访问次数下界更强。
+219	Each case is handled in a different way, but they now give the same usable refinement scale.	两种情形用的办法不同，最后却都得到同一个可用的精修尺度。
+220	Refinement is only one bottleneck. Put it back alongside the limits from pool size, accesses, and bits.	精修只是一道瓶颈；把它和样本池、访问次数、比特预算这三道限制放回一起比较。
+221	The general lower bound is done. For Gaussian means, the cleaner information bound lets us keep the constants and invert more precisely.	一般下界已经证完。对高斯均值，信息界更干净，可以保留常数，把求逆做得更精确。
+222	The Gaussian ceiling is explicit. Compare it with van Trees, remembering that the prior also contributes information.	高斯情形的信息上限已经写清楚；拿去和范特里斯不等式比较时，别忘了还有先验信息。
+223	Reuse the earlier idea of measuring precision relative to one machine, but keep exact factors this time.	沿用前面相对于单机尺度衡量精度的办法，这一回把因子都原样保留。
+224	Scale the comparison so shared samples, leftover entropy, and the prior appear in the same units.	给整个比较式除以同一个尺度，让共享样本、剩余熵和先验都能在同一单位下比较。
+225	As before, put the entropy budget into these units. The localization cost cancels and leaves the new precision variable.	和前面一样，把熵预算也换到这个尺度。定位成本会抵消，留下新的精度变量。
+226	Because we will undo the logarithm, it is convenient to write the fixed constant as a logarithm too.	等会儿要消掉对数；现在先把固定的数字也写成对数，到时就能一起处理。
+227	Now replace leftover entropy with its explicit budget and collect the terms containing precision.	用已经算清的预算换掉剩余熵，再把含有精度的项收在同一边。
+228	The left has a number plus its logarithm. Taking the exponential turns that sum into a familiar product.	左边是一个数加它的对数。取指数以后，加法就变成这个数和它的指数相乘。
+229	We now need to undo “multiply a number by its own exponential.” Give that inverse its usual name.	接下来要反过来做「一个数乘自己的指数」；这个反函数有一个现成的名字。
+230	The inverse gives a ceiling on precision. Turn it over one last time to read the explicit error floor.	反函数给出了精度上限；最后再取一次倒数，就读出了显式的误差下界。

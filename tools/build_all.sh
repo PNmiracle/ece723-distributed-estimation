@@ -48,3 +48,6 @@ python3 tools/term-zh/inject.py
 
 # Refresh the Chinese equation explanations available inside the English cards.
 python3 tools/plain-zh/inject.py
+
+# Refresh the bilingual lower-bound reader from the guided readers.
+node tools/converse/build.js

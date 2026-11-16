@@ -23,6 +23,7 @@ so the published site needs no build step.
 | `notes/bridges.js` + `notes/inject-bridges.js` | Short examples in both languages, keyed by the numbered equation that follows the original prose. `node tools/notes/inject-bridges.js` updates the note buttons and their popovers. |
 | `term-zh/terms.tsv`, `term-zh/inject.py` | English spellings and their Chinese equivalents. After editing the list, run `python3 tools/term-zh/inject.py` to refresh the annotations in `reading-en.html`. |
 | `plain-zh/inject.py` | Generates the English cards' “中文解读” disclosures and their shared data file from the rendered Chinese callouts. `build_all.sh` refreshes both outputs. |
+| `converse/bridges.tsv`, `converse/build.js` | Bilingual links between the steps of the lower-bound proof; `node tools/converse/build.js` regenerates `converse.html`. |
 | `say.js` | Pronunciation dictionary (Greek letters, script letters, ⪯, ≍, ⊗, sup/inf, hat/tilde, …). A symbol's reading is shown the first time it appears in a callout. |
 | `build.js` | Rebuilds the callouts of one section on one page (replaces existing ones, inserts missing ones, keeps the CSS in sync). |
 | `build_all.sh` | Runs `build.js` for every section on both pages. |
