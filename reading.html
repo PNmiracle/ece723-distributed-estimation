@@ -3641,7 +3641,8 @@ fromHash(); addEventListener('hashchange', fromHash);
   const EN = (document.documentElement.lang || '').startsWith('en');
   const T = EN ? {
     btn: '🖍 Notes', title: 'My highlights & notes', note: 'Note', add: '＋ Note', ph: 'Write a note… (saved automatically)',
-    auto: 'Auto highlight', autoTip: 'Toggle continuous yellow highlighting (Option+Q / Alt+Q)',
+    auto: 'Auto highlight', autoTip: 'Toggle with Option+Q / Alt+Q. Undo an auto highlight with Cmd+Z / Ctrl+Z.',
+    undone: 'Highlight undone',
     del: 'Delete', copy: 'Copy text', close: 'Close', saved: 'Saved', md: 'Export Markdown', cp: 'Copy all', bak: 'Back up (JSON)',
     imp: 'Restore', clr: 'Clear all', sure: 'Click again to clear', onlyN: 'With notes only', all: 'All',
     empty: 'Nothing yet. Select any text to highlight it, or hover over a formula / scanned paragraph and click “＋ Note”.<br>Shortcuts with text selected: <b>H</b> highlight, <b>N</b> highlight + note.',
@@ -3649,7 +3650,8 @@ fromHash(); addEventListener('hashchange', fromHash);
     hdr: 'My notes', src: 'Source', when: 'Exported', none: '(no note)', jump: 'open'
   } : {
     btn: '🖍 笔记', title: '我的高亮与笔记', note: '笔记', add: '＋ 笔记', ph: '写点笔记…（自动保存）',
-    auto: '连续高亮', autoTip: '开关连续黄色高亮（Option+Q / Alt+Q）',
+    auto: '连续高亮', autoTip: 'Option+Q / Alt+Q 开关连续高亮；Cmd+Z / Ctrl+Z 撤销一次连续高亮。',
+    undone: '已撤销高亮',
     del: '删除', copy: '复制原文', close: '关闭', saved: '已保存', md: '导出 Markdown', cp: '复制全部', bak: '备份 (JSON)',
     imp: '恢复备份', clr: '清空', sure: '再点一次确认清空', onlyN: '只看有笔记的', all: '全部',
     empty: '还没有内容。选中任意文字即可高亮；把鼠标移到公式或扫描段落上，点“＋ 笔记”即可给整块加笔记。<br>选中文字后的快捷键：<b>H</b> 高亮，<b>N</b> 高亮并写笔记。',
@@ -3813,7 +3815,9 @@ fromHash(); addEventListener('hashchange', fromHash);
   };
 
   /* ---------- selection → toolbar or continuous highlight ---------- */
-  let selRange = null, continuous = false, selT;
+  let selRange = null, continuous = false, selT = null;
+  const autoHistory = [];
+  function cancelQueuedSelection() { clearTimeout(selT); selT = null; }
   const mode = mk('button', 'hl-mode', T.auto);
   mode.type = 'button'; mode.title = T.autoTip;
   mode.setAttribute('aria-keyshortcuts', 'Alt+Q');
@@ -3821,7 +3825,7 @@ fromHash(); addEventListener('hashchange', fromHash);
   function setContinuous(on) {
     continuous = on;
     mode.setAttribute('aria-pressed', String(on));
-    clearTimeout(selT);
+    cancelQueuedSelection();
     bar.hidden = true; selRange = null;
     if (currentRange()) getSelection().removeAllRanges();
   }
@@ -3838,8 +3842,13 @@ fromHash(); addEventListener('hashchange', fromHash);
     return r;
   }
   function finishSelection() {
+    selT = null;
     const r = currentRange(); if (!r) { bar.hidden = true; return; }
-    if (continuous) return create('y', false, r);
+    if (continuous) {
+      const it = create('y', false, r);
+      if (it) autoHistory.push(it);
+      return;
+    }
     selRange = r.cloneRange();
     const rects = r.getClientRects(); const rect = rects.length ? rects[rects.length - 1] : r.getBoundingClientRect();
     const touch = matchMedia('(pointer:coarse)').matches;
@@ -3871,6 +3880,30 @@ fromHash(); addEventListener('hashchange', fromHash);
     items.push(it); getSelection().removeAllRanges(); bar.hidden = true; selRange = null;
     paint(it); save(); renderPanel();
     if (withNote) openPop(it.id);
+    return it;
+  }
+  function removeHighlight(it) {
+    // Formula paint is shared by overlapping highlights; restore any earlier one.
+    const hasMath = !!document.querySelector(`.katex[data-hl="${it.id}"]`);
+    unpaint(it.id);
+    items = items.filter(x => x !== it);
+    if (hasMath) paintAll();
+    if (popId === it.id) pop.hidden = true;
+    save(); renderPanel();
+  }
+  function undoAuto() {
+    if (selT !== null && currentRange()) {
+      cancelQueuedSelection();
+      getSelection().removeAllRanges();
+      return true;
+    }
+    while (autoHistory.length) {
+      const it = autoHistory.pop();
+      if (it.note || !items.includes(it)) continue;
+      removeHighlight(it);
+      return true;
+    }
+    return false;
   }
   bar.addEventListener('mousedown', e => e.preventDefault());
   bar.addEventListener('click', e => {
@@ -3880,12 +3913,19 @@ fromHash(); addEventListener('hashchange', fromHash);
     if (a.dataset.a === 'copy') { const t = (selRange || currentRange() || '').toString(); copyText(t); bar.hidden = true; }
   });
   document.addEventListener('keydown', e => {
-    if (e.isComposing || tgt(e).closest('input, textarea, select, [contenteditable="true"]')) return;
+    const target = tgt(e);
+    if (e.defaultPrevented || e.isComposing || target.isContentEditable || target.closest('input, textarea, select')) return;
     if (e.key === 'Escape') { if (continuous) setContinuous(false); bar.hidden = true; pop.hidden = true; plus.hidden = true; if (!panel.hidden) closePanel(); return; }
     // Option may change the character (for example Q becomes œ on a US Mac).
     if (e.altKey && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.code === 'KeyQ') {
       e.preventDefault();
       if (!e.repeat) setContinuous(!continuous);
+      return;
+    }
+    if (continuous && !document.body.classList.contains('edit-on') && !e.altKey && !e.shiftKey &&
+        e.metaKey !== e.ctrlKey && e.key.toLowerCase() === 'z' && !e.repeat && undoAuto()) {
+      e.preventDefault();
+      say(T.undone);
       return;
     }
     if (e.metaKey || e.ctrlKey || e.altKey) return;
@@ -3931,8 +3971,15 @@ fromHash(); addEventListener('hashchange', fromHash);
     const rect = target ? target.getBoundingClientRect() : {left: innerWidth / 2, width: 0, top: 120, bottom: 120};
     placeAt(pop, rect, true);
     const ta = pop.querySelector('textarea'); setTimeout(() => ta.focus(), 30);
+    const saved = pop.querySelector('.hl-saved');
     let t; ta.addEventListener('input', () => {
-      clearTimeout(t); t = setTimeout(() => { it.note = ta.value; save(); repaint(it); renderPanel(); const s = pop.querySelector('.hl-saved'); s.classList.add('on'); setTimeout(() => s.classList.remove('on'), 900); }, 350);
+      it.note = ta.value;
+      clearTimeout(t);
+      t = setTimeout(() => {
+        if (!items.includes(it)) return;
+        save(); repaint(it); renderPanel();
+        saved.classList.add('on'); setTimeout(() => saved.classList.remove('on'), 900);
+      }, 350);
     });
   }
   pop.addEventListener('click', e => {
@@ -3942,7 +3989,7 @@ fromHash(); addEventListener('hashchange', fromHash);
     const a = e.target.closest('[data-a]'); if (!a) return;
     if (a.dataset.a === 'close') pop.hidden = true;
     if (a.dataset.a === 'copy') copyText(it.text);
-    if (a.dataset.a === 'del') { unpaint(it.id); items = items.filter(x => x !== it); save(); renderPanel(); pop.hidden = true; }
+    if (a.dataset.a === 'del') removeHighlight(it);
   });
   // click on a highlight (capture phase so the glossary popup does not also open)
   window.addEventListener('click', e => {

@@ -4,12 +4,16 @@ import os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 css = open(os.path.join(HERE, 'hl.css'), encoding='utf-8').read().strip()
 js = open(os.path.join(HERE, 'hl.js'), encoding='utf-8').read().strip()
+def embed(s, tag, id_, contents, before):
+    block = f'<{tag} id="{id_}">\n{contents}\n</{tag}>'
+    # Keep the existing script order: English term labels initialize after highlights.
+    s, count = re.subn(rf'<{tag} id="{id_}">.*?</{tag}>', lambda _: block, s, flags=re.S)
+    return s if count else s.replace(before, f'{block}\n{before}')
+
 for f in sys.argv[1:]:
     s = open(f, encoding='utf-8').read()
-    s = re.sub(r'\n?<style id="hl-style">.*?</style>', '', s, flags=re.S)
-    s = re.sub(r'\n?<script id="hl-script">.*?</script>', '', s, flags=re.S)
     assert s.count('</head>') == 1 and s.count('</body>') == 1, f
-    s = s.replace('</head>', f'<style id="hl-style">\n{css}\n</style>\n</head>')
-    s = s.replace('</body>', f'<script id="hl-script">\n{js}\n</script>\n</body>')
+    s = embed(s, 'style', 'hl-style', css, '</head>')
+    s = embed(s, 'script', 'hl-script', js, '</body>')
     open(f, 'w', encoding='utf-8').write(s)
     print('injected', f)
