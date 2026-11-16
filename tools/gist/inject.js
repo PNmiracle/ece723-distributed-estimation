@@ -1,4 +1,4 @@
-// Put a one-line "what is it / what is it for" gist at the top of every green
+// Put a short "what / how / why" gist (with how where available) at the top of every green
 // "人话 / In plain words" callout, right under its tag and above the symbol cheat sheet.
 // Data: tools/gist/gist.json  { zh: { n: [what, why] }, en: { n: [what, why] } }  ($...$ = inline math)
 // Usage (repo root):  node tools/gist/inject.js            # both reading pages
@@ -11,7 +11,9 @@ try { katex = require('katex'); } catch (e) { katex = require('/opt/npm-tools/no
 
 const G = JSON.parse(fs.readFileSync(path.join(__dirname, 'gist.json'), 'utf8'));
 const level = require('./levels.js');
+const origins = require('./origins.js');
 const LBL = { zh: ['是什么', '有什么用'], en: ['What', 'Why it matters'] };
+const HOW = { zh: '怎么来的', en: 'Where it comes from' };
 const LEVELS = {
   zh: { core: '必读', proof: '关键推导', detail: '推导细节' },
   en: { core: 'Core', proof: 'Proof step', detail: 'Detail' },
@@ -27,10 +29,15 @@ const inline = t => t.split(/(\$[^$]+\$)/).map(part => part.startsWith('$') && p
 const render = (lang, n) => {
   const [what, why] = G[lang][n];
   const [a, b] = LBL[lang];
+  const how = origins[n]?.[lang];
   const rank = level(Number(n));
+  const row = (label, body, cls = '', attrs = '') =>
+    `<span class="gist-row${cls}"${attrs}><span class="gist-k" data-hl-ui>${label}</span>${inline(body)}</span>`;
   return `<!--gist--><span class="eq-level eq-level-${rank}" data-hl-ui>${LEVELS[lang][rank]}</span>` +
-    `<span class="plain-gist"><span class="gist-row"><span class="gist-k" data-hl-ui>${a}</span>${inline(what)}</span>` +
-    `<span class="gist-row"><span class="gist-k" data-hl-ui>${b}</span>${inline(why)}</span></span><!--/gist-->`;
+    `<span class="plain-gist">${row(how ? `1. ${a}` : a, what)}` +
+    // This inserted text must not shift existing highlights anchored in the card.
+    (how ? row(`2. ${HOW[lang]}`, how, ' gist-origin', ' data-hl-ui') : '') +
+    `${row(how ? `3. ${b}` : b, why)}</span><!--/gist-->`;
 };
 
 const CSS = `<style id="gist-css">
@@ -51,7 +58,6 @@ const CSS = `<style id="gist-css">
 for (const [file, lang] of [['reading.html', 'zh'], ['reading-en.html', 'en']]) {
   let s = fs.readFileSync(file, 'utf8');
   s = s.replace(/<!--gist-->[\s\S]*?<!--\/gist-->/g, '')
-    .replace(/<style id="gist-css">[\s\S]*?<\/style>/, '')
     .replace(/<span class="eq-level-legend" data-hl-ui>[^<]*<\/span>/, '');
   const seen = new Set();
   s = s.replace(/(<figure class="equation" id="eq-(\d+)">(?:(?!<\/figure>)[\s\S])*<\/figure>\s*<aside class="plain"><span class="plain-tag">[^<]*<\/span>)/g, (m, whole, n) => {
@@ -67,7 +73,8 @@ for (const [file, lang] of [['reading.html', 'zh'], ['reading-en.html', 'en']]) 
   const howto = /(<p class="howto">[^\n]*?)(<\/p>)/;
   if (!howto.test(s)) throw new Error(`${file}: no reading guide for the priority legend`);
   s = s.replace(howto, `$1<span class="eq-level-legend" data-hl-ui>${LEGEND[lang]}</span>$2`);
-  s = s.replace('</head>', CSS + '</head>');
+  const existingCSS = /<style id="gist-css">[\s\S]*?<\/style>/;
+  s = existingCSS.test(s) ? s.replace(existingCSS, CSS) : s.replace('</head>', CSS + '</head>');
   fs.writeFileSync(file, s);
   console.log(file, lang, 'gists and priorities', seen.size);
 }
