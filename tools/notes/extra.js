@@ -80,4 +80,58 @@ module.exports = [
       body: T`For Gaussian covariance estimation the score is a quadratic form in $X$, a combination of squared Gaussians like $\chi^2$ variables. For $Z\sim N(0,1)$, $\mathbb E e^{tZ^2}=(1-2t)^{-1/2}$ blows up at $t=1/2$: squared Gaussians have exponential, not Gaussian, tails.<br><br>A sub-Gaussian bound needs $\mathbb E e^{tA}<\infty$ for every real $t$, which fails here. The moment-generating function is still finite near $0$, which is exactly the Bernstein (sub-exponential) condition with $b>0$. That is why this example uses the $b>0$ branch of the converse.` },
     zh: { title: '为什么协方差的得分不是次高斯？',
       body: T`估计高斯协方差时，得分是 $X$ 的二次型，即若干高斯变量平方的组合，类似 $\chi^2$ 变量。对 $Z\sim N(0,1)$ 有 $\mathbb E e^{tZ^2}=(1-2t)^{-1/2}$，在 $t=1/2$ 处爆掉：高斯的平方是指数尾，不是高斯尾。<br><br>次高斯（sub-Gaussian）要求对所有实数 $t$ 都有 $\mathbb E e^{tA}<\infty$，这里做不到。但矩母函数（moment-generating function）在 $0$ 附近仍然有限，这正是 $b>0$ 的伯恩斯坦（Bernstein，次指数）条件。所以这个例子走的是下界证明中 $b>0$ 的那条分支。` } },
+
+  { id: 'x-two-limits', para: 3,
+    en: { title: 'Two pipes and a toll booth',
+      body: T`Think of estimating $\theta$ as filling a tank through two pipes.<br><b>Data pipe.</b> At most $\min\{N,nm\}$ distinct observations exist, so the error cannot beat about $1/\min\{N,nm\}$.<br><b>Wire pipe.</b> At most $nk$ bits are sent in total, so the error cannot beat about $2^{-2nk/d}$.<br><br>The third effect is a toll booth: before any bit can <i>refine</i> the estimate, each coordinate must first be located to about single-machine accuracy, which costs roughly $\tfrac12\log_2m$ bits per coordinate. When local blocks are huge ($m$ exponential in $n$), this toll eats much of the budget, and what is left over, the surplus $s$, decides the refinement term.` },
+    zh: { title: '两根水管加一个收费站',
+      body: T`把估计 $\theta$ 想成用两根水管给水箱灌水。<br><b>数据水管。</b>不同的观测最多 $\min\{N,nm\}$ 条，所以误差最多做到约 $1/\min\{N,nm\}$。<br><b>通信水管。</b>总共最多发 $nk$ 比特，所以误差最多做到约 $2^{-2nk/d}$。<br><br>第三个效应是"收费站"：比特要想<b>精修</b>估计，先得把每个坐标定位到单机精度附近，每个坐标大约要交 $\tfrac12\log_2m$ 比特的"过路费"。本地数据块极大（$m$ 随 $n$ 指数增长）时，这笔过路费吃掉预算的一大块，剩下的余量（surplus）$s$ 决定精修项。` } },
+
+  { id: 'x-refine-term', para: 91,
+    en: { title: 'Reading the refinement term [m(1+s₊)]⁻¹',
+      body: T`With no surplus ($s\le0$) this term is just single-machine accuracy $1/m$: the bits are used up locating the parameter. Each extra surplus bit per coordinate then buys roughly one more machine's worth of averaging, so the term behaves like $\frac1m\cdot\frac1{1+s}$.<br><br>Once $s$ is of order $n$, you would be "averaging over" more machines than the $n$ that exist, so the data term $(nm)^{-1}$ takes over. That is why this term never promises more than the available samples allow.` },
+    zh: { title: '怎么读精修项 [m(1+s₊)]⁻¹',
+      body: T`没有余量（$s\le0$）时，这一项就是单机精度 $1/m$：比特全花在定位上了。之后每个坐标每多一比特余量，大致相当于多"平均"了一台机器的估计，所以这一项像 $\frac1m\cdot\frac1{1+s}$。<br><br>当 $s$ 达到 $n$ 的量级，相当于要对比实际存在的 $n$ 台还多的机器取平均，这时数据项 $(nm)^{-1}$ 接管。所以这一项永远不会承诺超过样本本身能给的精度。` } },
+
+  { id: 'x-theorem1', para: 92,
+    en: { title: 'Theorem 1 at a glance',
+      body: T`Theorem 1 sandwiches the best achievable risk: $c\mathcal L\le R\le C\mathcal U$. Each envelope is the <i>maximum</i> of a few terms, and each term is one bottleneck: pool size $1/N$, total accessible data $1/(nm)$, total bits $a_B=2^{-2B/d}$, and localization-refinement.<br><br>"Maximum" means the worst bottleneck sets the pace, like the slowest station on an assembly line. Where the lower and upper envelopes share the same largest term, the rate is pinned down up to constants; Table I lists those regimes. The only mismatch is the shared-observation count $\bar r$ inside the lower envelope's last term.` },
+    zh: { title: '一眼看懂定理 1',
+      body: T`定理 1 把最优风险夹在两层"包络"之间：$c\mathcal L\le R\le C\mathcal U$。每个包络都是几项取<b>最大值</b>，每一项是一个瓶颈：样本池大小 $1/N$、可访问数据总量 $1/(nm)$、总比特数 $a_B=2^{-2B/d}$、定位-精修项。<br><br>"取最大"意味着最慢的那个瓶颈决定速度，就像流水线上最慢的工位。上下包络的最大项相同时，速率就被确定到常数倍——表 I 列的就是这些情形。唯一的差别是下包络最后一项里的共享观测数 $\bar r$。` } },
+
+  { id: 'x-window', para: 101,
+    en: { title: 'What is still open, and why',
+      body: T`The gap lives in the critical window: local blocks are large enough that localization matters, and overlap is intermediate. The lower bound charges shared observations additively through $\bar r$, the expected number of overlaps; the upper bound does not exploit overlap at all. When $\bar r$ is small compared with $m(1+s)$ the two agree; in between they can differ.<br><br>Closing it needs either an encoder that profits from overlaps or a converse showing that raw-data encoders cannot. The Gaussian local-mean case is settled, but general raw data can encode <i>which</i> shared items differ, information that sample means throw away.` },
+    zh: { title: '还没解决的是什么，为什么难',
+      body: T`缺口在临界窗口（critical window）：本地块大到定位开始起作用，同时重叠程度居中。下界通过 $\bar r$（期望重叠数）以加法方式为共享观测记账；上界则完全没有利用重叠。$\bar r$ 相对 $m(1+s)$ 很小时两者一致，处在中间时就可能不一致。<br><br>要补上缺口，要么找到能从重叠中获益的编码器，要么证明原始数据编码器做不到。高斯局部均值的情形已经解决；但一般的原始数据可以编码"<b>哪些</b>共享样本不同"，这种信息在只看样本均值时会被丢掉。` } },
+
+  { id: 'x-exp-rate', para: 132,
+    en: { title: 'Polynomial vs exponential growth in one picture',
+      body: T`Corollary 2 measures every size on the scale of $n$.<br><b>Polynomial.</b> If $N\asymp n^\beta$ and $m\asymp n^\alpha$, the risk is a power of $n$: $R\asymp dn^{-\min\{\beta,\alpha+1\}}$. The data bottleneck $\min\{N,nm\}$ decides, because $nk$ bits are plenty for polynomially many samples.<br><b>Exponential.</b> If $m$ grows like $2^{\lambda n}$, the error decays like $2^{-n\min\{\lambda,2k/d\}}$: you are limited either by the local data ($1/m=2^{-\lambda n}$) or by the wire ($2^{-2nk/d}$), whichever is weaker.` },
+    zh: { title: '一张图看懂多项式与指数增长',
+      body: T`推论 2 把所有规模都放到 $n$ 的尺度上衡量。<br><b>多项式。</b>若 $N\asymp n^\beta$、$m\asymp n^\alpha$，风险是 $n$ 的幂：$R\asymp dn^{-\min\{\beta,\alpha+1\}}$。这时数据瓶颈 $\min\{N,nm\}$ 说了算，因为对多项式量级的样本来说 $nk$ 比特绰绰有余。<br><b>指数。</b>若 $m$ 像 $2^{\lambda n}$ 那样增长，误差按 $2^{-n\min\{\lambda,2k/d\}}$ 衰减：要么受本地数据限制（$1/m=2^{-\lambda n}$），要么受通信限制（$2^{-2nk/d}$），取较弱的那个。` } },
+
+  { id: 'x-extremes', para: 330,
+    en: { title: 'Two sanity checks',
+      body: T`<b>No shared observations ($r=0$).</b> Nothing is revealed, $G$ is empty, and the bound reduces to the classical independent-block bound: overlap costs nothing because there is none.<br><b>No private observations ($q=0$).</b> Every file a processor holds is also held by someone else. Once $G$ is revealed, the transcript is a deterministic function of $(G,R)$ and adds nothing, so the only information left is that of the $r$ shared observations themselves.<br><br>A good bound should reproduce both extremes, and this one does.` },
+    zh: { title: '两个"极端情形"自检',
+      body: T`<b>没有共享观测（$r=0$）。</b>没有东西被公开，$G$ 是空的，界退化为经典的独立样本块界：没有重叠，自然没有重叠代价。<br><b>没有私有观测（$q=0$）。</b>每台处理器手里的卷宗别人也都有。公开 $G$ 之后，通信记录是 $(G,R)$ 的确定性函数，不再增加任何信息，剩下的信息只有那 $r$ 条共享观测本身。<br><br>好的界应该在两个极端都说得通，这个界做到了。` } },
+
+  { id: 'x-coords-share', para: 475,
+    en: { title: 'Why coordinates may reuse the same data',
+      body: T`The target is a sum over coordinates: $\mathbb E\|\widehat p-p\|^2=\sum_j\mathbb E(\widehat p_j-p_j)^2$. The expectation of a sum is the sum of expectations, with or without independence. So it is enough for each coordinate's estimate to be good on its own; the errors of different coordinates may be correlated.<br><br>That is why one processor can serve several coordinates from the same resampled block, as long as, for each fixed coordinate, different processors' statistics are independent given the pool.` },
+    zh: { title: '为什么不同坐标可以共用同一份数据',
+      body: T`目标是各坐标误差之和：$\mathbb E\|\widehat p-p\|^2=\sum_j\mathbb E(\widehat p_j-p_j)^2$。和的期望等于期望的和，不需要独立性。所以只要每个坐标单独估得好就够了，不同坐标的误差可以相关。<br><br>这就是为什么一台处理器可以用同一个重抽样块同时服务好几个坐标——只要对每个固定坐标，不同处理器的统计量在给定样本池时相互独立。` } },
+
+  { id: 'x-measurable', para: 567,
+    en: { title: 'Why a "measurable selection"?',
+      body: T`The decoder maps the estimated moments $\widehat p$ back to a parameter by choosing a point of $\Theta$ whose moments are closest. If $\mu(\Theta)$ is not convex there can be ties: several equally close points.<br><br>Any of them works for the error bound, but the estimator must still be a proper random variable, so the tie-breaking rule has to be measurable. The selection theorem guarantees such a rule exists. It is a technicality: a promise that "pick any nearest point" can be written down consistently.` },
+    zh: { title: '为什么要"可测选择"？',
+      body: T`解码器要把估计出的矩 $\widehat p$ 映回参数：在 $\Theta$ 里挑一个矩最接近的点。如果 $\mu(\Theta)$ 不是凸的，可能出现"并列"：好几个点一样近。<br><br>挑哪个都不影响误差界，但估计量必须是一个正规的随机变量，所以"并列时怎么挑"的规则必须可测。可测选择定理（measurable selection theorem）保证这样的规则存在。这只是技术细节：保证"任挑一个最近点"能被一致地写下来。` } },
+
+  { id: 'x-minimal', para: 636,
+    en: { title: 'Why the covariance of T must stay away from zero',
+      body: T`For an exponential family the moment map is $\nabla A$, and its slope is the covariance: $\nabla^2A(\theta)=\operatorname{Cov}_\theta T(X)$. If some combination $u^\top T$ had (almost) zero variance, moving $\theta$ in direction $u$ would barely change the moments: a flat direction, the thermometer problem again.<br><br>A uniform lower bound $aI_d$ on the covariance makes every direction visible, which gives the inverse-Lipschitz constant. Minimality (no redundant statistic) plus compactness of the parameter box provides that bound.` },
+    zh: { title: '为什么 T 的协方差不能接近零',
+      body: T`指数族（exponential family）的矩映射是 $\nabla A$，它的"斜率"就是协方差：$\nabla^2A(\theta)=\operatorname{Cov}_\theta T(X)$。如果某个组合 $u^\top T$ 的方差（几乎）为零，$\theta$ 沿方向 $u$ 移动时矩几乎不变——这是一个"平坦方向"，又回到了温度计读不准的问题。<br><br>协方差有一致下界 $aI_d$，就保证每个方向都"看得见"，从而得到逆利普希茨常数。最小性（minimal，没有冗余统计量）加上参数区域的紧性，提供了这个下界。` } },
 ];

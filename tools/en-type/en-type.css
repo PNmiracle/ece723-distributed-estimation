@@ -14,6 +14,7 @@ html[lang="en"] .paper,html[lang="en"] .overview,html[lang="en"] .recap{font-siz
 .para.english .katex-display{margin:.5em 0}
 .para.english .reference{font-size:1rem;line-height:1.5;text-align:left}
 .para.abstract p,.para.index-terms p{font-size:1.0625rem}
+.dropcap{float:left;font-size:3.1em;line-height:.85;margin:.06em .08em 0 0}
 .qed{float:right;margin-left:.6em;font-size:.95em}
 .paper-table{margin:1.1em auto 1.5em;border-collapse:collapse;font-size:1rem}
 .paper-table caption{caption-side:top;font-size:.92rem;font-variant:small-caps;letter-spacing:.02em;line-height:1.45;margin-bottom:.55em;padding:0 1em}
