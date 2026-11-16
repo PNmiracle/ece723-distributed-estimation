@@ -5,6 +5,7 @@ Every equation (1)–(492) on the two reading pages is followed by a green callo
 
 - **符号速查 / Symbol cheat sheet** — each symbol in the equation, explained plainly;
 - **读法 / Say** — pronunciation for hard-to-read symbols (added automatically from `say.js`);
+- **是什么 / 有什么用 · What / Why it matters** — a one-line gist at the very top (stays visible when the callout is folded);
 - **这条式子在说什么 / What it says** — the plain explanation.
 
 The callouts are generated from the data files here and written straight into the HTML,
@@ -15,6 +16,7 @@ so the published site needs no build step.
 | File | What it is |
 |---|---|
 | `data/sec-*.js` | The content, one file per section. Each exports `{ zh: { notes, syms }, en: { notes, syms } }`. `notes[n]` is a list of paragraphs; `syms[n]` is a list of `[TeX, meaning]` rows. Text can contain inline math as `$...$` and `<b>` tags. |
+| `gist/gist.json` + `gist/inject.js` | The one-line gists (`[what, why]` per equation, zh and en). `node tools/gist/inject.js` writes them into both pages (idempotent); `build_all.sh` runs it at the end. |
 | `say.js` | Pronunciation dictionary (Greek letters, script letters, ⪯, ≍, ⊗, sup/inf, hat/tilde, …). A symbol's reading is shown the first time it appears in a callout. |
 | `build.js` | Rebuilds the callouts of one section on one page (replaces existing ones, inserts missing ones, keeps the CSS in sync). |
 | `build_all.sh` | Runs `build.js` for every section on both pages. |

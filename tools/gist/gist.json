@@ -1,0 +1,3942 @@
+{
+"zh": {
+"1": [
+"观测池：$N$ 条独立同分布的样本",
+"整个问题里只有这 $N$ 条数据，下界里 $1/N$ 一项就来自这里"
+],
+"2": [
+"每台机器均匀随机地取 $m$ 条（不放回）",
+"各机器独立地取，所以子集会重叠；后面的重叠计数都从它出发"
+],
+"3": [
+"能看到的不同样本数 $U$",
+"它最多是 $\\min\\{N,nm\\}$，给出“可见样本”那一项下界"
+],
+"4": [
+"第 $i$ 台机器的数据：样本连同编号",
+"带编号才能知道谁和谁拿到了同一条样本"
+],
+"5": [
+"非交互协议：每台机器独立发一条 $k$ 比特消息",
+"定义上界所用的最简单协议"
+],
+"6": [
+"非交互时的通信记录：$n$ 条消息排成一串",
+"融合中心能看到的全部内容"
+],
+"7": [
+"黑板协议：下一个发言者只由公开历史决定",
+"保证“谁发言”本身不偷偷传信息"
+],
+"8": [
+"黑板协议的每一位：看完黑板再写",
+"允许交互，下界要对它也成立"
+],
+"9": [
+"黑板上的总比特数 $L\\le B=nk$",
+"定义总通信预算 $B$"
+],
+"10": [
+"通信记录的熵 $\\le B\\ln 2$",
+"整个下界证明的“熵预算”起点"
+],
+"11": [
+"估计量：只用记录、清单和公共种子",
+"明确融合中心能用什么信息"
+],
+"12": [
+"minimax 风险：最坏参数下、最好方案的误差",
+"全文要刻画的目标量"
+],
+"13": [
+"黑板协议的最优误差 $\\le$ 非交互的",
+"于是只需证 BB 的下界和 NI 的上界"
+],
+"14": [
+"score 与 Fisher 信息的定义",
+"下界的所有信息量都用它们来衡量"
+],
+"15": [
+"score 平方可积、均值为零",
+"Fisher 信息有限、参数是似然的“平衡点”"
+],
+"16": [
+"求导与积分可交换",
+"推出 score 均值为零，也让 (18) 能对消息求导"
+],
+"17": [
+"消息的概率：对原始数据取平均",
+"参数只通过原始数据影响消息"
+],
+"18": [
+"消息的 score = 原始 score 的条件期望",
+"把通信后的信息和原始信息联系起来"
+],
+"19": [
+"score 的均匀 Bernstein 条件",
+"下界的核心假设：控制 score 的尾巴"
+],
+"20": [
+"(19) 的一维写法：任意方向 $a$、步长 $t$",
+"把向量条件化为一维条件来用"
+],
+"21": [
+"log-MGF 在 0 处的二阶导 = 该方向的 Fisher 信息",
+"把尾巴条件和 Fisher 信息连起来"
+],
+"22": [
+"Fisher 信息 $\\preceq vI_d$，迹 $\\le dv$",
+"每条样本带的信息有上限，给出 $1/N$、$1/(nm)$ 两项"
+],
+"23": [
+"$q$ 条样本的块 score 也满足 Bernstein（方差乘 $q$）",
+"第 III 节对整块数据做集中性分析的基础"
+],
+"24": [
+"有界识别矩：矩能唯一、稳定地反推参数",
+"上界的唯一假设"
+],
+"25": [
+"全池的经验矩 $\\mu_N$",
+"“所有数据集中在一处”时的理想基准"
+],
+"26": [
+"经验矩误差 $\\le d/(4N)$",
+"这是池子误差，通信再多也消不掉"
+],
+"27": [
+"把有界矩变成一枚硬币",
+"每条样本只需 1 比特就能无偏地报告矩"
+],
+"28": [
+"最近点解码：挑矩最接近的参数",
+"从估好的矩回到参数"
+],
+"29": [
+"参数误差 $\\le 2L\\times$ 矩误差",
+"上界只需把矩估准"
+],
+"30": [
+"定义 $B$、余量 $s$ 和比特底线 $a_B$",
+"全文最重要的三个记号"
+],
+"31": [
+"比特底线 = 单机精度 $1/m$ × 折扣 $2^{-2s}$",
+"看出 $s$ 的正负决定比特是不是瓶颈"
+],
+"32": [
+"访问重数 $D_a$：第 $a$ 条被几台机器拿到",
+"定义共享观测的出发点"
+],
+"33": [
+"共享观测数 $r$：被至少两台拿到的样本数",
+"共享样本让数据不再独立，下界要单独处理"
+],
+"34": [
+"$D_a \\sim \\mathrm{Bin}(n, m/N)$",
+"用来算共享数的期望"
+],
+"35": [
+"共享观测数的期望 $\\bar r$",
+"下界第四项里的修正量，也是 gap 的来源"
+],
+"36": [
+"下界包络 $\\mathcal L$（地板）",
+"任何协议的误差都不低于它的常数倍"
+],
+"37": [
+"上界包络 $\\mathcal U$（天花板）",
+"存在协议达到它；与地板只差第四项的 $\\bar r$"
+],
+"38": [
+"前两项合并为 $d/\\min\\{N,nm\\}$",
+"“最多能看到多少不同样本”的经典误差"
+],
+"39": [
+"$\\mathcal L\\le\\mathcal U$",
+"地板确实在天花板下面"
+],
+"40": [
+"定理 1 下界：$R_{\\mathrm{BB}}\\ge c\\mathcal L$",
+"即使允许交互，误差也不低于地板"
+],
+"41": [
+"定理 1 上界：$R_{\\mathrm{NI}}\\le C\\mathcal U$",
+"最简单的非交互协议就能达到天花板"
+],
+"42": [
+"定理 1 的“三明治”",
+"地板与天花板同阶时问题完全解决，且交互无用"
+],
+"43": [
+"余量有界时 $1/m \\lesssim a_B$",
+"表 I 第 1 行：比特是唯一瓶颈"
+],
+"44": [
+"天花板各项都 $\\le 1/m$",
+"配合 (43) 让上下界夹住 $da_B$"
+],
+"45": [
+"余量 $\\ge \\varepsilon n$ 时精修项 $\\lesssim 1/(nm)$",
+"表 I 第 2 行：精修不是瓶颈"
+],
+"46": [
+"比特项与总访问项之比趋于 0",
+"比特充足时只剩样本数限制"
+],
+"47": [
+"临界窗口里比特项、总访问项都可忽略",
+"表 I 第 3、4 行的出发点"
+],
+"48": [
+"$s\\to\\infty$ 时精修项 $\\approx 1/(ms)$",
+"每多 1 比特余量，相当于多一台机器的精度"
+],
+"49": [
+"临界窗口里 $\\mathcal U \\asymp d\\max\\{1/N, 1/(ms)\\}$",
+"天花板只剩两项"
+],
+"50": [
+"池子小（$N\\lesssim ms$）时 $1/(ms)\\lesssim 1/N$",
+"表 I 第 3 行：误差 $\\asymp d/N$"
+],
+"51": [
+"共享数 $\\le$ 两两交集之和",
+"把难算的量换成好算的量"
+],
+"52": [
+"两台机器平均重叠 $m^2/N$ 条",
+"算 (53) 的一步"
+],
+"53": [
+"$\\bar r \\le \\binom n2 m^2/N$",
+"池子够大时共享项不碍事"
+],
+"54": [
+"大池子时 $\\bar r \\lesssim ms$",
+"表 I 第 4 行的关键一步"
+],
+"55": [
+"地板第四项的分母 $\\asymp ms$",
+"地板与天花板第四项同阶"
+],
+"56": [
+"$N/(ms)\\to\\infty$",
+"池子项可忽略，误差 $\\asymp d/(ms)$"
+],
+"57": [
+"完全重叠 $m=N$：大家算同一个经验矩",
+"表 I 第 5 行的出发点"
+],
+"58": [
+"把 $B$ 比特平均分给 $d$ 个坐标",
+"完全重叠时的编码方案"
+],
+"59": [
+"量化误差 $\\lesssim d\\,2^{-2B/d}$",
+"完全重叠时比特能“一起用”"
+],
+"60": [
+"池子误差 $\\le d/(4N)$",
+"与 (26) 相同"
+],
+"61": [
+"参数误差 $\\le 2L\\times$ 矩误差",
+"与 (29) 相同，把矩误差换成参数误差"
+],
+"62": [
+"完全重叠的最坏误差 $\\lesssim d(1/N + a_B)$",
+"表 I 第 5 行得证"
+],
+"63": [
+"未解决窗口里 $m$ 随 $n$ 指数增长",
+"只有单机数据极多时才会落进 gap"
+],
+"64": [
+"多项式情形：$R\\asymp dn^{-\\min\\{\\beta,\\alpha+1\\}}$",
+"推论 2：多项式耦合全部解决"
+],
+"65": [
+"指数情形的衰减率 $\\min\\{\\lambda,2k/d\\}$",
+"数据和比特谁更紧，谁决定速率"
+],
+"66": [
+"多项式情形 $s/n \\to k/d$",
+"落入表 I 第 2 行"
+],
+"67": [
+"$\\min\\{N,nm\\}\\asymp n^{\\min\\{\\beta,\\alpha+1\\}}$",
+"代入得到 (64)"
+],
+"68": [
+"单机数据的指数增长率 $\\lambda_n$",
+"(65) 里的 $\\lambda$"
+],
+"69": [
+"下界只取两项：$1/(nm)$ 与 $2^{-2nk/d}$",
+"证明指数速率的上半边"
+],
+"70": [
+"衰减指数 $\\le \\min\\{\\lambda_n, 2k/d\\}+o(1)$",
+"速率的上界"
+],
+"71": [
+"上界只取两项：$1/m$ 与 $2^{-2nk/d}$",
+"证明指数速率的另一半"
+],
+"72": [
+"衰减指数 $\\ge \\min\\{\\lambda_n, 2k/d\\}-o(1)$",
+"与 (70) 夹住，(65) 得证"
+],
+"73": [
+"一般数据 $Z$ 经过与 $\\theta$ 无关的规则变成消息",
+"(17) 的一般形式，III-A 从这里起步"
+],
+"74": [
+"对消息概率求导：导数只落在数据密度上",
+"推出得分恒等式 (75) 的中间一步"
+],
+"75": [
+"得分恒等式：消息的 score = 原始 score 的条件期望",
+"下界的地基：压缩只会把信息平均掉"
+],
+"76": [
+"独立样本的 score 相加",
+"信息可加：$q$ 条样本 = $q$ 倍信息"
+],
+"77": [
+"简记 $S_Z$（数据的 score）和 $S_T$（消息的 score）",
+"后面几行的记号"
+],
+"78": [
+"条件 Jensen：消息的信息 $\\le$ 数据的信息（任一方向）",
+"推出 Fisher 版数据处理不等式"
+],
+"79": [
+"Fisher 信息的数据处理不等式 $J_T\\preceq J_Z$",
+"加工数据不能增加信息"
+],
+"80": [
+"联合 score = $G$ 的 score + 给定 $G$ 后的追加 score",
+"为链式法则 (83) 做准备"
+],
+"81": [
+"追加 score 的条件均值为 0",
+"交叉项会消失的原因"
+],
+"82": [
+"两部分 score 不相关",
+"让信息可以拆成两块相加"
+],
+"83": [
+"Fisher 信息的链式法则",
+"III-D 靠它把共享观测单独算账"
+],
+"84": [
+"(83) 取迹后的数值版本",
+"后面都用迹来衡量总信息"
+],
+"85": [
+"证明用的平滑先验 $\\pi$",
+"它的熵和 Fisher 信息都能精确算出"
+],
+"86": [
+"先验的 Fisher 信息 $J_\\pi$",
+"出现在 van Trees 分母里"
+],
+"87": [
+"单坐标先验积分为 1",
+"验证先验合法"
+],
+"88": [
+"单坐标先验的 score $2\\pi\\cot(\\pi t)$",
+"用来算 $J_\\pi$"
+],
+"89": [
+"单坐标先验的 Fisher 信息 $=4\\pi^2$",
+"于是 $J_\\pi=4\\pi^2 d$，是个常数"
+],
+"90": [
+"辅助积分 $F(a)=\\int_0^\\pi\\sin^a x\\,dx$",
+"为算先验的熵准备"
+],
+"91": [
+"$F$ 的递推式",
+"把 $F(2)$ 化到 $F(0)$"
+],
+"92": [
+"经典积分 $\\int_0^{\\pi/2}\\ln\\sin x\\,dx=-\\tfrac\\pi2\\ln2$",
+"算熵要用的常数"
+],
+"93": [
+"$F'(2)/F(2)=\\tfrac12-\\ln2$",
+"算熵的最后一个零件"
+],
+"94": [
+"$\\mathbb E\\ln\\sin^2(\\pi\\Theta_1)=1-2\\ln2$",
+"代入熵的公式"
+],
+"95": [
+"单坐标先验的微分熵 $=\\ln2-1$",
+"于是 $h(\\pi)=d(\\ln2-1)$，进入熵预算"
+],
+"96": [
+"贝叶斯风险 $D$：参数也随机时的平均误差",
+"下界先对它证明"
+],
+"97": [
+"$(\\Theta,Y)$ 的联合密度与它的 score",
+"van Trees 证明的出发点"
+],
+"98": [
+"分部积分：E[误差 × score] = 1",
+"van Trees 的关键恒等式"
+],
+"99": [
+"Cauchy–Schwarz：$d\\le\\sqrt{D}\\sqrt{\\mathbb E\\|Q\\|^2}$",
+"把恒等式变成误差下界"
+],
+"100": [
+"总 score 平方 = 先验信息 + 平均数据信息",
+"算出 van Trees 的分母"
+],
+"101": [
+"van Trees 不等式：$D\\ge d^2/(\\text{平均信息}+J_\\pi)$",
+"从此“证误差下界” = “给信息找上界”"
+],
+"102": [
+"最坏风险 $\\ge$ 贝叶斯风险",
+"贝叶斯下界自动成为 minimax 下界"
+],
+"103": [
+"第 $a$ 条没被任何机器取到的概率",
+"用来算可见样本数的期望"
+],
+"104": [
+"可见样本数的期望 $\\le\\min\\{N,nm\\}$",
+"给出第一个下界的样本数"
+],
+"105": [
+"固定清单和种子后，记录的信息 $\\le dvU$",
+"每条可见样本至多带 $dv$ 信息"
+],
+"106": [
+"对清单和种子平均后信息 $\\le dv\\,\\mathbb EU$",
+"代入 van Trees 的准备"
+],
+"107": [
+"第一个下界：$R\\gtrsim d/\\min\\{N,nm\\}$",
+"通信无限也只能用这么多不同样本"
+],
+"108": [
+"看到记录 $y$ 后的条件误差 $D_y$",
+"转向熵论证"
+],
+"109": [
+"给定方差时高斯熵最大",
+"剩余不确定性 $\\le$ 同方差高斯的熵"
+],
+"110": [
+"对 $Y$ 平均并用 Jensen",
+"得到条件熵的上界"
+],
+"111": [
+"互信息 $\\ge$ 先验熵 − 剩余熵",
+"误差要小，记录就必须传足够多关于 $\\Theta$ 的信息"
+],
+"112": [
+"$I(\\Theta;T,W)=I(\\Theta;T\\mid W)$",
+"清单和种子本身不带参数信息"
+],
+"113": [
+"互信息 $\\le$ 记录的熵 $\\le B\\ln2$",
+"$B$ 比特至多装 $B$ 比特信息"
+],
+"114": [
+"第二个下界：$D\\gtrsim d\\,2^{-2B/d}$",
+"数据再多，$B$ 比特也只能这么准"
+],
+"115": [
+"代入先验熵后的显式常数",
+"(114) 的具体形式"
+],
+"116": [
+"$h_T$：给定参数和种子后记录剩下的熵",
+"熵预算里与参数无关的“废话”部分"
+],
+"117": [
+"记录的熵 = 参数信息 + $h_T$",
+"把熵预算拆成两块"
+],
+"118": [
+"熵预算：$h_T\\le B\\ln2-h(\\pi)+\\tfrac d2\\ln(2\\pi eD/d)$",
+"误差越小，留给 $h_T$ 的越少；III-E 要用"
+],
+"119": [
+"块 score $A_q$：$q$ 条样本的 score 之和",
+"III-B 的研究对象"
+],
+"120": [
+"块 score 的 log-MGF 满足 Bernstein（方差 $vq$）",
+"引理 1 的输入"
+],
+"121": [
+"引理 1：概率为 $p$ 的事件最多把块 score 推偏 $\\sqrt{2vq\\ln(1/p)}+b\\ln(1/p)$",
+"把“得知一个事件”换算成 score 的偏移"
+],
+"122": [
+"引理 1 的平方版",
+"后面直接代入信息"
+],
+"123": [
+"次高斯时更简洁的平方版",
+"$b=0$ 时少一项"
+],
+"124": [
+"简记惊讶度 $\\ell$ 和条件均值 $\\mu_E$",
+"证明引理 1 的记号"
+],
+"125": [
+"$\\mu_E$ 的方向 $e$",
+"把向量问题化成一维"
+],
+"126": [
+"条件 Jensen 用在 $\\exp$ 上",
+"把偏移放进指数矩"
+],
+"127": [
+"条件指数矩 $\\le$ 无条件指数矩 / $p$",
+"代价是一个 $\\ln(1/p)$"
+],
+"128": [
+"$\\lambda\\|\\mu_E\\|\\le\\ell+$ Bernstein 项",
+"对任意旋钮 $\\lambda$ 成立"
+],
+"129": [
+"换个看法：条件化的 KL 代价就是 $\\ell$",
+"解释为什么罕见事件“更有料”"
+],
+"130": [
+"偏移 $\\le \\ell/\\lambda$ + 随 $\\lambda$ 增大的项",
+"需要选 $\\lambda$ 折中"
+],
+"131": [
+"选折中的旋钮 $\\lambda_*$",
+"让两项平衡"
+],
+"132": [
+"检查 $b\\lambda_*<1$",
+"确保旋钮合法"
+],
+"133": [
+"代入后第一项",
+"计算 (121)"
+],
+"134": [
+"代入后第二项",
+"两项相加即 (121)"
+],
+"135": [
+"平方得到 (122)",
+"引理 1 的平方版证毕"
+],
+"136": [
+"记录能撬动的 score $\\lesssim$ 记录的熵",
+"Fisher 信息和熵挂上钩"
+],
+"137": [
+"次高斯时只剩熵那一项",
+"(136) 的简洁版"
+],
+"138": [
+"自信息 $L_T=\\ln(1/p_T(T))$",
+"平均就是熵；引理 2 研究它的二阶矩"
+],
+"139": [
+"引理 2：自信息平方的平均 $\\le K_B\\approx(B\\ln2)^2$",
+"控制 Bernstein 多出来的平方项"
+],
+"140": [
+"自信息大于 $x$ 的概率 $\\le 2^Be^{-x}$",
+"证明引理 2 的尾部估计"
+],
+"141": [
+"再与 1 取小",
+"完整的尾部上界"
+],
+"142": [
+"二阶矩 = 尾概率的积分",
+"标准计算公式"
+],
+"143": [
+"在 $a=B\\ln2$ 处切成两段积分",
+"分别估计"
+],
+"144": [
+"第二段积分 $=2(a+1)$",
+"代入得到 $K_B$"
+],
+"145": [
+"引理 2 的条件版本",
+"给定种子后照样成立"
+],
+"146": [
+"独立私有块：每台机器至多 $q$ 条独有样本",
+"III-C 先处理没有重叠的情形"
+],
+"147": [
+"引理 3：信息 $\\le 4vq\\,H(T\\mid R)+2b^2K_B$",
+"记录每多 1 nat 熵，最多多运 $4vq$ 信息；与机器数无关"
+],
+"148": [
+"次高斯时的引理 3",
+"系数减半、没有常数项"
+],
+"149": [
+"第 $i$ 台机器的“清单” $E_i(t;r)$",
+"记录对它的数据提的全部要求"
+],
+"150": [
+"矩形性质：记录 $=t$ ⇔ 每台各自满足清单",
+"交互时也成立，是引理 3 的关键"
+],
+"151": [
+"简记 $p_i(t)$、$p(t)$、$\\ell_i(t)$",
+"后面几步的记号"
+],
+"152": [
+"记录概率 = 各机器概率之积；惊讶度相加",
+"独立 + 矩形 ⇒ 熵可以按机器拆开"
+],
+"153": [
+"看到记录后各块仍独立",
+"每块只受自己清单影响"
+],
+"154": [
+"第 $i$ 块的 score $A_i$ 与它的后验均值 $a_i(t)$",
+"后面逐块计算"
+],
+"155": [
+"$a_i(t)$ 只取决于第 $i$ 块是否满足清单",
+"可以对每块单独用引理 1"
+],
+"156": [
+"给定记录，两块的 score 条件独立",
+"为交叉项消失做准备"
+],
+"157": [
+"对记录平均后交叉项为 0",
+"各机器的信息不会互相放大"
+],
+"158": [
+"记录的 score = 各块后验均值之和",
+"得分恒等式用在多机器上"
+],
+"159": [
+"记录的信息 = 各块后验均值平方和的平均",
+"交叉项按 (157) 消失"
+],
+"160": [
+"逐块用引理 1：$\\|a_i\\|^2\\le 4vq_i\\ell_i+2b^2\\ell_i^2$",
+"每块的偏移由它的惊讶度控制"
+],
+"161": [
+"代入 (159)",
+"信息 $\\le$ 惊讶度之和 + 平方和"
+],
+"162": [
+"惊讶度之和的平均 = 记录的条件熵",
+"把信息和熵连起来"
+],
+"163": [
+"平方和 $\\le$ 和的平方",
+"把平方项换成自信息平方"
+],
+"164": [
+"信息 $\\le 4vq\\cdot$熵 $+2b^2\\cdot$自信息平方的平均",
+"差引理 2 就完成"
+],
+"165": [
+"代入引理 2",
+"固定种子的 (147)"
+],
+"166": [
+"种子不带信息，对种子取平均",
+"去掉“固定种子”"
+],
+"167": [
+"条件熵 = 对种子平均",
+"(147) 证毕"
+],
+"168": [
+"次高斯时逐块的更紧估计",
+"没有平方惊讶度项"
+],
+"169": [
+"次高斯时固定种子的结论",
+"得到 (148)"
+],
+"170": [
+"把样本分成共享集 $\\mathcal G$ 和各机器的私有集",
+"III-D 处理重叠的第一步"
+],
+"171": [
+"共享数据 $G$ 和各台私有数据 $V_i$",
+"定义 $r$、$q_i$、$q$ 这些计数"
+],
+"172": [
+"共享组与私有组互相独立",
+"可以分开计算信息"
+],
+"173": [
+"私有块大小 $q_i\\le m$、$q\\le m$",
+"后面把 $q$ 放宽成 $m$"
+],
+"174": [
+"定理 2：信息 $\\le dvr+4vq\\,H(T\\mid G,R)+2b^2K_B$",
+"共享样本按条数加信息，私有部分受熵限制"
+],
+"175": [
+"定理 2 的好用版本（$q\\to m$、去掉条件 $G$）",
+"后面 III-E 直接代入这个形式"
+],
+"176": [
+"次高斯时的定理 2",
+"去掉 Bernstein 项、系数减半"
+],
+"177": [
+"高斯均值例子的定理 2",
+"常数完全显式"
+],
+"178": [
+"把共享数据也给中心，信息只会变多",
+"给信息找上界时可以这么做"
+],
+"179": [
+"链式法则：$(G,T)$ 的信息 = $G$ 的 + 给定 $G$ 后 $T$ 的",
+"把共享部分单独拿出来"
+],
+"180": [
+"$J_G=rI_X$",
+"$r$ 条独立共享样本的信息"
+],
+"181": [
+"信息 $\\le r\\,\\mathrm{tr}I_X$ + 给定共享数据后的条件信息",
+"剩下的只需处理私有部分"
+],
+"182": [
+"固定共享数据后，私有块仍独立",
+"回到独立块的情形"
+],
+"183": [
+"固定共享数据和种子后，记录是私有数据的函数",
+"参数只通过私有数据进入"
+],
+"184": [
+"对私有块套用引理 3",
+"得到条件信息的上界"
+],
+"185": [
+"对共享数据的取值平均",
+"去掉“固定 $G$”"
+],
+"186": [
+"固定种子的定理 2",
+"代回 (181)"
+],
+"187": [
+"对种子平均，(174) 证毕",
+"定理 2 完成"
+],
+"188": [
+"多知道 $G$，熵只会减少",
+"把 (174) 放宽成 (175)"
+],
+"189": [
+"次高斯时用引理 3 的紧版本",
+"得到 (176)"
+],
+"190": [
+"高斯模型：score $=X-\\theta$，$v=1$、$b=0$",
+"高斯例子的常数"
+],
+"191": [
+"没有私有数据时信息 $\\le dvr$",
+"极端情形的检验"
+],
+"192": [
+"对随机抽样设计平均：$r\\to\\bar r$",
+"$\\bar r$ 就是这样进入下界的"
+],
+"193": [
+"对先验平均后的信息上界",
+"下界第四项里 $\\bar r$ 的来源"
+],
+"194": [
+"两个主角：贝叶斯风险 $D$ 与剩余熵 $h_T$",
+"III-E 要把它们连起来"
+],
+"195": [
+"平均信息 $\\le dv\\bar r+4vm\\,h_T+2b^2K_B$",
+"信息界的最终形式"
+],
+"196": [
+"打包常数 $A$、$Q$",
+"让后面的式子更短"
+],
+"197": [
+"代入 van Trees：$d^2/D\\le Amh_T+Q$",
+"信息界变成误差界"
+],
+"198": [
+"熵预算代入先验熵",
+"误差越小，$h_T$ 越受限"
+],
+"199": [
+"常数 $c_\\pi$",
+"打包"
+],
+"200": [
+"$x=mD/d$：误差与单机精度之比",
+"换成无量纲变量"
+],
+"201": [
+"比特数 = 余量 + 定位花费",
+"为抵消 $\\tfrac12\\ln m$ 做准备"
+],
+"202": [
+"$h_T/d\\le s\\ln2+c_\\pi+\\tfrac12\\ln x$",
+"定位花费被抵消，只剩余量"
+],
+"203": [
+"信息界 + 熵预算合并",
+"解释了结论里为什么是余量 $s$ 而不是 $B$"
+],
+"204": [
+"关于 $x$ 的对数不等式",
+"下一步把它“取逆”"
+],
+"205": [
+"换元 $t=2/(Ax)$",
+"变成 $t+\\ln t\\le\\cdots$ 的形式"
+],
+"206": [
+"$t+\\ln t\\le$ 余量项 + 常数 + 修正",
+"准备取逆"
+],
+"207": [
+"拆开修正项：共享、Bernstein、先验",
+"看清每一项来源"
+],
+"208": [
+"$K_B\\le C_K(B+1)^2$",
+"控制 Bernstein 修正的大小"
+],
+"209": [
+"把所有增长项打包成 $F$",
+"简化右边"
+],
+"210": [
+"$t+\\ln t\\le C_1F$",
+"整理后的不等式"
+],
+"211": [
+"$t\\le C_2F$",
+"对数不等式取逆的结果"
+],
+"212": [
+"误差 $\\gtrsim d/[m(1+s_+)+\\bar r+(B+1)^2]$",
+"比目标多一项 $(B+1)^2$"
+],
+"213": [
+"目标：精修项下界 $d/[m(1+s_+)+\\bar r]$",
+"要去掉 $(B+1)^2$"
+],
+"214": [
+"情况一（$m\\ge n^2$）：$(B+1)^2\\lesssim m$",
+"多余项被吸收"
+],
+"215": [
+"分母只变大常数倍",
+"情况一得到目标"
+],
+"216": [
+"情况二（$m<n^2$）：$s\\ge nk/d-\\log_2 n$",
+"余量很大"
+],
+"217": [
+"$s\\ge nk/(2d)$",
+"余量与 $n$ 同阶"
+],
+"218": [
+"精修项被总访问项盖住",
+"情况二里多余项无关紧要"
+],
+"219": [
+"第四项下界 $R\\gtrsim d/[m(1+s_+)+\\bar r]$",
+"两种情况合并"
+],
+"220": [
+"主下界：四项合一，即地板 $\\mathcal L$",
+"证明了定理 1 的下界 (40)"
+],
+"221": [
+"高斯情形的更精确信息界",
+"系数是 $2m$"
+],
+"222": [
+"高斯情形代入 van Trees",
+"准备显式下界"
+],
+"223": [
+"重新定义 $t=d/(mD)$",
+"高斯情形的变量"
+],
+"224": [
+"(222) 除以 $md$",
+"得到关于 $t$ 的不等式"
+],
+"225": [
+"高斯情形的熵预算",
+"$\\ln m$ 再次抵消"
+],
+"226": [
+"三个常数合并为 $\\ln(\\pi e^3/2)$",
+"整理常数"
+],
+"227": [
+"$t+\\ln t\\le z$（右边完全显式）",
+"准备用 Lambert W 求解"
+],
+"228": [
+"$te^t\\le e^z$",
+"取指数"
+],
+"229": [
+"Lambert W 函数",
+"$te^t$ 的反函数"
+],
+"230": [
+"高斯情形的显式下界（含 Lambert W）",
+"完全显式、非渐近"
+],
+"231": [
+"每台只从自己的子集里抽 $m$ 个编号",
+"上界构造的第一步：重抽样"
+],
+"232": [
+"引理 4：抽出的编号等同于从全池独立均匀抽",
+"把重叠的麻烦“洗掉”"
+],
+"233": [
+"已抽编号集合与个数",
+"重抽样规则的记号"
+],
+"234": [
+"重抽样规则",
+"旧编号各以 $1/N$ 重抽，其余在未抽过的里均分"
+],
+"235": [
+"书架上总有未抽过的编号",
+"规则不会卡住"
+],
+"236": [
+"各情况概率之和为 1",
+"规则合法"
+],
+"237": [
+"关键不变量：未露面的部分仍均匀",
+"证明引理 4 的核心"
+],
+"238": [
+"给定书架，历史概率 = 每步之积",
+"为贝叶斯计算准备"
+],
+"239": [
+"每步因子只取决于历史",
+"书架的后验仍均匀"
+],
+"240": [
+"抽到旧编号的概率 $1/N$",
+"一种情况"
+],
+"241": [
+"未露面编号在书架上的概率",
+"另一种情况的因子"
+],
+"242": [
+"三个因子相乘 $=1/N$",
+"新编号也是 $1/N$"
+],
+"243": [
+"每个编号下次被抽中的概率都是 $1/N$",
+"于是独立均匀，引理 4 得证"
+],
+"244": [
+"第二次重复的概率是 $1/N$ 而不是 $1/m$",
+"说明这不是普通的有放回抽样"
+],
+"245": [
+"固定池子后所有编号组合等概率",
+"各机器的抽样独立"
+],
+"246": [
+"池子的经验分布 $\\widehat P_N$ 与抽到的样本 $Y_{i,t}$",
+"后面的记号"
+],
+"247": [
+"固定池子后，所有抽样都独立来自 $\\widehat P_N$",
+"重叠带来的相关性被洗掉"
+],
+"248": [
+"池子上的经验矩 $p_{N,j}$",
+"上界要估的目标"
+],
+"249": [
+"把矩随机化成硬币 $U_{i,t,j}$",
+"每次抽样变成一个伯努利"
+],
+"250": [
+"硬币正面概率 = 经验矩",
+"硬币无偏地报告矩"
+],
+"251": [
+"固定池子后硬币独立同分布",
+"可以按标准伯努利估计处理"
+],
+"252": [
+"正面计数 $K_{i,j}$",
+"每台机器的局部统计量"
+],
+"253": [
+"$K_{i,j}\\sim\\mathrm{Bin}(m,p_{N,j})$",
+"后面编码的对象"
+],
+"254": [
+"经验矩无偏",
+"池子误差只来自方差"
+],
+"255": [
+"经验矩方差 $\\le 1/(4N)$",
+"每个坐标的池子误差"
+],
+"256": [
+"池子误差合计 $\\le d/(4N)$",
+"与 (26) 相同"
+],
+"257": [
+"总误差 $\\le 2\\times$通信误差 $+2\\times$池子误差",
+"后面只需控制通信误差"
+],
+"258": [
+"外部工具：Cai–Wei 的稳健编码保证",
+"近似高斯的输入就能达到三项最大值"
+],
+"259": [
+"把 $m$ 个硬币分成两半，各 $q$ 个",
+"一半估均值、一半估方差"
+],
+"260": [
+"两半各自的正面比例",
+"均值和方差各用一半"
+],
+"261": [
+"平滑统计量：样本均值 + 补齐方差的高斯噪声",
+"让离散的二项变得像高斯"
+],
+"262": [
+"加的噪声方差在 $3/(4q)$ 到 $1/q$ 之间",
+"噪声不会退化"
+],
+"263": [
+"引理 5：与 $N(p,1/q)$ 的 TV 距离 $\\le Cq^{-1/2}$",
+"满足稳健编码的输入条件"
+],
+"264": [
+"平滑统计量仍无偏",
+"均值不变"
+],
+"265": [
+"Hoeffding：$q$ 个有界变量的平均是次高斯",
+"控制尾巴"
+],
+"266": [
+"平滑统计量是次高斯（方差约 $5/(4q)$）",
+"稳健编码的另一条件"
+],
+"267": [
+"固定方差估计后的噪声方差 $\\sigma_w^2$",
+"证明引理 5 的记号"
+],
+"268": [
+"高斯模糊后的测试函数 $h_w$",
+"光滑化以便泰勒展开"
+],
+"269": [
+"$h_w$ 的三阶导数可控",
+"泰勒余项的大小"
+],
+"270": [
+"三阶导数 $\\le Cq^{3/2}$",
+"对所有 $w$ 一致"
+],
+"271": [
+"中心化、缩放的伯努利项 $Z_a$",
+"Lindeberg 替换的对象"
+],
+"272": [
+"高斯“替身” $Y_a$",
+"与 $Z_a$ 前两阶矩相同"
+],
+"273": [
+"替身与原版均值、方差相同，三阶矩很小",
+"替换误差只来自三阶项"
+],
+"274": [
+"逐个替换：前面换成高斯，后面仍是伯努利",
+"Lindeberg 替换法"
+],
+"275": [
+"泰勒展开到二阶",
+"余项由三阶导数控制"
+],
+"276": [
+"每换一个，误差约 $q^{-3/2}$",
+"零到二阶项全部抵消"
+],
+"277": [
+"$q$ 次替换的总误差 $\\lesssim q^{-1/2}$",
+"接近高斯"
+],
+"278": [
+"给定方差估计时的 TV 距离 $\\le Cq^{-1/2}$",
+"引理 5 的条件版本"
+],
+"279": [
+"方差比 $a_w$",
+"实际方差与目标方差之比"
+],
+"280": [
+"$3/4\\le a_w\\le5/4$",
+"比值离 1 不远"
+],
+"281": [
+"两个只差方差的高斯之间的 KL",
+"显式公式"
+],
+"282": [
+"$a-1-\\ln a\\le C(a-1)^2$",
+"泰勒估计"
+],
+"283": [
+"Pinsker：TV $\\lesssim|a_w-1|$",
+"方差差一点，分布只差一点"
+],
+"284": [
+"方差估计误差 $\\lesssim q^{-1/2}$",
+"控制方差不匹配"
+],
+"285": [
+"总 TV $\\le$ 替换误差 + 方差不匹配误差",
+"引理 5 得证"
+],
+"286": [
+"平滑统计量的实际方差",
+"与 $1/q$ 只差小项"
+],
+"287": [
+"比特轮流分给 $d$ 个坐标",
+"每个坐标约 $B/d$ 比特"
+],
+"288": [
+"坐标 $j$ 的比特数 $B_j$ 与参与机器数 $Q_j$",
+"分配后的记号"
+],
+"289": [
+"每台 $k$ 比特分完；$|B_j-B/d|\\le1$",
+"分配均匀"
+],
+"290": [
+"参与机器数 $Q_j$ 与 $n$ 同阶",
+"样本项不会变差"
+],
+"291": [
+"参考尺度 $\\sigma=q^{-1/2}$",
+"稳健编码的参数"
+],
+"292": [
+"$q\\ge m/3$，$Q_j\\le 3q$",
+"检查编码条件"
+],
+"293": [
+"TV 条件满足",
+"可以用 (258)"
+],
+"294": [
+"坐标 $j$ 的误差 $\\lesssim$ 三项最大",
+"用上稳健编码"
+],
+"295": [
+"坐标 $j$ 自己的余量 $s_j$",
+"与整体余量对比"
+],
+"296": [
+"样本项 $\\lesssim 1/(mn)$",
+"对上总访问项"
+],
+"297": [
+"比特项 $\\le 4a_B$",
+"对上比特底线"
+],
+"298": [
+"$s_j$ 与 $s$ 只差有界量",
+"精修项可以对比"
+],
+"299": [
+"$1+s_+\\lesssim 1+s_{j,+}$",
+"余量同阶"
+],
+"300": [
+"精修项 $\\lesssim 1/[m(1+s_+)]$",
+"对上天花板第四项"
+],
+"301": [
+"大块情形：每坐标通信误差 $\\lesssim\\max\\{1/(mn),a_B,1/[m(1+s_+)]\\}$",
+"正好是天花板里的三项"
+],
+"302": [
+"引理 6 的机器数门槛",
+"只要求机器数比 $\\ln^2$ 大，很宽松"
+],
+"303": [
+"引理 6：每台 1 比特，误差 $\\lesssim 1/(Qm)$",
+"小块情形不损失精度"
+],
+"304": [
+"二项计数的特征函数（一根“表针”）",
+"用表针位置读出 $p$"
+],
+"305": [
+"“实部”机器发 1 的概率",
+"合法地用 1 比特报告 $\\cos(tK)$"
+],
+"306": [
+"±1 符号的平均 = 表针的实部",
+"读出横坐标"
+],
+"307": [
+"“虚部”机器：用 $\\sin$ 代替 $\\cos$",
+"读纵坐标"
+],
+"308": [
+"±1 符号的平均 = 表针的虚部",
+"两组合起来读出完整位置"
+],
+"309": [
+"一串翻倍的频率 $t_j=2^j/m$",
+"从粗到细逐级定位"
+],
+"310": [
+"频率范围与灵敏度量级",
+"最快一级对应单机精度"
+],
+"311": [
+"单步表针长度的显式公式",
+"证明表针不会太短"
+],
+"312": [
+"单步表针长度平方 $\\ge 3/4$",
+"下一步取 $m$ 次方"
+],
+"313": [
+"对数长度 $\\ge -1/6$",
+"$m$ 次方后仍不太短"
+],
+"314": [
+"表针长度 $\\ge e^{-1/6}$",
+"转角永远读得出来"
+],
+"315": [
+"展开的相位 $\\varphi_j(p)$",
+"表针累计转过的角度"
+],
+"316": [
+"相位对 $p$ 的导数",
+"灵敏度"
+],
+"317": [
+"灵敏度 $\\asymp\\lambda_j$",
+"频率越高越灵敏"
+],
+"318": [
+"短区间内相位差 $<\\pi/2$",
+"表针不会绕圈"
+],
+"319": [
+"两个复数距离的公式",
+"长度差 + 角度差"
+],
+"320": [
+"表针位置差 $\\ge c_2\\lambda_j|p-p'|$",
+"读出表针就能反推 $p$"
+],
+"321": [
+"容许误差 $\\epsilon$",
+"一个小常数"
+],
+"322": [
+"每级分配 $r$ 台机器",
+"保证每级读得准"
+],
+"323": [
+"Hoeffding：读数偏离超过 $\\epsilon/2$ 的概率指数小",
+"控制每级出错"
+],
+"324": [
+"粗定位出错的总概率很小",
+"并集上界"
+],
+"325": [
+"“一切顺利”事件 $\\mathcal E$",
+"后面在它上面分析"
+],
+"326": [
+"粗定位用的机器数 $\\lesssim\\ln^2$",
+"只占很少机器"
+],
+"327": [
+"粗定位最多用一半机器",
+"另一半留给精修"
+],
+"328": [
+"第 $j$ 级的可行集 $A_j$",
+"与读数一致的 $p$"
+],
+"329": [
+"可行集包成区间 $I_j$",
+"方便归纳"
+],
+"330": [
+"区间长度 $\\le 2\\epsilon/(c_2\\lambda_j)$",
+"每升一级区间缩一半"
+],
+"331": [
+"第 0 级：区间已经很短",
+"归纳起点"
+],
+"332": [
+"归纳一步：先看时针，再看分针",
+"更快的表针在更小区间里定位"
+],
+"333": [
+"精修读数的误差平方 $\\lesssim 1/Q$",
+"用剩下的机器读最快一级"
+],
+"334": [
+"在最后的小区间里做最近点解码",
+"得到 $\\widehat p$"
+],
+"335": [
+"估计位置误差 $\\le 2\\times$读数误差",
+"三角不等式"
+],
+"336": [
+"$p$ 的误差 $\\le$ 读数误差 / 灵敏度",
+"反推 $p$"
+],
+"337": [
+"“顺利”时误差 $\\lesssim 1/(Qm)$",
+"最快一级灵敏度 $\\approx m$"
+],
+"338": [
+"加上出错的小概率，总误差仍 $\\lesssim 1/(Qm)$",
+"引理 6 得证"
+],
+"339": [
+"小块情形：每坐标约 $n/d$ 台机器",
+"机器平均分给坐标"
+],
+"340": [
+"门槛条件只有 $\\ln^2 n$ 量级",
+"$n$ 够大就满足"
+],
+"341": [
+"小块情形：每坐标误差 $\\lesssim 1/(nm)$",
+"达到总访问项"
+],
+"342": [
+"$m$ 小时余量与 $n$ 同阶",
+"比特充足"
+],
+"343": [
+"比特项可忽略",
+"与总访问项比趋于 0"
+],
+"344": [
+"天花板三项中最大的是 $1/(nm)$",
+"(341) 达到要求"
+],
+"345": [
+"打包通信误差 $\\rho_{n,m}$",
+"大块、小块统一处理"
+],
+"346": [
+"经验矩估计误差 $\\le C_1 d\\rho_{n,m}$",
+"两种情形的共同结论"
+],
+"347": [
+"截断到 $[0,1]$",
+"让估计落在合法范围"
+],
+"348": [
+"截断只会更接近真值",
+"不损失精度"
+],
+"349": [
+"截断后误差界仍成立",
+"可以直接用"
+],
+"350": [
+"对池子平均后的误差界",
+"不依赖池子"
+],
+"351": [
+"最近点解码",
+"从矩回到参数"
+],
+"352": [
+"到指纹集合的最短距离 $\\delta(z)$",
+"解码规则的定义"
+],
+"353": [
+"$\\delta$ 是 1-Lipschitz",
+"保证能选出可测的解码器"
+],
+"354": [
+"选中的参数至少和真参数一样近",
+"解码的关键性质"
+],
+"355": [
+"逆 Lipschitz：参数误差 $\\le L\\times$指纹误差",
+"用 (24)"
+],
+"356": [
+"三角不等式",
+"中间绕道估计矩"
+],
+"357": [
+"参数误差 $\\le 2L\\times$矩误差",
+"与 (29) 相同"
+],
+"358": [
+"矩误差 = 通信误差 + 池子误差",
+"分开控制"
+],
+"359": [
+"平方后不需要两部分独立",
+"$\\|a+b\\|^2\\le2\\|a\\|^2+2\\|b\\|^2$"
+],
+"360": [
+"池子误差 $\\le d/(4N)$",
+"同 (256)"
+],
+"361": [
+"矩误差合计",
+"两部分相加"
+],
+"362": [
+"参数误差 $\\lesssim d(\\rho_{n,m}+1/N)$",
+"上界的最终形式"
+],
+"363": [
+"展开成四项",
+"池子、总访问、比特、精修"
+],
+"364": [
+"$=C_2\\mathcal U$",
+"正是天花板"
+],
+"365": [
+"上界完成：$R_{\\mathrm{NI}}\\le C_2\\mathcal U$",
+"与下界合起来，定理 1 得证"
+],
+"366": [
+"仿射换坐标 $\\eta=c+A\\theta$",
+"把任意参数区域搬到单位立方体"
+],
+"367": [
+"新坐标下 score $=A^\\top\\times$旧 score",
+"链式法则"
+],
+"368": [
+"Bernstein 常数只放大固定倍数",
+"假设 (19) 不受换坐标影响"
+],
+"369": [
+"识别矩假设也保持",
+"假设 (24) 不受影响"
+],
+"370": [
+"两套坐标的误差只差常数倍",
+"误差量级不变"
+],
+"371": [
+"高斯均值模型 $X\\sim N_d(\\theta,I_d)$",
+"最经典的例子"
+],
+"372": [
+"高斯的 score $=x-\\theta$",
+"观测减均值"
+],
+"373": [
+"score 的 log-MGF $=\\tfrac12\\|u\\|^2$",
+"$v=1$、$b=0$，满足 (19)"
+],
+"374": [
+"识别矩：每个坐标是否 $\\ge0$",
+"有界、1 比特可报告"
+],
+"375": [
+"矩 $=\\Phi(\\theta_j)$",
+"均值越大，正数概率越高"
+],
+"376": [
+"$|\\mu_j-\\mu_j'|\\ge\\phi(1)|\\theta_j-\\theta_j'|$",
+"矩能区分参数"
+],
+"377": [
+"逆 Lipschitz 常数 $1/\\phi(1)$",
+"高斯满足 (24)"
+],
+"378": [
+"有界 score 准则：$\\|\\xi\\|\\le M$",
+"一个简单的充分条件"
+],
+"379": [
+"有界 score ⇒ 次高斯（Hoeffding 引理）",
+"很多模型一步验证 (19)"
+],
+"380": [
+"伯努利模型，$p\\in[a,1-a]$",
+"离边界有距离"
+],
+"381": [
+"伯努利的 pmf 与 score",
+"score 只有两个取值"
+],
+"382": [
+"score 均值 0、$|\\xi|\\le 1/a$",
+"有界 score"
+],
+"383": [
+"伯努利 Fisher 信息 $=1/[p(1-p)]$",
+"有上限"
+],
+"384": [
+"矩取 $p$ 本身",
+"识别矩最简单的情形"
+],
+"385": [
+"把 $p$ 线性搬到 $[0,1]$",
+"只改常数"
+],
+"386": [
+"多项分布（$d+1$ 面骰子）",
+"离散分布估计的例子"
+],
+"387": [
+"每面概率 $\\ge a$",
+"离边界有距离"
+],
+"388": [
+"多项分布 score 的分量",
+"每面一票"
+],
+"389": [
+"score 长度 $\\le\\sqrt d/a$",
+"有界 score ⇒ 次高斯"
+],
+"390": [
+"多项分布的 Fisher 信息矩阵",
+"显式且有界"
+],
+"391": [
+"矩取“是不是第 $j$ 面”",
+"平均就是 $p_j$"
+],
+"392": [
+"指纹就是参数本身",
+"$L=1$"
+],
+"393": [
+"乘积模型：几个独立部分拼起来",
+"组合已有例子"
+],
+"394": [
+"各部分 log-MGF 相加",
+"乘积模型满足 (19)"
+],
+"395": [
+"各部分的矩拼起来",
+"乘积模型满足 (24)"
+],
+"396": [
+"自然指数族",
+"伯努利、泊松、高斯都在内"
+],
+"397": [
+"统计量有界",
+"保证 score 有界"
+],
+"398": [
+"统计量的宽度 $w_j$",
+"后面的常数"
+],
+"399": [
+"$\\nabla A=$ 均值，$\\nabla^2A=$ 协方差",
+"指数族的核心恒等式"
+],
+"400": [
+"对均值求导得到协方差",
+"(399) 第二式的来源"
+],
+"401": [
+"score $=T-\\nabla A$，Fisher 信息 $=\\nabla^2A$",
+"指数族的 score 与信息"
+],
+"402": [
+"score 次高斯（Hoeffding）",
+"满足 (19)"
+],
+"403": [
+"可识别性：Hessian $\\succeq aI_d$",
+"不在任何方向退化"
+],
+"404": [
+"梯度差 = 沿线段积分 Hessian",
+"微积分基本定理"
+],
+"405": [
+"内积 $\\ge a\\|\\Delta\\|^2$",
+"梯度把参数推开"
+],
+"406": [
+"参数距离 $\\le$ 梯度距离 / $a$",
+"逆界"
+],
+"407": [
+"统计量缩放到 $[0,1]$",
+"做成有界矩"
+],
+"408": [
+"缩放后的矩 = 缩放后的梯度",
+"矩与梯度的关系"
+],
+"409": [
+"梯度差 $=W\\times$矩差",
+"宽度矩阵"
+],
+"410": [
+"逆 Lipschitz 常数 $w_{\\max}/a$",
+"指数族满足 (24)"
+],
+"411": [
+"逻辑回归模型",
+"带协变量的例子"
+],
+"412": [
+"协变量有界、二阶矩正定",
+"逻辑回归的假设"
+],
+"413": [
+"常数 $M_\\theta$、$\\lambda_Z$",
+"后面的常数"
+],
+"414": [
+"逻辑回归的联合密度",
+"伯努利似然"
+],
+"415": [
+"score = 协变量 ×（标签 − 预测概率）",
+"猜错多少推多少"
+],
+"416": [
+"条件均值 0、长度有界",
+"有界 score"
+],
+"417": [
+"条件 Hoeffding：score 次高斯",
+"满足 (19)"
+],
+"418": [
+"识别矩 $g(\\theta)=\\mathbb E[ZY]$",
+"逻辑回归的“指纹”"
+],
+"419": [
+"$g$ 的雅可比",
+"为逆界准备"
+],
+"420": [
+"雅可比 = Fisher 信息矩阵",
+"巧合式的联系"
+],
+"421": [
+"$\\sigma'$ 有正下限 $c_\\sigma$",
+"逻辑函数不会太平"
+],
+"422": [
+"雅可比一致正定",
+"$\\ge c_\\sigma\\lambda_Z$"
+],
+"423": [
+"$g$ 把不同参数推开",
+"同 (405)"
+],
+"424": [
+"参数距离 $\\le$ $g$ 的距离 $/(c_\\sigma\\lambda_Z)$",
+"逆界"
+],
+"425": [
+"把 $Z_jY$ 缩放到 $[0,1]$",
+"做成有界矩"
+],
+"426": [
+"缩放后的矩与 $g$ 线性相关",
+"矩的形式"
+],
+"427": [
+"逆 Lipschitz 常数 $2K/(c_\\sigma\\lambda_Z)$",
+"定理 1 适用于逻辑回归"
+],
+"428": [
+"速率参数 $\\lambda\\in[a,b_0]$",
+"离 0 有距离"
+],
+"429": [
+"泊松分布",
+"计数数据的例子"
+],
+"430": [
+"泊松的 score $=(x-\\lambda)/\\lambda$",
+"来得多就往上推"
+],
+"431": [
+"score 均值 0，信息 $1/\\lambda$",
+"基本性质"
+],
+"432": [
+"泊松 score 的精确 log-MGF",
+"展开成幂级数"
+],
+"433": [
+"逐项放大成几何级数",
+"得到 Bernstein 形式"
+],
+"434": [
+"泊松满足 Bernstein（$b>0$），但不是次高斯",
+"这正是 (19) 允许 $b>0$ 的用处"
+],
+"435": [
+"识别矩：“有没有人来”",
+"平均 $e^{-\\lambda}$ 单调"
+],
+"436": [
+"矩差 $\\ge e^{-b_0}\\times$参数差",
+"矩能区分参数"
+],
+"437": [
+"逆 Lipschitz 常数 $e^{b_0}$",
+"泊松满足 (24)"
+],
+"438": [
+"似然导数可和",
+"正则条件成立"
+],
+"439": [
+"指数分布",
+"等待时间的例子"
+],
+"440": [
+"指数分布的 score $=1/\\lambda-x$",
+"等得短就往上推"
+],
+"441": [
+"score 均值 0，信息 $1/\\lambda^2$",
+"基本性质"
+],
+"442": [
+"score 的 MGF（直接积分）",
+"为 log-MGF 准备"
+],
+"443": [
+"log-MGF 展开成幂级数",
+"准备放大"
+],
+"444": [
+"逐项放大成几何级数",
+"得到 Bernstein 形式"
+],
+"445": [
+"指数分布的 Bernstein 常数",
+"同样不是次高斯"
+],
+"446": [
+"识别矩：“等待时间 $\\le t$ 吗”",
+"平均 $1-e^{-\\lambda t}$ 单调"
+],
+"447": [
+"导数有正下界",
+"严格单调"
+],
+"448": [
+"矩差 $\\ge te^{-b_0t}\\times$参数差",
+"矩能区分参数"
+],
+"449": [
+"逆 Lipschitz 常数 $e^{b_0t}/t$",
+"指数分布满足 (24)"
+],
+"450": [
+"似然导数可积",
+"正则条件成立"
+],
+"451": [
+"泊松 / 指数的乘积模型",
+"多维的例子"
+],
+"452": [
+"取各坐标最大的常数",
+"整体常数"
+],
+"453": [
+"向量版的 (19)",
+"独立坐标的 log-MGF 相加"
+],
+"454": [
+"$d$ 个有界矩识别 $d$ 维参数",
+"满足 (24)"
+],
+"455": [
+"高斯协方差估计模型",
+"要估的是协方差矩阵"
+],
+"456": [
+"参数维度 $d=p(p+1)/2$",
+"对称矩阵的自由度"
+],
+"457": [
+"用基矩阵把协方差参数化",
+"参数落在单位立方体"
+],
+"458": [
+"系数到矩阵的线性映射 $\\mathcal H$",
+"记号"
+],
+"459": [
+"矩阵大小与系数大小只差常数倍",
+"两种误差等价"
+],
+"460": [
+"高斯对数似然",
+"求 score 的起点"
+],
+"461": [
+"$\\ln\\det$ 与 $\\Sigma^{-1}$ 的导数",
+"矩阵求导公式"
+],
+"462": [
+"沿方向 $H$ 的 score：二次型减均值",
+"score 是二次的"
+],
+"463": [
+"score 向量与方向 score 的关系",
+"记号"
+],
+"464": [
+"白化矩阵 $M_H$",
+"化成标准高斯"
+],
+"465": [
+"用标准高斯改写 score",
+"准备对角化"
+],
+"466": [
+"score = 加权的“卡方减 1”之和",
+"分布清楚了"
+],
+"467": [
+"卡方的 MGF，只在 $s<1$ 有限",
+"说明不是次高斯"
+],
+"468": [
+"score 的显式 log-MGF",
+"会在有限处发散"
+],
+"469": [
+"$-z-\\ln(1-z)$ 的级数估计",
+"放大成几何级数"
+],
+"470": [
+"Bernstein 形式的 log-MGF 界",
+"协方差 score 满足 (19)"
+],
+"471": [
+"白化后矩阵的范数界",
+"控制常数"
+],
+"472": [
+"对任意方向 $u$ 的 log-MGF 界",
+"向量版 (19)"
+],
+"473": [
+"协方差模型的 Bernstein 常数",
+"依赖特征值范围"
+],
+"474": [
+"方向 Fisher 信息",
+"与二次系数一致"
+],
+"475": [
+"选 $p(p+1)/2$ 个方向",
+"坐标轴 + 两两之和"
+],
+"476": [
+"识别矩 $e^{-c(v^\\top X)^2}$",
+"有界、可 1 比特报告"
+],
+"477": [
+"矩 $=(1+2cv^\\top\\Sigma v)^{-1/2}$",
+"只依赖方向方差"
+],
+"478": [
+"$f(z)$ 单调下降",
+"可反推方向方差"
+],
+"479": [
+"方向方差在 $[a,2b_0]$",
+"有界区间"
+],
+"480": [
+"$|f'|\\ge\\kappa$",
+"斜率有下限"
+],
+"481": [
+"$f$ 值差 $\\ge\\kappa\\times$自变量差",
+"矩能区分方向方差"
+],
+"482": [
+"方向方差误差 $\\le$ 矩误差 / $\\kappa$",
+"逆界"
+],
+"483": [
+"由方向方差还原非对角元",
+"极化恒等式"
+],
+"484": [
+"对差矩阵取同样的方向方差",
+"记号"
+],
+"485": [
+"矩阵误差 $\\le$ 常数 × 方向方差误差",
+"从方向回到矩阵"
+],
+"486": [
+"参数误差 $\\le C\\sqrt p\\times$矩误差",
+"协方差模型满足 (24)"
+],
+"487": [
+"密度的可积上界",
+"正则条件成立"
+],
+"488": [
+"唯一未解决的区间（中等重叠）",
+"论文留下的 gap"
+],
+"489": [
+"该区间里上下界只差 $\\bar r$",
+"要么去掉 $\\bar r$，要么找更好的协议"
+],
+"490": [
+"一条能闭合 gap 的充分不等式",
+"开放问题的具体目标"
+],
+"491": [
+"任意两台重叠的概率 $\\le\\binom n2 m^2/N$",
+"“零重叠”需要 $N\\gg n^2m^2$"
+],
+"492": [
+"重复访问比例 $\\le (n-1)m/(2N)$",
+"比例趋 0 仍不足以照搬独立块的结论"
+]
+},
+"en": {
+"1": [
+"The pool: $N$ i.i.d. samples",
+"These are the only data in the problem; the $1/N$ term of the bounds comes from here"
+],
+"2": [
+"Each machine draws $m$ items uniformly without replacement",
+"Machines draw independently, so subsets overlap; all overlap counts start here"
+],
+"3": [
+"The number $U$ of distinct accessible samples",
+"It is at most $\\min\\{N,nm\\}$, which gives the accessible-sample term"
+],
+"4": [
+"Machine $i$’s data: samples with their indices",
+"Indices reveal which machines hold the same sample"
+],
+"5": [
+"Noninteractive protocol: each machine sends one $k$-bit message on its own",
+"The simplest protocol; the upper bound uses it"
+],
+"6": [
+"The noninteractive transcript: the $n$ messages in a row",
+"Everything the fusion center sees"
+],
+"7": [
+"Blackboard protocol: the next speaker depends only on the public history",
+"Ensures that who speaks next leaks no hidden information"
+],
+"8": [
+"Each blackboard bit is written after reading the board",
+"Interaction is allowed; the lower bound must hold for it too"
+],
+"9": [
+"Total bits on the board: $L\\le B=nk$",
+"Defines the total communication budget $B$"
+],
+"10": [
+"Transcript entropy $\\le B\\ln 2$",
+"The starting point of the entropy budget in the lower bound"
+],
+"11": [
+"The estimator uses only the transcript, the design and the public seed",
+"Pins down what the fusion center may use"
+],
+"12": [
+"Minimax risk: the best scheme’s error at the worst parameter",
+"The quantity the whole paper characterizes"
+],
+"13": [
+"Optimal blackboard risk $\\le$ optimal noninteractive risk",
+"So it suffices to lower-bound BB and upper-bound NI"
+],
+"14": [
+"Definitions of the score and Fisher information",
+"Every information measure in the lower bound is built from them"
+],
+"15": [
+"The score is square-integrable with mean zero",
+"Fisher information is finite and the truth is the likelihood’s balance point"
+],
+"16": [
+"Derivative and integral can be swapped",
+"Gives the mean-zero score and lets (18) differentiate through the message"
+],
+"17": [
+"The message’s probability, averaged over the raw data",
+"The parameter affects the message only through the raw data"
+],
+"18": [
+"Score of the message = conditional mean of the raw score",
+"Links post-communication information to raw information"
+],
+"19": [
+"The uniform Bernstein condition on the score",
+"The lower bound’s core assumption: it controls the score’s tails"
+],
+"20": [
+"(19) in one dimension: direction $a$, step $t$",
+"Turns the vector condition into a scalar one"
+],
+"21": [
+"Second derivative of the log-MGF at 0 = Fisher information in that direction",
+"Connects the tail condition to Fisher information"
+],
+"22": [
+"Fisher information $\\preceq vI_d$, trace $\\le dv$",
+"Each sample carries bounded information; gives the $1/N$ and $1/(nm)$ terms"
+],
+"23": [
+"The block score of $q$ samples is Bernstein too (variance $\\times q$)",
+"Basis for the block concentration in Section III"
+],
+"24": [
+"Bounded identifying moments: moments determine the parameter stably",
+"The upper bound’s only assumption"
+],
+"25": [
+"The pool’s empirical moment $\\mu_N$",
+"The ideal benchmark if all data were in one place"
+],
+"26": [
+"Empirical-moment error $\\le d/(4N)$",
+"The pool error, which no amount of communication removes"
+],
+"27": [
+"Turns a bounded moment into a coin flip",
+"Each sample reports the moment unbiasedly with one bit"
+],
+"28": [
+"Nearest-point decoding: pick the parameter with the closest moment",
+"Goes from estimated moments back to the parameter"
+],
+"29": [
+"Parameter error $\\le 2L\\times$ moment error",
+"So the upper bound only needs accurate moments"
+],
+"30": [
+"Defines $B$, the surplus $s$ and the bit floor $a_B$",
+"The three most important symbols of the paper"
+],
+"31": [
+"Bit floor = single-machine precision $1/m$ × discount $2^{-2s}$",
+"The sign of $s$ decides whether bits are the bottleneck"
+],
+"32": [
+"Access multiplicity $D_a$: how many machines hold item $a$",
+"The starting point for shared observations"
+],
+"33": [
+"Number $r$ of shared observations (held by $\\ge 2$ machines)",
+"Shared samples break independence and need separate treatment"
+],
+"34": [
+"$D_a \\sim \\mathrm{Bin}(n, m/N)$",
+"Used to compute the expected number of shared items"
+],
+"35": [
+"Expected number $\\bar r$ of shared observations",
+"The correction in the fourth lower-bound term, and the source of the gap"
+],
+"36": [
+"Lower envelope $\\mathcal L$ (the floor)",
+"No protocol beats a constant times it"
+],
+"37": [
+"Upper envelope $\\mathcal U$ (the ceiling)",
+"Achievable; differs from the floor only by $\\bar r$ in the fourth term"
+],
+"38": [
+"The first two terms merge into $d/\\min\\{N,nm\\}$",
+"The classical error for the number of distinct samples one can see"
+],
+"39": [
+"$\\mathcal L\\le\\mathcal U$",
+"The floor is indeed below the ceiling"
+],
+"40": [
+"Theorem 1 lower bound: $R_{\\mathrm{BB}}\\ge c\\mathcal L$",
+"Even with interaction, the error is at least the floor"
+],
+"41": [
+"Theorem 1 upper bound: $R_{\\mathrm{NI}}\\le C\\mathcal U$",
+"The simplest noninteractive protocol attains the ceiling"
+],
+"42": [
+"Theorem 1 as a sandwich",
+"When floor and ceiling match, the problem is solved and interaction does not help"
+],
+"43": [
+"Bounded surplus gives $1/m \\lesssim a_B$",
+"Row 1 of Table I: bits are the only bottleneck"
+],
+"44": [
+"Every ceiling term is $\\le 1/m$",
+"With (43), floor and ceiling meet at $da_B$"
+],
+"45": [
+"With surplus $\\ge \\varepsilon n$ the refinement term is $\\lesssim 1/(nm)$",
+"Row 2 of Table I: refinement is not the bottleneck"
+],
+"46": [
+"Ratio of bit term to access term tends to 0",
+"With ample bits, only the sample count limits"
+],
+"47": [
+"In the critical window the bit and access terms vanish",
+"The starting point of rows 3–4 of Table I"
+],
+"48": [
+"As $s\\to\\infty$ the refinement term is $\\approx 1/(ms)$",
+"Each extra surplus bit is worth one more machine’s precision"
+],
+"49": [
+"In the window $\\mathcal U \\asymp d\\max\\{1/N, 1/(ms)\\}$",
+"Only two ceiling terms remain"
+],
+"50": [
+"Small pool ($N\\lesssim ms$) gives $1/(ms)\\lesssim 1/N$",
+"Row 3 of Table I: error $\\asymp d/N$"
+],
+"51": [
+"Shared count $\\le$ sum of pairwise intersections",
+"Replaces a hard quantity by an easy one"
+],
+"52": [
+"Two machines overlap in $m^2/N$ items on average",
+"A step toward (53)"
+],
+"53": [
+"$\\bar r \\le \\binom n2 m^2/N$",
+"With a large pool the shared term is harmless"
+],
+"54": [
+"With a large pool $\\bar r \\lesssim ms$",
+"The key step of row 4 of Table I"
+],
+"55": [
+"The fourth floor term’s denominator is $\\asymp ms$",
+"Floor and ceiling agree in the fourth term"
+],
+"56": [
+"$N/(ms)\\to\\infty$",
+"The pool term vanishes; error $\\asymp d/(ms)$"
+],
+"57": [
+"Full overlap $m=N$: everyone computes the same empirical moment",
+"Starting point of row 5 of Table I"
+],
+"58": [
+"Split the $B$ bits evenly over the $d$ coordinates",
+"The coding scheme under full overlap"
+],
+"59": [
+"Quantization error $\\lesssim d\\,2^{-2B/d}$",
+"Under full overlap the bits can be pooled"
+],
+"60": [
+"Pool error $\\le d/(4N)$",
+"Same as (26)"
+],
+"61": [
+"Parameter error $\\le 2L\\times$ moment error",
+"As in (29), converts moment error to parameter error"
+],
+"62": [
+"Worst-case error under full overlap $\\lesssim d(1/N + a_B)$",
+"Proves row 5 of Table I"
+],
+"63": [
+"In the open window $m$ grows exponentially in $n$",
+"The gap only appears with exponentially large local data"
+],
+"64": [
+"Polynomial case: $R\\asymp dn^{-\\min\\{\\beta,\\alpha+1\\}}$",
+"Corollary 2: all polynomial couplings are solved"
+],
+"65": [
+"Exponential case: rate $\\min\\{\\lambda,2k/d\\}$",
+"Whichever of data and bits is tighter sets the rate"
+],
+"66": [
+"Polynomial case: $s/n \\to k/d$",
+"Falls into row 2 of Table I"
+],
+"67": [
+"$\\min\\{N,nm\\}\\asymp n^{\\min\\{\\beta,\\alpha+1\\}}$",
+"Plugging in gives (64)"
+],
+"68": [
+"The growth rate $\\lambda_n$ of local data",
+"The $\\lambda$ in (65)"
+],
+"69": [
+"Lower bound with two terms: $1/(nm)$ and $2^{-2nk/d}$",
+"One half of the exponential-rate proof"
+],
+"70": [
+"Decay exponent $\\le \\min\\{\\lambda_n, 2k/d\\}+o(1)$",
+"Upper bound on the rate"
+],
+"71": [
+"Upper bound with two terms: $1/m$ and $2^{-2nk/d}$",
+"The other half of the exponential-rate proof"
+],
+"72": [
+"Decay exponent $\\ge \\min\\{\\lambda_n, 2k/d\\}-o(1)$",
+"With (70) this proves (65)"
+],
+"73": [
+"Any data $Z$ turned into a message by a $\\theta$-free rule",
+"The general form of (17); III-A starts here"
+],
+"74": [
+"Differentiating the message probability: only the data density moves",
+"The middle step toward the score identity (75)"
+],
+"75": [
+"Score identity: message score = conditional mean of raw score",
+"Foundation of the lower bound: compression only averages information away"
+],
+"76": [
+"Scores of independent samples add",
+"Information adds: $q$ samples = $q$ times the information"
+],
+"77": [
+"Shorthand $S_Z$ (data score) and $S_T$ (message score)",
+"Notation for the next lines"
+],
+"78": [
+"Conditional Jensen: message information $\\le$ data information in every direction",
+"Gives the Fisher data-processing inequality"
+],
+"79": [
+"Fisher data-processing inequality $J_T\\preceq J_Z$",
+"Processing cannot create information"
+],
+"80": [
+"Joint score = score of $G$ + extra score given $G$",
+"Prepares the chain rule (83)"
+],
+"81": [
+"The extra score has conditional mean zero",
+"Why the cross term vanishes"
+],
+"82": [
+"The two score parts are uncorrelated",
+"Lets information split into a sum"
+],
+"83": [
+"Chain rule for Fisher information",
+"III-D uses it to account for shared observations separately"
+],
+"84": [
+"The trace version of (83)",
+"Total information is measured by the trace from here on"
+],
+"85": [
+"The smooth prior $\\pi$ used in the proof",
+"Its entropy and Fisher information are explicit"
+],
+"86": [
+"The prior’s Fisher information $J_\\pi$",
+"Appears in the van Trees denominator"
+],
+"87": [
+"The one-coordinate prior integrates to 1",
+"Checks the prior is a density"
+],
+"88": [
+"The one-coordinate prior’s score $2\\pi\\cot(\\pi t)$",
+"Used to compute $J_\\pi$"
+],
+"89": [
+"One-coordinate prior information $=4\\pi^2$",
+"So $J_\\pi=4\\pi^2 d$, a constant"
+],
+"90": [
+"Helper integral $F(a)=\\int_0^\\pi\\sin^a x\\,dx$",
+"Prepares the entropy computation"
+],
+"91": [
+"A recursion for $F$",
+"Reduces $F(2)$ to $F(0)$"
+],
+"92": [
+"The classical integral $\\int_0^{\\pi/2}\\ln\\sin x\\,dx=-\\tfrac\\pi2\\ln2$",
+"A constant needed for the entropy"
+],
+"93": [
+"$F'(2)/F(2)=\\tfrac12-\\ln2$",
+"The last piece for the entropy"
+],
+"94": [
+"$\\mathbb E\\ln\\sin^2(\\pi\\Theta_1)=1-2\\ln2$",
+"Plugged into the entropy formula"
+],
+"95": [
+"One-coordinate prior entropy $=\\ln2-1$",
+"So $h(\\pi)=d(\\ln2-1)$, used in the entropy budget"
+],
+"96": [
+"Bayes risk $D$: average error with a random parameter",
+"The lower bound is first proved for it"
+],
+"97": [
+"Joint density of $(\\Theta,Y)$ and its score",
+"Starting point of the van Trees proof"
+],
+"98": [
+"Integration by parts: E[error × score] = 1",
+"The key identity behind van Trees"
+],
+"99": [
+"Cauchy–Schwarz: $d\\le\\sqrt{D}\\sqrt{\\mathbb E\\|Q\\|^2}$",
+"Turns the identity into an error bound"
+],
+"100": [
+"Total score squared = prior information + average data information",
+"Gives the van Trees denominator"
+],
+"101": [
+"van Trees: $D\\ge d^2/(\\text{average information}+J_\\pi)$",
+"From now on, lower-bounding error = upper-bounding information"
+],
+"102": [
+"Worst-case risk $\\ge$ Bayes risk",
+"A Bayes lower bound is automatically a minimax lower bound"
+],
+"103": [
+"Probability that item $a$ is drawn by no machine",
+"Used for the expected number of visible samples"
+],
+"104": [
+"Expected visible samples $\\le\\min\\{N,nm\\}$",
+"The sample count in the first lower bound"
+],
+"105": [
+"Given design and seeds, transcript information $\\le dvU$",
+"Each visible sample carries at most $dv$"
+],
+"106": [
+"Averaged over design and seeds, information $\\le dv\\,\\mathbb EU$",
+"Ready to plug into van Trees"
+],
+"107": [
+"First lower bound: $R\\gtrsim d/\\min\\{N,nm\\}$",
+"Even unlimited communication sees only this many samples"
+],
+"108": [
+"Conditional error $D_y$ given the transcript $y$",
+"Switches to the entropy argument"
+],
+"109": [
+"Given variance, the Gaussian maximizes entropy",
+"Remaining uncertainty $\\le$ a Gaussian’s entropy"
+],
+"110": [
+"Average over $Y$ and apply Jensen",
+"Gives an upper bound on conditional entropy"
+],
+"111": [
+"Mutual information $\\ge$ prior entropy − remaining entropy",
+"Small error forces the transcript to carry much information about $\\Theta$"
+],
+"112": [
+"$I(\\Theta;T,W)=I(\\Theta;T\\mid W)$",
+"Design and seeds carry no information about the parameter"
+],
+"113": [
+"Mutual information $\\le$ transcript entropy $\\le B\\ln2$",
+"$B$ bits carry at most $B$ bits of information"
+],
+"114": [
+"Second lower bound: $D\\gtrsim d\\,2^{-2B/d}$",
+"However much data, $B$ bits allow only this precision"
+],
+"115": [
+"The explicit constant after plugging in the prior entropy",
+"The concrete form of (114)"
+],
+"116": [
+"$h_T$: transcript entropy left given parameter and seeds",
+"The parameter-free “filler” in the entropy budget"
+],
+"117": [
+"Transcript entropy = parameter information + $h_T$",
+"Splits the entropy budget into two parts"
+],
+"118": [
+"Entropy budget: $h_T\\le B\\ln2-h(\\pi)+\\tfrac d2\\ln(2\\pi eD/d)$",
+"Smaller error leaves less room for $h_T$; used in III-E"
+],
+"119": [
+"Block score $A_q$: sum of $q$ sample scores",
+"The object of III-B"
+],
+"120": [
+"The block score’s log-MGF is Bernstein (variance $vq$)",
+"Input to Lemma 1"
+],
+"121": [
+"Lemma 1: an event of probability $p$ shifts the block score by at most $\\sqrt{2vq\\ln(1/p)}+b\\ln(1/p)$",
+"Converts learning an event into a score shift"
+],
+"122": [
+"Squared form of Lemma 1",
+"Plugged into information bounds later"
+],
+"123": [
+"The cleaner squared form when sub-Gaussian",
+"One term fewer when $b=0$"
+],
+"124": [
+"Shorthand: surprise $\\ell$, conditional mean $\\mu_E$",
+"Notation for proving Lemma 1"
+],
+"125": [
+"The direction $e$ of $\\mu_E$",
+"Reduces the vector problem to one dimension"
+],
+"126": [
+"Conditional Jensen applied to $\\exp$",
+"Puts the shift inside an exponential moment"
+],
+"127": [
+"Conditional exponential moment $\\le$ unconditional / $p$",
+"The cost is one $\\ln(1/p)$"
+],
+"128": [
+"$\\lambda\\|\\mu_E\\|\\le\\ell+$ Bernstein term",
+"Holds for every knob $\\lambda$"
+],
+"129": [
+"Another view: conditioning costs KL $=\\ell$",
+"Explains why rare events are more informative"
+],
+"130": [
+"Shift $\\le \\ell/\\lambda$ + a term growing in $\\lambda$",
+"A trade-off in $\\lambda$"
+],
+"131": [
+"Choose the balancing knob $\\lambda_*$",
+"Balances the two terms"
+],
+"132": [
+"Check $b\\lambda_*<1$",
+"Makes the knob admissible"
+],
+"133": [
+"The first term after substitution",
+"Computing (121)"
+],
+"134": [
+"The second term after substitution",
+"Adding both gives (121)"
+],
+"135": [
+"Squaring gives (122)",
+"Finishes the squared Lemma 1"
+],
+"136": [
+"Score movable by the transcript $\\lesssim$ transcript entropy",
+"Links Fisher information to entropy"
+],
+"137": [
+"Only the entropy term when sub-Gaussian",
+"The clean version of (136)"
+],
+"138": [
+"Self-information $L_T=\\ln(1/p_T(T))$",
+"Its mean is entropy; Lemma 2 bounds its second moment"
+],
+"139": [
+"Lemma 2: mean squared self-information $\\le K_B\\approx(B\\ln2)^2$",
+"Controls the extra quadratic Bernstein term"
+],
+"140": [
+"P(self-information $>x$) $\\le 2^Be^{-x}$",
+"The tail estimate for Lemma 2"
+],
+"141": [
+"Take the minimum with 1",
+"The full tail bound"
+],
+"142": [
+"Second moment = integral of tail probabilities",
+"A standard formula"
+],
+"143": [
+"Split the integral at $a=B\\ln2$",
+"Estimate each piece"
+],
+"144": [
+"Second piece $=2(a+1)$",
+"Gives $K_B$"
+],
+"145": [
+"Conditional version of Lemma 2",
+"Still holds given the seeds"
+],
+"146": [
+"Independent private blocks of at most $q$ samples",
+"III-C first handles the no-overlap case"
+],
+"147": [
+"Lemma 3: information $\\le 4vq\\,H(T\\mid R)+2b^2K_B$",
+"Each nat of transcript entropy carries at most $4vq$; independent of $n$"
+],
+"148": [
+"Lemma 3 when sub-Gaussian",
+"Half the constant, no extra term"
+],
+"149": [
+"Machine $i$’s “checklist” $E_i(t;r)$",
+"All the transcript asks of its data"
+],
+"150": [
+"Rectangle property: transcript $=t$ ⇔ each machine meets its checklist",
+"Holds even with interaction; the key to Lemma 3"
+],
+"151": [
+"Shorthand $p_i(t)$, $p(t)$, $\\ell_i(t)$",
+"Notation for the next steps"
+],
+"152": [
+"Transcript probability = product; surprises add",
+"Independence + rectangle ⇒ entropy splits by machine"
+],
+"153": [
+"Blocks stay independent given the transcript",
+"Each block depends only on its own checklist"
+],
+"154": [
+"Block score $A_i$ and its posterior mean $a_i(t)$",
+"Computed block by block"
+],
+"155": [
+"$a_i(t)$ depends only on block $i$ meeting its checklist",
+"Lemma 1 applies block by block"
+],
+"156": [
+"Given the transcript, two blocks’ scores are conditionally independent",
+"Prepares the vanishing cross terms"
+],
+"157": [
+"Cross terms vanish after averaging over transcripts",
+"Machines’ information does not amplify each other"
+],
+"158": [
+"Transcript score = sum of block posterior means",
+"The score identity for many machines"
+],
+"159": [
+"Transcript information = average sum of squared block means",
+"Cross terms vanish by (157)"
+],
+"160": [
+"Lemma 1 per block: $\\|a_i\\|^2\\le 4vq_i\\ell_i+2b^2\\ell_i^2$",
+"Each block’s shift is controlled by its surprise"
+],
+"161": [
+"Plug into (159)",
+"Information $\\le$ sum of surprises + squares"
+],
+"162": [
+"Mean of summed surprises = conditional transcript entropy",
+"Connects information to entropy"
+],
+"163": [
+"Sum of squares $\\le$ square of sum",
+"Turns squares into squared self-information"
+],
+"164": [
+"Information $\\le 4vq\\cdot$entropy $+2b^2\\cdot$mean squared self-information",
+"Lemma 2 finishes it"
+],
+"165": [
+"Apply Lemma 2",
+"(147) for a fixed seed"
+],
+"166": [
+"Seeds carry no information; average over them",
+"Removes the fixed seed"
+],
+"167": [
+"Conditional entropy = average over seeds",
+"Completes (147)"
+],
+"168": [
+"The tighter per-block bound when sub-Gaussian",
+"No squared-surprise term"
+],
+"169": [
+"The fixed-seed result when sub-Gaussian",
+"Gives (148)"
+],
+"170": [
+"Split samples into the shared set $\\mathcal G$ and private sets",
+"The first step in handling overlap in III-D"
+],
+"171": [
+"Shared data $G$ and private data $V_i$",
+"Defines the counts $r$, $q_i$, $q$"
+],
+"172": [
+"The shared and private groups are independent",
+"So their information can be counted separately"
+],
+"173": [
+"Private block sizes $q_i\\le m$, $q\\le m$",
+"Later $q$ is relaxed to $m$"
+],
+"174": [
+"Theorem 2: information $\\le dvr+4vq\\,H(T\\mid G,R)+2b^2K_B$",
+"Shared samples add information per item; private parts are limited by entropy"
+],
+"175": [
+"The convenient form of Theorem 2 ($q\\to m$, drop the conditioning on $G$)",
+"III-E plugs this form in directly"
+],
+"176": [
+"Theorem 2 when sub-Gaussian",
+"No Bernstein term, half the constant"
+],
+"177": [
+"Theorem 2 for the Gaussian mean",
+"All constants explicit"
+],
+"178": [
+"Giving the shared data to the center only adds information",
+"Allowed when upper-bounding information"
+],
+"179": [
+"Chain rule: information of $(G,T)$ = that of $G$ + of $T$ given $G$",
+"Separates the shared part"
+],
+"180": [
+"$J_G=rI_X$",
+"Information of $r$ independent shared samples"
+],
+"181": [
+"Information $\\le r\\,\\mathrm{tr}I_X$ + conditional information given shared data",
+"Only the private part remains"
+],
+"182": [
+"Given the shared data, private blocks stay independent",
+"Back to the independent-block case"
+],
+"183": [
+"Given shared data and seeds, the transcript is a function of private data",
+"The parameter enters only through private data"
+],
+"184": [
+"Apply Lemma 3 to the private blocks",
+"Bounds the conditional information"
+],
+"185": [
+"Average over the shared data",
+"Removes the fixed $G$"
+],
+"186": [
+"Theorem 2 for a fixed seed",
+"Plugged back into (181)"
+],
+"187": [
+"Average over seeds; (174) proved",
+"Completes Theorem 2"
+],
+"188": [
+"Knowing $G$ can only reduce entropy",
+"Relaxes (174) to (175)"
+],
+"189": [
+"Use the tight Lemma 3 when sub-Gaussian",
+"Gives (176)"
+],
+"190": [
+"Gaussian model: score $=X-\\theta$, $v=1$, $b=0$",
+"Constants of the Gaussian example"
+],
+"191": [
+"With no private data, information $\\le dvr$",
+"A sanity check at the extreme"
+],
+"192": [
+"Average over the random design: $r\\to\\bar r$",
+"This is how $\\bar r$ enters the lower bound"
+],
+"193": [
+"The information bound averaged over the prior",
+"The source of $\\bar r$ in the fourth lower-bound term"
+],
+"194": [
+"The two players: Bayes risk $D$ and leftover entropy $h_T$",
+"III-E connects them"
+],
+"195": [
+"Average information $\\le dv\\bar r+4vm\\,h_T+2b^2K_B$",
+"The final form of the information bound"
+],
+"196": [
+"Bundle constants $A$, $Q$",
+"Shortens the next formulas"
+],
+"197": [
+"Into van Trees: $d^2/D\\le Amh_T+Q$",
+"Turns the information bound into an error bound"
+],
+"198": [
+"The entropy budget with the prior entropy plugged in",
+"Smaller error restricts $h_T$ more"
+],
+"199": [
+"The constant $c_\\pi$",
+"Bundling"
+],
+"200": [
+"$x=mD/d$: error relative to single-machine precision",
+"A dimensionless variable"
+],
+"201": [
+"Bits = surplus + localization cost",
+"Prepares the cancellation of $\\tfrac12\\ln m$"
+],
+"202": [
+"$h_T/d\\le s\\ln2+c_\\pi+\\tfrac12\\ln x$",
+"The localization cost cancels; only the surplus remains"
+],
+"203": [
+"Information bound + entropy budget combined",
+"Explains why the result involves the surplus $s$, not $B$"
+],
+"204": [
+"A logarithmic inequality in $x$",
+"Next it is inverted"
+],
+"205": [
+"Substitute $t=2/(Ax)$",
+"Gives the form $t+\\ln t\\le\\cdots$"
+],
+"206": [
+"$t+\\ln t\\le$ surplus term + constants + corrections",
+"Ready to invert"
+],
+"207": [
+"Split the correction: shared, Bernstein, prior",
+"Shows where each part comes from"
+],
+"208": [
+"$K_B\\le C_K(B+1)^2$",
+"Controls the Bernstein correction"
+],
+"209": [
+"Bundle all growing terms into $F$",
+"Simplifies the right side"
+],
+"210": [
+"$t+\\ln t\\le C_1F$",
+"The tidy inequality"
+],
+"211": [
+"$t\\le C_2F$",
+"The inverted logarithmic inequality"
+],
+"212": [
+"Error $\\gtrsim d/[m(1+s_+)+\\bar r+(B+1)^2]$",
+"One extra term $(B+1)^2$ compared with the target"
+],
+"213": [
+"Target: refinement lower bound $d/[m(1+s_+)+\\bar r]$",
+"The $(B+1)^2$ must go"
+],
+"214": [
+"Case 1 ($m\\ge n^2$): $(B+1)^2\\lesssim m$",
+"The extra term is absorbed"
+],
+"215": [
+"The denominator grows only by a constant",
+"Case 1 gives the target"
+],
+"216": [
+"Case 2 ($m<n^2$): $s\\ge nk/d-\\log_2 n$",
+"The surplus is large"
+],
+"217": [
+"$s\\ge nk/(2d)$",
+"The surplus is of order $n$"
+],
+"218": [
+"The refinement term is dominated by the access term",
+"In case 2 the extra term is irrelevant"
+],
+"219": [
+"Fourth-term lower bound $R\\gtrsim d/[m(1+s_+)+\\bar r]$",
+"Both cases combined"
+],
+"220": [
+"Main lower bound: all four terms, i.e. the floor $\\mathcal L$",
+"Proves the lower bound (40) of Theorem 1"
+],
+"221": [
+"The sharper information bound in the Gaussian case",
+"Coefficient $2m$"
+],
+"222": [
+"Gaussian case into van Trees",
+"Toward an explicit bound"
+],
+"223": [
+"Redefine $t=d/(mD)$",
+"The Gaussian-case variable"
+],
+"224": [
+"Divide (222) by $md$",
+"An inequality in $t$"
+],
+"225": [
+"The entropy budget in the Gaussian case",
+"$\\ln m$ cancels again"
+],
+"226": [
+"Three constants merge into $\\ln(\\pi e^3/2)$",
+"Tidies constants"
+],
+"227": [
+"$t+\\ln t\\le z$ (fully explicit)",
+"Ready for Lambert W"
+],
+"228": [
+"$te^t\\le e^z$",
+"Exponentiate"
+],
+"229": [
+"The Lambert W function",
+"The inverse of $te^t$"
+],
+"230": [
+"An explicit Gaussian lower bound via Lambert W",
+"Fully explicit and non-asymptotic"
+],
+"231": [
+"Each machine draws $m$ indices from its own subset",
+"Step 1 of the upper bound: resampling"
+],
+"232": [
+"Lemma 4: the indices are i.i.d. uniform on the whole pool",
+"Washes out the overlap"
+],
+"233": [
+"The set and number of drawn indices",
+"Notation for the resampling rule"
+],
+"234": [
+"The resampling rule",
+"Each old index again w.p. $1/N$; the rest split among unused ones"
+],
+"235": [
+"There is always an unused index",
+"The rule never gets stuck"
+],
+"236": [
+"Probabilities sum to 1",
+"The rule is valid"
+],
+"237": [
+"Key invariant: the unseen part stays uniform",
+"The heart of Lemma 4"
+],
+"238": [
+"Given the shelf, history probability = product of steps",
+"Prepares a Bayes computation"
+],
+"239": [
+"Each factor depends only on the history",
+"The shelf’s posterior stays uniform"
+],
+"240": [
+"Probability of an old index: $1/N$",
+"One case"
+],
+"241": [
+"Probability an unseen index is on the shelf",
+"A factor in the other case"
+],
+"242": [
+"Three factors multiply to $1/N$",
+"New indices also get $1/N$"
+],
+"243": [
+"Every index is drawn next w.p. $1/N$",
+"So i.i.d. uniform; Lemma 4 proved"
+],
+"244": [
+"A repeat has probability $1/N$, not $1/m$",
+"This is not ordinary sampling with replacement"
+],
+"245": [
+"Given the pool, all index tuples are equally likely",
+"Machines’ draws are independent"
+],
+"246": [
+"The pool’s empirical distribution $\\widehat P_N$ and draws $Y_{i,t}$",
+"Notation"
+],
+"247": [
+"Given the pool, all draws are i.i.d. from $\\widehat P_N$",
+"Overlap-induced dependence is gone"
+],
+"248": [
+"The pool’s empirical moment $p_{N,j}$",
+"What the upper bound estimates"
+],
+"249": [
+"Randomize the moment into a coin $U_{i,t,j}$",
+"Each draw becomes a Bernoulli"
+],
+"250": [
+"Heads probability = empirical moment",
+"The coin reports the moment unbiasedly"
+],
+"251": [
+"Given the pool, coins are i.i.d.",
+"A standard Bernoulli estimation problem"
+],
+"252": [
+"Head count $K_{i,j}$",
+"Each machine’s local statistic"
+],
+"253": [
+"$K_{i,j}\\sim\\mathrm{Bin}(m,p_{N,j})$",
+"The object to be encoded"
+],
+"254": [
+"The empirical moment is unbiased",
+"The pool error is pure variance"
+],
+"255": [
+"Empirical-moment variance $\\le 1/(4N)$",
+"Pool error per coordinate"
+],
+"256": [
+"Total pool error $\\le d/(4N)$",
+"Same as (26)"
+],
+"257": [
+"Total error $\\le 2\\times$communication $+2\\times$pool error",
+"Only the communication error remains"
+],
+"258": [
+"External tool: the Cai–Wei robust encoding guarantee",
+"Near-Gaussian inputs achieve the max of three terms"
+],
+"259": [
+"Split the $m$ coins into two halves of $q$",
+"One half for the mean, one for the variance"
+],
+"260": [
+"Head proportions of the two halves",
+"One for the mean, one for the variance"
+],
+"261": [
+"Smoothed statistic: sample mean + Gaussian noise topping up the variance",
+"Makes the discrete binomial look Gaussian"
+],
+"262": [
+"Added noise variance between $3/(4q)$ and $1/q$",
+"The noise never degenerates"
+],
+"263": [
+"Lemma 5: TV distance to $N(p,1/q)$ $\\le Cq^{-1/2}$",
+"Meets the robust encoder’s input condition"
+],
+"264": [
+"The smoothed statistic stays unbiased",
+"The mean is unchanged"
+],
+"265": [
+"Hoeffding: the average of $q$ bounded variables is sub-Gaussian",
+"Controls the tail"
+],
+"266": [
+"The smoothed statistic is sub-Gaussian (variance ≈ $5/(4q)$)",
+"The encoder’s other condition"
+],
+"267": [
+"Noise variance $\\sigma_w^2$ given the variance estimate",
+"Notation for Lemma 5"
+],
+"268": [
+"The Gaussian-smoothed test function $h_w$",
+"Smooth enough for Taylor expansion"
+],
+"269": [
+"The third derivative of $h_w$ is bounded",
+"Controls the Taylor remainder"
+],
+"270": [
+"Third derivative $\\le Cq^{3/2}$",
+"Uniform in $w$"
+],
+"271": [
+"Centered, scaled Bernoulli terms $Z_a$",
+"What Lindeberg replacement swaps"
+],
+"272": [
+"Gaussian stand-ins $Y_a$",
+"Same first two moments as $Z_a$"
+],
+"273": [
+"Same mean and variance; small third moments",
+"Replacement error comes only from third order"
+],
+"274": [
+"Swap one at a time: Gaussians before, Bernoullis after",
+"The Lindeberg method"
+],
+"275": [
+"Taylor expansion to second order",
+"Remainder controlled by the third derivative"
+],
+"276": [
+"Each swap costs about $q^{-3/2}$",
+"Orders 0–2 cancel"
+],
+"277": [
+"Total error of $q$ swaps $\\lesssim q^{-1/2}$",
+"Close to Gaussian"
+],
+"278": [
+"TV distance given the variance estimate $\\le Cq^{-1/2}$",
+"Conditional version of Lemma 5"
+],
+"279": [
+"Variance ratio $a_w$",
+"Actual vs target variance"
+],
+"280": [
+"$3/4\\le a_w\\le5/4$",
+"The ratio is near 1"
+],
+"281": [
+"KL between two Gaussians differing only in variance",
+"An explicit formula"
+],
+"282": [
+"$a-1-\\ln a\\le C(a-1)^2$",
+"A Taylor estimate"
+],
+"283": [
+"Pinsker: TV $\\lesssim|a_w-1|$",
+"Slightly different variance, slightly different law"
+],
+"284": [
+"Variance-estimate error $\\lesssim q^{-1/2}$",
+"Controls the variance mismatch"
+],
+"285": [
+"Total TV $\\le$ replacement + mismatch error",
+"Proves Lemma 5"
+],
+"286": [
+"Actual variance of the smoothed statistic",
+"Differs from $1/q$ by a small term"
+],
+"287": [
+"Deal bits round-robin to the $d$ coordinates",
+"About $B/d$ bits each"
+],
+"288": [
+"Bits $B_j$ and participating machines $Q_j$ for coordinate $j$",
+"Notation after allocation"
+],
+"289": [
+"Each machine’s $k$ bits are used; $|B_j-B/d|\\le1$",
+"Even allocation"
+],
+"290": [
+"Participating machines $Q_j$ are of order $n$",
+"The sample term does not degrade"
+],
+"291": [
+"Reference scale $\\sigma=q^{-1/2}$",
+"A parameter of the encoder"
+],
+"292": [
+"$q\\ge m/3$, $Q_j\\le 3q$",
+"Checks the encoder’s conditions"
+],
+"293": [
+"The TV condition holds",
+"(258) applies"
+],
+"294": [
+"Coordinate $j$’s error $\\lesssim$ max of three terms",
+"Applies the robust encoder"
+],
+"295": [
+"Coordinate $j$’s own surplus $s_j$",
+"Compared with the overall surplus"
+],
+"296": [
+"Sample term $\\lesssim 1/(mn)$",
+"Matches the access term"
+],
+"297": [
+"Bit term $\\le 4a_B$",
+"Matches the bit floor"
+],
+"298": [
+"$s_j$ differs from $s$ by a bounded amount",
+"Lets the refinement terms be compared"
+],
+"299": [
+"$1+s_+\\lesssim 1+s_{j,+}$",
+"Surpluses of the same order"
+],
+"300": [
+"Refinement term $\\lesssim 1/[m(1+s_+)]$",
+"Matches the ceiling’s fourth term"
+],
+"301": [
+"Large blocks: per-coordinate error $\\lesssim\\max\\{1/(mn),a_B,1/[m(1+s_+)]\\}$",
+"Exactly three ceiling terms"
+],
+"302": [
+"Machine-count threshold for Lemma 6",
+"Only needs more machines than a $\\ln^2$ term"
+],
+"303": [
+"Lemma 6: one bit per machine, error $\\lesssim 1/(Qm)$",
+"Small blocks lose no precision"
+],
+"304": [
+"Characteristic function of the binomial count (a “clock hand”)",
+"Read $p$ off the hand’s position"
+],
+"305": [
+"Probability that a “real-part” machine sends 1",
+"Reports $\\cos(tK)$ with one bit"
+],
+"306": [
+"Mean of the ±1 sign = real part of the hand",
+"Reads the horizontal coordinate"
+],
+"307": [
+"“Imaginary-part” machines: $\\sin$ instead of $\\cos$",
+"Reads the vertical coordinate"
+],
+"308": [
+"Mean of the ±1 sign = imaginary part",
+"Together they give the full position"
+],
+"309": [
+"Doubling frequencies $t_j=2^j/m$",
+"Locate from coarse to fine"
+],
+"310": [
+"Frequency range and sensitivity scale",
+"The fastest level matches single-machine precision"
+],
+"311": [
+"An explicit formula for the one-step hand length",
+"Shows the hand is not too short"
+],
+"312": [
+"One-step hand length squared $\\ge 3/4$",
+"Next, raise to the $m$-th power"
+],
+"313": [
+"Log length $\\ge -1/6$",
+"Still not short after the $m$-th power"
+],
+"314": [
+"Hand length $\\ge e^{-1/6}$",
+"The angle can always be read"
+],
+"315": [
+"The unwrapped phase $\\varphi_j(p)$",
+"Total angle turned by the hand"
+],
+"316": [
+"Derivative of the phase in $p$",
+"The sensitivity"
+],
+"317": [
+"Sensitivity $\\asymp\\lambda_j$",
+"Higher frequency, higher sensitivity"
+],
+"318": [
+"Phase difference $<\\pi/2$ on short intervals",
+"The hand does not wrap around"
+],
+"319": [
+"Distance between two complex numbers",
+"Length difference + angle difference"
+],
+"320": [
+"Hand-position gap $\\ge c_2\\lambda_j|p-p'|$",
+"Reading the hand recovers $p$"
+],
+"321": [
+"Tolerance $\\epsilon$",
+"A small constant"
+],
+"322": [
+"Assign $r$ machines per level",
+"Each level is read accurately"
+],
+"323": [
+"Hoeffding: deviation beyond $\\epsilon/2$ is exponentially unlikely",
+"Controls each level’s failure"
+],
+"324": [
+"Total failure probability of localization is tiny",
+"Union bound"
+],
+"325": [
+"The “all good” event $\\mathcal E$",
+"The analysis happens on it"
+],
+"326": [
+"Localization uses $\\lesssim\\ln^2$ machines",
+"Very few machines"
+],
+"327": [
+"Localization uses at most half the machines",
+"The other half refines"
+],
+"328": [
+"Feasible set $A_j$ at level $j$",
+"Values of $p$ consistent with the reading"
+],
+"329": [
+"Wrap the feasible set into an interval $I_j$",
+"Convenient for induction"
+],
+"330": [
+"Interval length $\\le 2\\epsilon/(c_2\\lambda_j)$",
+"Halves at each level"
+],
+"331": [
+"Level 0: the interval is already short",
+"Base case"
+],
+"332": [
+"Inductive step: hour hand, then minute hand",
+"Faster hands locate within smaller intervals"
+],
+"333": [
+"Refinement reading error squared $\\lesssim 1/Q$",
+"Remaining machines read the fastest level"
+],
+"334": [
+"Nearest-point decoding in the final interval",
+"Gives $\\widehat p$"
+],
+"335": [
+"Position error $\\le 2\\times$reading error",
+"Triangle inequality"
+],
+"336": [
+"$p$ error $\\le$ reading error / sensitivity",
+"Recovers $p$"
+],
+"337": [
+"On the good event, error $\\lesssim 1/(Qm)$",
+"The fastest sensitivity is $\\approx m$"
+],
+"338": [
+"Adding the small failure probability, still $\\lesssim 1/(Qm)$",
+"Proves Lemma 6"
+],
+"339": [
+"Small blocks: about $n/d$ machines per coordinate",
+"Machines split evenly"
+],
+"340": [
+"The threshold is only $\\ln^2 n$",
+"Holds for large $n$"
+],
+"341": [
+"Small blocks: per-coordinate error $\\lesssim 1/(nm)$",
+"Attains the access term"
+],
+"342": [
+"For small $m$ the surplus is of order $n$",
+"Bits are plentiful"
+],
+"343": [
+"The bit term is negligible",
+"Its ratio to the access term vanishes"
+],
+"344": [
+"The largest ceiling term is $1/(nm)$",
+"(341) meets the target"
+],
+"345": [
+"Bundle the communication error as $\\rho_{n,m}$",
+"Treats large and small blocks together"
+],
+"346": [
+"Empirical-moment estimation error $\\le C_1 d\\rho_{n,m}$",
+"The common conclusion of both cases"
+],
+"347": [
+"Clip to $[0,1]$",
+"Keeps the estimate in range"
+],
+"348": [
+"Clipping only moves closer to the truth",
+"No loss of accuracy"
+],
+"349": [
+"The error bound survives clipping",
+"Usable directly"
+],
+"350": [
+"The bound averaged over the pool",
+"Pool-independent"
+],
+"351": [
+"Nearest-point decoding",
+"From moments back to the parameter"
+],
+"352": [
+"Distance $\\delta(z)$ to the set of fingerprints",
+"Defines the decoder"
+],
+"353": [
+"$\\delta$ is 1-Lipschitz",
+"Ensures a measurable decoder exists"
+],
+"354": [
+"The chosen parameter is at least as close as the truth",
+"The key decoding property"
+],
+"355": [
+"Inverse Lipschitz: parameter error $\\le L\\times$fingerprint error",
+"Uses (24)"
+],
+"356": [
+"Triangle inequality",
+"Detour through the estimated moment"
+],
+"357": [
+"Parameter error $\\le 2L\\times$moment error",
+"Same as (29)"
+],
+"358": [
+"Moment error = communication + pool error",
+"Controlled separately"
+],
+"359": [
+"No independence needed after squaring",
+"$\\|a+b\\|^2\\le2\\|a\\|^2+2\\|b\\|^2$"
+],
+"360": [
+"Pool error $\\le d/(4N)$",
+"As in (256)"
+],
+"361": [
+"Total moment error",
+"The two parts added"
+],
+"362": [
+"Parameter error $\\lesssim d(\\rho_{n,m}+1/N)$",
+"The final form of the upper bound"
+],
+"363": [
+"Expanded into four terms",
+"Pool, access, bits, refinement"
+],
+"364": [
+"$=C_2\\mathcal U$",
+"Exactly the ceiling"
+],
+"365": [
+"Upper bound done: $R_{\\mathrm{NI}}\\le C_2\\mathcal U$",
+"With the lower bound, Theorem 1 is proved"
+],
+"366": [
+"Affine change of coordinates $\\eta=c+A\\theta$",
+"Moves any parameter box to the unit cube"
+],
+"367": [
+"New score $=A^\\top\\times$old score",
+"Chain rule"
+],
+"368": [
+"Bernstein constants scale by fixed factors",
+"Assumption (19) survives reparametrization"
+],
+"369": [
+"Identifying moments are preserved",
+"Assumption (24) survives too"
+],
+"370": [
+"Errors in the two coordinates differ by constants",
+"Rates are unchanged"
+],
+"371": [
+"Gaussian mean model $X\\sim N_d(\\theta,I_d)$",
+"The classic example"
+],
+"372": [
+"Gaussian score $=x-\\theta$",
+"Observation minus mean"
+],
+"373": [
+"Score log-MGF $=\\tfrac12\\|u\\|^2$",
+"$v=1$, $b=0$: satisfies (19)"
+],
+"374": [
+"Identifying moments: is each coordinate $\\ge0$?",
+"Bounded and one-bit reportable"
+],
+"375": [
+"Moment $=\\Phi(\\theta_j)$",
+"Larger mean, more positives"
+],
+"376": [
+"$|\\mu_j-\\mu_j'|\\ge\\phi(1)|\\theta_j-\\theta_j'|$",
+"Moments separate parameters"
+],
+"377": [
+"Inverse Lipschitz constant $1/\\phi(1)$",
+"The Gaussian satisfies (24)"
+],
+"378": [
+"Bounded-score criterion: $\\|\\xi\\|\\le M$",
+"A simple sufficient condition"
+],
+"379": [
+"Bounded score ⇒ sub-Gaussian (Hoeffding’s lemma)",
+"Verifies (19) in one step for many models"
+],
+"380": [
+"Bernoulli model with $p\\in[a,1-a]$",
+"Away from the boundary"
+],
+"381": [
+"Bernoulli pmf and score",
+"The score takes two values"
+],
+"382": [
+"Score mean 0, $|\\xi|\\le 1/a$",
+"A bounded score"
+],
+"383": [
+"Bernoulli Fisher information $=1/[p(1-p)]$",
+"Bounded above"
+],
+"384": [
+"The moment is $p$ itself",
+"The simplest identifying moment"
+],
+"385": [
+"Map $p$ linearly onto $[0,1]$",
+"Only constants change"
+],
+"386": [
+"Multinomial ($d+1$-sided die)",
+"Discrete distribution estimation"
+],
+"387": [
+"Every face has probability $\\ge a$",
+"Away from the boundary"
+],
+"388": [
+"Components of the multinomial score",
+"One vote per face"
+],
+"389": [
+"Score length $\\le\\sqrt d/a$",
+"Bounded score ⇒ sub-Gaussian"
+],
+"390": [
+"Multinomial Fisher information matrix",
+"Explicit and bounded"
+],
+"391": [
+"Moment: “is it face $j$?”",
+"Its mean is $p_j$"
+],
+"392": [
+"The fingerprint is the parameter itself",
+"$L=1$"
+],
+"393": [
+"Product model of independent parts",
+"Combines earlier examples"
+],
+"394": [
+"Log-MGFs of the parts add",
+"Product models satisfy (19)"
+],
+"395": [
+"Concatenate the parts’ moments",
+"Product models satisfy (24)"
+],
+"396": [
+"Natural exponential family",
+"Includes Bernoulli, Poisson, Gaussian"
+],
+"397": [
+"Bounded statistics",
+"Makes the score bounded"
+],
+"398": [
+"Widths $w_j$ of the statistics",
+"Used in constants"
+],
+"399": [
+"$\\nabla A=$ mean, $\\nabla^2A=$ covariance",
+"The key identities of exponential families"
+],
+"400": [
+"Differentiate the mean to get the covariance",
+"Source of the second identity in (399)"
+],
+"401": [
+"Score $=T-\\nabla A$, Fisher information $=\\nabla^2A$",
+"Score and information of the family"
+],
+"402": [
+"The score is sub-Gaussian (Hoeffding)",
+"Satisfies (19)"
+],
+"403": [
+"Identifiability: Hessian $\\succeq aI_d$",
+"No direction degenerates"
+],
+"404": [
+"Gradient difference = integrated Hessian",
+"Fundamental theorem of calculus"
+],
+"405": [
+"Inner product $\\ge a\\|\\Delta\\|^2$",
+"The gradient separates parameters"
+],
+"406": [
+"Parameter distance $\\le$ gradient distance / $a$",
+"An inverse bound"
+],
+"407": [
+"Rescale statistics to $[0,1]$",
+"Makes bounded moments"
+],
+"408": [
+"Rescaled moment = rescaled gradient",
+"Links moments to the gradient"
+],
+"409": [
+"Gradient difference $=W\\times$moment difference",
+"The width matrix"
+],
+"410": [
+"Inverse Lipschitz constant $w_{\\max}/a$",
+"Exponential families satisfy (24)"
+],
+"411": [
+"The logistic regression model",
+"An example with covariates"
+],
+"412": [
+"Bounded covariates with a positive-definite second moment",
+"Assumptions for logistic regression"
+],
+"413": [
+"Constants $M_\\theta$, $\\lambda_Z$",
+"Used in constants"
+],
+"414": [
+"Joint density of logistic regression",
+"A Bernoulli likelihood"
+],
+"415": [
+"Score = covariate × (label − predicted probability)",
+"Pushes by how wrong the guess is"
+],
+"416": [
+"Conditional mean 0, bounded length",
+"A bounded score"
+],
+"417": [
+"Conditional Hoeffding: the score is sub-Gaussian",
+"Satisfies (19)"
+],
+"418": [
+"Identifying moment $g(\\theta)=\\mathbb E[ZY]$",
+"The fingerprint for logistic regression"
+],
+"419": [
+"The Jacobian of $g$",
+"Prepares the inverse bound"
+],
+"420": [
+"Jacobian = Fisher information matrix",
+"A neat coincidence"
+],
+"421": [
+"$\\sigma'$ has a positive lower bound $c_\\sigma$",
+"The logistic curve is not too flat"
+],
+"422": [
+"The Jacobian is uniformly positive definite",
+"$\\ge c_\\sigma\\lambda_Z$"
+],
+"423": [
+"$g$ separates parameters",
+"As in (405)"
+],
+"424": [
+"Parameter distance $\\le$ $g$ distance $/(c_\\sigma\\lambda_Z)$",
+"The inverse bound"
+],
+"425": [
+"Rescale $Z_jY$ to $[0,1]$",
+"Makes bounded moments"
+],
+"426": [
+"Rescaled moments are affine in $g$",
+"The moment’s form"
+],
+"427": [
+"Inverse Lipschitz constant $2K/(c_\\sigma\\lambda_Z)$",
+"Theorem 1 applies to logistic regression"
+],
+"428": [
+"Rate parameter $\\lambda\\in[a,b_0]$",
+"Away from 0"
+],
+"429": [
+"The Poisson distribution",
+"An example with counts"
+],
+"430": [
+"Poisson score $=(x-\\lambda)/\\lambda$",
+"More arrivals push the rate up"
+],
+"431": [
+"Score mean 0, information $1/\\lambda$",
+"Basic properties"
+],
+"432": [
+"Exact log-MGF of the Poisson score",
+"Expanded as a power series"
+],
+"433": [
+"Bound term by term by a geometric series",
+"Gives a Bernstein form"
+],
+"434": [
+"Poisson is Bernstein ($b>0$) but not sub-Gaussian",
+"Why (19) allows $b>0$"
+],
+"435": [
+"Identifying moment: “did anyone arrive?”",
+"Its mean $e^{-\\lambda}$ is monotone"
+],
+"436": [
+"Moment gap $\\ge e^{-b_0}\\times$parameter gap",
+"Moments separate parameters"
+],
+"437": [
+"Inverse Lipschitz constant $e^{b_0}$",
+"Poisson satisfies (24)"
+],
+"438": [
+"The likelihood derivative is summable",
+"Regularity holds"
+],
+"439": [
+"The Exponential distribution",
+"An example with waiting times"
+],
+"440": [
+"Exponential score $=1/\\lambda-x$",
+"Short waits push the rate up"
+],
+"441": [
+"Score mean 0, information $1/\\lambda^2$",
+"Basic properties"
+],
+"442": [
+"The score’s MGF by direct integration",
+"Prepares the log-MGF"
+],
+"443": [
+"Log-MGF as a power series",
+"Ready to bound"
+],
+"444": [
+"Bound term by term by a geometric series",
+"Gives a Bernstein form"
+],
+"445": [
+"Bernstein constants of the Exponential",
+"Again not sub-Gaussian"
+],
+"446": [
+"Identifying moment: “wait $\\le t$?”",
+"Its mean $1-e^{-\\lambda t}$ is monotone"
+],
+"447": [
+"The derivative has a positive lower bound",
+"Strictly monotone"
+],
+"448": [
+"Moment gap $\\ge te^{-b_0t}\\times$parameter gap",
+"Moments separate parameters"
+],
+"449": [
+"Inverse Lipschitz constant $e^{b_0t}/t$",
+"The Exponential satisfies (24)"
+],
+"450": [
+"The likelihood derivative is integrable",
+"Regularity holds"
+],
+"451": [
+"Product of Poisson / Exponential coordinates",
+"A multivariate example"
+],
+"452": [
+"Take the largest constants over coordinates",
+"Overall constants"
+],
+"453": [
+"Vector version of (19)",
+"Log-MGFs of independent coordinates add"
+],
+"454": [
+"$d$ bounded moments identify $d$ parameters",
+"Satisfies (24)"
+],
+"455": [
+"Gaussian covariance estimation",
+"The unknown is the covariance matrix"
+],
+"456": [
+"Parameter dimension $d=p(p+1)/2$",
+"Degrees of freedom of a symmetric matrix"
+],
+"457": [
+"Parametrize the covariance with basis matrices",
+"Parameters live in the unit cube"
+],
+"458": [
+"The linear map $\\mathcal H$ from coefficients to matrices",
+"Notation"
+],
+"459": [
+"Matrix and coefficient sizes differ by constants",
+"The two errors are equivalent"
+],
+"460": [
+"The Gaussian log-likelihood",
+"Starting point for the score"
+],
+"461": [
+"Derivatives of $\\ln\\det$ and $\\Sigma^{-1}$",
+"Matrix calculus"
+],
+"462": [
+"Score along $H$: a quadratic form minus its mean",
+"The score is quadratic"
+],
+"463": [
+"The score vector and directional scores",
+"Notation"
+],
+"464": [
+"The whitened matrix $M_H$",
+"Reduces to a standard Gaussian"
+],
+"465": [
+"Rewrite the score with a standard Gaussian",
+"Ready to diagonalize"
+],
+"466": [
+"Score = weighted sum of “chi-square minus 1”",
+"Its law is explicit"
+],
+"467": [
+"Chi-square MGF, finite only for $s<1$",
+"Shows it is not sub-Gaussian"
+],
+"468": [
+"Explicit log-MGF of the score",
+"It blows up at a finite point"
+],
+"469": [
+"Series bound for $-z-\\ln(1-z)$",
+"A geometric-series bound"
+],
+"470": [
+"A Bernstein-form log-MGF bound",
+"The covariance score satisfies (19)"
+],
+"471": [
+"Norm bounds for the whitened matrix",
+"Controls constants"
+],
+"472": [
+"Log-MGF bound for any direction $u$",
+"Vector form of (19)"
+],
+"473": [
+"Bernstein constants of the covariance model",
+"Depend on the eigenvalue range"
+],
+"474": [
+"Directional Fisher information",
+"Matches the quadratic coefficient"
+],
+"475": [
+"Choose $p(p+1)/2$ directions",
+"Axes and pairwise sums"
+],
+"476": [
+"Identifying moment $e^{-c(v^\\top X)^2}$",
+"Bounded and one-bit reportable"
+],
+"477": [
+"Moment $=(1+2cv^\\top\\Sigma v)^{-1/2}$",
+"Depends only on the directional variance"
+],
+"478": [
+"$f(z)$ is decreasing",
+"The directional variance can be recovered"
+],
+"479": [
+"Directional variances lie in $[a,2b_0]$",
+"A bounded range"
+],
+"480": [
+"$|f'|\\ge\\kappa$",
+"The slope is bounded below"
+],
+"481": [
+"$f$ gap $\\ge\\kappa\\times$argument gap",
+"Moments separate directional variances"
+],
+"482": [
+"Directional-variance error $\\le$ moment error / $\\kappa$",
+"The inverse bound"
+],
+"483": [
+"Recover off-diagonal entries from directional variances",
+"Polarization"
+],
+"484": [
+"Same directional variances for the difference matrix",
+"Notation"
+],
+"485": [
+"Matrix error $\\le$ constant × directional error",
+"From directions back to the matrix"
+],
+"486": [
+"Parameter error $\\le C\\sqrt p\\times$moment error",
+"The covariance model satisfies (24)"
+],
+"487": [
+"An integrable bound on the density",
+"Regularity holds"
+],
+"488": [
+"The only unresolved regime (intermediate overlap)",
+"The gap left open"
+],
+"489": [
+"In it the bounds differ only by $\\bar r$",
+"Either remove $\\bar r$ or find a better protocol"
+],
+"490": [
+"A sufficient inequality that would close the gap",
+"A concrete target for the open problem"
+],
+"491": [
+"Probability of any overlap $\\le\\binom n2 m^2/N$",
+"“No overlap” needs $N\\gg n^2m^2$"
+],
+"492": [
+"Fraction of repeated accesses $\\le (n-1)m/(2N)$",
+"A vanishing fraction is not enough to reuse independent-block results"
+]
+}
+}
