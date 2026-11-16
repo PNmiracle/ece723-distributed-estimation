@@ -200,7 +200,66 @@ body.edit-on .edited{background:rgba(255,236,170,.45)}
 .edit-panel button:hover{background:rgba(255,255,255,.12)}
 .edit-panel .ep-done{background:#2f6fd0;border-color:#2f6fd0}
 @media print{.edit-btn,.edit-panel{display:none!important}}
-</style></head>
+</style>
+<style id="hl-style">
+/* ---------- highlights & notes (tools/highlights) ---------- */
+mark.hl{color:inherit;border-radius:2px;padding:0 1px;cursor:pointer;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.hl-c-y{background:#ffe98a}.hl-c-g{background:#c4efc9}.hl-c-b{background:#cde3ff}.hl-c-p{background:#ffd0e2}
+.katex.hl-k{border-radius:3px;cursor:pointer}
+mark.hl.hl-note-end::after{content:"✎";font-size:.7em;vertical-align:super;margin-left:1px;color:#8a6200}
+mark.hl.hl-flash,.katex.hl-flash,.hl-block.hl-flash{animation:hlflash 1.2s ease 2}
+@keyframes hlflash{50%{box-shadow:0 0 0 3px #ffb300}}
+.hl-block{outline:3px solid transparent;outline-offset:3px;border-radius:6px;position:relative}
+.hl-block.hl-c-y{background:transparent;outline-color:#ffd84a}.hl-block.hl-c-g{background:transparent;outline-color:#86d993}
+.hl-block.hl-c-b{background:transparent;outline-color:#8fc0ff}.hl-block.hl-c-p{background:transparent;outline-color:#ff9cc2}
+.english-scan .hl-badge{left:auto;right:4px}
+.hl-badge{position:absolute;top:4px;left:4px;z-index:2;font:600 .72rem/1 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;background:#fff;border:1px solid #d8c27a;color:#7a5a00;border-radius:10px;padding:3px 7px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+body.edit-on .hl-ui-float{display:none!important}
+.hl-ui{font:.88rem/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:var(--ink,#162339)}
+.hl-bar{position:absolute;z-index:35;display:flex;gap:4px;align-items:center;background:#1f2a3c;border-radius:10px;padding:5px 6px;box-shadow:0 8px 24px rgba(10,20,40,.25)}
+.hl-bar button{border:0;background:transparent;color:#fff;cursor:pointer;border-radius:7px;padding:4px 7px;font:inherit;line-height:1}
+.hl-bar button:hover{background:rgba(255,255,255,.14)}
+.hl-dot{width:20px;height:20px;padding:0!important;border-radius:50%!important;border:2px solid rgba(255,255,255,.85)!important}
+.hl-dot.hl-c-y{background:#ffe98a}.hl-dot.hl-c-g{background:#c4efc9}.hl-dot.hl-c-b{background:#cde3ff}.hl-dot.hl-c-p{background:#ffd0e2}
+.hl-dot:hover{transform:scale(1.12)}
+.hl-sep{width:1px;height:18px;background:rgba(255,255,255,.25);margin:0 2px}
+.hl-plus{position:absolute;z-index:34;border:1px solid #d8c27a;background:#fffaf0;color:#7a5a00;border-radius:8px;padding:2px 8px;font:600 .78rem/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.hl-pop{position:absolute;z-index:36;width:min(340px,calc(100vw - 20px));background:#fff;border:1px solid #d6dfeb;border-radius:12px;box-shadow:0 14px 40px rgba(20,40,80,.2);padding:10px 12px}
+.hl-x{position:absolute;top:6px;right:8px;border:0;background:transparent;color:#8593a6;cursor:pointer;font-size:.9rem;padding:2px 4px;border-radius:5px}.hl-x:hover{background:#eef2f7;color:#1f2a3c}
+.hl-pop .hl-q{margin-right:20px;font-size:.8rem;color:#566579;max-height:4.6em;overflow:hidden;border-left:3px solid #ffd84a;padding-left:8px;margin-bottom:8px}
+.hl-pop textarea,.hl-panel textarea{width:100%;box-sizing:border-box;min-height:84px;resize:vertical;border:1px solid #cfd8e6;border-radius:8px;padding:7px 9px;font:inherit;line-height:1.55}
+.hl-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.hl-row .hl-dot{border:2px solid #fff!important;box-shadow:0 0 0 1px #c9d3e0;cursor:pointer}
+.hl-row .hl-dot.on{box-shadow:0 0 0 2px #1f2a3c}
+.hl-btn{border:1px solid #cfd8e6;background:#fff;border-radius:7px;padding:3px 9px;cursor:pointer;font:inherit;font-size:.82rem;color:#2f4a70}
+.hl-btn:hover{background:#eef4fd}.hl-btn.danger{color:#b3261e;border-color:#efc4c0}.hl-btn.danger:hover{background:#fdeeed}
+.hl-grow{flex:1}
+.hl-saved{font-size:.75rem;color:#1f7a55;opacity:0;transition:opacity .3s}.hl-saved.on{opacity:1}
+.hl-open{margin-right:6px}
+.hl-open b{display:inline-block;min-width:1.2em;margin-left:3px;padding:0 5px;border-radius:9px;background:#ffe98a;color:#5a4300;font-size:.75rem}
+.hl-panel{position:fixed;top:0;right:0;bottom:0;z-index:41;width:min(420px,100vw);background:#fff;border-left:1px solid var(--line,#dde5ef);box-shadow:-10px 0 30px rgba(20,40,80,.12);display:flex;flex-direction:column}
+.hl-panel header{display:flex;align-items:center;gap:8px;padding:12px 14px;border-bottom:1px solid var(--line,#dde5ef)}
+.hl-panel header h3{margin:0;font-size:1rem;flex:1}
+.hl-filters{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid var(--line,#dde5ef)}
+.hl-filters .hl-dot{cursor:pointer;opacity:.45}.hl-filters .hl-dot.on{opacity:1;box-shadow:0 0 0 2px #1f2a3c}
+.hl-filters label{font-size:.8rem;color:#566579;display:flex;gap:4px;align-items:center;margin-left:auto}
+.hl-list{flex:1;overflow:auto;padding:6px 14px 14px}
+.hl-sec{font-size:.75rem;font-weight:700;color:#255ca7;margin:14px 0 4px;letter-spacing:.03em}
+.hl-item{border:1px solid #e3e9f2;border-left-width:5px;border-radius:9px;padding:8px 10px;margin:6px 0;cursor:pointer}
+.hl-item:hover{background:#f7f9fc}
+.hl-item.hl-c-y{border-left-color:#ffd84a;background:#fff}.hl-item.hl-c-g{border-left-color:#86d993;background:#fff}
+.hl-item.hl-c-b{border-left-color:#8fc0ff;background:#fff}.hl-item.hl-c-p{border-left-color:#ff9cc2;background:#fff}
+.hl-item .hl-q{font-size:.84rem;color:#33415a;max-height:5em;overflow:hidden}
+.hl-item .hl-n{margin-top:5px;font-size:.84rem;background:#fffaf0;border-radius:6px;padding:5px 8px;white-space:pre-wrap}
+.hl-item .hl-meta{font-size:.72rem;color:#8593a6;margin-top:4px}
+.hl-item.orphan{opacity:.7}.hl-item.orphan .hl-meta{color:#b3261e}
+.hl-empty{color:#566579;font-size:.88rem;padding:18px 4px;line-height:1.7}
+.hl-panel footer{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px;border-top:1px solid var(--line,#dde5ef)}
+.hl-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:50;background:#1f2a3c;color:#fff;border-radius:9px;padding:7px 14px;font:.86rem/1.4 -apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;box-shadow:0 8px 24px rgba(10,20,40,.25)}
+@media (max-width:640px){.hl-panel{top:auto;height:78vh;width:100vw;border-left:0;border-top:1px solid var(--line,#dde5ef);border-radius:14px 14px 0 0}}
+@media print{.hl-ui,.hl-badge,.hl-plus{display:none!important}mark.hl{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
 <body>
 <div class="progress" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
 <header class="topbar"><div class="bar-content">
@@ -2920,6 +2979,399 @@ fromHash(); addEventListener('hashchange', fromHash);
     const f = file.files[0]; if (!f) return;
     f.text().then(t => { try { const j = JSON.parse(t); Object.assign(store, j.edits || j); save(); location.reload(); } catch (err) {} });
   });
+})();
+</script>
+<script id="hl-script">
+/* ---------- highlights & notes: kept in this browser (localStorage) ---------- */
+(() => {
+  const MAIN = document.querySelector('main');
+  if (!MAIN) return;
+  const PAGE = (location.pathname.split('/').pop() || 'index.html');
+  const KEY = 'notes:' + PAGE;
+  const EN = (document.documentElement.lang || '').startsWith('en');
+  const T = EN ? {
+    btn: '🖍 Notes', title: 'My highlights & notes', note: 'Note', add: '＋ Note', ph: 'Write a note… (saved automatically)',
+    del: 'Delete', copy: 'Copy text', close: 'Close', saved: 'Saved', md: 'Export Markdown', cp: 'Copy all', bak: 'Back up (JSON)',
+    imp: 'Restore', clr: 'Clear all', sure: 'Click again to clear', onlyN: 'With notes only', all: 'All',
+    empty: 'Nothing yet. Select any text to highlight it, or hover over a formula / scanned paragraph and click “＋ Note”.<br>Shortcuts with text selected: <b>H</b> highlight, <b>N</b> highlight + note.',
+    orphan: 'original text not found (page changed)', block: 'Block note', eq: 'Eq.', copied: 'Copied', imported: 'Restored', exported: 'Downloaded',
+    hdr: 'My notes', src: 'Source', when: 'Exported', none: '(no note)', jump: 'open'
+  } : {
+    btn: '🖍 笔记', title: '我的高亮与笔记', note: '笔记', add: '＋ 笔记', ph: '写点笔记…（自动保存）',
+    del: '删除', copy: '复制原文', close: '关闭', saved: '已保存', md: '导出 Markdown', cp: '复制全部', bak: '备份 (JSON)',
+    imp: '恢复备份', clr: '清空', sure: '再点一次确认清空', onlyN: '只看有笔记的', all: '全部',
+    empty: '还没有内容。选中任意文字即可高亮；把鼠标移到公式或扫描段落上，点“＋ 笔记”即可给整块加笔记。<br>选中文字后的快捷键：<b>H</b> 高亮，<b>N</b> 高亮并写笔记。',
+    orphan: '找不到原文（页面内容已改动）', block: '整块笔记', eq: '式', copied: '已复制', imported: '已恢复', exported: '已下载',
+    hdr: '我的笔记', src: '来源', when: '导出时间', none: '（无笔记）', jump: '跳转'
+  };
+  const COLORS = ['y', 'g', 'b', 'p'];
+  const CC = {y: '#ffd84a', g: '#86d993', b: '#8fc0ff', p: '#ff9cc2'};
+  const CNAME = EN ? {y: 'yellow', g: 'green', b: 'blue', p: 'pink'} : {y: '黄', g: '绿', b: '蓝', p: '粉'};
+  const SKIP = '.katex-mathml, script, style, [data-hl-ui], .hl-ui';
+  const BLOCKS = 'figure.equation, .english-scan';
+
+  /* ---------- storage ---------- */
+  let items = [];
+  try { const j = JSON.parse(localStorage.getItem(KEY) || '{}'); items = Array.isArray(j.items) ? j.items : []; } catch (e) { items = []; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({v: 1, page: PAGE, items})); } catch (e) {} updCount(); };
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  const byId = id => items.find(x => x.id === id);
+  const tgt = e => (e.target && e.target.nodeType === 1) ? e.target : ((e.target && e.target.parentElement) || document.body);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+
+  /* ---------- text model: visible text of a root, skipping hidden MathML and our UI ---------- */
+  function textNodes(root) {
+    const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: n => (n.parentElement && n.parentElement.closest(SKIP)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+    });
+    const out = []; let n; while ((n = w.nextNode())) out.push(n); return out;
+  }
+  const fullText = root => textNodes(root).map(n => n.data).join('');
+  function posOf(root, container, offset) {
+    const r = document.createRange(); r.setStart(container, offset); r.collapse(true);
+    let base = 0;
+    for (const n of textNodes(root)) {
+      if (n === container) return base + offset;
+      if (r.comparePoint(n, 0) >= 0) return base;
+      base += n.data.length;
+    }
+    return base;
+  }
+  const anchorOf = node => {
+    let el = node.nodeType === 1 ? node : node.parentElement;
+    el = el && el.closest('[id]');
+    return el && MAIN.contains(el) ? el : MAIN;
+  };
+
+  /* ---------- painting ---------- */
+  function paintText(it) {
+    let root = document.getElementById(it.anchor);
+    if (!root || !MAIN.contains(root)) root = MAIN;
+    let s = it.start, e = it.end;
+    let txt = fullText(root);
+    if (txt.slice(s, e) !== it.text) {
+      const found = locate(txt, it);
+      if (found < 0 && root !== MAIN) { root = MAIN; txt = fullText(MAIN); }
+      const f2 = found >= 0 ? found : locate(txt, it);
+      if (f2 < 0) { it.orphan = true; return false; }
+      s = f2; e = f2 + it.text.length;
+    }
+    it.orphan = false;
+    let base = 0; const segs = []; const kats = new Set();
+    for (const n of textNodes(root)) {
+      const len = n.data.length, a = Math.max(s, base), b = Math.min(e, base + len);
+      if (a < b) {
+        const k = n.parentElement.closest('.katex');
+        if (k) kats.add(k); else if (n.data.slice(a - base, b - base).trim()) segs.push([n, a - base, b - base]);
+      }
+      base += len; if (base >= e) break;
+    }
+    const marks = [];
+    for (const [n, a, b] of segs) {
+      let mid = n; if (a > 0) mid = n.splitText(a); if (b - a < mid.data.length) mid.splitText(b - a);
+      const m = document.createElement('mark'); m.className = 'hl hl-c-' + it.color; m.dataset.hl = it.id;
+      mid.parentNode.insertBefore(m, mid); m.appendChild(mid); marks.push(m);
+    }
+    kats.forEach(k => { k.classList.add('hl-k', 'hl-c-' + it.color); k.dataset.hl = it.id; });
+    if (marks.length && it.note) marks[marks.length - 1].classList.add('hl-note-end');
+    if (!marks.length && kats.size && it.note) [...kats].pop().title = it.note;
+    marks.forEach(m => { if (it.note) m.title = it.note; });
+    return marks.length + kats.size > 0;
+  }
+  function locate(txt, it) {
+    let best = -1, bestScore = -1, i = txt.indexOf(it.text);
+    while (i >= 0) {
+      let sc = 0;
+      const pre = txt.slice(Math.max(0, i - (it.pre || '').length), i), suf = txt.slice(i + it.text.length, i + it.text.length + (it.suf || '').length);
+      for (let k = 1; k <= pre.length && pre[pre.length - k] === it.pre[it.pre.length - k]; k++) sc++;
+      for (let k = 0; k < suf.length && suf[k] === it.suf[k]; k++) sc++;
+      if (sc > bestScore) { bestScore = sc; best = i; }
+      i = txt.indexOf(it.text, i + 1);
+    }
+    return best;
+  }
+  function blockEl(it) {
+    const root = document.getElementById(it.anchor) || MAIN;
+    if (root.matches && root.matches('figure.equation') && it.idx === -1) return root;
+    const list = [...root.querySelectorAll(BLOCKS)];
+    return list[it.idx] || null;
+  }
+  function paintBlock(it) {
+    const el = blockEl(it); if (!el) { it.orphan = true; return false; }
+    it.orphan = false;
+    el.classList.add('hl-block', 'hl-c-' + it.color); el.dataset.hlb = it.id;
+    const bd = document.createElement('button'); bd.type = 'button'; bd.className = 'hl-badge'; bd.dataset.hlUi = '1'; bd.dataset.hl = it.id;
+    bd.textContent = it.note ? '✎ ' + T.note : '★'; if (it.note) bd.title = it.note;
+    el.appendChild(bd);
+    return true;
+  }
+  const paint = it => it.kind === 'block' ? paintBlock(it) : paintText(it);
+  function unpaint(id) {
+    document.querySelectorAll(`mark.hl[data-hl="${id}"]`).forEach(m => { const p = m.parentNode; while (m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); });
+    document.querySelectorAll(`.katex[data-hl="${id}"]`).forEach(k => { k.classList.remove('hl-k', ...COLORS.map(c => 'hl-c-' + c)); delete k.dataset.hl; k.removeAttribute('title'); });
+    document.querySelectorAll(`[data-hlb="${id}"]`).forEach(b => { b.classList.remove('hl-block', ...COLORS.map(c => 'hl-c-' + c)); delete b.dataset.hlb; });
+    document.querySelectorAll(`.hl-badge[data-hl="${id}"]`).forEach(b => b.remove());
+  }
+  const repaint = it => { unpaint(it.id); paint(it); };
+  function paintAll() {
+    // marks may have been captured by the page's edit mode; clear stray ones first
+    const stray = document.querySelectorAll('mark.hl');
+    stray.forEach(m => { const p = m.parentNode; while (m.firstChild) p.insertBefore(m.firstChild, m); p.removeChild(m); p.normalize(); });
+    items.forEach(paint);
+  }
+  function unpaintAll() { items.forEach(it => unpaint(it.id)); }
+
+  /* ---------- context labels for the notes list ---------- */
+  function contextOf(it) {
+    let el = it.kind === 'block' ? blockEl(it) : document.querySelector(`[data-hl="${it.id}"]`);
+    if (!el) el = document.getElementById(it.anchor);
+    if (!el) return {sec: '', sub: '', order: 1e12, link: ''};
+    const sec = el.closest('section');
+    const h = sec && sec.querySelector('.sec-h, h2, h3');
+    let sub = '';
+    const plain = el.closest('aside.plain'); const fig = el.closest('figure.equation');
+    if (plain) sub = (plain.querySelector('.plain-tag') || {}).textContent || '';
+    else if (fig) sub = T.eq + ' (' + fig.id.replace('eq-', '') + ')';
+    const linkEl = fig || (plain && plain.previousElementSibling && plain.previousElementSibling.id ? plain.previousElementSibling : null) || sec || el.closest('[id]');
+    const r = el.getBoundingClientRect();
+    return {sec: h ? h.textContent.trim() : '', sub, order: r.top + scrollY + r.left / 1e4, link: linkEl && linkEl.id ? '#' + linkEl.id : ''};
+  }
+
+  /* ---------- floating UI ---------- */
+  const mk = (tag, cls, html) => { const e = document.createElement(tag); e.className = cls; e.dataset.hlUi = '1'; if (html != null) e.innerHTML = html; return e; };
+  const dots = (on) => COLORS.map(c => `<button type="button" class="hl-dot hl-c-${c}${c === on ? ' on' : ''}" data-c="${c}" title="${CNAME[c]}" aria-label="${CNAME[c]}"></button>`).join('');
+  const bar = mk('div', 'hl-ui hl-ui-float hl-bar', dots() + `<span class="hl-sep"></span><button type="button" data-a="note">✎ ${T.note}</button><button type="button" data-a="copy" title="${T.copy}">⧉</button>`);
+  bar.hidden = true; document.body.appendChild(bar);
+  const plus = mk('button', 'hl-ui hl-ui-float hl-plus', T.add); plus.type = 'button'; plus.hidden = true; document.body.appendChild(plus);
+  const pop = mk('div', 'hl-ui hl-ui-float hl-pop'); pop.hidden = true; document.body.appendChild(pop);
+  const toast = mk('div', 'hl-ui hl-toast'); toast.hidden = true; document.body.appendChild(toast);
+  let toastT; const say = m => { toast.textContent = m; toast.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => toast.hidden = true, 1600); };
+  const placeAt = (el, rect, below) => {
+    el.hidden = false;
+    const w = el.offsetWidth, h = el.offsetHeight;
+    let x = rect.left + scrollX + rect.width / 2 - w / 2;
+    x = Math.max(scrollX + 8, Math.min(x, scrollX + document.documentElement.clientWidth - w - 8));
+    let y = below ? rect.bottom + scrollY + 8 : rect.top + scrollY - h - 8;
+    if (!below && y < scrollY + 64) y = rect.bottom + scrollY + 8;
+    el.style.left = x + 'px'; el.style.top = y + 'px';
+  };
+
+  /* ---------- selection → toolbar ---------- */
+  let selRange = null;
+  function currentRange() {
+    const s = getSelection(); if (!s || s.isCollapsed || !s.rangeCount) return null;
+    const r = s.getRangeAt(0);
+    if (!MAIN.contains(r.commonAncestorContainer)) return null;
+    const anc = r.commonAncestorContainer.nodeType === 1 ? r.commonAncestorContainer : r.commonAncestorContainer.parentElement;
+    if (anc.closest('[data-hl-ui], [contenteditable="true"], input, textarea')) return null;
+    if (!s.toString().trim()) return null;
+    return r;
+  }
+  function showBar() {
+    if (document.body.classList.contains('edit-on')) return;
+    const r = currentRange(); if (!r) { bar.hidden = true; return; }
+    selRange = r.cloneRange();
+    const rects = r.getClientRects(); const rect = rects.length ? rects[rects.length - 1] : r.getBoundingClientRect();
+    const touch = matchMedia('(pointer:coarse)').matches;
+    placeAt(bar, touch ? r.getBoundingClientRect() : rect, touch);
+  }
+  let selT; const queueBar = () => { clearTimeout(selT); selT = setTimeout(showBar, 180); };
+  document.addEventListener('mouseup', e => { if (!tgt(e).closest('[data-hl-ui]')) queueBar(); });
+  document.addEventListener('keyup', e => { if (e.shiftKey || e.key.startsWith('Arrow')) queueBar(); });
+  document.addEventListener('selectionchange', () => { if (matchMedia('(pointer:coarse)').matches) queueBar(); else if (getSelection().isCollapsed) bar.hidden = true; });
+
+  function create(color, withNote) {
+    const r = selRange || currentRange(); if (!r) return;
+    const root = anchorOf(r.commonAncestorContainer);
+    const start = posOf(root, r.startContainer, r.startOffset), end = posOf(root, r.endContainer, r.endOffset);
+    const txt = fullText(root); const text = txt.slice(start, end);
+    if (!text.trim()) return;
+    const it = {id: uid(), kind: 'text', color, note: '', anchor: root.id || 'top', start, end, text, pre: txt.slice(Math.max(0, start - 32), start), suf: txt.slice(end, end + 32), t: Date.now()};
+    items.push(it); getSelection().removeAllRanges(); bar.hidden = true; selRange = null;
+    paint(it); save(); renderPanel();
+    if (withNote) openPop(it.id);
+  }
+  bar.addEventListener('mousedown', e => e.preventDefault());
+  bar.addEventListener('click', e => {
+    const c = e.target.closest('[data-c]'); if (c) return create(c.dataset.c, false);
+    const a = e.target.closest('[data-a]'); if (!a) return;
+    if (a.dataset.a === 'note') create('y', true);
+    if (a.dataset.a === 'copy') { const t = (selRange || currentRange() || '').toString(); copyText(t); bar.hidden = true; }
+  });
+  document.addEventListener('keydown', e => {
+    if (tgt(e).closest('input, textarea, [contenteditable="true"]')) return;
+    if (e.key === 'Escape') { bar.hidden = true; pop.hidden = true; plus.hidden = true; if (!panel.hidden) closePanel(); return; }
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if ((e.key === 'h' || e.key === 'H' || e.key === 'n' || e.key === 'N') && currentRange()) { e.preventDefault(); selRange = currentRange().cloneRange(); create('y', e.key.toLowerCase() === 'n'); }
+  });
+
+  /* ---------- block notes for formulas and scanned paragraphs ---------- */
+  let plusTarget = null;
+  MAIN.addEventListener('mouseover', e => {
+    if (document.body.classList.contains('edit-on') || matchMedia('(pointer:coarse)').matches) return;
+    const t = tgt(e), b = t.closest(BLOCKS); if (!b || b.dataset.hlb) { if (!t.closest('.hl-plus')) plus.hidden = true; return; }
+    plusTarget = b; const r = b.getBoundingClientRect();
+    plus.hidden = false; plus.style.left = (r.right + scrollX - plus.offsetWidth - 4) + 'px'; plus.style.top = (r.top + scrollY + 4) + 'px';
+  });
+  function blockKey(el) {
+    if (el.matches('figure.equation') && el.id) return {anchor: el.id, idx: -1};
+    const root = el.parentElement.closest('[id]') || MAIN;
+    return {anchor: root.id || 'top', idx: [...root.querySelectorAll(BLOCKS)].indexOf(el)};
+  }
+  function addBlock(el, open) {
+    if (el.dataset.hlb) return openPop(el.dataset.hlb);
+    const k = blockKey(el);
+    const label = el.matches('figure.equation') ? T.eq + ' (' + el.id.replace('eq-', '') + ')' : T.block;
+    const it = {id: uid(), kind: 'block', color: 'y', note: '', anchor: k.anchor, idx: k.idx, text: label, t: Date.now()};
+    items.push(it); paint(it); save(); renderPanel(); plus.hidden = true;
+    if (open) openPop(it.id);
+  }
+  plus.addEventListener('click', () => { if (plusTarget) addBlock(plusTarget, true); });
+  // touch devices: long-press is selection, so offer block notes via a double-tap on the block
+  MAIN.addEventListener('dblclick', e => { const b = tgt(e).closest(BLOCKS); if (b && matchMedia('(pointer:coarse)').matches) addBlock(b, true); });
+
+  /* ---------- popover for one item ---------- */
+  let popId = null;
+  function openPop(id, near) {
+    const it = byId(id); if (!it) return; popId = id;
+    pop.innerHTML = `<button type="button" class="hl-x" data-a="close" aria-label="${T.close}">✕</button><div class="hl-q">${esc(it.text).slice(0, 400)}</div>
+      <textarea placeholder="${T.ph}">${esc(it.note || '')}</textarea>
+      <div class="hl-row">${dots(it.color)}<span class="hl-saved">${T.saved}</span><span class="hl-grow"></span>
+      ${it.kind === 'text' ? `<button type="button" class="hl-btn" data-a="copy">${T.copy}</button>` : ''}
+      <button type="button" class="hl-btn danger" data-a="del">${T.del}</button></div>`;
+    pop.querySelector('.hl-q').style.borderLeftColor = CC[it.color];
+    const target = near || document.querySelector(`[data-hl="${id}"]`) || (it.kind === 'block' && blockEl(it));
+    const rect = target ? target.getBoundingClientRect() : {left: innerWidth / 2, width: 0, top: 120, bottom: 120};
+    placeAt(pop, rect, true);
+    const ta = pop.querySelector('textarea'); setTimeout(() => ta.focus(), 30);
+    let t; ta.addEventListener('input', () => {
+      clearTimeout(t); t = setTimeout(() => { it.note = ta.value; save(); repaint(it); renderPanel(); const s = pop.querySelector('.hl-saved'); s.classList.add('on'); setTimeout(() => s.classList.remove('on'), 900); }, 350);
+    });
+  }
+  pop.addEventListener('click', e => {
+    const it = byId(popId); if (!it) return;
+    const c = e.target.closest('[data-c]');
+    if (c) { it.color = c.dataset.c; save(); repaint(it); renderPanel(); pop.querySelectorAll('.hl-dot').forEach(d => d.classList.toggle('on', d === c)); pop.querySelector('.hl-q').style.borderLeftColor = CC[it.color]; return; }
+    const a = e.target.closest('[data-a]'); if (!a) return;
+    if (a.dataset.a === 'close') pop.hidden = true;
+    if (a.dataset.a === 'copy') copyText(it.text);
+    if (a.dataset.a === 'del') { unpaint(it.id); items = items.filter(x => x !== it); save(); renderPanel(); pop.hidden = true; }
+  });
+  // click on a highlight (capture phase so the glossary popup does not also open)
+  window.addEventListener('click', e => {
+    if (document.body.classList.contains('edit-on')) return;
+    const t = tgt(e);
+    const badge = t.closest('.hl-badge'); if (badge) { e.preventDefault(); e.stopPropagation(); openPop(badge.dataset.hl, badge); return; }
+    const m = t.closest('mark.hl, .katex.hl-k');
+    if (m && !t.closest('.gl-term') && getSelection().isCollapsed) { e.preventDefault(); e.stopPropagation(); openPop(m.dataset.hl, m); return; }
+    if (!t.closest('[data-hl-ui]')) { pop.hidden = true; }
+  }, true);
+
+  /* ---------- notes panel ---------- */
+  const open = mk('button', 'hl-open', `${T.btn}<b>0</b>`); open.type = 'button';
+  const host = document.querySelector('.langsw');
+  if (host) host.parentNode.insertBefore(open, host); else document.body.appendChild(open);
+  function updCount() { open.querySelector('b').textContent = items.length; }
+  const panel = mk('div', 'hl-ui hl-panel', `<header><h3>${T.title}</h3><button type="button" class="hl-btn" data-a="close">✕</button></header>
+    <div class="hl-filters"><button type="button" class="hl-btn" data-f="all">${T.all}</button>${dots()}<label><input type="checkbox" data-f="notes"> ${T.onlyN}</label></div>
+    <div class="hl-list"></div>
+    <footer><button type="button" class="hl-btn" data-a="md">${T.md}</button><button type="button" class="hl-btn" data-a="cp">${T.cp}</button>
+    <button type="button" class="hl-btn" data-a="bak">${T.bak}</button><button type="button" class="hl-btn" data-a="imp">${T.imp}</button>
+    <span class="hl-grow"></span><button type="button" class="hl-btn danger" data-a="clr">${T.clr}</button><input type="file" accept=".json,application/json" hidden></footer>`);
+  panel.hidden = true; document.body.appendChild(panel);
+  const filt = {colors: new Set(COLORS), notes: false};
+  function sorted() { return items.map(it => ({it, cx: contextOf(it)})).sort((a, b) => a.cx.order - b.cx.order); }
+  function renderPanel() {
+    updCount(); if (panel.hidden) return;
+    panel.querySelectorAll('.hl-filters .hl-dot').forEach(d => d.classList.toggle('on', filt.colors.has(d.dataset.c)));
+    const list = sorted().filter(({it}) => filt.colors.has(it.color) && (!filt.notes || it.note));
+    let html = '', last = null;
+    for (const {it, cx} of list) {
+      if (cx.sec !== last) { html += `<div class="hl-sec">${esc(cx.sec || '—')}</div>`; last = cx.sec; }
+      html += `<div class="hl-item hl-c-${it.color}${it.orphan ? ' orphan' : ''}" data-id="${it.id}">
+        <div class="hl-q">${it.kind === 'block' ? '▣ ' : '“'}${esc(it.text).slice(0, 300)}${it.kind === 'block' ? '' : '”'}</div>
+        ${it.note ? `<div class="hl-n">${esc(it.note)}</div>` : ''}
+        <div class="hl-meta">${esc(cx.sub)}${cx.sub ? ' · ' : ''}${new Date(it.t).toLocaleDateString()}${it.orphan ? ' · ' + T.orphan : ''}</div></div>`;
+    }
+    panel.querySelector('.hl-list').innerHTML = html || `<div class="hl-empty">${T.empty}</div>`;
+  }
+  function openPanel() { panel.hidden = false; renderPanel(); }
+  function closePanel() { panel.hidden = true; }
+  open.addEventListener('click', () => panel.hidden ? openPanel() : closePanel());
+  function jumpTo(it) {
+    const el = it.kind === 'block' ? blockEl(it) : document.querySelector(`[data-hl="${it.id}"]`);
+    if (!el) return;
+    el.scrollIntoView({block: 'center', behavior: 'smooth'});
+    const fl = it.kind === 'block' ? [el] : [...document.querySelectorAll(`[data-hl="${it.id}"]`)];
+    fl.forEach(x => { x.classList.remove('hl-flash'); void x.offsetWidth; x.classList.add('hl-flash'); });
+    if (matchMedia('(max-width:640px)').matches) closePanel();
+    setTimeout(() => openPop(it.id), 450);
+  }
+  let armed = false;
+  panel.addEventListener('click', e => {
+    const item = e.target.closest('.hl-item'); if (item) { const it = byId(item.dataset.id); if (it) jumpTo(it); return; }
+    const d = e.target.closest('.hl-filters .hl-dot');
+    if (d) { const c = d.dataset.c; if (filt.colors.size === COLORS.length) filt.colors = new Set([c]); else if (filt.colors.has(c)) filt.colors.delete(c); else filt.colors.add(c); if (!filt.colors.size) filt.colors = new Set(COLORS); renderPanel(); return; }
+    const f = e.target.closest('[data-f]');
+    if (f && f.dataset.f === 'all') { filt.colors = new Set(COLORS); filt.notes = false; panel.querySelector('[data-f="notes"]').checked = false; renderPanel(); return; }
+    if (f && f.dataset.f === 'notes') { filt.notes = f.checked; renderPanel(); return; }
+    const a = e.target.closest('[data-a]'); if (!a) return;
+    const act = a.dataset.a;
+    if (act === 'close') closePanel();
+    if (act === 'md') { download(toMarkdown(), 'notes-' + PAGE.replace(/\.html$/, '') + '.md', 'text/markdown'); say(T.exported); }
+    if (act === 'cp') copyText(toMarkdown());
+    if (act === 'bak') { download(JSON.stringify({v: 1, page: PAGE, items}, null, 1), 'notes-' + PAGE.replace(/\.html$/, '') + '.json', 'application/json'); say(T.exported); }
+    if (act === 'imp') panel.querySelector('input[type=file]').click();
+    if (act === 'clr') {
+      if (!armed) { armed = true; a.textContent = T.sure; setTimeout(() => { armed = false; a.textContent = T.clr; }, 3000); return; }
+      unpaintAll(); items = []; save(); renderPanel(); armed = false; a.textContent = T.clr;
+    }
+  });
+  panel.querySelector('input[type=file]').addEventListener('change', ev => {
+    const file = ev.target.files[0]; if (!file) return;
+    file.text().then(t => {
+      try {
+        const j = JSON.parse(t); const add = (j.items || []).filter(x => x && x.id && !byId(x.id));
+        items.push(...add); save(); add.forEach(paint); renderPanel(); say(T.imported + ' ' + add.length);
+      } catch (err) {}
+      ev.target.value = '';
+    });
+  });
+
+  /* ---------- export helpers ---------- */
+  function toMarkdown() {
+    const url = location.origin + location.pathname;
+    let md = `# ${T.hdr} · ${document.title}\n\n${T.src}: ${url}  \n${T.when}: ${new Date().toLocaleString()}\n`;
+    let last = null;
+    for (const {it, cx} of sorted()) {
+      if (cx.sec !== last) { md += `\n## ${cx.sec || '—'}\n`; last = cx.sec; }
+      const q = it.kind === 'block' ? `**[${it.text}]**` : it.text.replace(/\s+/g, ' ').trim();
+      md += `\n> ${q}\n\n`;
+      md += (it.note ? it.note.trim() + '\n\n' : '') + `*${CNAME[it.color]}${cx.sub ? ' · ' + cx.sub : ''}${cx.link ? ` · [${T.jump}](${url}${cx.link})` : ''}*\n`;
+    }
+    return md;
+  }
+  function download(text, name, type) {
+    const u = URL.createObjectURL(new Blob([text], {type: type + ';charset=utf-8'}));
+    const l = document.createElement('a'); l.href = u; l.download = name; document.body.appendChild(l); l.click(); l.remove(); setTimeout(() => URL.revokeObjectURL(u), 1500);
+  }
+  function copyText(t) {
+    const done = () => say(T.copied);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, () => fallback());
+    else fallback();
+    function fallback() { const ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} ta.remove(); }
+  }
+
+  /* ---------- coexist with the page's edit mode ---------- */
+  new MutationObserver(() => {
+    const on = document.body.classList.contains('edit-on');
+    if (on && !MAIN.dataset.hlOff) { MAIN.dataset.hlOff = '1'; bar.hidden = pop.hidden = plus.hidden = true; unpaintAll(); }
+    if (!on && MAIN.dataset.hlOff) { delete MAIN.dataset.hlOff; paintAll(); renderPanel(); }
+  }).observe(document.body, {attributes: true, attributeFilter: ['class']});
+
+  paintAll(); updCount();
+  if (items.some(it => it.orphan)) save();
+  window.__hl = {items: () => items, paintAll, toMarkdown};
 })();
 </script>
 </body></html>

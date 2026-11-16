@@ -37,3 +37,18 @@ so the published site needs no build step.
 To add a pronunciation, add a row to the `D` list in `say.js` (regex on the TeX, glyph, English reading, Chinese reading), then run `bash tools/build_all.sh`.
 
 `build.js` throws on any KaTeX error, so a typo in the TeX stops the build instead of reaching the site.
+
+## Highlights & notes (`highlights/`)
+
+`hl.js` + `hl.css` add highlighting and note-taking to the reading pages:
+select text → color toolbar (or press **H** / **N**); hover a formula or scanned paragraph → "＋ 笔记";
+"🖍 笔记" in the top bar opens the list with filters, jump-to, Markdown export and JSON backup/restore.
+Everything is stored in the reader's browser (`localStorage`, key `notes:<page>`); highlights are anchored by
+section id + text offsets with a quote/context fallback, so they survive regenerated callouts.
+Highlights are temporarily removed while the page's ✎ edit mode is on, so they never end up in saved edits.
+
+After editing `hl.js` / `hl.css`, re-insert them (idempotent):
+
+```bash
+python3 tools/highlights/inject.py reading.html reading-en.html
+```
