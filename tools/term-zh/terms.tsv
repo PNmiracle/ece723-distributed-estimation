@@ -1,0 +1,406 @@
+# Chinese term<TAB>English spellings separated by |. Prefer the longest complete phrase.
+通信受限参数估计	communication-constrained parameter estimation|communication constrained parameter estimation
+通信受限	communication-constrained
+通信约束	communication constraint|communication constraints
+重叠样本	overlapping samples|overlapping observations
+分布式参数估计	distributed parameter estimation
+分布式估计	distributed estimation|distributed statistical estimation
+分布式伯努利估计	distributed Bernoulli estimation
+分布式高斯均值估计	distributed Gaussian mean estimation
+观测池	observation pool|observation pools|sample pool|sample pools|shared pool|common pool|finite pool
+统计模型	statistical model|statistical models
+统计实验	statistical experiment|statistical experiments
+参数空间	parameter space|parameter spaces
+参数立方体	parameter cube|unit parameter cube
+随机抽样设计	random sampling design|random design
+抽样设计	sampling design|sampling designs
+访问集合	access set|access sets
+访问重数	access multiplicity|access multiplicities|sampling multiplicity
+无放回抽样	sampling without replacement|sample without replacement
+有放回抽样	sampling with replacement|sample with replacement|replacement sampling
+独立同分布	independent and identically distributed|i.i.d.|iid|i.i.d
+样本块	sample block|sample blocks|data block|data blocks
+共享观测	shared observation|shared observations|shared draw|shared draws|shared samples
+私有观测	private observation|private observations|private samples
+重叠度	overlap degree|degree of overlap
+私有样本块	private block|private blocks|private sample block|private sample blocks
+独立样本块	independent block|independent blocks|independent-block
+观测数据的局部副本	local copies of observations
+局部数据	local data
+带编号的数据	labeled data|labelled data
+辅助信息	side information
+融合中心	fusion center|fusion centre
+非交互协议	noninteractive protocol|noninteractive protocols|non-interactive protocol|non-interactive protocols|NI protocols
+非交互式	noninteractive|non-interactive
+交互协议	interactive protocol|interactive protocols
+黑板协议	blackboard protocol|blackboard protocols|blackboard model
+黑板通信记录	blackboard transcript|blackboard transcripts
+黑板	blackboard
+通信记录	transcript|transcripts
+通信预算	communication budget|communication budgets|total bit budget|bit budget|bit budgets
+每台机器的比特预算	per-machine bit budget|per-processor bit budget
+随机种子	random seed|random seeds
+公共随机种子	public seed|public seeds|shared seed|shared seeds
+私有随机种子	private seed|private seeds
+公共随机性	public randomness|shared randomness
+私有随机性	private randomness
+私有随机化	private randomization|private randomisation
+调度规则	scheduling rule|scheduling rules
+前缀无歧义	prefix-free
+解码器	decoder|decoders
+编码器	encoder|encoders
+估计量	estimator|estimators
+估计方案	estimation scheme|estimation schemes
+均方误差	mean squared error|mean square error|mean-squared error|MSE
+平方误差风险	squared-error risk|squared error risk|squared-error risks
+平方误差	squared error|squared errors|squared-error
+平方损失	squared loss|quadratic loss
+平方欧氏损失	squared Euclidean loss
+最坏情形风险	worst-case risk|worst case risk
+极小极大风险	minimax risk|minimax risks
+极小极大平方误差风险	minimax squared-error risk|minimax squared error risk
+随机设计下的极小极大风险	random-design minimax risk
+极小极大率	minimax rate|minimax rates
+极小极大	minimax
+贝叶斯风险	Bayes risk|Bayes risks|Bayesian risk
+风险下界	risk lower bound|risk lower bounds|risk floor
+风险量级	risk order|order of risk
+风险包络	risk envelope|risk envelopes
+下界	lower bound|lower bounds|lower-bounds
+上界	upper bound|upper bounds|upper-bounds
+下界包络	lower envelope|lower envelopes
+上界包络	upper envelope|upper envelopes
+包络	envelope|envelopes
+可达性	achievability
+下界证明	converse|converse proof|converse argument|converse arguments
+误差衰减率	error decay rate|decay rate of the error
+指数衰减率	exponential decay rate|exponential rate|exponential rates
+多项式增长	polynomial growth
+多项式耦合	polynomial coupling|polynomial couplings
+渐近量级	asymptotic order|asymptotic rate|asymptotic rates
+非渐近	nonasymptotic|non-asymptotic
+先验分布	prior distribution|prior distributions|prior law|prior
+平滑先验	smooth prior|smooth product prior
+后验分布	posterior distribution|posterior distributions|posterior law|posterior
+后验均值	posterior mean|posterior means
+得分函数	score function|score functions|score|scores
+得分向量	score vector|score vectors
+样本块得分	block score|block scores|aggregate score
+得分恒等式	score identity|score identities
+通信记录的得分	transcript score|transcript scores
+条件得分	conditional score|conditional scores
+得分偏移	score shift|score shifts
+方向得分	directional score|directional scores
+费舍尔信息	Fisher information|Fisher-information
+费舍尔信息矩阵	Fisher information matrix|Fisher information matrices
+向量梯度	gradient vector|gradient vectors
+正则性	regularity
+正则条件	regularity condition|regularity conditions|regularity assumptions
+公共支撑集	common support|common-support
+非正则	nonregular|non-regular
+平方可积	square-integrable|square integrable|square-integrability
+二阶矩	second moment|second moments
+三阶绝对矩	third absolute moment|third absolute moments
+对数似然函数	log-likelihood function|log likelihood function
+对数似然	log likelihood|log-likelihood
+似然函数	likelihood function|likelihood functions|likelihood|likelihoods
+乘积似然	product likelihood
+随机核	random kernel|random kernels|stochastic kernel|stochastic kernels
+马尔可夫核	Markov kernel|Markov kernels
+随机变量	random variable|random variables
+概率密度函数	probability density function|probability density functions|PDF
+概率密度	probability density|probability densities
+概率质量函数	probability mass function|probability mass functions|PMF
+联合密度	joint density|joint densities
+正则化常数	regularization constant
+归一化常数	normalizing constant|normalization constant|normalisation constant|log normalizer|log-normalizer|normalizer
+参考测度	reference measure|reference measures|dominating measure
+勒贝格测度	Lebesgue measure
+计数测度	counting measure
+联合分布	joint distribution|joint distributions|joint law
+边缘分布	marginal distribution|marginal distributions|marginal law
+条件分布	conditional distribution|conditional distributions|conditional law
+条件概率	conditional probability|conditional probabilities
+边缘概率	marginal probability|marginal probabilities
+联合概率	joint probability|joint probabilities
+概率测度	probability measure|probability measures
+乘积分布	product distribution|product distributions|product law
+条件期望	conditional expectation|conditional expectations|conditional mean|conditional means
+先验期望	prior expectation
+条件方差	conditional variance|conditional variances
+条件独立性	conditional independence
+条件独立	conditionally independent
+不相关	uncorrelated
+全期望公式	law of total expectation|tower property
+条件化	conditioning
+贝叶斯公式	Bayes' rule|Bayes rule|Bayes' theorem|Bayes formula
+期望	expectation|expectations|expected value
+方差	variance|variances
+方差代理	variance proxy|variance proxies|variance factor|variance parameter
+协方差	covariance|covariances
+协方差矩阵	covariance matrix|covariance matrices
+二阶矩矩阵	second-moment matrix|second moment matrix
+方差失配	variance mismatch|variance mismatches
+标准差	standard deviation|standard deviations
+可加性	additivity
+中心化	centered|centering|centred|mean-centered
+零均值	mean zero|mean-zero|zero mean|zero-mean
+经验分布	empirical distribution|empirical distributions|empirical law|empirical measure
+经验矩	empirical moment|empirical moments|empirical-moment
+全池经验矩	pool moment|pool moments|full-pool empirical moment
+样本池误差	pool error|pool sampling error
+总体矩	population moment|population moments
+中心矩	central moment|central moments
+矩映射	moment map|moment maps
+矩反演	moment inversion|inverting moments
+有界识别矩	bounded identifying moment|bounded identifying moments
+识别矩	identifying moment|identifying moments
+可识别性	identifiability
+逆利普希茨条件	inverse Lipschitz condition|inverse-Lipschitz condition
+逆利普希茨常数	inverse Lipschitz constant|inverse-Lipschitz constant
+逆利普希茨	inverse Lipschitz|inverse-Lipschitz
+利普希茨连续	Lipschitz continuous|Lipschitz continuity
+利普希茨	Lipschitz|1-Lipschitz
+最近点解码	nearest-point decoding|nearest point decoding|nearest-point decoder
+可测选择	measurable selection|measurable selections
+可测映射	measurable map|measurable maps
+可测估计量	measurable estimator|measurable estimators
+充分统计量	sufficient statistic|sufficient statistics
+局部统计量	local statistic|local statistics
+伯努利观测	Bernoulli observation|Bernoulli observations
+伯努利分布	Bernoulli distribution|Bernoulli distributions|Bernoulli law
+伯努利试验	Bernoulli trial|Bernoulli trials
+伯努利	Bernoulli
+二项分布	binomial distribution|binomial distributions|binomial law
+二项计数	binomial count|binomial counts|binomial statistic|binomial statistics
+平滑二项统计量	smoothed binomial statistic|smoothed binomial statistics
+二项式系数	binomial coefficient|binomial coefficients
+二项	binomial
+标准高斯分布	standard Gaussian distribution|standard normal distribution|standard Gaussian|standard normal
+高斯分布	Gaussian distribution|Gaussian distributions|Gaussian law|normal distribution
+高斯均值估计	Gaussian mean estimation
+高斯均值模型	Gaussian mean model|Gaussian mean models
+高斯均值	Gaussian mean|Gaussian means
+高斯协方差估计	Gaussian covariance estimation
+高斯协方差模型	Gaussian covariance model|Gaussian covariance models
+高斯噪声	Gaussian noise
+高斯平滑	Gaussian smoothing
+高斯近似	Gaussian approximation|Gaussian approximations
+高斯	Gaussian
+泊松分布	Poisson distribution|Poisson distributions|Poisson law
+泊松	Poisson
+指数分布	exponential distribution|exponential distributions|exponential law
+指数族	exponential family|exponential families
+自然指数族	natural exponential family|natural exponential families
+有界统计量	bounded statistic|bounded statistics
+逻辑回归	logistic regression|logistic regression model|logistic regression models
+逻辑函数	logistic function|logistic curve|sigmoid function|sigmoid
+协变量	covariate|covariates
+多项分布	multinomial distribution|multinomial distributions|multinomial
+乘积模型	product model|product models
+事件率	event rate|event rates|arrival rate|arrival rates|rate parameter|rate parameters
+等待时间	waiting time|waiting times
+累积分布函数	cumulative distribution function|cumulative distribution functions|distribution function|distribution functions|CDF
+概率生成函数	probability-generating function|probability generating function
+矩母函数	moment-generating function|moment generating function|moment-generating functions|MGF
+对数矩母函数	log moment-generating function|logarithmic moment-generating function|logarithm of the moment-generating function|log-MGF|log-MGFs|log MGF
+累积量生成函数	cumulant generating function|cumulant-generating function
+特征函数	characteristic function|characteristic functions|characteristic-function
+指数矩	exponential moment|exponential moments
+指数倾斜	exponential tilt|exponential tilting
+次高斯界	sub-Gaussian bound|subgaussian bound|sub-Gaussian tail bound
+次高斯条件	sub-Gaussian condition|subgaussian condition
+次高斯	sub-Gaussian|subgaussian
+次指数	sub-exponential|subexponential
+尾界	tail bound|tail bounds|tail control
+尾概率	tail probability|tail probabilities
+重尾	heavy tail|heavy tails|heavy-tailed|heavier tails|heavier-tail
+集中性	concentration|concentration bound|concentration bounds
+一致伯恩斯坦集中性	uniform Bernstein concentration
+伯恩斯坦条件	Bernstein condition|uniform Bernstein condition|Bernstein score condition
+伯恩斯坦界	Bernstein bound|Bernstein bounds|Bernstein-type bound|Bernstein tail bound|Bernstein tail bounds
+伯恩斯坦不等式	Bernstein inequality|Bernstein's inequality
+霍夫丁不等式	Hoeffding inequality|Hoeffding's inequality
+霍夫丁引理	Hoeffding lemma|Hoeffding's lemma
+条件版霍夫丁不等式	conditional Hoeffding
+詹森不等式	Jensen inequality|Jensen's inequality
+条件版詹森不等式	conditional Jensen|conditional Jensen inequality|conditional Jensen's inequality
+柯西–施瓦茨不等式	Cauchy-Schwarz|Cauchy Schwarz|Cauchy-Schwarz inequality
+三角不等式	triangle inequality
+并集上界	union bound|union bounds|pairwise union bound
+Pinsker 不等式	Pinsker inequality|Pinsker's inequality|Pinsker
+范特里斯不等式	van Trees inequality|van Trees's inequality|van Trees bound|van Trees
+贝叶斯克拉默–拉奥下界	Bayesian Cramér-Rao bound|Bayesian Cramer-Rao bound|Bayesian Cramér-Rao
+数据处理不等式	data-processing inequality|data processing inequality
+链式法则	chain rule
+熵	entropy
+离散熵	discrete entropy
+微分熵	differential entropy
+条件熵	conditional entropy
+二元熵	binary entropy
+通信记录熵	transcript entropy
+熵预算	entropy budget|entropy budgets
+余留熵	leftover entropy|remaining entropy|residual entropy
+互信息	mutual information
+条件互信息	conditional mutual information
+自信息	self-information|self information
+纳特	nat|nats
+相对熵	relative entropy
+KL 散度	Kullback-Leibler divergence|Kullback-Leibler|KL divergence|KL
+全变差距离	total variation distance|total-variation distance|total variation|total-variation|TV distance|TV
+定位余量	localization surplus|localisation surplus
+定位	localization|localisation
+粗定位	coarse localization|coarse localisation|initial localization
+逐级定位	successive localization|successive localisation
+精修	refinement|refinements
+精修项	refinement term|refinement terms
+比特底线	bit floor|bit-only floor|bit-only risk floor
+临界窗口	critical window|critical localization window|critical localisation window
+中等重叠	intermediate overlap|intermediate-overlap
+完全重叠	complete overlap|full overlap|fully overlapping
+无碰撞耦合	collision-free coupling|collision-free couplings
+重复访问	repeated accesses|repeat visits|repeated access
+碰撞	collision|collisions
+耦合	coupling|couplings
+矩形性质	rectangle property
+矩形结构	rectangle structure|rectangle factorization|rectangle factorisation
+精确重抽样	exact resampling|exact re-sampling
+重抽样	resampling|re-sampling|resampled
+条件去相关	conditional decorrelation
+随机舍入	randomized rounding|randomised rounding
+量化	quantization|quantisation|quantizing|quantising
+量化误差	quantization error|quantisation error
+编码方案	encoding scheme|encoding schemes
+一比特编码	one-bit encoding|one-bit encoder|one-bit encoders
+一比特测量	one-bit measurement|one-bit measurements
+一比特	one-bit|one bit
+模长	modulus|magnitudes in the complex plane
+复平面	complex plane
+实部	real part|real component
+虚部	imaginary part|imaginary component
+相位	phase
+解缠相位	unwrapped phase|unwrapped angle
+绕相歧义	phase ambiguity|wraparound ambiguity|phase wrap
+灵敏度	sensitivity
+置信区间	confidence interval|confidence intervals
+可行集	feasible set|feasible sets
+可行区间	feasible interval|feasible intervals
+截断	clipping|coordinate clipping
+稳健性	robustness
+稳健编码	robust encoding|robust encoder|robust encoders
+测试函数	test function|test functions
+林德伯格替换法	Lindeberg replacement|Lindeberg method|Lindeberg's method
+泰勒展开	Taylor expansion|Taylor expansions|Taylor series
+泰勒余项	Taylor remainder|Taylor remainders
+几何级数	geometric series
+幂级数	power series
+分部积分	integration by parts
+梯度	gradient|gradients
+偏导数	partial derivative|partial derivatives
+方向导数	directional derivative|directional derivatives
+二阶导数	second derivative|second derivatives
+三阶导数	third derivative|third derivatives
+导数	derivative|derivatives
+积分	integral|integrals
+上确界	supremum
+下确界	infimum
+下半连续	lower semicontinuity|lower semicontinuous
+上半连续	upper semicontinuity|upper semicontinuous
+内积	inner product|inner products
+外积	outer product|outer products
+欧氏范数	Euclidean norm|Euclidean norms
+算子范数	operator norm|operator norms
+弗罗贝尼乌斯范数	Frobenius norm|Frobenius norms
+单位向量	unit vector|unit vectors
+单位矩阵	identity matrix|identity matrices
+单位协方差	identity covariance
+单位立方体	unit cube
+矩阵的迹	matrix trace|trace of a matrix|trace
+半正定	positive semidefinite|positive semi-definite|PSD
+正定	positive definite|positive-definite
+勒夫纳序	Loewner order|Löwner order
+特征值	eigenvalue|eigenvalues
+特征向量	eigenvector|eigenvectors
+谱界	spectral bound|spectral bounds
+对角矩阵	diagonal matrix|diagonal matrices
+对角化	diagonalization|diagonalisation|diagonalize|diagonalise
+对称矩阵	symmetric matrix|symmetric matrices
+秩一	rank one|rank-one
+二次型	quadratic form|quadratic forms
+白化	whitening|whitened
+白化矩阵	whitened matrix|whitening matrix
+海森矩阵	Hessian|Hessian matrix|Hessians
+雅可比矩阵	Jacobian|Jacobian matrix|Jacobians
+行列式	determinant|determinants
+逆矩阵	inverse matrix|matrix inverse
+仿射变换	affine transformation|affine transform|affine change of coordinates|affine rescaling|affine map
+极化恒等式	polarization identity|polarisation identity
+卡方分布	chi-square distribution|chi-squared distribution|chi-square|chi-squared
+兰伯特 W 函数	Lambert W function|Lambert W
+不放回	without replacement
+有放回	with replacement
+伯恩斯坦不等式	Bernstein
+霍夫丁不等式	Hoeffding
+詹森不等式	Jensen
+香农熵	Shannon entropy
+高斯最大熵原理	Gaussian maximum entropy
+方差界	variance bound|variance bounds
+乘积结构	product structure
+光滑性	smoothness
+分布	distribution|distributions
+高斯得分	Gaussian score|Gaussian scores
+参数估计	parameter estimation
+总体参数	population parameter|population parameters
+标量参数	scalar parameter|scalar parameters
+未知参数	unknown parameter|unknown parameters
+模型参数	model parameter|model parameters
+抽样误差	sampling error|sampling errors
+样本复杂度	sample complexity
+样本均值	sample mean|sample means|empirical mean|empirical means
+样本方差	sample variance|sample variances
+样本协方差	sample covariance|sample covariances
+匹配的界	matching bounds
+一致包络	uniform envelope|uniform envelopes
+总比特下限	total-bit floor
+临界区间	critical regime|critical regimes
+小样本块区间	small-block regime
+大样本块区间	large-block regime
+加性共享观测上界	additive shared-observation bound
+可访问样本下界	accessible-sample lower bound
+贝叶斯平方误差不等式	Bayesian squared-error inequality|Bayesian squared error inequality
+分块得分集中性	concentration of a block score
+经验矩误差	empirical-moment error|empirical moment error
+可达性上界	achievability bound|achievability upper bound
+信息论	information theory
+信息界	information bound|information bounds
+熵界	entropy bound|entropy bounds
+信息收缩	information contraction
+信息矩阵	information matrix|information matrices
+无偏	unbiased
+有偏	biased
+偏差	bias|biases
+相关性	correlation|correlations
+相关系数	correlation coefficient
+独立性	independence
+统计量	statistic|statistics
+随机化	randomization|randomisation
+随机子集	random subset|random subsets
+随机访问	random access
+有界性	boundedness
+可微性	differentiability
+模长下界	modulus lower bound
+模长界	modulus bound
+对数不等式	logarithmic inequality
+绝对值	absolute value
+凸性	convexity
+凸函数	convex function|convex functions
+凹性	concavity
+有效样本量	effective sample size
+置信水平	confidence level
+单位球面	unit sphere
+误差项	error term|error terms
+余项	remainder term|remainder terms
+伯努利模型	Bernoulli model|Bernoulli models
+泊松模型	Poisson model|Poisson models
+指数模型	exponential model|exponential models
+多项模型	multinomial model|multinomial models
