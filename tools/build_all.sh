@@ -49,5 +49,9 @@ python3 tools/term-zh/inject.py
 # Refresh the Chinese equation explanations available inside the English cards.
 python3 tools/plain-zh/inject.py
 
+# Restore the original illustrations and fill any remaining gaps.
+node tools/figs/inject.js
+python3 tools/figs/structure.py
+
 # Refresh the bilingual lower-bound reader from the guided readers.
 node tools/converse/build.js
