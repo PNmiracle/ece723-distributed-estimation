@@ -1,0 +1,47 @@
+231|Restrict resampling to the observed subset
+245|Condition on the realized archive
+248|Turn a bounded statistic into one bit
+254|Separate empirical and population moments
+258|Balance sampling, quantization, and refinement
+267|Move derivatives onto the Gaussian kernel
+271|Use matching means and variances to cancel terms
+287|Share the budget across coordinates
+293|Check the encoder's approximation tolerance
+294|Read the conditional error for coordinate j
+295|Define the surplus of this coordinate
+296|Convert local sample counts to the global scale
+297|One bit of budget rounding costs at most fourfold
+298|Compare local and global surplus
+299|Control the difference after taking positive parts
+300|Replace the local refinement term by the global one
+301|Collect the three coordinate-error scales
+309|Make the characteristic-function signal visible
+321|Estimate phase in independent batches
+328|Narrow the interval using the phase constraint
+333|Use an independent batch for final refinement
+345|Invert the moment estimate
+366|Relate parameters in the two coordinate systems
+368|Scale variance and tail constants
+369|Use the inverse map to control parameter error
+370|Compare Euclidean distances via singular values
+371|Identify the Gaussian observation model
+372|Differentiate the log-likelihood
+373|Compute the score's exact log-MGF
+374|Convert the sign of each coordinate into a bit
+375|Calculate the slope of the sign probability
+414|Define the conditional label law
+418|Write the moment as an average over covariates
+419|Differentiate the moment map
+420|Recognize its derivative as Fisher information
+446|Observe whether the arrival beats the deadline
+447|Find the smallest slope on the rate interval
+448|Turn the slope bound into separation of means
+449|Convert moment error back into rate error
+451|Combine independent coordinates
+452|Choose constants valid for all coordinates
+487|Dominate the density by an integrable envelope
+488|Specify the unsolved intermediate-overlap window
+489|Compare the last terms that still differ
+490|State the missing information inequality
+491|Find the probability of any shared index
+492|Bound the fraction of repeated accesses

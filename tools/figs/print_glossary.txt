@@ -1,0 +1,28 @@
+231|247|S|S|The machine's observed subset of pool indices.
+231|247|Jt|J<sub>t</sub>|The index selected at resampling step t.
+248|257|ψ|ψ|The bounded statistic used to identify the parameter.
+258|301|q|q|Local sample count for the smoothed binomial statistic.
+287|301|Qj|Q<sub>j</sub>|Number of machines assigned to coordinate j.
+287|301|Bj|B<sub>j</sub>|The bit budget allocated to coordinate j.
+287|301|pN,j|p<sub>N,j</sub>|Coordinate j of the empirical moment of the full pool.
+296|301|aB|a<sub>B</sub>|The total-bit resolution term, 2<sup>−2B/d</sup>.
+345|365|pN|p<sub>N</sub>|The empirical moment vector of the complete archive.
+345|365|μ|μ|The population moment map used to recover the parameter.
+366|370|A|A|The linear part of the change of parameter coordinates.
+371|379|Id|I<sub>d</sub>|The d by d identity matrix.
+371|379|ξθ|ξ<sub>θ</sub>|The score, or gradient of the log-likelihood.
+374|379|Φ|Φ|The standard normal cumulative distribution function.
+374|379|ϕ|ϕ|The standard normal probability density.
+414|427|σ|σ|The logistic function converting a linear predictor to a probability.
+414|427|Z|Z|The observed covariate vector.
+414|427|Y|Y|The binary response.
+418|427|g|g|The logistic model's population moment map.
+428|454|λ|λ|The rate parameter.
+446|449|t|t|The fixed deadline used for the waiting-time indicator.
+446|449|μ|μ|The probability of arriving by that deadline, viewed as a function of the rate.
+455|487|Σ|Σ|The Gaussian covariance matrix.
+455|487|H|H|A symmetric matrix direction used to perturb the covariance.
+465|472|MH|M<sub>H</sub>|The perturbation in whitened coordinates, Σ<sup>−1/2</sup>HΣ<sup>−1/2</sup>.
+488|490|s|s|Communication budget left after localization, per coordinate.
+491|492|N|N|Number of observations in the common pool.
+491|492|m|m|Number of observations sampled by one machine.

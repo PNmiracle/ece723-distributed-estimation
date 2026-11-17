@@ -1,0 +1,66 @@
+1|Shared archive|Local samples|Bit-limited estimate
+14|Score of one sample|Bound score tails|Control information from messages
+24|Bounded statistic|Estimate its mean|Recover the parameter
+30|Total bits|Pay for localization|Spend surplus on refinement
+32|Count visits per sample|Mark repeated IDs|Average the overlap
+36|Account for four limits|Compare the two bounds|Identify the active bottleneck
+43|Budget barely localizes|Compare each cost with the bit floor|Bit budget sets the risk
+45|Surplus grows with machine count|Compare refinement with access|Available data set the risk
+47|Intermediate surplus|Compare pool and refinement scales|Identify where bounds match
+51|Large pool|Bound the average overlap|Refinement sets the risk
+57|Every machine sees the pool|Split the encoding of a common estimate|Pool noise plus quantization
+64|Relate sample sizes to machine count|Identify the dominant term|Read off the rate
+73|Data score|Average given the message|Score after compression
+77|Reveal the transcript step by step|Control score increments|Add their information
+85|Choose a smooth prior|Check boundary and derivatives|Compute prior information
+96|Combine prior and message scores|Apply the Bayesian inequality|Lower-bound the risk
+103|Count distinct accessible data|Bound their total information|Obtain a sample-size floor
+108|Control posterior uncertainty|Convert error to information needed|Compare with the bit budget
+112|Bound transcript entropy|Subtract information about the parameter|Find the remaining entropy
+119|Sum scores within a block|Condition on a message event|Control the conditional mean
+138|Convert rare messages to surprisal|Bound the second moment|Control the heavy-tail correction
+146|Fix seeds and the target transcript|Test each machine separately|Factor the transcript event
+158|Use the product law given the transcript|Cancel cross terms|Add information over blocks
+170|Partition observations by ownership|Reveal shared observations in the proof|Apply the independent-block bound privately
+185|Bound the conditional private information|Average over the revealed data|Add the shared-sample contribution
+194|Combine Fisher and entropy bounds|Relate the remaining entropy to risk|Obtain the lower-bound inequality
+204|Reparameterize the risk|Invert the logarithmic inequality|Recover an error floor
+213|Isolate the Bernstein correction|Compare it with existing scales|Absorb it in the lower bound
+221|Use Gaussian score tails|Solve the scalar inequality|Get the explicit Gaussian bound
+231|Observe a uniform local subset|Repeat or reveal an index with the right probabilities|Simulate a draw from the whole pool
+245|Hold the full pool fixed|Use independent subsets and seeds|Get independent simulated blocks
+248|Compute the bounded statistic|Compare with an independent uniform draw|Get a Bernoulli trial with the empirical mean
+254|Average the statistic over the pool|Bound sampling variance|Account for the pool error
+258|Form a local binomial count|Smooth the empirical frequency|Use a Gaussian-compatible encoder
+264|Center the local statistic|Bound its tails|Control rare local deviations
+267|Start with a bounded test function|Average it with Gaussian noise|Control derivatives for replacement
+271|Replace summands one at a time|Match the first two moments|Sum the Taylor remainders
+279|Find the remaining variance difference|Compare Gaussian laws|Pay the variance-mismatch error
+287|Start with the total bit budget|Allocate machines or bits by coordinate|Fit all coordinate messages in the budget
+291|Find the local approximation error|Compare with the encoder tolerance|Apply the scalar guarantee
+296|Start with the coordinate bound|Rewrite in pool, bit and refinement scales|Recover the uniform upper envelope
+302|Start with a local binomial count|Send one randomized bit per machine|Recover a useful statistic at the center
+304|Evaluate a phase at the local count|Encode its real or imaginary part|Estimate a characteristic function
+309|Choose a frequency for the current scale|Bound the signal magnitude|Convert phase separation into parameter separation
+321|Divide machines into measurement groups|Control bad measurement events|Get reliable coarse phase information
+328|Start with the current interval|Keep the subinterval consistent with phase|Repeat until localized
+333|Hold the localized interval fixed|Use fresh machines for the fine measurement|Convert phase error into squared error
+339|Apply the one-bit construction by coordinate|Respect the global budget|Combine errors in the small-block regime
+345|Estimate the empirical moment vector|Project and invert the moment map|Recover the original parameter
+366|Change parameter coordinates|Transform scores and moment distances|Transfer the rate
+371|Write a Gaussian location model|Use the residual as the score|Check the score tail condition
+374|Threshold each coordinate at zero|Compute its Bernoulli mean and slope|Check identifiable moments
+380|Write the discrete log-likelihood|Calculate its score|Check the two model assumptions
+396|Differentiate the log-partition function|Use the Hessian to control moment sensitivity|Apply the general theorem
+414|Condition the label on its covariate|Relate the logistic slope to information|Check identification
+428|Use the Poisson score|Control its log moment-generating function|Check the Bernstein condition
+434|Choose a bounded count indicator|Compute how its mean changes with rate|Obtain moment identification
+438|Use the exponential waiting-time score|Control its log moment-generating function|Check the Bernstein condition
+446|Count arrivals before a fixed deadline|Lower-bound how fast the probability changes|Convert probability error to rate error
+451|Put independent coordinates in one vector|Combine the coordinate constants|Get a uniform product-model bound
+455|Represent a covariance perturbation|Express the likelihood and score|Identify the relevant matrix scales
+465|Write the score as a centered quadratic form|Bound its tails in whitened coordinates|Check the score condition
+473|Use bounded functions of Gaussian projections|Recover the projected variances|Reconstruct the covariance
+483|Control the change in the covariance moments|Check regularity over the parameter set|Apply the general theorem
+488|Locate the intermediate-overlap window|Compare the lower and upper bounds|Identify the open information inequality
+491|Count pairwise collisions|Bound either any collision or the fraction of repeats|Compare the coupling error with the risk
