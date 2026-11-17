@@ -74,23 +74,23 @@
 ],
 "19": [
 "把得分投影到某个方向，用指数放大大的波动；不等式给放大后的平均值取对数所能达到的上限。",
-"$v$ 控制原点附近的二次尺度；$b>0$ 时界只要求在有限范围内成立，后面用它控制罕见消息的得分偏移。"
+"下界唯一的定量假设，沿三条路线用到后面：① 二阶部分 → (21)(22)：每条样本信息 $\\le v$，给出 (107) 的 $d/\\min\\{N,nm\\}$ 和共享项 $dv\\bar r$；② 加总到 $q$ 条 → (23)=(120) → 引理 1 (121)：得知罕见消息后得分最多偏 $\\sqrt{2vq\\ell}+b\\ell$ → 引理 3 (147) → 定理 2 (174) → 主下界第四项 (219)；③ $b>0$ 的代价 $K_B$ 由 (213)–(218) 去掉。"
 ],
 "20": [
 "先用单位向量 $a$ 固定观察方向，再用 $t$ 调整放大倍数，就只剩一个数的波动。",
-"把向量条件化为一维条件来用"
+"把 (19) 变成“沿一个方向看”的一维条件：(21) 在 $t=0$ 求二阶导用的就是它；引理 1 的证明 (125)–(128) 也是沿方向 $e=\\mu_E/\\|\\mu_E\\|$ 用它的块版本 (120)。"
 ],
 "21": [
 "在 $t=0$ 附近看这条曲线弯得多急，读出的正是投影得分的方差，上限是 $v$。",
-"把尾巴条件和 Fisher 信息连起来"
+"→ (22)：每个方向的信息 $\\le v$。它只用到原点附近的弯曲（方差）；要控制罕见消息，引理 1 仍需要完整的 (19)，光有方差不够。"
 ],
 "22": [
 "任意单位方向的信息都不超过 $v$；把 $d$ 个坐标方向相加，得到总信息不超过 $dv$。",
-"每条样本带的信息有上限，给出 $1/N$、$1/(nm)$ 两项"
+"每条样本的信息至多 $dv$。用在 (105)–(107)：可见样本给出 $d/\\min\\{N,nm\\}$；以及 (180)(186)：共享样本按条计入 $dv\\cdot r$，成为定理 2 (174) 的第一项和下界里的 $\\bar r$。"
 ],
 "23": [
 "独立样本的得分相加时，指数平均相乘、取对数后相加，所以方差上界乘 $q$，尾部参数 $b$ 不变。",
-"第 III 节对整块数据做集中性分析的基础"
+"这就是 (120)：$q$ 条数据的块得分，方差因子变成 $vq$、$b$ 不变。引理 1 (121)–(123) 的 $\\sqrt{2vq\\ell}$ 偏移、引理 3 (147)(148) 的系数 $4vq$、$2vq$，以及定理 2 的 $4vm$ 都从这里来。"
 ],
 "24": [
 "给每条数据算一个有界特征并取总体平均；如果两组平均值很接近，对应的参数也必须很接近。",
@@ -2044,23 +2044,23 @@
 ],
 "19": [
 "An exponential magnifies large scores along a direction; the inequality caps the log of their average after this magnification.",
-"$v$ controls the local quadratic scale; positive $b$ restricts the domain of the bound. Later this controls score shifts from rare messages."
+"The lower bound’s only quantitative assumption, used three ways later: ① its quadratic part gives (21)–(22), at most $v$ information per sample, hence $d/\\min\\{N,nm\\}$ in (107) and the shared term $dv\\bar r$; ② summed over $q$ samples it becomes (23) = (120) → Lemma 1 (121): a rare message moves the score by at most $\\sqrt{2vq\\ell}+b\\ell$ → Lemma 3 (147) → Theorem 2 (174) → the fourth term of the main bound (219); ③ the cost of $b>0$, $K_B$, is removed in (213)–(218)."
 ],
 "20": [
 "Fix a unit direction $a$ and vary the tilt $t$; now only one scalar projection fluctuates.",
-"Turns the vector condition into a scalar one"
+"Turns (19) into a one-direction condition: (21) differentiates it at $t=0$, and the proof of Lemma 1, (125)–(128), applies its block version (120) along the direction $e=\\mu_E/\\|\\mu_E\\|$."
 ],
 "21": [
 "The curvature at $t=0$ is the variance of the projected score, and it is at most $v$.",
-"Connects the tail condition to Fisher information"
+"→ (22): at most $v$ information in each direction. It uses only the curvature at the origin (the variance); controlling rare messages in Lemma 1 still needs all of (19)."
 ],
 "22": [
 "Every unit direction carries at most $v$ information; adding the $d$ coordinate directions gives at most $dv$ in total.",
-"Each sample carries bounded information; gives the $1/N$ and $1/(nm)$ terms"
+"Each sample carries at most $dv$ information. Used in (105)–(107), the $d/\\min\\{N,nm\\}$ term from visible samples, and in (180) and (186), where shared samples add $dv\\cdot r$: the first term of Theorem 2 (174) and the $\\bar r$ of the lower bound."
 ],
 "23": [
 "For independent scores, exponential averages multiply and their logs add. The variance bound gains a factor of $q$, while $b$ stays the same.",
-"Basis for the block concentration in Section III"
+"This is (120): for a block of $q$ samples the variance factor becomes $vq$ while $b$ stays. Lemma 1’s $\\sqrt{2vq\\ell}$ shift in (121)–(123), the factors $4vq$ and $2vq$ in Lemma 3 (147)–(148), and the $4vm$ of Theorem 2 all come from here."
 ],
 "24": [
 "Average a bounded feature of each observation. If two population averages are close, their parameters must also be close.",

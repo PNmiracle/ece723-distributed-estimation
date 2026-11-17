@@ -594,4 +594,136 @@ fig(230, L => {
   return { svg: svg(W, 175, s), cap: L('高斯情形的显式下界：误差至少是单机尺度 d/m 除以 W₀(e^z)。s = 10 时约为 d/(14.6 m)，和近似式 d/(2 ln 2·ms) 很接近。', 'The explicit Gaussian bound: the risk is at least the one-machine scale d/m divided by W₀(e^z). At s = 10 that is about d/(14.6 m), close to the approximation d/(2 ln 2 · ms).') };
 });
 
+/* ---------------- (19)–(23): the score assumption ---------------- */
+function box(x, y, w, h, l1, l2, col, fill) {
+  return rect(x, y, w, h, { fill: fill || '#fff', stroke: col, sw: 1.6, r: 7 }) +
+    T(x + w / 2, y + (l2 ? h / 2 - 3 : h / 2 + 5), l1, { anchor: 'middle', size: 12.5, weight: 700, color: col }) +
+    (l2 ? T(x + w / 2, y + h / 2 + 15, l2, { anchor: 'middle', size: 11.5, color: C.ink }) : '');
+}
+// (19) a: what the inequality says, with a Poisson-type score
+function mgfPlot(L) {
+  const ax = axes(60, 22, 330, 150, [-1.8, 2.3], [0, 4.2], { xl: 't', yl: L('对数矩母函数', 'log-MGF'), ylMath: false });
+  const actual = t => Math.exp(t) - 1 - t, subG = t => t * t / 2, bern = t => t * t / (2 * (1 - 0.5 * Math.abs(t)));
+  let s = ax.body;
+  s += path(`M${ax.X(2)},${ax.Y(0)}L${ax.X(2)},${ax.Y(4.2)}L${ax.X(2.3)},${ax.Y(4.2)}L${ax.X(2.3)},${ax.Y(0)}Z`, { fill: C.faint, stroke: 'none' });
+  s += line(ax.X(2), ax.Y(0), ax.X(2), ax.Y(4.2), { color: C.amber, dash: '4 3', sw: 1.2 }) + M(ax.X(2), ax.Y(0) + 16, '1/b', { anchor: 'middle', color: C.amber, size: 12 });
+  s += line(ax.X(0), ax.Y(0), ax.X(0), ax.Y(4.2), { color: C.line, dash: '3 3', sw: 1 });
+  s += path(curve(subG, -1.8, 2.3, ax.X, ax.Y), { stroke: C.teal, sw: 1.8, dash: '6 4' });
+  s += path(curve(bern, -1.5, 1.5, ax.X, ax.Y), { stroke: C.amber, sw: 2.4 });
+  s += path(curve(actual, -1.8, 2.02, ax.X, ax.Y), { stroke: C.blue, sw: 2.6 });
+  s += T(ax.X(1.9) + 4, ax.Y(3.5), L('实际', 'actual'), { color: C.blue, size: 12 }) + M(ax.X(1.35) - 6, ax.Y(3.6), L('橙', 'orange'), { color: C.amber, size: 11, anchor: 'end' });
+  s += T(410, 34, L('蓝：一个泊松模型的得分（实际值）', 'Blue: a Poisson score (actual)'), { size: 11.5, color: C.blue, weight: 600 });
+  s += T(410, 56, L('绿虚线：次高斯界 v t²/2', 'Green dashed: sub-Gaussian v t²/2'), { size: 11.5, color: C.teal, weight: 600 });
+  s += T(410, 72, L('右边被蓝线超过 → 不够用', 'beaten on the right → too strict'), { size: 11, color: C.gray });
+  s += T(410, 94, L('橙：伯恩斯坦界 (19)', 'Orange: Bernstein bound (19)'), { size: 11.5, color: C.amber, weight: 600 });
+  s += M(410, 112, 'v t² / (2(1 − b|t|))', { size: 12.5, color: C.amber });
+  s += T(410, 130, L('始终在蓝线上方；在 1/b 处', 'stays above the blue curve;'), { size: 11, color: C.gray });
+  s += T(410, 146, L('可以发散（灰区不作要求）', 'may blow up at 1/b (grey: no claim)'), { size: 11, color: C.gray });
+  s += T(410, 172, L('原点附近：弯曲 = 方差 ≤ v', 'near 0: curvature = variance ≤ v'), { size: 11.5, color: C.ink, weight: 600 });
+  return svg(W, 200, s);
+}
+// (19) b: where the assumption is used later
+function usageMap(L) {
+  const w = 122, h = 48, X = [134, 274, 414, 554, 694];
+  const ra = (x1, x2, y, c, k) => arrow(x1, y, x2 - 2, y, { color: c, arrowColor: k });
+  let s = box(4, 112, 108, 54, '(19)', L('均匀 Bernstein', 'uniform Bernstein'), C.ink, C.amberS);
+  // ① information per sample
+  s += box(X[0], 28, w, h, '(21)(22)', L('每条样本信息 ≤ v', '≤ v info per sample'), C.teal, C.tealS);
+  s += box(X[1], 28, w, h, '(105)–(107)', 'd / min{N, nm}', C.teal);
+  s += box(X[3], 28, w, h, '(180)(186)', L('共享项 dv·r', 'shared term dv·r'), C.teal);
+  s += ra(X[0] + w, X[1], 52, C.teal, 't');
+  s += path(`M${X[0] + w / 2},76 V90 H${X[3] - 18} V52 H${X[3] - 8}`, { stroke: C.teal, sw: 1.5 }) + ra(X[3] - 10, X[3], 52, C.teal, 't');
+  s += arrow(X[3] + w / 2, 76, X[3] + w / 2, 110, { color: C.teal, arrowColor: 't' });
+  // ② rare messages
+  const r2 = [['(23) = (120)', L('q 条的块得分', 'block of q samples')], [L('引理 1 (121)', 'Lemma 1 (121)'), L('罕见消息 → 偏移', 'rare message → shift')],
+    [L('引理 3 (147)', 'Lemma 3 (147)'), L('信息 ≤ 4vq · 熵', 'info ≤ 4vq·entropy')], [L('定理 2 (174)', 'Theorem 2 (174)'), L('共享 + 私有', 'shared + private')], [L('下界 (219)', 'Bound (219)'), L('第四项', 'fourth term')]];
+  r2.forEach(([a, b], k) => { const last = k === 4; s += box(X[k], 112, w, h, a, b, last ? C.red : C.blue, k === 0 ? C.blueS : last ? C.redS : '#fff'); if (k) s += ra(X[k - 1] + w, X[k], 136, C.blue, 'b'); });
+  // ③ the price of b > 0
+  s += box(X[0], 198, w, h, L('b > 0 的代价', 'cost of b > 0'), 'K_B ≈ (B+1)²', C.purple, C.purpleS);
+  s += box(X[2], 198, w, h, '(212)–(218)', L('去掉，不改量级', 'removed, same order'), C.purple);
+  s += ra(X[0] + w, X[2], 222, C.gray, 'g');
+  s += path(`M${X[2] + w},222 H${X[4] + w / 2} V166`, { stroke: C.gray, sw: 1.5, dash: '4 3' }) + arrow(X[4] + w / 2, 176, X[4] + w / 2, 162, { color: C.gray });
+  // from (19)
+  s += path(`M112,126 C122,126 122,52 ${X[0] - 4},52`, { stroke: C.ink, sw: 1.6 }) + arrow(X[0] - 8, 52, X[0] - 1, 52, { color: C.ink, arrowColor: 'k' });
+  s += arrow(112, 139, X[0] - 1, 136, { color: C.ink, arrowColor: 'k' });
+  s += path(`M112,152 C122,152 122,222 ${X[0] - 4},222`, { stroke: C.ink, sw: 1.6 }) + arrow(X[0] - 8, 222, X[0] - 1, 222, { color: C.ink, arrowColor: 'k' });
+  s += T(X[0], 16, L('① 只用到原点附近的弯曲（方差）', '① uses only the curvature at 0 (the variance)'), { size: 12, color: C.teal, weight: 600 });
+  s += T(X[0], 104, L('② 用到完整的指数界：控制罕见消息', '② uses the full exponential bound: rare messages'), { size: 12, color: C.blue, weight: 600 });
+  s += T(X[0], 190, L('③ 只有 b > 0（厚尾）时才有', '③ only when b > 0 (heavy tails)'), { size: 12, color: C.purple, weight: 600 });
+  return svg(820, 254, s);
+}
+fig(19, L => [
+  { svg: mgfPlot(L), cap: L('(19) 在说什么：沿任一方向，得分的对数矩母函数（蓝）不能超过橙线。只要求 b = 0 的绿虚线太严，泊松这类厚尾模型过不了；伯恩斯坦形式在 |t| < 1/b 内留出余地。', 'What (19) says: along any direction, the log-MGF of the score (blue) must stay below the orange curve. The b = 0 curve (green dashed) is too strict for heavy-tailed models such as Poisson; the Bernstein form leaves room inside |t| < 1/b.') },
+  { svg: usageMap(L), cap: L('(19) 有什么用：它是下界唯一的定量假设，沿三条路线流到后面：① 每条样本信息 ≤ v；② 控制“得知罕见消息后得分偏多少”，一路推到主下界；③ b > 0 的额外代价，最后被去掉。', 'What (19) is for: the lower bound’s only quantitative assumption, flowing forward along three routes: ① at most v information per sample; ② a cap on how far a rare message moves the score, all the way to the main bound; ③ the extra cost of b > 0, removed at the end.') },
+]);
+
+// (20) one direction at a time
+fig(20, L => {
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const g = () => Math.sqrt(-2 * Math.log(rnd())) * Math.cos(2 * Math.PI * rnd());
+  const cx = 150, cy = 100, ang = Math.PI / 6, ux = Math.cos(ang), uy = -Math.sin(ang);
+  let s = line(cx - 120, cy, cx + 120, cy, { color: C.line, sw: 1 }) + line(cx, cy + 80, cx, cy - 80, { color: C.line, sw: 1 });
+  s += line(cx - 130 * ux, cy - 130 * uy, cx + 130 * ux, cy + 130 * uy, { color: C.amber, dash: '5 4', sw: 1.4 });
+  for (let k = 0; k < 46; k++) {
+    const a = g() * 34, b = g() * 18, x = cx + a * 0.9 - b * 0.3, y = cy - a * 0.35 - b * 0.9;
+    s += circ(x, y, 2.4, { fill: C.blue, stroke: 'none', op: 0.75 });
+    if (k % 9 === 0) { const pr = (x - cx) * ux + (y - cy) * uy; s += line(x, y, cx + pr * ux, cy + pr * uy, { color: C.amber, sw: 1, dash: '2 2' }) + circ(cx + pr * ux, cy + pr * uy, 2.6, { fill: C.amber, stroke: 'none' }); }
+  }
+  s += arrow(cx, cy, cx + 60 * ux, cy + 60 * uy, { color: C.red, arrowColor: 'r', sw: 2.4 }) + M(cx + 64 * ux + 4, cy + 64 * uy - 4, 'a', { color: C.red, size: 15 });
+  s += M(cx - 128, cy - 66, L('得分 ξ_θ(X) 的取值（d = 2）', 'values of the score ξ_θ(X) (d = 2)'), { size: 11.5, color: C.blue });
+  s += T(320, 50, L('选一个单位方向 a，', 'Pick a unit direction a'), { size: 12.5, weight: 600 });
+  s += T(320, 70, L('只看投影 aᵀξ（橙点）：', 'and keep only the projection aᵀξ'), { size: 12, color: C.gray });
+  s += T(320, 88, L('一个数的波动', '(orange): one number'), { size: 12, color: C.gray });
+  s += M(320, 120, 'u = t·a,   ‖u‖ = |t|', { size: 14, color: C.red });
+  s += T(320, 144, L('对每个方向都要成立', 'must hold in every direction'), { size: 12, color: C.gray });
+  return { svg: svg(W, 190, s), cap: L('(20) 把 d 维条件改写成“任意方向上的一维条件”：沿方向 a 投影后，只剩一个数 aᵀξ 在波动，t 调节放大倍数。', '(20) rewrites the d-dimensional condition as a one-dimensional one in every direction: after projecting on a, only the number aᵀξ fluctuates, and t sets the tilt.') };
+});
+
+// (21) curvature at 0 = variance
+fig(21, L => {
+  const ax = axes(60, 22, 300, 130, [-1.6, 1.6], [0, 1.3], { xl: 't' });
+  const psi = t => 0.7 * Math.log(Math.cosh(t)), par = t => t * t / 2;
+  let s = ax.body + line(ax.X(0), ax.Y(0), ax.X(0), ax.Y(1.3), { color: C.line, dash: '3 3', sw: 1 });
+  s += path(curve(par, -1.6, 1.6, ax.X, ax.Y), { stroke: C.amber, sw: 2, dash: '6 4' }) + path(curve(psi, -1.6, 1.6, ax.X, ax.Y), { stroke: C.blue, sw: 2.6 });
+  s += M(ax.X(1.45), ax.Y(1.2), 'v t²/2', { color: C.amber, anchor: 'end' }) + T(ax.X(-1.55), ax.Y(psi(-1.55)) + 36, L('对数矩母函数', 'log-MGF'), { color: C.blue, size: 12 });
+  s += circ(ax.X(0), ax.Y(0), 4, { fill: C.red, stroke: '#fff' });
+  s += M(390, 50, 'ψ″(0) = E(aᵀξ)² = aᵀI_X a', { size: 13.5 });
+  s += M(390, 76, L('≤ 橙线在 0 的弯曲 = v', '≤ curvature of orange = v'), { size: 13, color: C.amber });
+  s += T(390, 104, L('两条曲线在 0 处相切；', 'Both curves touch at 0;'), { size: 12, color: C.gray });
+  s += T(390, 122, L('下面的那条弯得更缓。', 'the lower one bends less.'), { size: 12, color: C.gray });
+  return { svg: svg(W, 175, s), cap: L('(21) 在 t = 0 处比较弯曲程度：对数矩母函数的二阶导就是投影得分的方差（= 这个方向的 Fisher 信息），它不能超过上界的弯曲 v。', '(21) compares curvature at t = 0: the second derivative of the log-MGF is the variance of the projected score (the Fisher information in that direction), which cannot exceed the bound’s curvature v.') };
+});
+
+// (22) information ellipse inside the circle
+fig(22, L => {
+  const cx = 150, cy = 95, R = 70;
+  let s = line(cx - 95, cy, cx + 95, cy, { color: C.line, sw: 1 }) + line(cx, cy + 85, cx, cy - 85, { color: C.line, sw: 1 });
+  s += circ(cx, cy, R, { fill: 'none', stroke: C.amber, sw: 2, dash: '6 4' });
+  s += `<ellipse cx="${cx}" cy="${cy}" rx="62" ry="34" transform="rotate(-25 ${cx} ${cy})" fill="${C.blueS}" stroke="${C.blue}" stroke-width="2"/>`;
+  s += M(cx + 52, cy - 60, L('半径 √v', 'radius √v'), { color: C.amber, size: 12 }) + M(cx - 30, cy + 6, 'I_X', { color: C.blue, size: 15 });
+  s += M(cx + 98, cy + 4, 'e_1', { size: 12, color: C.gray }) + M(cx + 4, cy - 88, 'e_2', { size: 12, color: C.gray });
+  s += M(300, 46, 'I_X ⪯ v I_d', { size: 15 });
+  s += T(300, 70, L('每个方向的信息 ≤ v：', 'At most v information in every'), { size: 12, color: C.gray });
+  s += T(300, 88, L('信息椭圆整个装在圆里', 'direction: the ellipse fits in the circle'), { size: 12, color: C.gray });
+  s += M(300, 120, 'tr I_X = Σ_j e_jᵀ I_X e_j ≤ d v', { size: 14, color: C.teal });
+  s += T(300, 144, L('沿 d 个坐标方向相加', 'add up the d coordinate directions'), { size: 12, color: C.gray });
+  return { svg: svg(W, 190, s), cap: L('(22)：把 Fisher 信息画成椭圆，(21) 说它在每个方向都不超过 v，即整个装进半径 √v 的圆；沿坐标轴相加得到每条样本的总信息 ≤ dv。', '(22): draw the Fisher information as an ellipse. (21) says it never exceeds v in any direction, so it fits inside the circle of radius √v; adding the coordinate axes gives at most dv per sample.') };
+});
+
+// (23) a block of q samples
+fig(23, L => {
+  const ax = axes(60, 22, 300, 130, [0, 2.2], [0, 6], { xl: 't' });
+  const bnd = (q, t) => q * t * t / (2 * (1 - 0.5 * t));
+  let s = ax.body + line(ax.X(2), ax.Y(0), ax.X(2), ax.Y(6), { color: C.purple, dash: '4 3', sw: 1.4 }) + M(ax.X(2), ax.Y(0) + 16, '1/b', { anchor: 'middle', color: C.purple });
+  s += path(curve(t => bnd(1, t), 0, 1.58, ax.X, ax.Y), { stroke: C.blue, sw: 2 });
+  s += path(curve(t => bnd(4, t), 0, 1.13, ax.X, ax.Y), { stroke: C.teal, sw: 2.6 });
+  s += M(ax.X(1.58) + 6, ax.Y(bnd(1, 1.5)) + 4, 'q = 1', { color: C.blue }) + M(ax.X(1.05), ax.Y(5.3), 'q = 4', { color: C.teal, anchor: 'end' });
+  s += M(390, 46, 'A_q = Σ_{a≤q} ξ_θ(X_a)', { size: 14 });
+  s += T(390, 70, L('独立：矩母函数相乘，', 'Independent: MGFs multiply,'), { size: 12, color: C.gray });
+  s += T(390, 88, L('取对数后相加', 'so their logs add'), { size: 12, color: C.gray });
+  s += M(390, 116, L('高度 × q：v → qv', 'height × q: v → qv'), { size: 13.5, color: C.teal });
+  s += M(390, 140, L('1/b 不变：b → b', '1/b unchanged: b → b'), { size: 13.5, color: C.purple });
+  return { svg: svg(W, 175, s), cap: L('(23)：q 条独立样本的得分相加，上界的高度变成 q 倍（方差因子 vq），但发散点 1/b 不动。第 III 节的块得分 (120) 就是这一条。', '(23): summing q independent scores multiplies the height of the bound by q (variance factor vq) but leaves the blow-up point 1/b where it was. Section III’s block score (120) is exactly this.') };
+});
+
 module.exports = F;

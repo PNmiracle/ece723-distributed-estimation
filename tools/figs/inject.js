@@ -18,13 +18,13 @@ for (const pg of pages) {
   const L = (zh, en) => (pg.lang === 'zh' ? zh : en);
   let count = 0;
   for (const n of Object.keys(F).map(Number).sort((a, b) => a - b)) {
-    const { svg, cap } = F[n](L);
+    const items = [].concat(F[n](L));
     const at = html.indexOf(pg.tag(n));
     if (at < 0) throw new Error(`${pg.file}: no plain-words box for (${n})`);
     const end = html.indexOf('</aside>', at), gist = html.indexOf('<!--/gist-->', at);
     if (gist < 0 || gist > end) throw new Error(`${pg.file}: no gist in box (${n})`);
     const pos = gist + '<!--/gist-->'.length;
-    const block = `<!--fig--><figure class="eq-fig" data-hl-ui>${svg}<figcaption>${cap}</figcaption></figure><!--/fig-->`;
+    const block = `<!--fig-->${items.map(({ svg, cap }) => `<figure class="eq-fig" data-hl-ui>${svg}<figcaption>${cap}</figcaption></figure>`).join('')}<!--/fig-->`;
     html = html.slice(0, pos) + block + html.slice(pos);
     count++;
   }
