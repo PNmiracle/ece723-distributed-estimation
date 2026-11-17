@@ -27,7 +27,7 @@
   const COLORS = ['y', 'g', 'b', 'p'];
   const CC = {y: '#ffd84a', g: '#86d993', b: '#8fc0ff', p: '#ff9cc2'};
   const CNAME = EN ? {y: 'yellow', g: 'green', b: 'blue', p: 'pink'} : {y: '黄', g: '绿', b: '蓝', p: '粉'};
-  const SKIP = '.katex-mathml, script, style, [data-hl-ui], .hl-ui';
+  const SKIP = '.katex-mathml, script, style, svg, [data-hl-ui], .hl-ui';
   // Older highlights counted neither guide nor summary text in their offsets.
   const LEGACY_SKIP = SKIP + ', .plain-gist, .sub-guide';
   const TEXT_MODEL = 2;
@@ -203,7 +203,7 @@
     const r = s.getRangeAt(0);
     if (!MAIN.contains(r.commonAncestorContainer)) return null;
     const anc = r.commonAncestorContainer.nodeType === 1 ? r.commonAncestorContainer : r.commonAncestorContainer.parentElement;
-    if (anc.closest('[data-hl-ui], [contenteditable="true"], input, textarea')) return null;
+    if (anc.closest('[data-hl-ui], svg, [contenteditable="true"], input, textarea')) return null;
     if (!s.toString().trim()) return null;
     return r;
   }

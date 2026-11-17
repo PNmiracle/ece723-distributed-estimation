@@ -1,10 +1,10 @@
 // Insert (or refresh) the diagrams in the plain-words boxes of both reading pages.
 // Usage (repo root):  node tools/figs/inject.js
 // Each diagram sits right under the box's short gist, between <!--fig--> and <!--/fig-->.
-// It is marked data-hl-ui, so highlights and notes anchored in the box are unaffected.
+// The caption can be highlighted; the drawing (SVG) is skipped by the highlighter.
 const fs = require('fs');
 const path = require('path');
-const F = require('./figs.js');
+const F = { ...require('./figs.js'), ...require('./figs2.js') };
 const root = path.resolve(__dirname, '../..');
 const css = fs.readFileSync(path.join(__dirname, 'style.css'), 'utf8').trim();
 const pages = [
@@ -24,7 +24,7 @@ for (const pg of pages) {
     const end = html.indexOf('</aside>', at), gist = html.indexOf('<!--/gist-->', at);
     if (gist < 0 || gist > end) throw new Error(`${pg.file}: no gist in box (${n})`);
     const pos = gist + '<!--/gist-->'.length;
-    const block = `<!--fig-->${items.map(({ svg, cap }) => `<figure class="eq-fig" data-hl-ui>${svg}<figcaption>${cap}</figcaption></figure>`).join('')}<!--/fig-->`;
+    const block = `<!--fig-->${items.map(({ svg, cap }) => `<figure class="eq-fig">${svg}<figcaption>${cap}</figcaption></figure>`).join('')}<!--/fig-->`;
     html = html.slice(0, pos) + block + html.slice(pos);
     count++;
   }

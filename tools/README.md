@@ -23,7 +23,7 @@ so the published site needs no build step.
 | `notes/bridges.js` + `notes/inject-bridges.js` | Short examples in both languages, keyed by the numbered equation that follows the original prose. `node tools/notes/inject-bridges.js` updates the note buttons and their popovers. |
 | `term-zh/terms.tsv`, `term-zh/inject.py` | English spellings and their Chinese equivalents. After editing the list, run `python3 tools/term-zh/inject.py` to refresh the annotations in `reading-en.html`. |
 | `gist/refresh-why.js` | Re-renders only the “有什么用 / Why it matters” row of the given equations from `gist/gist.json`, without rebuilding the rest of the pages: `node tools/gist/refresh-why.js 19 20 21`. |
-| `figs/figs.js`, `figs/lib.js`, `figs/inject.js` | Diagrams in the plain-words boxes of eqs. (19)–(23) and (150)–(230), on both reading pages (64 so far; same picture, labels in each language). Each diagram is a small hand-written SVG in `figs.js` (`fig(n, L => ({ svg, cap }))`, with `L(zh, en)` for labels). Run `node tools/figs/inject.js` after editing; it replaces everything between `<!--fig-->` and `<!--/fig-->`. |
+| `figs/figs.js`, `figs/figs2.js`, `figs/lib.js`, `figs/inject.js` | Diagrams in the plain-words boxes of every equation before (230) that a picture helps: (1)–(149) in `figs2.js`, (19)–(23) and (150)–(230) in `figs.js` (161 boxes; same picture on both reading pages, labels in each language). Each diagram is a small hand-written SVG (`fig(n, L => ({ svg, cap }))`, with `L(zh, en)` for labels; captions in `figs2.js` may use `^{..}`/`_{..}`, turned into `<sup>`/`<sub>`). Run `node tools/figs/inject.js` after editing; it replaces everything between `<!--fig-->` and `<!--/fig-->`. Captions and all plain-words rows can be highlighted; the drawings themselves (SVG) are skipped by the highlighter. |
 | `term-en/extra.tsv`, `term-en/inject.py` | English equivalents shown after Chinese terms in `reading.html` (once per paragraph, skipped where the text already gives the English in parentheses; switch: 英文术语 开/关). The table is `term-zh/terms.tsv` inverted, plus `extra.tsv` for wording only the Chinese reader uses (`-` = match but add nothing). After editing either list, run `python3 tools/term-en/inject.py`. |
 | `plain-zh/inject.py` | Generates the English cards' “中文解读” disclosures and their shared data file from the rendered Chinese callouts. `build_all.sh` refreshes both outputs. |
 | `converse/bridges.tsv`, `converse/build.js` | Bilingual links between the steps of the lower-bound proof; `node tools/converse/build.js` regenerates `converse.html`. |
@@ -91,7 +91,7 @@ python3 tools/videos/inject.py
 ```
 
 The script is idempotent: inserted HTML sits between `<!--vid:…-->` / `<!--/vid-->` markers and is
-replaced on every run. Boxes carry `data-hl-ui` (ignored by the highlighter) and their own `id`, so
+replaced on every run. Box labels carry `data-hl-ui` (ignored by the highlighter; the rows and captions stay highlightable) and their own `id`, so
 existing highlights and saved in-page edits keep their anchors.
 
 ## Sub-heading guides (`subguide/`)

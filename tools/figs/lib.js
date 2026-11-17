@@ -21,6 +21,11 @@ function ml(s, size) {
       else { arg = s[i + 1]; i += 2; }
       const dy = ch === '_' ? d : -d * 1.25;
       out += `<tspan dy="${dy}" font-size="${Math.round(size * 0.72)}">${esc(arg)}</tspan><tspan dy="${-dy}">​</tspan>`;
+    } else if (s[i + 1] === '\u0302') {
+      // a hat: draw it as a raised small caret, since fonts often drop the combining mark
+      const up = Math.round(size * 0.62), back = Math.round(size * 0.38);
+      out += `${esc(ch)}<tspan dx="${-back}" dy="${-up}" font-size="${Math.round(size * 0.8)}">ˆ</tspan><tspan dx="${Math.round(size * 0.08)}" dy="${up}">\u200b</tspan>`;
+      i += 2;
     } else { out += esc(ch); i++; }
   }
   return out;

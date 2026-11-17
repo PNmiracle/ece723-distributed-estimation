@@ -9,7 +9,7 @@ Reading pages:  a box at the end of the section guides listed in data.SECTIONS,
                 a top-bar link and a pointer in the one-page overview.
 Everything inserted sits between <!--vid:...--> / <!--/vid--> markers, so running
 the script again replaces the old blocks instead of duplicating them.
-Boxes carry data-hl-ui (skipped by the highlighter) and their own id (so the
+Box titles carry data-hl-ui (skipped by the highlighter; the box text can be highlighted) and their own id (so the
 in-page editor keys of surrounding text do not shift).
 """
 import html, os, re, sys
@@ -192,7 +192,7 @@ def roadmap(path, L):
         j = t.find('<div class="rels">', m.end())
         nxt = t.find('<article', m.end())
         assert j != -1 and (nxt == -1 or j < nxt), c
-        box = (f'<details class="vids" id="v-{c}" data-hl-ui><summary class="vids-h">📺 {tx["vids"]}'
+        box = (f'<details class="vids" id="v-{c}"><summary class="vids-h" data-hl-ui>📺 {tx["vids"]}'
                f'<span class="vids-hint">{HINT[L].format(n=len(ss))}</span></summary><ol>'
                + ''.join(item(s, L) for s in ss) + '</ol></details>')
         t = t[:j] + wrap('c-' + c, box) + t[j:]
@@ -212,7 +212,7 @@ def reading(path, L, roadmap_href):
     # pointer in the one-page overview (end of section)
     i = t.find('<section class="overview" id="overview">')
     j = t.find('</section>', i)
-    ov = (f'<div class="vids" id="v-overview" data-hl-ui><div class="vids-h">{tx["sec_title"]}</div>'
+    ov = (f'<div class="vids" id="v-overview"><div class="vids-h" data-hl-ui>{tx["sec_title"]}</div>'
           f'<div>{tx["ov"]} <a href="{roadmap_href}#videos" target="_blank">{tx["path"]}</a></div></div>')
     t = t[:j] + wrap('ov', ov) + t[j:]
     count = 0
@@ -225,7 +225,7 @@ def reading(path, L, roadmap_href):
         ge = t.find('</aside>', g)
         lis = ''.join(item(BYID[sid], L, note=(zh if L == 'zh' else en), roadmap_href=roadmap_href).replace(
             '<a class="vstep" href=', '<a class="vstep" target="_blank" href=') for sid, zh, en in rows)
-        box = (f'<details class="vids" id="v-{sec}" data-hl-ui><summary class="vids-h">📺 {tx["sec_title"]}'
+        box = (f'<details class="vids" id="v-{sec}"><summary class="vids-h" data-hl-ui>📺 {tx["sec_title"]}'
                f'<span class="vids-hint">{HINT[L].format(n=len(rows))}</span></summary><ol>{lis}</ol>'
                f'<div class="vids-more"><a href="{roadmap_href}#videos" target="_blank">{tx["path"]}</a></div></details>')
         t = t[:ge] + wrap(sec, box) + t[ge:]
@@ -281,7 +281,7 @@ def box(key, cls, title, rows, L, intro='', roadmap_href=''):
     intro_html = f'<div class="vids-intro">{E(intro)}</div>' if intro else ''
     more = f'<div class="vids-more"><a href="{roadmap_href}#videos" target="_blank">{T[L]["path"]}</a></div>' if roadmap_href else ''
     ol = f'<ol>{lis}</ol>' if rows else ''
-    return (f'<details class="vids {cls}" id="v-{key}" data-hl-ui><summary class="vids-h">📺 {E(title)}{E(paren)}'
+    return (f'<details class="vids {cls}" id="v-{key}"><summary class="vids-h" data-hl-ui>📺 {E(title)}{E(paren)}'
             f'<span class="vids-hint">{hint}</span></summary>{intro_html}{ol}{more}</details>')
 
 

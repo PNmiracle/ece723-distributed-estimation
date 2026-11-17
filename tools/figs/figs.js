@@ -726,4 +726,6 @@ fig(23, L => {
   return { svg: svg(W, 175, s), cap: L('(23)：q 条独立样本的得分相加，上界的高度变成 q 倍（方差因子 vq），但发散点 1/b 不动。第 III 节的块得分 (120) 就是这一条。', '(23): summing q independent scores multiplies the height of the bound by q (variance factor vq) but leaves the blow-up point 1/b where it was. Section III’s block score (120) is exactly this.') };
 });
 
+// Shared components for figs2.js (not enumerable, so the injector skips them).
+Object.defineProperty(F, 'parts', { value: { W, phi, Phi, condMean, W0, tree2, plane, dens, stack, pool, lemma1Plot, entropyBars, box, squeeze, cancel, mgfPlot, fig: null } });
 module.exports = F;

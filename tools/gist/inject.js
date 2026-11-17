@@ -35,8 +35,7 @@ const render = (lang, n) => {
     `<span class="gist-row${cls}"${attrs}><span class="gist-k" data-hl-ui>${label}</span>${inline(body)}</span>`;
   return `<!--gist--><span class="eq-level eq-level-${rank}" data-hl-ui>${LEVELS[lang][rank]}</span>` +
     `<span class="plain-gist">${row(how ? `1. ${a}` : a, what)}` +
-    // This inserted text must not shift existing highlights anchored in the card.
-    (how ? row(`2. ${HOW[lang]}`, how, ' gist-origin', ' data-hl-ui') : '') +
+    (how ? row(`2. ${HOW[lang]}`, how, ' gist-origin') : '') +
     `${row(how ? `3. ${b}` : b, why)}</span><!--/gist-->`;
 };
 
