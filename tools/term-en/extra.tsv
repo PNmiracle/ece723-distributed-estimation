@@ -1,0 +1,122 @@
+# Chinese term<TAB>English term. Added on top of the inverted ../term-zh/terms.tsv
+# for wording that only the Chinese reader uses. A line here overrides terms.tsv.
+得分	score
+先验	prior
+余量	surplus
+盈余	surplus
+通信盈余	communication surplus
+量级	order
+非交互	noninteractive
+样本池	observation pool
+共同样本池	common pool
+本地数据	local data
+局部样本块	local block
+似然	likelihood
+共享数据	shared data
+共享样本	shared sample
+私有块	private block
+独立私有样本块	independent private block
+访问集	access set
+相互独立	mutually independent
+子高斯	sub-Gaussian
+边信息	side information
+侧信息	side information
+精细估计	refinement
+细化	refinement
+比特预算	bit budget
+总比特预算	total bit budget
+共享项	shared-data term
+加法项	additive term
+无碰撞	collision-free
+定位成本	localization cost
+估计器	estimator
+重采样	resampling
+矩形熵界	rectangle entropy bound
+条件均值	conditional mean
+指数率	exponential rate
+主导指数率	leading exponential rate
+总熵预算	total entropy budget
+平滑步骤	smoothing step
+块得分	block score
+共同支撑	common support
+密度函数	density function
+非正则实验	nonregular experiment
+局部充分统计量	local sufficient statistic
+公共设计	public design
+最坏情况风险	worst-case risk
+总变差距离	total variation distance
+欧几里得范数	Euclidean norm
+数学期望	expectation
+对数	logarithm
+区间	interval
+处理器	processor
+交叉项	cross term
+原始数据	raw data
+访问次数	number of accesses
+总访问量	total accesses
+参数区域	parameter region
+发送方	sender
+真参数	true parameter
+观测值	observation
+均值	mean
+编码器	encoder
+协议	protocol
+常数	constant
+# Words that contain a listed term but mean something else; "-" means "match, but add nothing".
+第二项	-
+多余项	-
+最大熵	-
+分布式	distributed
+伯恩斯坦	Bernstein
+伯恩斯坦集中性	Bernstein concentration
+均匀伯恩斯坦集中性	uniform Bernstein concentration
+# Everyday technical words (each glossed once per paragraph).
+维度	dimension
+维数	dimension
+向量	vector
+矩阵	matrix
+范数	norm
+概率	probability
+比特	bit
+消息	message
+编码	encoding
+解码	decoding
+重叠	overlap
+引理	lemma
+定理	theorem
+推论	corollary
+不等式	inequality
+阈值	threshold
+噪声	noise
+尾部	tail
+模型	model
+样本	sample
+风险	risk
+收敛	convergence
+速率	rate
+后验	posterior
+支撑	support
+支撑集	support
+恒等式	identity
+多项式	polynomial
+投影	projection
+坐标	coordinate
+方向	direction
+尺度	scale
+归一化	normalization
+极限	limit
+转置	transpose
+标量	scalar
+线性	linear
+二次	quadratic
+第二次	-
+交互	interaction
+私有	private
+公共	public
+种子	seed
+预算	budget
+停止规则	stopping rule
+发送者	sender
+访问	access
+矩生成函数	moment-generating function
+尾部界	tail bound

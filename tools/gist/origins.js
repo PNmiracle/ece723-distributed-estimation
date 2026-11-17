@@ -26,8 +26,8 @@ module.exports = {
     en: T`This is a tail assumption on the model. The quadratic term sets the scale near zero, and the denominator with $b$ allows heavier tails.`,
   },
   20: {
-    zh: T`在 (19) 中写 $u=ta$，其中 $a$ 是单位向量。于是内积变成 $t$ 乘以沿 $a$ 的 score 投影，且 $\\|u\\|=|t|$。`,
-    en: T`Substitute $u=ta$ into (19), with $a$ a unit vector. The inner product becomes $t$ times the projected score along $a$, and $\\|u\\|=|t|$.`,
+    zh: T`在 (19) 中写 $u=ta$，其中 $a$ 是单位向量。于是内积变成 $t$ 乘以沿 $a$ 的 score 投影，且 $\|u\|=|t|$。`,
+    en: T`Substitute $u=ta$ into (19), with $a$ a unit vector. The inner product becomes $t$ times the projected score along $a$, and $\|u\|=|t|$.`,
   },
   21: {
     zh: T`在 $t=0$ 附近比较 (20) 两边的二次项：常数项和一次项都是零，左边的二阶导是投影的方差，右边的二阶导是 $v$。`,
@@ -42,20 +42,20 @@ module.exports = {
     en: T`For independent samples, the exponential expectation of the sum factors into a product of individual expectations. Take logs to turn the product into a sum, then add $q$ copies of the bound in (19).`,
   },
   24: {
-    zh: T`第一行定义总体特征均值：先对观测应用 $\\psi$，再取期望。第二行是额外的模型假设，要求从均值反推参数时，小误差不会被无限放大。`,
-    en: T`The first line defines the population feature mean by applying $\\psi$ to an observation and taking its expectation. The second line is a model assumption that limits how much errors can grow when we recover the parameter from that mean.`,
+    zh: T`第一行定义总体特征均值：先对观测应用 $\psi$，再取期望。第二行是额外的模型假设，要求从均值反推参数时，小误差不会被无限放大。`,
+    en: T`The first line defines the population feature mean by applying $\psi$ to an observation and taking its expectation. The second line is a model assumption that limits how much errors can grow when we recover the parameter from that mean.`,
   },
   25: {
-    zh: T`把 (24) 里的总体期望换成经验平均：对池里的每个样本算同一个 $\\psi$，把结果加起来再除以 $N$。`,
-    en: T`Replace the population expectation in (24) with an empirical average: apply the same $\\psi$ to each observation in the pool, add the results, and divide by $N$.`,
+    zh: T`把 (24) 里的总体期望换成经验平均：对池里的每个样本算同一个 $\psi$，把结果加起来再除以 $N$。`,
+    en: T`Replace the population expectation in (24) with an empirical average: apply the same $\psi$ to each observation in the pool, add the results, and divide by $N$.`,
   },
   26: {
     zh: T`(25) 无偏，所以平方误差的期望是各坐标方差之和。样本独立让每个坐标的方差除以 $N$；每个特征值都在 $[0,1]$ 内，单个的方差最多为 $1/4$。`,
     en: T`The average in (25) is unbiased, so its expected squared error is the sum of the coordinate variances. Independence across draws divides each variance by $N$, and a feature in $[0,1]$ has variance at most $1/4$.`,
   },
   27: {
-    zh: T`这是一个随机编码规则：在 $[0,1]$ 上均匀抽一个数，落在阈值 $\\psi_j(X)$ 以下就记 1。给定 $X$，这一步记 1 的概率就是该阈值；再对 $X$ 取平均。`,
-    en: T`Construct the bit by drawing a uniform number on $[0,1]$ and recording 1 if it falls below $\\psi_j(X)$. Given $X$, the chance of a 1 equals that threshold. Average over $X$ to get the unconditional mean.`,
+    zh: T`这是一个随机编码规则：在 $[0,1]$ 上均匀抽一个数，落在阈值 $\psi_j(X)$ 以下就记 1。给定 $X$，这一步记 1 的概率就是该阈值；再对 $X$ 取平均。`,
+    en: T`Construct the bit by drawing a uniform number on $[0,1]$ and recording 1 if it falls below $\psi_j(X)$. Given $X$, the chance of a 1 equals that threshold. Average over $X$ to get the unconditional mean.`,
   },
   28: {
     zh: T`这是解码规则的定义：对每个候选参数算它的理论矩，比较它与估计矩的距离，再选距离最小的那个参数。`,
