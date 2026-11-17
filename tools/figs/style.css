@@ -1,0 +1,8 @@
+.eq-fig{margin:10px 0 8px;padding:10px 12px 8px;background:#fff;border:1px solid #d5e8dc;border-radius:10px}
+.eq-fig svg{display:block;width:100%;max-width:640px;height:auto;margin:0 auto}
+.eq-fig .ft{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+.eq-fig .fm{font-family:"Latin Modern Math","STIX Two Math","Cambria Math","Times New Roman",serif;font-style:italic}
+.eq-fig figcaption{margin-top:4px;font-size:.86em;line-height:1.55;color:#4d5b54}
+.eq-fig figcaption::before{content:"图解";display:inline-block;margin-right:7px;padding:0 6px;border-radius:4px;background:#2e7d32;color:#fff;font-size:.82em;font-weight:700;letter-spacing:.04em}
+html[lang^="en"] .eq-fig figcaption::before{content:"Diagram"}
+@media print{.eq-fig{break-inside:avoid}}
