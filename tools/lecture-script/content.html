@@ -1,0 +1,336 @@
+<!-- Source for lecture-script.html. Math: $$...$$ (display) and \(...\) (inline); use \lt for "<".
+     Rebuild with: node tools/lecture-script/build.js -->
+
+<section class="part prep" id="prep" data-min="0" data-title="How to use this script">
+<h2><span class="pn">0</span>How to use this script</h2>
+<p class="lead">A word-for-word blackboard lecture for the second half of Section III, eqs. (150)–(230), PDF pp. 13–17. About 55 minutes. Every part starts with <em>why</em>, uses one small picture, writes only the two or three lines that carry the argument, and ends with what we just gained.</p>
+
+<div class="grid2">
+<div class="card">
+<h3>What the professor asked for</h3>
+<ul class="req">
+<li><b>Big picture and intuition.</b> “Down-to-earth”, “very accessible”. <span class="ts">00:12:46–00:13:29</span></li>
+<li><b>But also the details.</b> Not just a big picture with no technical content, and checked for correctness. <span class="ts">00:48:32–00:49:21</span></li>
+<li><b>No copying equations</b> onto the board, no line-by-line reading. <span class="ts">00:11:20 · 00:47:44</span></li>
+<li><b>You own correctness</b>, even when AI helped. <span class="ts">00:10:50 · 00:18:39</span></li>
+</ul>
+<p class="note">Mohammad (Teams, Nov 16): the professor most likely wants a blackboard lecture like his own last session, not slides. Email him to be sure.</p>
+</div>
+<div class="card">
+<h3>How to read this page</h3>
+<ul class="legend">
+<li><span class="lg lg-say"></span>Plain paragraphs are what you <b>say</b>.</li>
+<li><span class="lg lg-brd"></span>Chalkboard boxes are what you <b>write</b>. Write only these.</li>
+<li><span class="lg lg-act"></span>Amber cues are <b>gestures or pauses</b>.</li>
+<li><span class="lg lg-tk"></span>Teal lines close a part: <b>what we just gained</b>.</li>
+</ul>
+<p class="note">Use <b>Board only</b> (top bar) the night before to copy the board plan, and <b>Script only</b> to rehearse your words.</p>
+</div>
+</div>
+
+<h3>Board layout</h3>
+<p>Split the board into three panels. Panels A and C stay up for the whole hour; panel B is erased between parts.</p>
+<figure class="boardmap" aria-label="Blackboard split into three panels">
+<svg viewBox="0 0 900 250" role="img">
+<rect x="4" y="4" width="892" height="242" rx="10" fill="#26443b" stroke="#8a6a3c" stroke-width="8"/>
+<line x1="300" y1="22" x2="300" y2="228" stroke="#e9e4d6" stroke-opacity=".35" stroke-width="2" stroke-dasharray="6 6"/>
+<line x1="610" y1="22" x2="610" y2="228" stroke="#e9e4d6" stroke-opacity=".35" stroke-width="2" stroke-dasharray="6 6"/>
+<g font-family="-apple-system,Segoe UI,sans-serif" fill="#f3efe3">
+<text x="30" y="52" font-size="22" font-weight="700" fill="#f2c46b">A · Toolbox</text>
+<text x="30" y="84" font-size="15">van Trees (101)</text>
+<text x="30" y="108" font-size="15">entropy budget (118)</text>
+<text x="30" y="132" font-size="15">Lemma 1, Lemma 2</text>
+<text x="30" y="156" font-size="15">+ Lemma 3, (193) as we go</text>
+<text x="30" y="212" font-size="13" fill-opacity=".7">written in the opening · never erased</text>
+<text x="326" y="52" font-size="22" font-weight="700" fill="#8fd0ff">B · Derivation</text>
+<text x="326" y="84" font-size="15">the current part's 2–3 key lines</text>
+<text x="326" y="108" font-size="15">rectangle → additive price →</text>
+<text x="326" y="132" font-size="15">the squeeze → case split → Gaussian</text>
+<text x="326" y="212" font-size="13" fill-opacity=".7">erased between parts</text>
+<text x="636" y="52" font-size="22" font-weight="700" fill="#f5a3b8">C · Picture + goal</text>
+<text x="636" y="84" font-size="15">boxed goal: d / (m(1+s₊) + r̄)</text>
+<text x="636" y="108" font-size="15">two-machine tree</text>
+<text x="636" y="132" font-size="15">pool {1..6}, S₁, S₂, shared 3</text>
+<text x="636" y="156" font-size="15">final result (220)</text>
+<text x="636" y="212" font-size="13" fill-opacity=".7">built in Parts 1–2 · kept to the end</text>
+</g>
+</svg>
+</figure>
+<p class="note">If time is short: cut Part 5 to one minute (its last line and the number 14.6) and skip the Bernstein paragraph in Part 1.</p>
+</section>
+
+<section class="part" id="open" data-min="5" data-title="Opening · big picture">
+<h2><span class="pn">★</span>Opening and the big picture</h2>
+<p>Thanks. My partner has just given us two tools, and in my half I want to use them to prove the hardest term in the lower bound. Before any new mathematics, let me put the tools somewhere we can see them for the next hour.</p>
+
+<div class="board" data-panel="A"><div class="blabel">Panel A · Toolbox</div>
+$$\text{(101) van Trees:}\quad D \;\ge\; \frac{d^2}{\mathbb{E}_\Theta\,\mathrm{tr}\,J_Y(\Theta) + 4\pi^2 d}$$
+$$\text{(118) budget:}\quad h_T := H(T\mid \Theta, W) \;\le\; B\ln 2 - h(\pi) + \tfrac d2 \ln\!\Big(\tfrac{2\pi e D}{d}\Big)$$
+$$\text{Lemma 1 } (b=0):\ \big\|\mathbb{E}[A_q \mid E]\big\|^2 \le 2vq\,\ln\tfrac{1}{\mathbb{P}(E)} \qquad \text{Lemma 2:}\ \mathbb{E}\ln^2\tfrac{1}{p_T(T)} \le K_B$$
+</div>
+
+<p>One sentence each. Van Trees says: if you want a small Bayes risk \(D\), the data you see must carry a lot of Fisher information. The budget says: the transcript has only \(B\) bits, and if the risk is small, many of those bits are already used up describing where theta is. What is left is \(h_T\), the randomness of the transcript when theta is held fixed. Lemma 1 says: if you learn that an event of probability \(p\) happened, the average score of \(q\) samples can move by at most about the square root of \(q\) times log one over \(p\).</p>
+<p>Now, what is my goal? Recall the lower envelope. My partner already proved three of its four terms: one over \(N\), one over \(nm\), and the bit floor. The missing one is this.</p>
+
+<div class="board" data-panel="C"><div class="blabel">Panel C · top, boxed</div>
+$$\boxed{\;\text{Goal (219):}\quad R_{BB} \;\gtrsim\; \frac{d}{m(1+s_+) + \bar r}\;}, \qquad s = \frac{B}{d} - \tfrac12 \log_2 m$$
+</div>
+
+<p>This term says three things. If there is no surplus \(s\), you cannot beat the resolution of one machine, \(d\) over \(m\). If there is surplus, each extra bit per coordinate buys you refinement. And shared samples, r-bar, weaken the bound. Our job is to see where each of these three pieces comes from.</p>
+<p>Here is the whole proof in one picture. I'll write three arrows, and the rest of the hour fills them in.</p>
+
+<div class="board" data-panel="B"><div class="blabel">Panel B · the whole proof in one line</div>
+$$\underbrace{\frac{d^2}{D}}_{\text{van Trees}} \;\lesssim\; \mathrm{tr}\,J_T \;\lesssim\; \underbrace{dv\,\bar r}_{\text{shared}} \;+\; \underbrace{m\,h_T}_{\text{private}} \;\lesssim\; dv\,\bar r + m\Big(B\ln2 + \tfrac d2\ln D\Big)$$
+</div>
+
+<p class="act">Point to the middle inequality.</p>
+<p>The middle step is new, and it is the heart of today. It says: the Fisher information in the transcript is at most the shared samples, plus the local sample size times the leftover randomness \(h_T\). Parts 1 and 2 prove it. Part 3 then plugs in the budget, and the risk \(D\) appears on both sides. Solving for \(D\) gives the goal.</p>
+<p>Why should Fisher information be controlled by entropy at fixed theta? Here is the intuition. The machines don't know theta. The transcript reacts to theta only through the data. If, at a fixed theta, the transcript were not random at all, it would not be looking at the data, so it could not react to theta. So sensitivity to theta needs randomness at fixed theta. The new statement is quantitative: each nat of that randomness buys at most about \(2vq\) units of Fisher information. Think of it as an exchange rate.</p>
+<p>And why is the leftover randomness small when the risk is small? Every bit in the transcript is doing one of two jobs. Either it tells the fusion center where theta is, or it describes noise around theta. Only the second kind feeds Fisher information. A small risk forces many bits into the first job.</p>
+<p class="take">That tension is the whole converse.</p>
+</section>
+
+<section class="part" id="p1" data-min="13" data-title="Part 1 · Rectangles" data-eqs="(150)–(169)">
+<h2><span class="pn">1</span>Rectangles: Fisher information is paid for in entropy</h2>
+<p>Let's start in the easy world: every machine has its own independent block of at most \(q\) samples. No overlap yet. We want to prove the exchange rate.</p>
+
+<div class="board" data-panel="B"><div class="blabel">Panel B · target of Part 1 (Lemma 3, sub-Gaussian case)</div>
+$$\mathrm{tr}\,J_{T,R}(\theta) \;\le\; 2vq\;H_\theta(T \mid R)$$
+</div>
+
+<p>Lemma 1 already does this for one machine and one event. The problem is that a transcript is not one machine's event. It is a conversation. Machine A speaks, then maybe B speaks depending on what A said, and so on. So the question is: can we break a whole conversation into one piece per machine?</p>
+
+<h3><span class="st">Step 1</span>A leaf is a rectangle <span class="eq">(150)</span></h3>
+<p>Let's take the smallest interesting conversation.</p>
+
+<div class="board" data-panel="C"><div class="blabel">Panel C · a small tree</div>
+$$\text{A sends } b_1 \;\to\; \begin{cases} b_1=0: & \text{stop} \quad \text{leaf } \texttt{0}\\ b_1=1: & \text{B sends } b_2 \quad \text{leaves } \texttt{10},\ \texttt{11} \end{cases}$$
+$$\{T=\texttt{10}\} \;=\; \underbrace{\{Z_A:\ g_1(Z_A)=1\}}_{E_A} \;\cap\; \underbrace{\{Z_B:\ g_2(Z_B,\texttt{1})=0\}}_{E_B}$$
+</div>
+
+<p>Look at leaf 10. For this leaf to happen, A's data must make A say 1, and B's data, given that it heard a 1, must make B say 0. Each condition involves only one machine's data. So the leaf event is a product of a condition on A and a condition on B. In the paper this is equation (150), and we call it a rectangle.</p>
+<p>Why does this work even with interaction? Because once the full history is fixed, B's “given that it heard a 1” is not random any more. It is just a constant plugged into B's rule.</p>
+<p>But there is a catch, and this is why the model insists that the sender and the stopping time depend only on public history, rule (7). Suppose instead A secretly decides who speaks: if A's sample is positive, B speaks, otherwise A speaks. Then the leaf “1” happens in two ways: A positive and B says 1, or A negative and A says 1. That is a union of two rectangles, which is not a rectangle. Everything after this breaks. It would also let A send a free bit through who is talking. So the public-history rule is not a technicality. It is exactly what makes leaves rectangles.</p>
+
+<h3><span class="st">Step 2</span>Surprise splits across machines <span class="eq">(152)</span></h3>
+<p>Because the blocks are independent, the probability of a rectangle is a product.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$p(t) = \prod_{i=1}^n p_i(t), \qquad \ln\frac{1}{p(t)} = \sum_{i=1}^n \underbrace{\ln\frac{1}{p_i(t)}}_{\ell_i(t)}$$
+</div>
+<p>In words: the total surprise of a leaf is the sum of each machine's private surprise. Hold on to this. At the end it will turn into the entropy.</p>
+
+<h3><span class="st">Step 3</span>On a leaf, the machines stay independent <span class="eq">(153)–(155)</span></h3>
+<p>A second consequence: once we condition on a leaf, the machines' blocks are still independent, and block \(i\) only “knows” its own event \(E_i\). So the posterior mean of machine \(i\)'s score, call it \(a_i(t)\), is just the conditional mean of \(A_i\) on \(E_i\). That is exactly Lemma 1's setting.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$a_i(t) := \mathbb{E}[A_i \mid T=t] = \mathbb{E}[A_i \mid Z_i\in E_i(t)], \qquad \|a_i(t)\|^2 \le 2vq\,\ell_i(t)$$
+</div>
+
+<h3><span class="st">Step 4</span>Add the machines without paying a factor \(n\) <span class="eq">(157)–(159)</span></h3>
+<p>The score of the transcript is the conditional mean of the total data score. That is identity (75), which my partner proved. So it is the sum of the \(a_i\)'s.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$\nabla_\theta \log p_\theta(T) = \sum_i a_i(T), \qquad \mathrm{tr}\,J_T = \mathbb{E}\Big\|\sum_i a_i(T)\Big\|^2 = \sum_i \mathbb{E}\|a_i(T)\|^2$$
+</div>
+<p class="act">Circle the last equality.</p>
+<p>This equality is the most delicate point of the lemma. Why do the cross terms disappear? Not leaf by leaf. If both machines said “my data is large”, both posterior means point the same way, and their inner product is positive. The cancellation happens only after averaging over leaves. Averaging \(a_i a_j^\top\) over the transcript gives back the unconditional \(\mathbb{E}[A_i A_j^\top]\), which is zero because the blocks are independent and scores have mean zero. That's (157).</p>
+<p>Why do we care so much? If we had used the crude bound, the norm of a sum squared is at most \(n\) times the sum of norms squared, we would lose a factor \(n\). That factor would destroy the rate. With the exact cancellation, \(n\) machines cost nothing extra.</p>
+
+<h3><span class="st">Step 5</span>Sum up <span class="eq">(162)</span></h3>
+<p>Now put the steps together.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$\mathrm{tr}\,J_T \le 2vq\;\mathbb{E}\sum_i \ell_i(T) = 2vq\;\mathbb{E}\ln\frac{1}{p(T)} = 2vq\,H_\theta(T\mid R=r)$$
+</div>
+<p>Surprise per machine became entropy of the whole conversation. Finally, the seeds have a law that doesn't depend on theta, so they carry no Fisher information. We average over them, (166)–(167), and the lemma is proved.</p>
+<div class="example"><span class="xl">Concrete check · Gaussian</span>
+<p>Let me make the exchange rate concrete with the Gaussian. One machine holds \(q\) samples and sends one bit: “is my sample mean above zero?” At theta equal to zero this bit has entropy \(\ln 2\). Its Fisher information is \(2q/\pi\). The lemma allows \(2q\ln 2\). So the bound is off by a factor of about 0.46, not by a factor of \(n\) or \(q\). The scaling is right: one bit from \(q\) samples is worth order \(q\) in Fisher information, never more. In our check log we also found the factor 2 is sharp for rare events, so there is no free improvement here.</p>
+</div>
+
+<h3 class="opt"><span class="st">Optional · 1 min</span>Bernstein scores</h3>
+<div class="optional">
+<p>For Poisson or covariance models the score is only Bernstein, \(b&gt;0\). Then Lemma 1 has an extra term, \(2b^2\ell^2\). Two lines handle it. First, since all \(\ell_i\) are nonnegative, the sum of squares is at most the square of the sum, and that is the squared surprise of the whole leaf, (163). Second, Lemma 2 bounds the average squared surprise by \(K_B\), which is about \(B^2\). So we get (147).</p>
+</div>
+<div class="board" data-panel="A"><div class="blabel">Panel A · add under the toolbox</div>
+$$\text{Lemma 3:}\quad \mathrm{tr}\,J_{T,R} \le 4vq\,H_\theta(T\mid R) + 2b^2K_B \quad (b=0:\ 2vq\,H_\theta(T\mid R))$$
+</div>
+<p class="take">That is all we need from Part 1: one bit of conversation randomness buys at most order \(q\) Fisher information, interaction included.</p>
+</section>
+
+<section class="part" id="p2" data-min="12" data-title="Part 2 · Overlap" data-eqs="(170)–(193)">
+<h2><span class="pn">2</span>Overlap: reveal the shared samples, pay an additive price</h2>
+<p>Now back to the real problem. Machines draw from a common pool, so two machines can hold the same sample. What breaks?</p>
+<p class="act">Erase panel B. Keep the tree in panel C, and draw the pool next to it.</p>
+
+<div class="board" data-panel="C"><div class="blabel">Panel C · the running example</div>
+$$\text{Pool } \{1,\dots,6\}:\quad S_1=\{1,2,3\},\quad S_2=\{3,4,5\}$$
+$$\mathcal G=\{3\}\ (\text{shared}),\quad V_1=\{1,2\},\quad V_2=\{4,5\}\ (\text{private}),\qquad r=1,\ q=2$$
+</div>
+<figure class="pool" aria-label="Pool of six samples; machine 1 holds 1,2,3; machine 2 holds 3,4,5; sample 3 is shared">
+<svg viewBox="0 0 560 120" role="img">
+<g font-family="-apple-system,Segoe UI,sans-serif" font-size="15" text-anchor="middle">
+<rect x="62" y="22" width="190" height="58" rx="29" fill="#e3f1f0" stroke="#0f6b6b" stroke-width="2"/>
+<rect x="196" y="38" width="190" height="58" rx="29" fill="rgba(61,90,128,.10)" stroke="#3d5a80" stroke-width="2"/>
+<text x="110" y="16" fill="#0f6b6b" font-weight="700">machine 1 · S₁</text>
+<text x="340" y="114" fill="#3d5a80" font-weight="700">machine 2 · S₂</text>
+<g fill="#fff" stroke="#5b6670">
+<circle cx="90" cy="51" r="16"/><circle cx="145" cy="51" r="16"/><circle cx="225" cy="60" r="18" fill="#fdf3e2" stroke="#9a5b00" stroke-width="2.5"/><circle cx="300" cy="67" r="16"/><circle cx="355" cy="67" r="16"/><circle cx="470" cy="60" r="16" stroke-dasharray="3 3"/>
+</g>
+<g fill="#1d2327"><text x="90" y="56">1</text><text x="145" y="56">2</text><text x="225" y="65" font-weight="700">3</text><text x="300" y="72">4</text><text x="355" y="72">5</text><text x="470" y="65" fill="#5b6670">6</text></g>
+<text x="225" y="108" fill="#9a5b00" font-size="13" font-weight="700">shared 𝒢</text>
+<text x="470" y="96" fill="#5b6670" font-size="12">unused</text>
+</g>
+</svg>
+</figure>
+
+<p>Sample 3 is held by both machines. Go back to the leaf picture. The condition “machine 1 says 1” and the condition “machine 2 says 0” both depend on sample 3. So the two pieces of the rectangle are no longer independent. The probability is not a product any more, the machines are not independent on a leaf, and the cross terms in Step 4 no longer cancel. Lemma 3 cannot be used directly.</p>
+
+<h3>The trick: hand the shared samples to the fusion center, only for this calculation</h3>
+<p>Here is the idea of Theorem 2, in one sentence. Let's pretend the fusion center also sees the shared samples \(G\), for free. Then, given \(G\), the only data left are private blocks, which are independent again, and we are back in Part 1.</p>
+<p>Is that allowed? For an upper bound on Fisher information, yes. Giving the decoder more data can only increase Fisher information. That is data processing, (78)–(79). So:</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B · (178)–(181)</div>
+$$\mathrm{tr}\,J_T \;\le\; \mathrm{tr}\,J_{G,T} \;=\; \underbrace{\mathrm{tr}\,J_G}_{=\,r\,\mathrm{tr}\,I_X\,\le\,dvr} \;+\; \mathbb{E}_G\,\mathrm{tr}\,J_{T\mid G}(\theta;G)$$
+</div>
+<p>The first equality is the chain rule my partner proved, (84). The first piece is the information in the shared samples themselves: \(r\) independent samples, each worth at most \(dv\).</p>
+<p>The second piece is the interesting one. Fix the shared values, \(G = g\). Look at machine 1's rule. It used to depend on samples 1, 2 and 3. Now sample 3 is a known number. So machine 1's rule is a function of samples 1 and 2 only, with \(g\) hard-coded inside. Same for machine 2. The sender and stopping rules are still public-history rules. So, for each fixed \(g\), this is a legal protocol on independent private blocks, of size at most \(q\), using at most \(B\) bits. That's exactly Lemma 3.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B · continue</div>
+$$\mathrm{tr}\,J_{T\mid G=g,R} \le 4vq\,H_\theta(T\mid G=g,R) + 2b^2K_B \qquad (184)$$
+$$\begin{aligned}\Rightarrow\quad \mathrm{tr}\,J_{T,R}(\theta) &\le dv\,r + 4vq\,H_\theta(T\mid G,R) + 2b^2K_B && (174)\\ &\le dv\,r + 4vm\,H_\theta(T\mid R) + 2b^2K_B && (175)\end{aligned}$$
+</div>
+<p>The last step uses two facts: conditioning reduces entropy, (188), and a private block is never bigger than \(m\).</p>
+
+<h3>How to read Theorem 2</h3>
+<p class="act">Underline \(dv\,r\) and \(4vm\,H\) separately.</p>
+<p>The shared data enter additively. Each shared sample costs at most one sample's worth of Fisher information, \(dv\). It is not multiplied by the entropy. The private part keeps the exchange rate from Part 1, with \(q\) replaced by \(m\).</p>
+<p>Two sanity checks. If nothing is shared, \(r\) is zero and we get Lemma 3 back. If everything is shared, every private block is empty, the transcript is a function of \(G\), and the bound is just \(dv\,r\): the transcript cannot know more than the samples it was computed from. In our toy enumeration, this second case is exactly where the bound becomes tight.</p>
+<p>Now the honest part. Is this bound tight in between? Probably not. We gave the fusion center every shared sample in full, as if it had infinitely many bits about them. The real transcript only has \(B\) bits. So \(dv\,r\) is a pessimistic price. Remember this: it is exactly where the open gap of the paper comes from. I'll come back to it at the end.</p>
+
+<h3>From one design to the random design <span class="eq">(192)–(193)</span></h3>
+<p>The design \(S\) is random and independent of theta, so we can apply the bound for each fixed design and average. The number of shared samples \(r\) becomes its expectation r-bar. Then we draw theta from the prior and average again. The entropy becomes \(h_T\), the conditional entropy given theta, the design and the seeds.</p>
+<div class="board" data-panel="A"><div class="blabel">Panel A · add</div>
+$$\text{(193):}\quad \mathbb{E}_\Theta\,\mathrm{tr}\,J_{T,S,R}(\Theta) \;\le\; dv\,\bar r + 4vm\,h_T + 2b^2K_B,\qquad h_T = H(T\mid\Theta,S,R)$$
+</div>
+
+<h3>The one place you must not cheat</h3>
+<p>Here is a question I'd like everyone to think about. We revealed \(G\) to bound the Fisher information. Why not also put \(G\) into the side information of the entropy budget, next to \(S\) and \(R\)?</p>
+<p class="act">Pause and let the class think.</p>
+<p>Because the budget relies on the side information carrying no information about theta. Equation (112) says the information in \(T\) and \(W\) equals the information in \(T\) given \(W\), and that is true only because \(W\), the design and the seeds, is independent of theta. \(G\) is not. \(G\) is real data. Even our one shared sample, sample 3, already tells you something about theta. If \(G\) were free side information in the budget, part of the information needed for small risk could come from \(G\) instead of from the \(B\) bits, and the budget would stop constraining the transcript.</p>
+<p class="take">So the rule is: \(G\) may be revealed inside the Fisher comparison, but the entropy budget is always charged to the original finite-bit transcript. The paper insists on this after (193) and again after (230). Keeping these two steps apart is what makes the shared-data price additive instead of multiplicative.</p>
+</section>
+
+<section class="part" id="p3" data-min="11" data-title="Part 3 · The squeeze" data-eqs="(194)–(212)">
+<h2><span class="pn">3</span>The squeeze: where the surplus \(s\) comes from</h2>
+<p>We now have everything on panel A. Let's put the three pieces together and see the surplus \(s\) appear. I'll do the sub-Gaussian case on the board. The Bernstein terms just ride along inside a constant.</p>
+<p class="act">Erase panel B.</p>
+
+<h3>Three lines</h3>
+<p>First line: van Trees, (101), with the Fisher bound (193) plugged in. Call \(A\) equal to \(4v\), and collect everything that does not involve \(h_T\) into one constant \(Q\). Second line: the entropy budget, (118), divided by \(d\), with the prior's entropy plugged in.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$\text{(i)}\quad \frac{d^2}{D} \;\le\; A\,m\,h_T + Q, \qquad Q = dv\,\bar r + 2b^2K_B + 4\pi^2 d \qquad (197)$$
+$$\text{(ii)}\quad \frac{h_T}{d} \;\le\; \frac{B}{d}\ln 2 + c_\pi + \tfrac12\ln\frac{D}{d} \qquad (198)$$
+</div>
+<p>Read these two lines together. Line (i) says: small \(D\) needs large \(h_T\). Line (ii) says: small \(D\) forces small \(h_T\), because of the minus-infinity in \(\log D\). They pull in opposite directions, so \(D\) cannot be too small. That is the squeeze.</p>
+
+<h3>The cancellation <span class="eq">(201)–(202)</span></h3>
+<p>Now the most important two lines of my whole talk. Measure the risk in units of one machine's resolution, \(d/m\). Define \(x = mD/d\). If \(x\) is about 1, the fusion center is doing as well as a single machine with its \(m\) samples.</p>
+<div class="board key" data-panel="B"><div class="blabel">Panel B · write slowly</div>
+$$x := \frac{mD}{d}: \qquad \frac{B}{d}\ln 2 = s\ln2 + \boxed{\tfrac12\ln m}, \qquad \tfrac12\ln\frac{D}{d} = \tfrac12\ln x - \boxed{\tfrac12\ln m}$$
+$$\text{(iii)}\quad \frac{h_T}{d} \;\le\; s\ln 2 + c_\pi + \tfrac12 \ln x \qquad (202)$$
+</div>
+<p class="act">Circle the two boxed terms and cross them out.</p>
+<p>The half log \(m\) in the bit budget cancels the half log \(m\) in the risk.</p>
+<p>What does this mean? Half of \(\log_2 m\) bits per coordinate is exactly what it takes to pin a coordinate of theta down to accuracy one over root \(m\). That is one machine's resolution. If you want risk around \(d/m\) or better, you must spend those bits telling the fusion center where theta is. Those bits are information about theta. They are not leftover randomness, so they cannot buy any Fisher information. Only the bits beyond that, the surplus \(s\), are free to become randomness that the exchange rate turns into Fisher information.</p>
+<p>So the localization-refinement picture appears inside the lower bound by itself. We never assumed that a protocol has a localization phase and a refinement phase. It falls out of the algebra. The achievability proof in Section IV ends up with the same \(s\), and that's why the two bounds can meet.</p>
+
+<h3>Solving for the risk <span class="eq">(203)–(212)</span></h3>
+<p>Put (iii) into (i). The left side \(d^2/D\) becomes \(dm/x\).</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$\frac{dm}{x} \;\le\; A\,m\,d\Big[s\ln2 + c_\pi + \tfrac12\ln x\Big] + Q$$
+$$t := \frac{2}{Ax}:\qquad t + \ln t \;\le\; 2s\ln 2 + \text{const} + \frac{\bar r}{2m} + \frac{b^2K_B}{vmd} + \frac{2\pi^2}{vm} \;\le\; C_1 F$$
+$$F := 1 + s_+ + \frac{\bar r}{m} + \frac{(B+1)^2}{m}$$
+</div>
+<p>The unknown \(x\) appears on the left as one over \(x\) and on the right inside a log. Substitute \(t = 2/(Ax)\), so \(t\) is large exactly when the risk is small. Divide through and you get (206).</p>
+<p>Now “\(t\) plus log \(t\)” is basically \(t\). If \(t\) is at least 1, the log is nonnegative, so \(t\) is at most \(C_1F\). If \(t\) is below 1, then \(t\) is below \(F\) anyway, because \(F\) is at least 1. Either way \(t\) is at most a constant times \(F\). Turning \(t\) back into \(D\):</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B · result of Part 3</div>
+$$D \;\gtrsim\; \frac{d}{m\,F} \;=\; \frac{d}{m(1+s_+) + \bar r + (B+1)^2} \qquad (212)$$
+</div>
+<p>One small detail we checked: when \(s\) is negative, the bracket in (203) can be negative. The inequality is still true, and the proof only uses \(s \le s_+\), so nothing breaks.</p>
+<p class="take">Read the denominator piece by piece. \(m\): with no surplus, you cannot beat one machine. \(m s_+\): each surplus bit per coordinate keeps refining. \(\bar r\): the price we paid for revealing the shared samples. \((B+1)^2\): an artifact of Bernstein scores. It is zero work for the Gaussian, and the next part removes it in general.</p>
+</section>
+
+<section class="part" id="p4" data-min="5" data-title="Part 4 · Bernstein correction" data-eqs="(213)–(220)">
+<h2><span class="pn">4</span>Removing the Bernstein correction</h2>
+<p>Why bother? Because the paper wants the theorem for Poisson, exponential and covariance models, where the score is only Bernstein. We want the clean term without \((B+1)^2\). The idea is a case split. Either the extra term is small compared with \(m\), or we are in a regime where the fourth term doesn't matter anyway.</p>
+<div class="board two" data-panel="B"><div class="blabel">Panel B · two columns</div>
+<div class="col"><div class="ch">Case \(m \ge n^2\)</div>
+$$(B+1)^2 \le (k+1)^2 n^2 \le (k+1)^2 m$$
+$$\Rightarrow\ \text{absorbed into } m(1+s_+)+\bar r$$
+</div>
+<div class="col"><div class="ch">Case \(m \lt n^2\)</div>
+$$s = \frac{nk}{d} - \tfrac12\log_2 m \;\ge\; \frac{nk}{d} - \log_2 n \;\ge\; \frac{nk}{2d}$$
+$$\Rightarrow\ \frac{1}{m(1+s_+)+\bar r} \le \frac{1}{ms} \le \frac{2d}{k}\cdot\frac{1}{nm}$$
+</div>
+</div>
+<p>Case one: big local blocks. \(B\) is only \(n\) times \(k\), so \(B^2\) is about \(n^2\), and that is at most \(m\). The extra term costs a constant factor, (215).</p>
+<p>Case two: small local blocks. Then the localization cost, half log \(m\), is at most \(\log n\), which is tiny compared with the budget \(nk/d\). So the surplus is huge, of order \(n\). Then the fourth term is at most a constant times \(d/(nm)\). But \(d/(nm)\) is the aggregate-access term my partner already proved in (107). So in this case there is nothing new to prove. We don't need to absorb anything.</p>
+<p>The threshold “\(n\) large enough” here depends on \(d\) and \(k\). That is where the \(n_L\) in Theorem 1 comes from.</p>
+<p>Now we collect all four terms.</p>
+<div class="board key" data-panel="C"><div class="blabel">Panel C · under the goal, boxed</div>
+$$\boxed{\;R_{BB}(N,m,n) \;\ge\; c\,d\,\max\Big\{\frac1N,\ \frac1{nm},\ 2^{-2B/d},\ \frac{1}{m(1+s_+)+\bar r}\Big\} = c\,\mathcal L\;} \qquad (220)$$
+</div>
+<p class="take">The first two come from (107), the third from (114), the last from today. We proved every bound for the Bayes risk under one prior, for every protocol and every estimator. The worst-case risk is at least the Bayes risk, so this is a minimax lower bound. And because we allowed blackboard interaction throughout, it holds for interactive protocols. That's the converse half of Theorem 1.</p>
+</section>
+
+<section class="part" id="p5" data-min="5" data-title="Part 5 · Gaussian, explicit" data-eqs="(221)–(230)">
+<h2><span class="pn">5</span>The explicit Gaussian bound</h2>
+<p>The last subsection asks: for our running example, Gaussian mean estimation, can we keep every constant? The answer is yes, and it is a nice way to see that the order-of-magnitude statement has real numbers behind it.</p>
+<p>For the Gaussian, \(v=1\) and \(b=0\). So there is no Bernstein term and the exchange rate is the sharp one, \(2m\) instead of \(4m\). Run exactly the same squeeze.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$\frac{d^2}{D} \le d\bar r + 2m\,h_T + 4\pi^2 d, \qquad \tau := \frac{d}{mD}\ \ (\text{the paper calls it } t)$$
+$$\tau + \ln\tau \;\le\; z := 2s\ln 2 + \frac{\bar r}{m} + \ln\frac{\pi e^3}{2} + \frac{4\pi^2}{m} \qquad (227)$$
+$$D \;\ge\; \frac{d}{m\,W_0\!\big(e^{z}\big)} \qquad (230)$$
+</div>
+<p>A small warning: the paper reuses the letter \(t\) here, the third meaning of \(t\) in this section. On the board I'll call it tau. Tau is one over the normalized risk, so large tau means small risk.</p>
+<p>To solve “tau plus log tau at most \(z\)”, exponentiate: \(\tau e^\tau \le e^z\). The function that inverts \(y e^y\) has a name, the Lambert W function. Since \(\tau e^\tau\) is increasing, \(\tau \le W_0(e^z)\).</p>
+<p>How do you read a Lambert W? For large \(z\), \(W_0(e^z)\) is about \(z - \ln z\). So \(W\) is roughly \(2s\ln 2\) plus \(\bar r/m\), and the bound reads \(d\) over \((2\ln 2\cdot ms + \bar r)\). That is the fourth term again, now with the constant \(2\ln 2\), about 1.39.</p>
+<div class="example"><span class="xl">One number to make it real</span>
+<table class="nums"><thead><tr><th>surplus \(s\)</th><th>\(z\)</th><th>\(W_0(e^z)\)</th><th>lower bound on risk</th></tr></thead>
+<tbody><tr><td>5</td><td>10.4</td><td>8.3</td><td>\(d/(8.3\,m)\)</td></tr>
+<tr class="hl"><td>10</td><td>17.3</td><td>14.6</td><td>\(d/(14.6\,m)\)</td></tr>
+<tr><td>20</td><td>31.2</td><td>27.9</td><td>\(d/(27.9\,m)\)</td></tr></tbody></table>
+<p>Take \(s = 10\) surplus bits per coordinate, no shared samples, and \(m\) large. Then \(z\) is about 17.3, and \(W_0(e^z)\) is about 14.6. So no protocol, interactive or not, can get the Gaussian risk below \(d\) over \(14.6\,m\). With \(s = 20\) the number becomes about 27.9.</p>
+</div>
+<p class="take">This bound is non-asymptotic: it holds for every \(n\), \(m\) and \(N\), not only in the limit. The paper writes it with \(s\) rather than \(s_+\). That's fine because \(W_0\) is increasing, but for the simplified envelope you again use \(s \le s_+\).</p>
+</section>
+
+<section class="part" id="close" data-min="4" data-title="Closing · the gap" data-eqs="(488)–(490)">
+<h2><span class="pn">✓</span>Closing: what is proved and where the gap is</h2>
+<p>Let me step back to the three arrows from the start.</p>
+<p class="act">Rewrite the opening line compactly at the bottom of panel C.</p>
+<div class="board key" data-panel="C"><div class="blabel">Panel C · bottom</div>
+$$\underbrace{\text{rectangles}}_{\text{Fisher}\,\le\,2vq\cdot\text{entropy}} \;+\; \underbrace{\text{reveal } G}_{+\,dv\,\bar r\ \text{(additive)}} \;+\; \underbrace{\text{budget}}_{\frac12\log_2 m\ \text{cancels}\ \Rightarrow\ s} \;\Longrightarrow\; \frac{d}{m(1+s_+)+\bar r}$$
+</div>
+<p>Three moves. Rectangles turn a whole conversation into per-machine pieces, so Fisher information is paid for in entropy at a rate of order \(m\), and interaction does not change the rate. Revealing the shared samples restores independence at an additive price. And the bit budget charges half of \(\log_2 m\) bits per coordinate for localization, which leaves only the surplus \(s\) to refine.</p>
+<p>Now compare with Section IV. The upper bound is the same expression without the r-bar.</p>
+<div class="board" data-panel="B"><div class="blabel">Panel B</div>
+$$\text{converse: } \frac{d}{m(1+s_+)+\bar r} \qquad\text{vs.}\qquad \text{achievable: } \frac{d}{m(1+s_+)}$$
+$$\text{open window (488):}\qquad ms \;\ll\; N \;\ll\; \frac{n^2m}{s}$$
+</div>
+<p>So the only disagreement in the whole paper is the r-bar we paid in Part 2. When does it matter? When collisions are rare, \(\bar r\) is about \(n^2m^2/(2N)\). That beats \(ms\) exactly when \(N\) is below roughly \(n^2m/s\). And for the gap to matter, the pool term \(d/N\) must not dominate, so \(N\) must be above \(ms\). That is the open window in Section VI, (488).</p>
+<p>Where would a fix come from? Not from constants: the factor 2 in Lemma 3 is sharp. It has to come from the place where we were generous, revealing \(G\) in full. The paper names one sufficient route, (490): show that the Fisher information is at most a constant times \(m\) times \(h_T\), with no r-bar at all. Combined with exactly the squeeze from Part 3, that would close the gap. That's the open problem our class is trying.</p>
+<p>Finally, a word on checking. I re-derived every displayed equation from (73) to (230). I found no mathematical error. I also tested Lemmas 1 to 3 and Theorem 2 by exact enumeration on a plus-or-minus-one toy model with random blackboard protocols, and saw no violation. What I did find are notation clashes, for example \(t\) and \(r\) each mean three different things in this section, and \(R\) means both the seeds and the risk. We have a list of fixes for the shorter version of the paper.</p>
+<p class="take">Thank you. I'm happy to take questions.</p>
+</section>
+
+<section class="part qa" id="qa" data-min="0" data-title="Backup answers">
+<h2><span class="pn">?</span>Backup answers for likely questions</h2>
+<p class="lead">Short answers to say out loud. Each names the equation to point at.</p>
+<details><summary>Why prove the lower bound for blackboard protocols if the scheme is non-interactive?</summary><p>Blackboard protocols include non-interactive ones, so \(R_{BB} \le R_{NI}\), (13). A lower bound on the larger class and an upper bound on the smaller class pin down both.</p></details>
+<details><summary>Why must the sender and stopping time depend only on public history?</summary><p>Otherwise a leaf can be a union of rectangles, not one rectangle, and (150), (153) and (157) all fail. It would also let machines send free information through who talks or when they stop.</p></details>
+<details><summary>Why do the cross terms vanish only on average?</summary><p>On one leaf, two machines' posterior score means can point the same way. Averaging over leaves gives back \(\mathbb{E}[A_iA_j^\top]\), which is zero by independence and mean-zero scores, (157).</p></details>
+<details><summary>Why conditional entropy at fixed theta, not plain entropy of \(T\)?</summary><p>Fisher information is local sensitivity. Bits that only locate theta are information about theta, not randomness at fixed theta, and they don't feed Fisher information. The split is (117): \(H(T\mid W) = I(\Theta;T\mid W) + h_T\).</p></details>
+<details><summary>Why can \(G\) be revealed in the Fisher step but not in the budget?</summary><p>Revealing data to the decoder only increases Fisher information, so (178) is a valid upper bound. The budget (112)–(113) needs side information independent of theta. \(G\) is real data that depends on theta.</p></details>
+<details><summary>Where exactly does \(s\) come from?</summary><p>From (201)–(202): the half log \(m\) in the bit budget cancels the half log \(m\) from measuring risk in units of \(d/m\).</p></details>
+<details><summary>Why the case split \(m \ge n^2\) in Part 4?</summary><p>For big blocks, \((B+1)^2\) is at most a constant times \(m\) and is absorbed, (214)–(215). For small blocks, \(s\) is of order \(n\), and \(d/(nm)\) from (107) already dominates the fourth term, (216)–(218).</p></details>
+<details><summary>Why \(\bar r\) and not \(r\)?</summary><p>The risk averages over the random design. The Fisher bound holds for each fixed design and is linear in \(r\), so averaging gives \(\bar r\), (192).</p></details>
+<details><summary>Is the additive price \(dv\,\bar r\) tight?</summary><p>Not known, and probably not in the middle window. It treats every shared sample as fully revealed, while the transcript has only \(B\) bits. This is the open gap, (488)–(490).</p></details>
+<details><summary>For the Gaussian, why not replace each machine's data by its sample mean?</summary><p>Machines that share samples can encode differences among the shared values, and that information disappears in local means. So the local-mean reduction does not cover raw-data protocols. Section VI explains this.</p></details>
+<details><summary>What exactly did you check?</summary><p>Every displayed equation from (73) to (230), all constants recomputed, and exact enumeration of Lemmas 1–3 and Theorem 2 on a ±1 toy with random blackboard protocols. No mathematical error, only notation clashes.</p></details>
+</section>

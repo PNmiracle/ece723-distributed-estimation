@@ -11,6 +11,7 @@ This site extracts the knowledge the paper relies on — every concept, symbol a
 | [Lower bound: equations in plain words](https://pnmiracle.github.io/ece723-distributed-estimation/converse.html) | Section III in paper order: equations (73)–(230), with concise Chinese and English explanations and a transition between each pair. A shortcut goes straight to the focus, equations (150)–(230). |
 | [Original + Chinese translation](https://pnmiracle.github.io/ece723-distributed-estimation/bilingual.html?view=en) | Scanned original pages next to a Chinese translation; switch between English only, both, or Chinese only. |
 | [Lecture review](https://pnmiracle.github.io/ece723-distributed-estimation/lecture-review.html?lang=en) | The lecture that introduced the paper, split into seven segments with summaries, plain-language explanations, takeaways, English expressions from class and self-check questions (English / Chinese / both). |
+| [Lecture script, eqs. (150)–(230)](https://pnmiracle.github.io/ece723-distributed-estimation/lecture-script.html) | A word-for-word English blackboard lecture for the second half of Section III: big picture first, the key derivations on a three-panel board plan, timing for a ~55-minute talk, a rehearsal timer, and backup answers. Switch between full, script-only and board-only views. Source: `tools/lecture-script/` (`node tools/lecture-script/build.js`). |
 
 Use the `中` switch on the guides to read in Chinese. The lower-bound equation reader shows both languages together.
 
