@@ -1,0 +1,476 @@
+1	Model assumption: draw N observations independently from the same Pθ. This specifies the experiment.	模型假设：从同一个 Pθ 独立抽取 N 个观测，用它规定统计实验。
+2	There are C(N,m) subsets of size m. Uniform sampling assigns probability 1/C(N,m) to each.	大小为 m 的子集共有 C(N,m) 个，均匀抽样就给每个子集相同的倒数概率。
+3	Define U by taking the union of the access sets. A union cannot exceed the pool size or the sum of set sizes.	把访问集合取并集定义 U；并集大小既不超过整个样本池，也不超过各集合大小之和。
+4	This defines the local observation: attach its pool index to each accessible value, retaining which samples are shared.	这是局部观测的定义：给每个可访问的样本值附上索引，保留共享样本的身份。
+5	This defines a noninteractive encoder. Its arguments are precisely the local data and allowed public/private randomness.	这是非交互编码器的定义，输入就是本机数据和允许使用的公共、私有随机性。
+6	Collect the messages from (5) into an ordered tuple. No further processing or independence assumption is used.	把 (5) 中的消息按机器顺序组成元组即可，不需要额外处理或独立性假设。
+7	This defines the scheduling rule. Restricting its inputs to public history, design, and public seed prevents hidden information in sender selection.	这是发言调度的定义；只允许公共历史、设计和公共种子作输入，避免发言者身份暗中传递信息。
+8	After (7) selects machine i, its encoding rule uses its local data, the public history, and seeds to produce one bit.	(7) 选中机器 i 后，其编码规则使用本机数据、公共历史和种子生成一个比特。
+9	Add the n individual limits of k bits. Their sum bounds every possible run length by nk.	把 n 台机器各 k 比特的限制相加，每次协议运行的长度都至多 nk。
+10	Fix the design and seeds. A binary tree of depth at most B has at most 2^B leaves, and entropy is at most the logarithm of alphabet size.	固定设计与种子后，深度至多 B 的二叉树最多有 2^B 个叶子；熵不超过字母表大小的对数。
+11	This defines the admissible decoder using the transcript and public side information available at the center.	这是合法解码器的定义，只使用中心能获得的通信记录和公共附加信息。
+12	First take the largest squared-error risk over θ for each protocol and decoder, then minimize over the admissible choices.	对每个协议和解码器先取 θ 上最坏的平方误差风险，再在合法选择中求最小值。
+13	Every noninteractive protocol can be run on the blackboard by writing its messages in a fixed order. Minimizing over a larger class cannot increase risk.	非交互协议可以按固定顺序写到黑板上；在更大的协议集合中取最优，风险不会增大。
+30	These are definitions. Total bits are nk; subtract log₂√m localization bits per coordinate, and square a grid width of 2^(−B/d) to get aB.	这些量按定义给出：总比特为 nk，每坐标扣除 log₂√m 的定位成本；网格宽 2^(−B/d) 平方后得到 aB。
+31	Rearrange (30) as B/d=s+(log₂m)/2, then exponentiate −2 times both sides.	把 (30) 改写为 B/d=s+(log₂m)/2，再对两边乘 −2 后取以 2 为底的指数。
+32	Add one indicator for each machine whose list contains index a. The sum counts the visits to that index.	每台机器若包含索引 a 就贡献一个指示量，相加便得到该索引的访问次数。
+33	Apply the threshold Da≥2 to (32), then sum its indicator over distinct pool indices.	对 (32) 的计数用 Da≥2 判定是否共享，再对不同样本池索引求和。
+34	For fixed a, the n membership indicators in (32) are independent Bernoulli(m/N) variables. Their sum is binomial.	固定 a 后，(32) 中 n 个包含事件相互独立，都是成功率 m/N 的伯努利变量，其和为二项分布。
+35	Use (34) to calculate P(Da≥2)=1−P(Da=0)−P(Da=1), then apply linearity of expectation to (33).	用 (34) 算 P(Da≥2)=1−P(Da=0)−P(Da=1)，再对 (33) 用期望的线性性。
+36	This defines the lower envelope; Section III proves its four components separately and combines them. The shared-count term enters through Theorem 2.	这里定义下包络；第三节分别证明四个组成项再合并，共享计数项由定理 2 引入。
+37	This defines the target upper envelope. Section IV constructs an encoder attaining each of these scales up to a fixed constant.	这里定义目标上包络；第四节构造编码器，在固定常数倍内达到这些尺度。
+38	For positive numbers, the larger reciprocal is the reciprocal of the smaller number. Apply this to N and nm.	正数中较大的倒数，等于较小数的倒数；把这个恒等式用于 N 和 nm。
+39	In (36), adding the nonnegative shared count enlarges only the fourth denominator compared with (37), so its reciprocal cannot increase.	相比 (37)，(36) 仅在第四个分母加上非负共享数，因此该项倒数不会增大。
+40	This is the converse theorem, proved in III-A–III-E. It combines sample, bit, and entropy–Fisher lower bounds rather than following from the envelope definition alone.	这是下界定理，在 III-A 至 III-E 证明；它合并样本、比特及熵与 Fisher 信息下界，不能只由包络定义推出。
+41	This is the construction theorem, proved in Section IV by resampling, moment encoding, and inversion under assumption (24).	这是构造定理，第四节在假设 (24) 下通过重采样、矩编码和反演来证明。
+42	Combine (40), protocol-class inclusion (13), and (41), with n large enough for both theorem thresholds.	将 (40)、协议集合包含关系 (13) 和 (41) 串联，n 同时满足两个定理门槛即可。
+43	Use 1/m=aB·2^(2s) from (31), and bound s by C₀ in the exponent.	代入 (31) 的 1/m=aB·2^(2s)，再在指数中用 s≤C₀。
+44	Use N≥m, n≥1, and 1+s+≥1. Increasing a positive denominator decreases its reciprocal.	用 N≥m、n≥1 和 1+s+≥1，正分母增大时倒数减小。
+45	Since s≥εn>0, 1+s+≥εn. Multiply by m and take reciprocals.	由 s≥εn>0 得 1+s+≥εn，两边乘 m 再取倒数。
+46	Replace aB by 2^(−2s)/m using (31), divide by 1/(nm), and use s≥εn. Exponential decay beats the factor n.	用 (31) 替换 aB，再除以 1/(nm)，利用 s≥εn；指数衰减快于前面的 n 增长。
+47	Divide the two terms by 1/(ms), substitute (31), and use s→∞ and s/n→0.	分别除以 1/(ms)，对 aB 代入 (31)，最后用 s→∞ 和 s/n→0。
+48	Cancel m in the ratio and use s/(1+s)→1 as s grows.	在比值中约去 m，再用 s 增大时 s/(1+s)→1。
+49	In (37), (47) removes two negligible terms, and (48) replaces the refinement term by its equivalent 1/(ms).	在 (37) 中用 (47) 去掉两个可忽略项，用 (48) 将精估项换成等价的 1/(ms)。
+50	Rearrange N≤C₀ms by dividing both sides by Nms.	对 N≤C₀ms 两边同时除以 Nms 即得。
+51	For every integer D, 1{D≥2}≤C(D,2). Sum over sample IDs, then count the same pairs by machine pairs.	每个整数 D 都满足 1{D≥2}≤C(D,2)；对样本索引求和，再按机器对重新计数。
+52	Write intersection size as a sum of membership indicators. Independence across machines makes each joint probability (m/N)².	把交集大小写成包含指示量之和；机器间独立使联合概率等于 (m/N)²。
+53	Take expectations in (51), apply (52) to every machine pair, and count C(n,2) pairs.	对 (51) 取期望，每对机器代入 (52)，机器对共有 C(n,2) 个。
+54	Insert N≥c₀n²m/s into (53), then use C(n,2)≤n²/2.	将 N≥c₀n²m/s 代入 (53)，再用 C(n,2)≤n²/2。
+55	For s≥1, ms≤m(1+s)≤2ms. Add the shared-count bound (54).	当 s≥1 时 ms≤m(1+s)≤2ms，再加入 (54) 的共享计数上界。
+56	Divide the large-pool assumption by ms. Since s/n→0, (n/s)² diverges.	把大样本池条件除以 ms；由 s/n→0，(n/s)² 发散。
+57	Set m=N. All local subsets equal the pool, so every processor can compute the empirical average defined in (25).	令 m=N，所有局部子集都等于样本池，因此每台机器都能计算 (25) 的经验平均。
+58	Distribute B integer bits as evenly as possible among d coordinates, using floor(B/d) and ceiling(B/d).	用 B/d 的向下取整和向上取整，把 B 个整数比特尽量均匀分给 d 个坐标。
+59	A midpoint quantizer with 2^Bj cells has coordinate error at most 2^(−Bj−1). Square, sum, and use Bj≥B/d−1 from (58).	2^Bj 个格子的中点量化器每坐标误差至多 2^(−Bj−1)；平方求和，再用 (58) 的 Bj≥B/d−1。
+60	Apply (26) to the bounded empirical moment in (57): each coordinate variance is at most 1/(4N).	对 (57) 的有界经验矩应用 (26)，每个坐标方差至多 1/(4N)。
+61	Apply inverse-Lipschitz identifiability (24) and the nearest-moment argument used in (29), now with the quantized moment.	对量化后的矩应用逆 Lipschitz 条件 (24)，再使用 (29) 的最近矩投影论证。
+62	Split quantization and sampling error, use ‖x+y‖²≤2‖x‖²+2‖y‖², and substitute (59)–(61).	把量化误差和抽样误差拆开，使用平方和不等式，再代入 (59) 至 (61)。
+63	Solve the definition of s in (30) for m, then state the critical-window assumptions s→∞ and s=o(n).	将 (30) 中 s 的定义反解为 m，再附上临界窗口条件 s→∞、s=o(n)。
+64	Use (66) to enter the abundant-surplus regime, then substitute the visible-sample count (67) into Table I's second row.	用 (66) 进入剩余比特充裕的情形，再把 (67) 的可见样本数代入表 I 第二行。
+65	Combine the opposite bounds on the negative log risk in (70) and (72); terms of order log n/n and 1/n vanish.	合并 (70) 与 (72) 对负对数风险的两侧界，log n/n 和 1/n 项趋于零。
+66	Substitute log₂m=αlog₂n+O(1) into (30), then divide by n.	把 log₂m=αlog₂n+O(1) 代入 (30)，再除以 n。
+67	Use m≈n^α and N≈n^β. The smaller of the two powers has the smaller exponent.	代入 m≈n^α 和 N≈n^β，两种幂中较小者由较小指数决定。
+68	This defines λn, the local sample-size exponent used in the logarithmic comparison.	这里定义 λn，作为后续对数比较中的局部样本量指数。
+69	Keep only the access term and bit term in the lower envelope (36), then apply (40) and (13).	在下包络 (36) 中只保留访问项和比特项，再用 (40) 和 (13)。
+70	Take −log₂ of (69), reversing the inequality, divide by n, and substitute (68). The log of a maximum becomes a minimum.	对 (69) 取负的以 2 为底的对数并翻转不等号，除以 n，代入 (68)；最大值变为最小值。
+71	In (37), N≥m bounds all non-bit terms by 1/m. Apply (41), also bounding BB through (13).	在 (37) 中由 N≥m 将所有非比特项压到 1/m，再用 (41)，并通过 (13) 控制 BB。
+72	Take −log₂ of (71), divide by n, and use the definition of λn in (68).	对 (71) 取负的以 2 为底的对数，除以 n，再使用 (68) 对 λn 的定义。
+73	Condition on the raw observation Z and integrate the θ-independent kernel K against its density. This is total probability.	先给定原始观测 Z，再把与 θ 无关的核 K 按 Z 的密度积分，这是全概率公式。
+74	Differentiate (73) under the integral and use ∇p=p∇log p. The kernel contributes no derivative because it is parameter independent.	在 (73) 的积分内求导，并用 ∇p=p∇log p；核不依赖参数，因此不产生导数。
+75	Divide (74) by the positive message probability. Bayes' rule identifies the resulting weights as the conditional law of Z given T.	把 (74) 除以正的消息概率，由贝叶斯公式把权重认成给定 T 后 Z 的条件分布。
+76	For independent observations, the joint log-likelihood is a sum. Its gradient adds scores; cross covariances vanish because scores are centered.	独立观测的联合对数似然是求和，其梯度累加得分；得分均值为零使交叉协方差消失。
+77	These are definitions of the raw-observation score and the processed-observation score.	这是原始观测得分和处理后观测得分的定义。
+78	Substitute the conditional-score identity (75) into directional Fisher information, then apply conditional Jensen to the square.	在方向 Fisher 信息中代入条件得分恒等式 (75)，再对平方使用条件 Jensen 不等式。
+79	A symmetric matrix inequality holds exactly when its quadratic-form inequality holds in every direction. Apply (78).	对称矩阵不等式等价于所有方向上的二次型不等式，直接使用 (78)。
+80	Factor the joint likelihood into marginal times conditional likelihood, take logs, and differentiate.	把联合似然分解成边缘似然乘条件似然，取对数再求导。
+81	Differentiate the normalization of the conditional likelihood of T given G; its total mass is one for every θ.	对给定 G 后 T 的条件似然归一化等式求导，其总质量对每个 θ 都为一。
+82	Condition the cross product on G. The G-score is fixed under that conditioning, and (81) makes the remaining conditional mean zero.	对交叉乘积先给定 G；G 的得分此时固定，余下的条件均值由 (81) 等于零。
+83	Expand the score outer product from (80), discard the zero cross terms using (82), and average the conditional information.	展开 (80) 的得分外积，用 (82) 消去交叉项，再对条件信息取平均。
+84	Take traces of (83), using linearity of trace and expectation.	对 (83) 取迹，并用迹与期望的线性性。
+85	Choose the product sine-squared prior. Its normalization and one-coordinate information/entropy are calculated explicitly in (87)–(95), then added over coordinates.	选用正弦平方乘积先验；(87) 至 (95) 明确计算单坐标的归一化、信息和熵，再逐坐标相加。
+86	This defines prior Fisher information as the prior average of its squared score norm.	按定义，先验 Fisher 信息是先验得分范数平方的先验平均。
+87	Use 2sin²x=1−cos(2x), integrate over [0,1], and evaluate the sine boundary term.	用 2sin²x=1−cos(2x) 展开，在 [0,1] 上积分，正弦边界项为零。
+88	Write log w(t)=log 2+2log sin(πt), then differentiate with the chain rule.	写成 log w(t)=log 2+2log sin(πt)，再用链式法则求导。
+89	Square (88), multiply by w(t)=2sin²(πt), cancel the sine factors, and integrate cos² over a full half-period.	将 (88) 平方再乘 w(t)，约掉正弦因子，对 cos² 的半个周期积分。
+90	This defines a one-parameter integral whose derivative inserts log sin x, the quantity needed for the entropy calculation.	定义这个带参数的积分；对参数求导会引入 log sin x，正是计算熵需要的量。
+91	Integrate sin^(a−1)x·sin x by parts, use cos²x=1−sin²x, and solve the resulting recurrence for F(a).	对 sin^(a−1)x·sin x 分部积分，用 cos²x=1−sin²x 展开，再整理得到 F(a) 的递推式。
+92	Add the sine-log integral to its cosine version, use sin x cos x=sin(2x)/2, and change variables y=2x.	将对数正弦积分与对数余弦版本相加，用二倍角公式，再令 y=2x 换元。
+93	Take the logarithmic derivative of (91) at a=2, and substitute F′(0)/F(0)=−log 2 from (92).	对 (91) 在 a=2 取对数导数，再代入由 (92) 得到的 F′(0)/F(0)=−log 2。
+94	Write the expectation under w as an integral, substitute x=πt, and recognize F′(2). Use F(2)=π/2 and (93).	将 w 下的期望写成积分，令 x=πt，认出 F′(2)，再用 F(2)=π/2 和 (93)。
+95	Use h(w)=−E log w and expand log w=log 2+log sin²(πΘ₁). Substitute (94).	使用 h(w)=−E log w，展开 log w，再代入 (94)。
+96	This defines the Bayes risk by averaging squared estimation error over the joint prior and observation law.	按定义，在参数先验与观测的联合分布下对估计平方误差取平均。
+97	Multiply prior by likelihood to form the joint density. The log derivative of a product is the sum of the two scores.	先验乘似然得到联合密度，乘积取对数求导变成两个得分相加。
+98	Replace Qj·q by ∂jq and integrate by parts in θj. The prior vanishes at the boundary, and ∂j(θ̂j−θj)=−1.	把 Qj·q 换成 ∂jq，对 θj 分部积分；先验令边界项为零，而误差对 θj 的导数为 −1。
+99	Sum (98) over j to get d, then apply Cauchy–Schwarz to the error–score inner product.	把 (98) 对 j 求和得到 d，再对误差与得分的内积使用 Cauchy–Schwarz。
+100	Expand the squared sum of scores in (97). The likelihood score has zero mean given Θ, so its cross term with the prior score vanishes.	展开 (97) 的得分和的平方；给定 Θ 后似然得分均值为零，因此与先验得分的交叉项消失。
+101	Square (99), insert the risk definition (96) and score moment (100), then divide by the positive information denominator.	将 (99) 平方，代入风险定义 (96) 与得分二阶矩 (100)，再除以正的信息分母。
+102	The supremum of a nonnegative risk function is at least any weighted average of that function, including its average under π.	非负风险函数的上确界不小于其任何加权平均，特别是不小于先验 π 下的平均。
+103	Each machine misses a fixed index with probability 1−m/N. Independence across machines multiplies these n probabilities.	每台机器错过固定索引的概率是 1−m/N，机器间独立将这 n 个概率相乘。
+104	Sum one minus (103) over pool indices. The upper bounds follow either from (3) or a union bound over machines.	把一减去 (103) 的概率对索引相加；上界由 (3) 或对机器的并集界给出。
+105	With public conditions fixed, apply data processing (79) to the accessible data. Their independent centered scores give trace at most dv per distinct sample by (22).	固定公共条件后，对可访问数据用 (79)；独立且中心化的得分配合 (22)，每个不同样本的迹至多 dv。
+106	Use the chain rule (84). W has zero parameter information, so average the conditional bound (105) over W.	用链式法则 (84)；W 不含参数信息，因此对 W 平均条件界 (105)。
+107	Insert (106) and Jπ=4π²d into (101), apply (102), then bound EU by min(N,nm) using (104).	把 (106) 和 Jπ=4π²d 代入 (101)，使用 (102)，再用 (104) 控制 EU。
+108	Define the squared error conditional on a realized record Y=y. The tower property gives its unconditional average D.	定义给定 Y=y 后的平方误差，再由迭代期望得到其总体平均 D。
+109	Translate by the fixed estimate without changing entropy. Among distributions with a given second-moment bound, an isotropic Gaussian gives the entropy upper bound.	平移一个固定估计值不改变熵；在给定二阶矩上界的分布中，用各向同性高斯给出熵上界。
+110	Average (109) over Y, then move the expectation inside the logarithm using its concavity and EDY=D.	对 Y 平均 (109)，再用对数凹性和 EDY=D，把平均移进对数。
+111	Use I(Θ;Y)=h(Θ)−h(Θ|Y), set Y=(T,W), and substitute the upper bound (110).	使用 I(Θ;Y)=h(Θ)−h(Θ|Y)，令 Y=(T,W)，代入 (110)。
+112	The mutual-information chain rule splits off I(Θ;W), which is zero because W is independent of Θ.	互信息链式法则拆出 I(Θ;W)，该项因 W 与 Θ 独立而为零。
+113	Mutual information cannot exceed the conditional transcript entropy. Its alphabet has at most 2^B values, so that entropy is at most B ln 2.	互信息不超过条件记录熵；记录字母表最多 2^B 个值，因此熵至多 B ln 2。
+114	Place (111) below the information ceiling (113), isolate log D, and exponentiate.	把 (111) 放在 (113) 的信息上限之下，分离 log D，再取指数。
+115	Insert h(π)=d(ln 2−1) from (85) into the prefactor in (114) and simplify.	将 (85) 的 h(π)=d(ln 2−1) 代入 (114) 的系数并化简。
+116	This defines the transcript entropy remaining after both the parameter and public conditions are known.	这一定义表示参数和公共条件都已知后，记录中还剩下的熵。
+117	Expand conditional mutual information as H(T|W)−H(T|Θ,W), then rearrange and use (116).	将条件互信息展开为 H(T|W)−H(T|Θ,W)，再整理并用 (116)。
+118	In (117), upper-bound H(T|W) by (113) and lower-bound parameter information by (111); solve for hT. The h on the left of the original display denotes hT from (116).	在 (117) 中用 (113) 控制左边的熵，用 (111) 控制参数信息的下界，再解出 hT；原式左边的 h 指 (116) 的 hT。
+119	Define the block score by adding the q single-observation scores. Independence later controls its exponential moments.	将 q 个单观测得分相加，定义块得分；后面用独立性控制其指数矩。
+120	Factor the exponential moment of the independent sum (119), take logs, and add q copies of (19).	分解独立和 (119) 的指数矩，取对数，再将 (19) 的上界加 q 次。
+121	Project onto the direction of the conditional mean, apply Jensen and (120), then choose the tilt in (131). Steps (124)–(134) prove the bound.	沿条件均值方向投影，用 Jensen 和 (120)，再选 (131) 的倾斜参数；完整步骤在 (124) 至 (134)。
+122	Square (121) and use (x+y)²≤2x²+2y².	将 (121) 平方，再用 (x+y)²≤2x²+2y²。
+123	Set b=0 in the unsquared bound (121) and square directly, avoiding the factor-two loss in (122).	在未平方的 (121) 中令 b=0，直接平方，避免 (122) 中额外的二倍损失。
+124	These abbreviations name the event surprisal and the score mean conditional on that event.	这两个缩写分别表示事件的惊奇度，以及在该事件下的得分条件均值。
+125	For a nonzero conditional mean, divide it by its Euclidean norm. This chooses the direction with maximal projection onto that mean.	条件均值非零时除以自身范数，选出与该均值投影最大的单位方向。
+126	Use eᵀμE=‖μE‖ from (125), then apply Jensen to the convex exponential under the conditional law given E.	由 (125) 得 eᵀμE=‖μE‖，再在给定 E 的条件分布下，对凸指数函数使用 Jensen。
+127	Write conditioning on E as multiplication by 1E/p. The exponential is nonnegative, so removing the indicator only increases its expectation.	把给定 E 的平均写成乘 1E/p；指数非负，去掉指示量只会增大期望。
+128	Combine (126) and (127), take logs, and insert the directional log-MGF bound (120) with u=λe.	合并 (126)、(127)，取对数，再在 (120) 中代入 u=λe。
+129	The conditioned law has density 1E/p relative to the original law. Average its log density under that conditioned law.	条件分布相对原分布的密度为 1E/p，再在条件分布下对该密度的对数取平均。
+130	Divide (128) by the positive tilt λ.	将 (128) 两边除以正的倾斜参数 λ。
+131	Choose η to balance the terms ℓ/η and vqη/2; then map η to an admissible tilt λ*=η/(1+bη).	选择 η 使 ℓ/η 与 vqη/2 平衡，再令 λ*=η/(1+bη) 保证倾斜参数合法。
+132	Insert λ* from (131), multiply by b, and subtract from one. Positivity of the denominator gives bλ*<1.	代入 (131) 的 λ*，乘 b 再用一减去它；分母为正保证 bλ*<1。
+133	Invert λ* from (131), multiply by ℓ, and simplify ℓ/η using the definition of η.	将 (131) 的 λ* 取倒数乘 ℓ，再用 η 的定义化简 ℓ/η。
+134	Substitute both identities in (132), cancel 1+bη, and simplify vqη/2 using (131).	代入 (132) 的两个恒等式，约掉 1+bη，再用 (131) 化简 vqη/2。
+135	Add (133) and (134) in (130), square, and apply the elementary squared-sum inequality.	将 (133)、(134) 相加代入 (130)，平方后用平方和不等式。
+136	Apply (122) to every event {T=t}, multiply by its probability, and sum. The first average surprisal equals entropy.	对每个 {T=t} 用 (122)，乘事件概率再求和；一阶惊奇度的平均就是熵。
+137	Repeat the averaging in (136), using the sharper event bound (123) valid when b=0.	重复 (136) 的平均步骤，改用 b=0 时更紧的事件界 (123)。
+138	This defines self-information as the negative log probability of the realized transcript.	按定义，自信息等于实际出现的通信记录概率的负对数。
+139	This lemma follows by bounding the tail in (140)–(141) and integrating it in (142)–(144). It uses alphabet size, not a lower bound on message probabilities.	此引理先在 (140) 至 (141) 控制尾部，再在 (142) 至 (144) 积分；只用消息种类数，不要求每条消息概率有正下界。
+140	The event LT>x means pT(t)<e^(−x). Sum these probabilities over at most M≤2^B possible positive-probability messages.	LT>x 等价于 pT(t)<e^(−x)，对最多 M≤2^B 个正概率消息求和。
+141	Combine (140) with the universal bound that a probability is at most one.	将 (140) 与任何概率都不超过一这一事实合并。
+142	Write LT² as the integral of 2x·1{LT>x}, then exchange expectation and integration by Tonelli since the integrand is nonnegative.	将 LT² 写成 2x·1{LT>x} 的积分，被积函数非负，因此由 Tonelli 交换期望和积分。
+143	Insert (141) into (142). Split at a=B ln 2, where 1=e^(a−x), and evaluate the two pieces.	把 (141) 代入 (142)，在两种上界相等的 a=B ln 2 处分段，再计算积分。
+144	In the second integral of (143), set y=x−a. Use ∫e^(−y)dy=1 and ∫ye^(−y)dy=1 on the positive half-line.	在 (143) 的第二项令 y=x−a，再用正半轴上指数密度积分和其一阶矩都为一。
+145	For every fixed W=w, apply (139) to its conditional transcript alphabet, then average over W.	固定每个 W=w，对条件记录字母表使用 (139)，最后对 W 平均。
+146	This specifies the independent-block experiment, with machine i holding qi samples and q bounding every block size.	这是独立块实验的设定，机器 i 持有 qi 个样本，q 是统一的块大小上界。
+147	Use the rectangle factorization (150)–(153), score identity (158), and event bounds (160)–(165); average the result over seeds via (166).	使用矩形分解 (150) 至 (153)、得分恒等式 (158) 和事件界 (160) 至 (165)，再用 (166) 对种子平均。
+148	Repeat the rectangle argument using (123) instead of (122). The quadratic surprisal term disappears, giving (168)–(169).	在矩形论证中用 (123) 替换 (122)，惊奇度平方项消失，得到 (168) 至 (169)。
+149	Fix the seeds and a target transcript. Intersect the constraints on machine i at every step where that machine is scheduled to speak.	固定种子与目标记录，对所有安排机器 i 发言的步骤，把其必须满足的条件取交集。
+150	A realized transcript makes every local check true. Conversely, induction along the public schedule shows all local checks reproduce every bit and termination.	实际记录必然满足所有本机检查；反过来沿公共调度逐步归纳，所有检查保证每个比特和停止时刻都一致。
+151	These definitions name each local check probability, the complete leaf probability, and local surprisal.	这些定义分别命名本机检查概率、完整叶子概率和局部惊奇度。
+152	Use independence of blocks in (150) to factor the event probability. Taking the negative logarithm converts the product to the sum of local surprisals.	在 (150) 中用块独立性分解概率，再取负对数，把乘积变成局部惊奇度之和。
+153	Write the conditional probability as a joint probability divided by p(t). Both numerator and denominator factor across independent blocks using (150) and (152).	把条件概率写成联合概率除以 p(t)，分子分母都由独立性、(150) 和 (152) 逐块分解。
+154	Define Ai as the raw score of block i and ai(t) as its mean given the transcript and fixed seeds.	定义 Ai 为块 i 的原始得分，ai(t) 为给定通信记录和固定种子后的均值。
+155	In the product conditional law (153), block i is conditioned only on its own checklist event Ei(t). Apply that marginal law to Ai.	在 (153) 的条件乘积分布中，块 i 只需满足自身检查事件 Ei(t)，将这一边缘分布用于 Ai。
+156	Under (153), blocks i and j remain conditionally independent. The conditional mean of their outer product factors into ai(t)aj(t)ᵀ.	由 (153)，块 i 和 j 在条件下仍独立，其外积的条件平均分解为 ai(t)aj(t)ᵀ。
+157	Average (156) over T with the tower property. The original block scores are independent and centered, so their unconditional cross moment is zero.	对 (156) 的 T 用迭代期望，回到原始块得分；块独立且均值为零，因此交叉矩为零。
+158	Apply (75) to the complete-data score ΣiAi, then use linearity of conditional expectation and (154).	对完整数据得分 ΣiAi 应用 (75)，再用条件期望的线性性和 (154)。
+159	The trace of Fisher information is the expected squared score norm. Insert (158), expand the square, and remove cross terms by (157).	Fisher 信息迹是得分范数平方的期望；代入 (158)，展开后用 (157) 消掉交叉项。
+160	Apply the event-score bound (122) to machine i's block and its local event, using (155) and the probabilities in (151).	用 (155) 和 (151)，对机器 i 的块及本机事件应用得分事件界 (122)。
+161	Substitute (160) into the sum in (159) and replace qi by its uniform upper bound q.	将 (160) 代入 (159) 的求和，再将 qi 放大到统一上界 q。
+162	Replace the sum of local surprisals by total surprisal using (152). Its conditional average is the definition of transcript entropy.	用 (152) 将局部惊奇度之和换成总惊奇度，其条件平均按定义就是记录熵。
+163	All ℓi are nonnegative, so expanding (Σiℓi)² adds only nonnegative cross terms. Use (152) for the final equality.	所有 ℓi 非负，展开和的平方只增加非负交叉项；最后一个等号用 (152)。
+164	Apply (162) to the first expectation in (161), and (163) to the second.	对 (161) 的第一个期望用 (162)，第二个期望用 (163)。
+165	The fixed-seed transcript has at most 2^B leaves. Apply Lemma 2, equation (139), to the last expectation in (164).	固定种子的记录最多 2^B 个叶子，对 (164) 最后一项用引理 2，即 (139)。
+166	Apply the Fisher chain rule to (T,R). The seed law does not depend on θ, so its own information contribution is zero.	对 (T,R) 用 Fisher 链式法则；种子分布不依赖 θ，因此自身信息贡献为零。
+167	This is the definition of conditional entropy as an average over the conditioning variable R.	这是条件熵的定义，即对条件变量 R 的不同取值取平均。
+168	Apply the sub-Gaussian event bound (123) to the local conditioning event in (155).	对 (155) 的本机条件事件使用次高斯事件界 (123)。
+169	Insert (168) into (159), use qi≤q, and convert the sum of surprisals to entropy via (162).	把 (168) 代入 (159)，用 qi≤q，再由 (162) 将惊奇度之和换成熵。
+170	Fix the design. Define shared indices by multiplicity at least two, and private indices by removing every other machine's list from Si.	固定设计后，以至少两次出现定义共享索引；从 Si 中去掉其他机器的全部索引，得到私有索引。
+171	Collect observation values over the index sets (170), and define r, qi, q as their cardinalities and largest private block size.	按 (170) 的索引集合收集样本值，再用集合大小及最大私有块大小定义 r、qi、q。
+172	The sets in (170) are disjoint and the pool draws are independent. Thus their observation vectors have the displayed product law.	(170) 的集合互不相交，样本池各观测独立，因此对应样本向量服从所写的乘积分布。
+173	Each private set is a subset of Si, which contains m indices. Taking the maximum over i preserves the bound.	每个私有集合都包含在大小为 m 的 Si 中，对 i 取最大值后仍不超过 m。
+174	Reveal shared samples only in the information comparison. Apply the chain rule (181) and Lemma 3 to private blocks as in (184)–(187).	仅在信息比较中揭示共享样本，用链式法则 (181)，再按 (184) 至 (187) 对私有块使用引理 3。
+175	In (174), use q≤m from (173) and H(T|G,R)≤H(T|R) from (188).	在 (174) 中用 (173) 的 q≤m，以及 (188) 的条件熵不增性质。
+176	Use the sub-Gaussian version (148) in the same shared-plus-private chain-rule argument.	在同一个共享加私有的链式法则论证中，改用次高斯版本 (148)。
+177	For unit-covariance Gaussian means, (190) gives v=1 and b=0. Insert these into (176), then use q≤m and (188).	单位协方差高斯均值由 (190) 得 v=1、b=0，代入 (176)，再用 q≤m 和 (188)。
+178	The original T is obtained from (G,T) by discarding G. Apply matrix data processing (79) at fixed seeds.	原始 T 是从 (G,T) 丢弃 G 得到的，因此在固定种子下使用矩阵数据处理界 (79)。
+179	Apply the trace chain rule (84) to the joint observation (G,T).	对联合观测 (G,T) 应用迹的链式法则 (84)。
+180	G contains r independent draws. Their scores add, and centered independent cross terms vanish, as in (76).	G 含 r 个独立观测，得分相加；如 (76)，独立且中心化使交叉项消失。
+181	Take traces in (178), substitute (179), then replace JG by (180).	对 (178) 取迹，代入 (179)，再用 (180) 替换 JG。
+182	In (172), the private blocks are independent of G, so conditioning on G leaves their product law unchanged.	由 (172)，私有块与 G 独立，因此给定 G 后仍是原来的乘积分布。
+183	At fixed g and seeds ρ, the transcript is a deterministic map of private blocks. Integrate its output indicator against (182).	固定 g 与种子 ρ 后，记录是私有块的确定函数，将其输出事件指示量按 (182) 积分。
+184	The experiment (183) has independent private blocks of size at most q, so Lemma 3, equation (147), applies directly.	(183) 中私有块独立、大小至多 q，因此直接使用引理 3 的 (147)。
+185	Average (184) over G at the fixed parameter. Conditional entropy averages to Hθ(T|G,R=ρ), while KB is uniform.	固定参数后对 G 平均 (184)，条件熵合成 Hθ(T|G,R=ρ)，KB 则是统一常数。
+186	Insert (185) into the chain-rule comparison (181), retaining the exact one-sample Fisher trace.	将 (185) 代入链式法则比较 (181)，保留单样本 Fisher 信息迹的精确形式。
+187	Use the chain rule and the parameter independence of R, exactly as in (166).	与 (166) 相同，用链式法则及 R 不依赖参数这一事实。
+188	Expand conditional mutual information between T and G given R as an entropy difference. Its nonnegativity gives the inequality.	将给定 R 后 T 与 G 的条件互信息展开成两个熵的差，再用互信息非负。
+189	At fixed G and seeds, replace (147) by its b=0 version (148).	固定 G 和种子后，把 (147) 换成 b=0 的版本 (148)。
+190	Differentiate the Gaussian location log density. The residual is N(0,Id), whose covariance and log-MGF are Id and ‖u‖²/2.	对高斯位置模型的对数密度求导；残差服从 N(0,Id)，其协方差与对数矩生成函数分别给出后两式。
+191	When q=0, T is deterministic given (G,R). Its conditional information is zero in (181); then use tr IX≤dv from (22).	q=0 时，给定 (G,R) 后 T 确定，所以 (181) 的条件信息为零；再用 (22) 的迹上界。
+192	Apply (175) for each fixed sampling design and average. The design contributes no Fisher information, and Er(S)=r̄.	对每个固定设计使用 (175) 后平均；设计不贡献 Fisher 信息，而且 Er(S)=r̄。
+193	Average (192) over Θ drawn from π. The average fixed-parameter conditional entropy is H(T|Θ,S,R).	对先验 π 下的 Θ 平均 (192)，固定参数条件熵的平均变成 H(T|Θ,S,R)。
+194	Define the Bayes risk and conditional transcript entropy for the chosen protocol, with the same prior as (85).	对选定协议使用 (85) 的先验，定义贝叶斯风险和条件记录熵。
+195	This is (193) with hT abbreviated using (194).	这就是 (193)，只用 (194) 将条件熵缩写为 hT。
+196	Group the coefficient 4v as A and all information terms not multiplying hT as Q, including Jπ=4π²d.	把系数 4v 记成 A，把所有不乘 hT 的信息项合并为 Q，其中包括先验信息 4π²d。
+197	Apply the Bayesian inequality (101) to (195), add prior information, and substitute (196). Rearranging gives the equivalent reciprocal form.	将贝叶斯不等式 (101) 用于 (195)，加入先验信息并代入 (196)，整理得到等价倒数形式。
+198	Divide entropy budget (118) by d, substitute h(π)=d(ln 2−1), and separate the constant from log(D/d).	将熵预算 (118) 除以 d，代入先验熵，再把常数与 log(D/d) 分开。
+199	This defines the constant collected from the prior entropy and Gaussian maximum-entropy factor in (198).	定义这个常数，用来收集 (198) 中先验熵与高斯最大熵系数的常数项。
+200	Define x by scaling D with m/d, the inverse of the single-machine risk scale.	将 D 乘 m/d 来定义 x，以单机器风险尺度的倒数归一化。
+201	Rearrange the definition of s in (30), convert base-two logs to natural logs, and use D/d=x/m from (200).	整理 (30) 中 s 的定义，把二进制对数换成自然对数，再用 (200) 的 D/d=x/m。
+202	Substitute both identities (201) into (198). The +½ln m and −½ln m terms cancel.	将 (201) 两式代入 (198)，其中正负的 ½ln m 相互抵消。
+203	Substitute the upper bound on hT in (202) into the right-hand side of (197).	把 (202) 对 hT 的上界代入 (197) 右边。
+204	Replace D by dx/m in (203), then divide both sides by Amd/2.	在 (203) 中用 D=dx/m，再将两边除以 Amd/2。
+205	Define the reciprocal-risk variable t=2/(Ax), then solve for x and D using (200).	定义倒数风险变量 t=2/(Ax)，再结合 (200) 解出 x 和 D。
+206	In (204), substitute ln x=ln(2/A)−ln t from (205), then move ln t to the left.	在 (204) 中代入由 (205) 得到的 ln x，再把 ln t 移到左边。
+207	Insert A and Q from (196), divide each term by Amd/2, and simplify its constants.	代入 (196) 的 A、Q，将每一项除以 Amd/2，再化简常数。
+208	From (139), KB is a quadratic polynomial in B with fixed coefficients, so it is bounded by a fixed multiple of (B+1)².	由 (139)，KB 是系数固定的 B 的二次多项式，因此可用 (B+1)² 的固定倍数控制。
+209	Define F to group the constant, positive surplus, shared-sample cost, and quadratic bit-budget correction from (206)–(208).	定义 F，合并 (206) 至 (208) 中的常数、正剩余量、共享样本成本和比特预算平方修正。
+210	Use s≤s+, m≥1, and (207)–(209) to bound every term on the right of (206) by a fixed multiple of F.	用 s≤s+、m≥1 和 (207) 至 (209)，将 (206) 右边每一项都控制为 F 的固定倍数。
+211	Split into t≥1, where ln t≥0 lets you drop it in (210), and t<1, where t≤F since F≥1.	分 t≥1 与 t<1：前者在 (210) 去掉非负 ln t，后者由 F≥1 直接得 t≤F。
+212	Insert t≤C₂F into D=2d/(Amt) from (205), then expand mF using (209).	把 t≤C₂F 代入 (205) 的 D 表达式，再用 (209) 展开 mF。
+213	This states the target refinement term after removing the extra quadratic correction in (212); (214)–(218) justify that removal.	这里写出从 (212) 去掉额外平方修正后的目标精估项，去除依据在 (214) 至 (218)。
+214	In the case m≥n², use B=nk and nk+1≤(k+1)n, then square and apply n²≤m.	在 m≥n² 时，用 B=nk 及 nk+1≤(k+1)n，平方后再用 n²≤m。
+215	Bound the added correction by (214). The base denominator is at least m, so that correction costs only a fixed multiplicative factor.	用 (214) 控制新增修正；原分母至少为 m，所以修正只导致固定倍数的增大。
+216	In the case m<n², log₂m<2log₂n. Substitute this in the definition of s in (30).	在 m<n² 时 log₂m<2log₂n，把它代入 (30) 的 s 定义。
+217	For fixed d,k and sufficiently large n, log₂n≤nk/(2d). Insert this into (216).	d、k 固定且 n 足够大时，log₂n≤nk/(2d)，将其代入 (216)。
+218	The target denominator is at least ms. Apply s≥nk/(2d) from (217), then take reciprocals.	目标分母至少为 ms，用 (217) 的 s 下界，再取倒数。
+219	For m≥n², use (212) and (215). For m<n², (218) shows that the sample lower bound (107) already dominates the target term.	m≥n² 时用 (212)、(215)；m<n² 时，(218) 表明样本下界 (107) 已控制目标项。
+220	Combine the two sample floors (107), the bit floor (114), and the refinement floor (219), choosing the smallest fixed constant.	合并 (107) 的两个样本项、(114) 的比特项和 (219) 的精估项，取各固定常数中最小者。
+221	Average the sharper Gaussian information inequality (177) over the design and prior.	对更紧的高斯信息不等式 (177) 在设计与先验下平均。
+222	Apply (101) to (221), include Jπ=4π²d, and rearrange to bound d²/D.	对 (221) 使用 (101)，加入 Jπ=4π²d，再整理为对 d²/D 的界。
+223	This defines a new reciprocal-risk variable specifically for the Gaussian calculation.	这是高斯计算专用的一个新的倒数风险变量定义。
+224	Divide (222) by md and identify d/(mD) as t using (223).	将 (222) 除以 md，再由 (223) 把 d/(mD) 认成 t。
+225	Multiply entropy budget (198) by two, use D/d=1/(mt), and replace 2(B/d)ln 2 by ln m+2s ln 2.	将熵预算 (198) 乘二，用 D/d=1/(mt)，并替换 2(B/d)ln 2；ln m 项抵消。
+226	Collect logarithms: ln(2πe)−2ln 2+2 equals ln(πe³/2).	合并对数：ln(2πe)−2ln 2+2 等于 ln(πe³/2)。
+227	Substitute (225) and constant identity (226) into (224), then move ln t to the left.	把 (225)、常数恒等式 (226) 代入 (224)，再将 ln t 移到左边。
+228	Name the right-hand side of (227) z, then exponentiate: exp(t+ln t)=t·exp(t).	将 (227) 右边记作 z，再取指数；exp(t+ln t)=t·exp(t)。
+229	This is the defining identity of the positive principal Lambert W function, the inverse of t↦t·exp(t).	这是正实数上主支 Lambert W 函数的定义，它是 t↦t·exp(t) 的反函数。
+230	Use monotonicity to invert (228) with W₀, then insert t=d/(mD) from (223) and the value of z from (227).	利用单调性，用 W₀ 反解 (228)，再代入 (223) 的 t 定义和 (227) 的 z。
+231	This is the support requirement of Lemma 4. The sampling rule (234) enforces it by assigning zero probability outside S.	这是引理 4 的可访问性要求；抽样规则 (234) 对 S 外索引赋零概率来保证它。
+232	Multiply the uniform conditional probabilities in (243) over t=1,…,m by the chain rule of probability.	把 (243) 的均匀条件概率按 t=1,…,m 用概率链式法则相乘。
+233	Define the already exposed index set from the generated history, then count its distinct members.	从已生成历史定义已经暴露的索引集合，再计算其中不同元素的数量。
+234	This is the resampling construction. Give each seen index probability 1/N and distribute the remaining mass equally among the unseen indices in S.	这是重采样规则的构造：每个旧索引分得 1/N，将剩余概率均匀分给 S 中尚未出现的索引。
+235	At most one new index appears per step, so a history of length t−1 contains at most t−1 distinct indices. Use t≤m.	每一步最多增加一个新索引，长度 t−1 的历史至多包含 t−1 个不同索引，再用 t≤m。
+236	There are r old indices and m−r unused local indices. Add their probabilities from (234) and cancel m−r.	旧索引有 r 个，未用本地索引有 m−r 个；将 (234) 的概率相加并约掉 m−r。
+237	For any S containing the history, (238)–(239) give the same history likelihood. Bayes' rule therefore preserves the uniform prior over all compatible subsets.	对所有包含历史的 S，(238) 至 (239) 给出相同历史似然，因此贝叶斯更新后在所有相容子集上仍均匀。
+238	Apply the probability chain rule to the generated history conditional on S; each factor is the sequential transition in (234).	给定 S 后对生成历史使用概率链式法则，每个因子就是 (234) 的一步转移。
+239	For each step in (238), select the old-index or new-index branch of (234) according to the fixed history.	在 (238) 每一步，按固定历史判断新旧索引，选择 (234) 对应分支。
+240	For an already exposed index, the old-index branch of (234) is 1/N for every compatible S, so averaging over S keeps 1/N.	对已暴露索引，(234) 的旧索引分支在每个相容 S 下都为 1/N，对 S 平均后不变。
+241	Under (237), the unused subset is uniform of size m−r in a population of N−r unseen indices. Its inclusion probability is (m−r)/(N−r).	由 (237)，未用子集在 N−r 个未见索引中均匀取 m−r 个，包含固定索引的概率就是大小之比。
+242	Multiply the probability of choosing the new-index branch, the inclusion probability (241), and the uniform choice among m−r unused local indices.	将选择新索引分支的概率、(241) 的包含概率、在 m−r 个本地新索引中的均匀选择概率相乘。
+243	The old-index case is (240), and the unseen-index case is (242). Together they cover every a∈[N].	旧索引由 (240) 给出，新索引由 (242) 给出，两种情形覆盖 [N] 中所有 a。
+244	Condition on J₁. Equation (243) makes the probability of selecting that same index at step two equal to 1/N, then average over J₁.	先给定 J₁，(243) 保证第二次选同一索引的概率为 1/N，最后对 J₁ 平均。
+245	For each machine use (232). Independent access sets and independent private seeds multiply these laws across machines; all are independent of the pool values.	每台机器用 (232)，再由访问集合与私有种子独立跨机器相乘；这些变量也独立于样本池取值。
+246	Define the empirical law by placing mass 1/N at every pool observation, and evaluate the observation at each resampled index.	在每个样本池观测处放质量 1/N 定义经验分布，再读取每个重采样索引的观测值。
+247	Push the independent uniform index law (245) through the fixed mapping a↦Xa. Each output then has empirical law (246).	将 (245) 的独立均匀索引通过固定映射 a↦Xa，所得每个输出都服从 (246) 的经验分布。
+248	Integrate ψj against the empirical measure in (246). An empirical-measure integral is the average of the statistic over the pool.	将 ψj 对 (246) 的经验测度积分；经验测度积分就是样本池统计量的平均。
+249	This constructs a randomized bit: compare an independent uniform [0,1] draw with the bounded value ψj(Y).	这是随机比特的构造：拿独立的 [0,1] 均匀随机数与有界值 ψj(Y) 比较。
+250	Condition first on Y in (249): a uniform draw falls below its threshold with probability ψj(Y). Average using the empirical law (247).	先在 (249) 给定 Y，均匀数低于阈值的概率为 ψj(Y)，再按 (247) 的经验分布平均。
+251	For fixed j, (247) gives independent resampled observations and (249) uses independent uniforms. Combine this independence with the mean in (250).	固定 j 后，(247) 给出独立重采样观测，(249) 使用独立均匀数，再结合 (250) 的均值。
+252	Define the local success count by summing the m Bernoulli bits at machine i for coordinate j.	对机器 i、坐标 j 的 m 个伯努利比特求和，定义本地成功计数。
+253	Apply the independent Bernoulli product law (251) to the sum defined in (252). A sum of m iid Bernoulli(pN,j) variables is binomial.	将独立伯努利乘积律 (251) 用于 (252) 的求和，m 个同参数伯努利和服从二项分布。
+254	Take expectation in the empirical average (248). Every iid pool observation has statistic mean μj(θ) by (24).	对 (248) 的经验平均取期望，每个同分布观测的统计量均值都是 (24) 的 μj(θ)。
+255	The average (248) is unbiased by (254). Independence divides the statistic variance by N, and a [0,1]-valued variable has variance at most 1/4.	(248) 由 (254) 无偏；独立性使方差除以 N，而 [0,1] 变量的方差至多 1/4。
+256	Sum the d coordinate bounds (255). The squared Euclidean norm is the sum of coordinate squared errors, even if coordinates are dependent.	将 (255) 的 d 个坐标界相加；欧氏范数平方按定义就是各坐标误差平方之和，不要求坐标独立。
+257	Split p̂−μ as (p̂−pN)+(pN−μ), use the squared-sum inequality, and insert (256).	将 p̂−μ 拆成两段，使用平方和不等式，再代入 (256)。
+258	This is the imported robust scalar encoding guarantee from the cited Cai–Wei construction under the stated approximation and tail hypotheses. Equations (291)–(293) verify those hypotheses here.	这是在所述近似和尾部条件下引用的 Cai–Wei 稳健标量编码保证；(291) 至 (293) 负责验证本问题满足条件。
+259	Define q as half the local sample size rounded down, so two groups of size q fit inside m observations.	将 q 定义为 m/2 向下取整，保证两个 q 大小的样本组都能放进 m 个观测。
+260	Split the Bernoulli observations from (251) into two disjoint groups and take each group's average.	将 (251) 的伯努利观测分成互不相交的两组，各自取平均。
+261	Estimate p(1−p) from the second group, then add independent Gaussian noise to the first group's mean with the prescribed complementary variance.	用第二组估计 p(1−p)，再按规定的互补方差给第一组均值添加独立高斯噪声。
+262	For x∈[0,1], 0≤x(1−x)≤1/4. Apply this to Ū′ in (261), then subtract from one and divide by q.	对 (261) 的 Ū′ 使用 [0,1] 上的 x(1−x) 范围，再用一减去并除以 q。
+263	This lemma is proved by the summand replacement bound (278), Gaussian variance correction (283), and mixture comparison (285).	这个引理由求和项替换界 (278)、高斯方差修正 (283) 以及混合比较 (285) 证明。
+264	Condition on the two Bernoulli groups in (261); the independent Gaussian noise is centered. The first-group average has mean p.	在 (261) 先给定两组伯努利变量，独立高斯噪声均值为零，而第一组平均的期望为 p。
+265	Apply Hoeffding's exponential-moment lemma to each centered Bernoulli variable scaled by 1/q, and multiply the q independent factors.	对每个除以 q 的中心化伯努利变量使用 Hoeffding 指数矩引理，再乘 q 个独立因子。
+266	Integrate out G in (261) using its Gaussian MGF, factor by group independence, then use (265) and 1−v̂≤1 from (262).	先对 (261) 中 G 用高斯矩生成函数积分，由两组独立性分解，再用 (265) 和 (262)。
+267	At a fixed realized variance estimate w, define the conditional noise variance appearing in (261).	固定方差估计值 w 后，按 (261) 定义相应的条件噪声方差。
+268	This defines Gaussian smoothing of the bounded test function using the noise scale (267).	使用 (267) 的噪声尺度，对有界测试函数定义高斯平滑。
+269	Write (268) as convolution with the Gaussian density, differentiate that density three times, and bound by ‖f‖∞ times its derivative's L1 norm.	把 (268) 写成高斯密度卷积，对密度求三阶导，再用 f 的上确界范数乘导数的 L1 范数控制。
+270	Use σw²≥3/(4q) from (262) in (269). The standard Gaussian third derivative has finite L1 norm.	在 (269) 用 (262) 的方差下界，标准高斯密度三阶导的 L1 范数为有限常数。
+271	Define the centered Bernoulli summands so their sum equals Ū−p in (260).	定义这些中心化伯努利求和项，使其和正好等于 (260) 的 Ū−p。
+272	Choose independent Gaussian replacement summands with the same variance as Za in (271).	选择独立高斯替换项，其方差与 (271) 的 Za 相同。
+273	Centering gives zero means; Bernoulli variance gives vp/q². Bounded Bernoulli moments and Gaussian absolute moments give the uniform q^(−3) bound.	中心化给零均值，伯努利方差给 vp/q²；有界伯努利矩与高斯绝对矩给统一的 q^(−3) 上界。
+274	Define the hybrid sum with all terms except the one being replaced: earlier terms are Gaussian and later ones still Bernoulli.	定义不含当前替换项的混合和：较早的项已换成高斯，较后的项仍为伯努利。
+275	Apply second-order Taylor expansion to the smoothed function (268); its third derivative controls the cubic remainder.	对平滑函数 (268) 做二阶泰勒展开，三阶导数控制三次余项。
+276	Apply (275) with Za and Ya at p+Sa. Matching first two moments (273) cancel the first three terms; bound remainders using (270) and (273).	在 p+Sa 分别代入 Za、Ya 做 (275)；由 (273) 前两阶矩匹配消去前三项，再用 (270)、(273) 控制余项。
+277	Telescope over the q single-summand replacements in (276). Their q errors of order q^(−3/2) sum to order q^(−1/2).	对 (276) 的 q 次单项替换作望远镜求和，q 个 q^(−3/2) 误差累积为 q^(−1/2)。
+278	The Gaussian replacement sum has variance vp/q. Add smoothing variance (267), then take the supremum over bounded test functions in (277).	高斯替换和的方差为 vp/q，再加 (267) 的平滑方差；对 (277) 中有界测试函数取上确界。
+279	Define aw as the conditional variance in (278) divided by the reference variance 1/q.	将 (278) 的条件方差除以参考方差 1/q，定义这个比值 aw。
+280	In (279), both w and vp lie in [0,1/4]. Insert their extreme values.	在 (279) 中，w 和 vp 都属于 [0,1/4]，代入端点即可。
+281	Use the KL formula for equal-mean one-dimensional Gaussians with variance ratio aw; the common p and q cancel.	使用同均值一维高斯的 KL 公式，方差比为 aw，共同的 p 和 q 被约去。
+282	The function a−1−ln a and its derivative vanish at one. Its second derivative 1/a² is bounded on (280), so Taylor gives a quadratic bound.	函数 a−1−ln a 及一阶导在一处为零，二阶导 1/a² 在 (280) 范围有界，因此泰勒给二次上界。
+283	Apply Pinsker's TV≤√(KL/2) to (281), then (282) and aw−1=vp−w from (279).	对 (281) 使用 Pinsker 的 TV 与 KL 关系，再用 (282) 和 (279)。
+284	The map x(1−x) is one-Lipschitz on [0,1]. Apply it to Ū′ and p, then Cauchy–Schwarz and Var(Ū′)=vp/q.	[0,1] 上 x(1−x) 是一 Lipschitz；用于 Ū′、p，再用 Cauchy–Schwarz 和样本均值方差。
+285	TV is convex under mixing. Average a triangle inequality, applying (278) to the replacement error and (283)–(284) to variance mismatch.	全变差对混合是凸的；对三角不等式取平均，用 (278) 控制替换误差，用 (283)、(284) 控制方差不匹配。
+286	Use conditional centering of the noise in (261), Var(Ū)=vp/q, and Ev̂=vp(1−1/q), obtained from the mean and variance of Ū′.	用 (261) 中噪声条件均值为零、样本均值方差以及由 Ū′ 一二阶矩算出的 Ev̂。
+287	This defines a round-robin assignment of the B bit positions to d coordinates using the remainder modulo d.	按模 d 的余数循环分配 B 个比特位置，这里定义轮流分配规则。
+288	Define Bj as coordinate j's total assigned bits, and Qj as the count of machines receiving at least one such bit.	将 Bj 定义为坐标 j 分到的总比特，将 Qj 定义为至少分到一个该坐标比特的机器数。
+289	Every machine contributes its k positions. Round-robin assignment (287) makes total coordinate counts differ from B/d by at most one.	每台机器贡献 k 个位置，循环分配 (287) 保证各坐标总数与 B/d 相差不超过一。
+290	Every active machine sends at most k bits for coordinate j, so Bj≤kQj; there are at most n active machines.	每台活跃机器给坐标 j 最多 k 比特，因此 Bj≤kQj；活跃机器也至多 n 台。
+291	Choose the standard deviation of the reference Gaussian in (263), whose variance is 1/q.	选择 (263) 中参考高斯的标准差，其方差为 1/q。
+292	For integer m≥2, floor(m/2)≥m/3. Combine this with the large-block regime m≥n and Qj≤n from (290).	整数 m≥2 时 floor(m/2)≥m/3，再结合大块条件 m≥n 和 (290) 的 Qj≤n。
+293	Use Qj≤3q from (292), rearrange to 1/q≤3/Qj, take square roots, and multiply by CTV.	由 (292) 得 Qj≤3q，整理为 1/q≤3/Qj，开平方再乘 CTV。
+294	Apply encoding guarantee (258) with Q=Qj, B′=Bj, and σ²=1/q from (291), after verifying its tolerance in (293).	在 (293) 验证容忍度后，对 (258) 代入 Q=Qj、B′=Bj、σ²=1/q。
+295	Substitute σ=q^(−1/2) in the surplus B′−log₂(1/σ) appearing in (258), and define its positive part.	在 (258) 的剩余预算表达式中代入 σ=q^(−1/2)，并定义正部。
+296	Combine q≥m/3 from (292) with Qj≥Bj/k from (290) and Bj≥nk/d−1 from (289). For fixed d,k and large n, Qj is a fixed fraction of n.	结合 (292) 的 q 下界、(290) 的 Qj 下界及 (289) 的 Bj 下界；固定 d、k 且 n 大时，Qj 至少为 n 的固定比例。
+297	From (289), Bj≥B/d−1. Exponentiate −2 times that inequality, then identify aB using (30).	由 (289) 得 Bj≥B/d−1，对负二倍取指数，再由 (30) 认出 aB。
+298	Subtract the global surplus definition (30) from the coordinate surplus definition (295), then combine the two logarithms.	将 (295) 的坐标剩余量减去 (30) 的全局剩余量，再合并对数。
+299	Use (298), budget rounding (289), and m/q≤3 to bound |sj−s| by M. The positive-part map is one-Lipschitz; factor the resulting bound.	由 (298)、(289) 及 m/q≤3 得 |sj−s|≤M；正部映射是一 Lipschitz，再整理成乘法界。
+300	Use q≥m/3 from (292) and rearrange (299) to bound the reciprocal of 1+sj,+. Multiply the two bounds.	用 (292) 的 q≥m/3，并将 (299) 整理为 1+sj,+ 的倒数界，两界相乘。
+301	Substitute the three termwise bounds (296), (297), and (300) into the maximum in (294), absorbing fixed factors into C.	把 (296)、(297)、(300) 三个逐项上界代入 (294) 的最大值，并将固定系数并入 C。
+302	This is the sample-budget condition of Lemma 6. The localization count (326) fits within Q/2 by (327) when C₀ is large enough.	这是引理 6 的机器预算条件；C₀ 足够大时，(326) 的定位机器数由 (327) 保证不超过 Q/2。
+303	The construction is analyzed in (304)–(338). The final bound (338), including localization failure, gives this uniform risk guarantee.	构造与分析在 (304) 至 (338)，其中 (338) 计入定位失败后给出这个统一风险保证。
+304	A binomial count is the sum of m iid Bernoulli(p) variables. Their characteristic functions multiply, each contributing 1−p+pe^(it).	二项计数是 m 个独立伯努利和，特征函数相乘，每项贡献 1−p+pe^(it)。
+305	This defines a legal randomized one-bit encoder because (1+cos(tK))/2 lies in [0,1].	这是合法随机单比特编码器的定义，因为余弦经过平移缩放后落在 [0,1]。
+306	Given K, the sign 2M−1 has mean cos(tK) by (305). Average over K and take the real part of (304).	给定 K 后，(305) 使符号 2M−1 的均值为 cos(tK)；再对 K 平均，认出 (304) 的实部。
+307	Replace cosine in the randomized construction (305) by sine, which is also between −1 and 1.	将随机构造 (305) 中的余弦换成正弦，后者同样位于 −1 和 1 之间。
+308	As in (306), first condition on K using (307), then average; the sine expectation is the imaginary part of (304).	与 (306) 相同，先用 (307) 给定 K，再平均，正弦期望就是 (304) 的虚部。
+309	Define a dyadic frequency grid from 1/m up to approximately 1/√m; λj=mtj records its phase-sensitivity scale.	定义从 1/m 到约 1/√m 的二倍频率网格；λj=mtj 表示相位敏感度尺度。
+310	Use J=floor((log₂m)/2) in (309), so √m/2<2^J≤√m. Substitute tj=2^j/m.	由 (309) 的 J 定义得 √m/2<2^J≤√m，再代入 tj=2^j/m。
+311	Multiply 1−p+pe^(it) by its complex conjugate and combine e^(it)+e^(−it)=2cos t.	将复数乘以其共轭，再用 e^(it)+e^(−it)=2cos t 合并。
+312	Insert p(1−p)≤1/4 and 1−cos t≤t²/2 into (311), then use tj≤1 from (310).	在 (311) 中代入 p(1−p)≤1/4 和余弦的二次界，再用 (310) 的 tj≤1。
+313	Use |Ft|=|1−p+pe^(it)|^m from (304) and (312); then ln(1−x)≥−x/(1−x), x≤1/4, and mtj²≤1 from (310).	由 (304)、(312) 取对数，再用 ln(1−x)≥−x/(1−x)、x≤1/4 以及 (310)。
+314	Exponentiate the lower bound −1/6 in (313), and name the resulting positive constant a₀.	对 (313) 的下界 −1/6 取指数，并将所得正常数记为 a₀。
+315	This defines the continuous unwrapped phase of the mth power in (304), using the positive real part of its base for 0<t≤1.	由于 0<t≤1 时底数实部为正，可连续取辐角；这里定义 (304) 中 m 次幂的未缠绕相位。
+316	Use d(arg z)/dp=Im(z′/z) for z=1−p+pe^(itj), multiply by m, and simplify the numerator to sin tj.	对 z=1−p+pe^(itj) 用辐角导数公式，乘 m 后化简分子为 sin tj。
+317	In (316), use tj sin 1≤sin tj≤tj, denominator at least 3/4 from (312) and at most one, and mtj=λj.	对 (316) 用正弦上下界、(312) 的分母下界及其不超过一，再用 mtj=λj。
+318	Integrate (317) between p and p′. Their interval length is at most 1/λj, which also bounds the upper phase difference by 4/3.	将 (317) 在 p 与 p′ 间积分，区间长度至多 1/λj，从而相位差上界也至多 4/3。
+319	Expand the squared complex distance, use cos(α−β), and rewrite 1−cos Δ as 2sin²(Δ/2).	展开复数距离的平方，用 cos(α−β)，再把 1−cos Δ 写成 2sin²(Δ/2)。
+320	Combine (319), the modulus floor (314), and sin(Δ/2)≥Δ/π. Substitute the lower phase sensitivity in (318).	合并 (319)、模长下界 (314) 和正弦线性下界，再代入 (318) 的相位敏感度。
+321	Choose a fixed tolerance small enough that the interval-shrinking induction in (332) stays within the validity range of (320).	选一个足够小的固定容差，使 (332) 的区间收缩归纳始终落在 (320) 的适用范围。
+322	Choose r so that the Hoeffding failure bound (323), multiplied by 2(J+1) measurements, is at most (Qm)^(−2).	选择 r，使 (323) 的 Hoeffding 失败界乘 2(J+1) 次测量后，至多为 (Qm)^(−2)。
+323	For independent signs in [−1,1], apply Hoeffding to an average of r values with deviation ε/2; the range length is two.	对 r 个独立 [−1,1] 符号的平均使用 Hoeffding，偏差阈值为 ε/2，变量区间长度为二。
+324	A complex error exceeding ε forces a component error above ε/2. Union-bound the 2(J+1) events in (323), then insert r from (322).	复误差超过 ε 必有某个分量误差超过 ε/2；对 (323) 的 2(J+1) 个事件作并集界，再代入 (322)。
+325	Define the good event requiring every scale's complex estimate to be within ε of its population characteristic function.	定义所有尺度的复数估计与总体特征函数都相差不超过 ε 的好事件。
+326	Count two groups of r machines at every one of J+1 scales. Use (309) to bound J+1 and (322) to bound r.	每个尺度用两组、每组 r 台，共 J+1 个尺度；再用 (309) 控制尺度数、(322) 控制 r。
+327	Compare (326) with the assumed budget (302). Taking C₀ at least twice the constant in (326) leaves half the machines for refinement.	将 (326) 与预算假设 (302) 比较，让 C₀ 至少为其常数的两倍，就留下至少一半机器精估。
+328	This defines the feasible parameters inside the previous interval whose characteristic functions match the measured value to tolerance ε.	将前一区间中，特征函数与测量值在 ε 内相容的参数定义为可行集。
+329	Take the smallest closed interval containing the compact feasible set (328), using its minimum and maximum.	对紧的可行集 (328)，用其最小与最大值取包含它的最小闭区间。
+330	For two feasible points, their characteristic functions differ by at most 2ε as in (331). Invert (320); induction via (332) ensures it applies at each scale.	两个可行点的函数值由 (331) 相差至多 2ε，再反用 (320)；(332) 的归纳保证每个尺度都适用。
+331	Insert F̂₀ between the two characteristic-function values and apply the triangle inequality; each feasible point has discrepancy at most ε by (328).	在两个特征函数值间插入 F̂₀，用三角不等式；由 (328) 每段至多 ε。
+332	Apply the previous-scale width bound (330), use λj=2λj−1 from (309), and then ε≤c₂/8 from (321).	代入前一尺度的 (330)，用 (309) 的频率倍增关系，再用 (321) 的容差上限。
+333	The fresh real/imaginary empirical signs are unbiased with variance at most one per sign. Add their average variances, then use each remaining group size at least Q/8.	新的实部、虚部符号平均无偏，单个符号方差至多一；平均方差相加，再用每组至少 Q/8 台机器。
+334	This defines the refinement decoder as the point in the localized compact interval that best matches the fresh complex measurement.	定义精估解码器：在定位后的紧区间中选与新复测量最接近的点。
+335	Insert F̃J and use the triangle inequality. On E the true p is feasible, so the minimizer (334) has no larger measurement discrepancy than p.	插入 F̃J 用三角不等式；在 E 上真实 p 可行，因此 (334) 的最小化性质保证估计的拟合距离不更大。
+336	Apply the inverse inequality (320) to p̂ and p inside the localized interval, then (335), square, and restrict to E.	在定位区间内对 p̂、p 使用逆向界 (320)，再用 (335)，平方并乘 E 的指示量。
+337	Drop the right-side indicator in (336), take expectations, and use fresh-measurement bound (333) and λJ²>m/4 from (310).	去掉 (336) 右侧指示量后取期望，使用 (333) 及 (310) 的 λJ² 下界。
+338	Split risk over E and its complement. Use (337) on E, squared error at most one outside it, and the failure probability (324).	将风险分成 E 内外，E 内用 (337)，外面平方误差至多一，再用 (324) 控制失败概率。
+339	Partition the n machines into d coordinate groups with sizes differing by at most one. With fixed d, each size is a constant fraction of n.	将 n 台机器分成 d 组，大小相差至多一；d 固定时每组都是 n 的固定比例。
+340	In the small-block regime, m≤n and Qj≤n. Apply these inequalities inside the two increasing logarithms.	小块情形满足 m≤n、Qj≤n，在两个单调增长的对数中分别代入。
+341	Use conditional binomial counts (253), verify Lemma 6's budget using (339)–(340), then apply (303) with Q=Qj.	用 (253) 的条件二项计数，借 (339)、(340) 验证引理 6 的预算，再在 (303) 代入 Q=Qj。
+342	In (30), use 1≤m≤n to place log₂m between zero and log₂n.	在 (30) 中用 1≤m≤n，将 log₂m 夹在零与 log₂n 之间。
+343	Divide aB by 1/(nm), substitute B=nk, and use m≤n. The exponential decay outruns n².	将 aB 除以 1/(nm)，代入 B=nk，再用 m≤n；指数衰减快于 n²。
+344	Equation (342) makes s a positive constant-order multiple of n. Thus refinement is O(1/(nm)), while (343) makes the bit term negligible.	由 (342)，s 为 n 的正常数阶倍数，故精估项为 O(1/(nm))；(343) 则使比特项可忽略。
+345	This abbreviates the maximum of the three empirical-moment encoding error scales already obtained in (301) and (344).	把 (301)、(344) 中得到的三种经验矩编码误差尺度的最大值缩写为 ρn,m。
+346	For m≥n use (301); for m<n use (341) and (344). Add the d coordinate mean squared errors and use definition (345).	m≥n 用 (301)，m<n 用 (341)、(344)；将 d 个坐标均方误差相加并用 (345)。
+347	This defines coordinatewise clipping to [0,1] and applies it to the moment estimate from (346).	定义逐坐标截断到 [0,1] 的映射，并用于 (346) 的矩估计。
+348	Check each coordinate: values below zero move to zero, values above one move to one, and values inside stay fixed. Each move gets no farther from u∈[0,1]^d.	逐坐标检查：小于零移到零，大于一移到一，内部不动；对 [0,1] 内的 u，每步都不会增大距离。
+349	Apply (348) with u=pN to the estimate in (346). Clipping cannot increase its conditional squared error.	在 (348) 取 u=pN，用于 (346) 的估计，截断不增大条件平方误差。
+350	Average the conditional inequality (349) over the realized pool by the tower property.	用迭代期望，对已实现样本池平均条件不等式 (349)。
+351	This defines nearest-moment decoding: choose a parameter whose population moment is closest to the estimated moment.	定义最近矩解码：选择总体矩最接近估计矩的参数。
+352	These definitions give the distance to the moment image and all its minimizers in (351). Compactness of Θ and continuity of μ guarantee a minimum exists.	定义到矩映像的距离及 (351) 中全部最小化点；Θ 紧且 μ 连续保证最小值存在。
+353	Use the triangle inequality to compare ‖z−μ(ϑ)‖ and ‖z′−μ(ϑ)‖ uniformly in ϑ; minimize and reverse the roles of z,z′.	用三角不等式统一比较到同一 μ(ϑ) 的两段距离，取最小后再交换 z、z′。
+354	The true θ is a feasible candidate in minimization (351), so the selected θ̂ cannot fit the estimated moment worse than θ does.	真实 θ 是 (351) 的可行候选，因此 θ̂ 到估计矩的拟合距离不会比 θ 更大。
+355	Apply the inverse-Lipschitz identifiability assumption (24) to θ̂ and θ.	对 θ̂ 与 θ 直接使用逆 Lipschitz 可识别性假设 (24)。
+356	In (355), insert p̂ between μ(θ̂) and μ(θ) and use the triangle inequality.	在 (355) 两个总体矩之间插入 p̂，使用三角不等式。
+357	Bound the first norm in (356) by the second using the minimizing inequality (354), then add the two equal bounds.	由最小化不等式 (354)，(356) 第一段不超过第二段，再将两段相加。
+358	Add and subtract pN in the population-moment error. This is an exact decomposition.	在总体矩误差中加上再减去 pN，这是精确分解。
+359	Apply ‖a+b‖²≤2‖a‖²+2‖b‖² to (358) pointwise and take expectations; independence of the two errors is unnecessary.	逐点对 (358) 用平方和不等式再取期望，不需要两种误差独立。
+360	The pool average is unbiased. Independence across observations divides each coordinate variance by N, and boundedness gives variance at most 1/4.	样本池平均无偏，观测间独立使每坐标方差除以 N，有界性又将单样本方差控制在 1/4。
+361	Insert the communication bound (350) and pool variance bound (360) into decomposition (359).	把通信界 (350) 和样本池方差界 (360) 代入分解 (359)。
+362	Square (357), take expectation, and substitute (361), multiplying both terms by 4L².	将 (357) 平方取期望，代入 (361)，两项均乘 4L²。
+363	Expand ρn,m from (345) in (362), and bound a sum of finitely many nonnegative terms by a fixed multiple of their maximum.	在 (362) 展开 (345) 的 ρn,m，再将有限个非负项的和用其最大值的固定倍数控制。
+364	Identify the maximum in (363) with the definition of the upper envelope (37).	将 (363) 的最大值认作上包络定义 (37)。
+365	The risk bound (364) is uniform in θ for the constructed noninteractive protocol. Take sup over θ, then the infimum over protocols as in (12).	构造出的非交互协议满足对 θ 统一的 (364)，先取 θ 上确界，再按 (12) 对协议取下确界。
+366	This defines a fixed invertible affine change from the unit cube parameter θ to the model's natural parameter η.	这里定义固定可逆仿射变换，把单位立方参数 θ 换成模型自然参数 η。
+367	Apply the multivariate chain rule to log pη(x) with η=c+Aθ from (366). The derivative is Aᵀ times the old score.	对 log pη(x) 使用多元链式法则及 (366)，导数为 Aᵀ 乘旧坐标得分。
+368	Insert (367) into the old score bound (19) with direction Au, then use ‖Au‖≤‖A‖op‖u‖ in the numerator and denominator.	将 (367) 代入旧得分界 (19)，方向改为 Au，再在分子分母用算子范数界。
+369	From (366), θ−θ′=A^(−1)(η−η′). Apply the operator-norm bound and then the original inverse-Lipschitz moment condition (24).	由 (366) 写出参数差的逆变换，先用算子范数界，再用原坐标的矩逆 Lipschitz 条件 (24)。
+370	Use η̂−η=A(θ̂−θ) from (366). The largest and smallest singular values bound the norm of A applied to any vector; square both inequalities.	用 (366) 的误差线性关系，最大最小奇异值控制 A 作用后范数，再将两边平方。
+371	This specifies the Gaussian location example with identity covariance on the unit cube.	这是单位立方上的单位协方差高斯位置模型设定。
+372	Take logs of the Gaussian density in (371), then differentiate the quadratic term with respect to θ.	对 (371) 的高斯密度取对数，再对其中二次项关于 θ 求导。
+373	Under (371), the score in (372) is standard Gaussian. Use its MGF E exp(uᵀG)=exp(‖u‖²/2) and take logs.	在 (371) 下，(372) 的得分是标准高斯；用标准高斯矩生成函数再取对数。
+374	Choose sign-threshold indicators as bounded moment statistics; this is a construction, not a consequence of the score formula.	选择取正阈值指示量作为有界矩统计量，这是构造，不由得分公式自动推出。
+375	In (374), standardize Xj=θj+Gj. Symmetry gives P(Gj≥−θj)=Φ(θj), and differentiating Φ yields ϕ.	在 (374) 写 Xj=θj+Gj，由标准高斯对称性得到概率 Φ(θj)，再对 Φ 求导。
+376	Integrate the derivative in (375) between θj and θj′. On [0,1], the normal density is bounded below by ϕ(1).	将 (375) 的导数在两个参数间积分；[0,1] 上正态密度至少为 ϕ(1)。
+377	Square the coordinate bound (376), add over j, and take square roots.	将 (376) 的各坐标界平方求和，再开方。
+378	This is a sufficient-condition assumption for the next argument: the centered score norm is uniformly bounded by M.	这是后一个论证的充分条件假设：中心化得分的范数统一不超过 M。
+379	Cauchy–Schwarz and (378) put uᵀξ in [−M‖u‖,M‖u‖]. Apply Hoeffding's lemma to this centered scalar variable.	由 Cauchy–Schwarz 和 (378) 得方向得分的取值区间，再对该中心化标量使用 Hoeffding 引理。
+380	This specifies a Bernoulli parameter restricted away from zero and one by the fixed margin a.	这里设定伯努利参数，并用固定 a 使其远离零和一。
+381	Write the Bernoulli mass function in (380), take logs, differentiate in p, and combine the two fractions.	写出 (380) 的伯努利质量函数，取对数对 p 求导，再通分。
+382	Evaluate the two score values in (381). Their probability-weighted mean is zero, and p,1−p≥a bounds their magnitudes by 1/a.	计算 (381) 两种得分值，其概率加权平均为零；由 p、1−p≥a 控制绝对值。
+383	Average the two squared score values from (381) with probabilities p and 1−p, simplify, then use p(1−p)≥a(1−a).	将 (381) 两个得分值平方按概率平均并化简，再用 p(1−p) 的区间下界。
+384	Choose the bounded statistic ψ(x)=x. A Bernoulli variable has mean p, so the moment map is the identity.	选有界统计量 ψ(x)=x，伯努利变量均值为 p，因此矩映射就是恒等映射。
+385	This affine change sends θ=0 to p=a and θ=1 to p=1−a, enabling the transformation rules (367)–(370).	这个仿射变换将 θ 的两个端点映成 p 区间的端点，随后可用 (367) 至 (370)。
+386	Define the first d category probabilities freely; normalization forces the last probability to be one minus their sum.	将前 d 个类别概率作为自由参数，归一化迫使最后一个等于一减去其和。
+387	This assumes a fixed interior region of the categorical simplex so all probabilities, including the dependent last one, are at least a.	这里假设参数落在类别单纯形内部的固定区域，使全部概率，包括最后一类，至少为 a。
+388	Differentiate log pj for category j. For the last category use ∂pj p(d+1)=−1 from (386).	对类别 j 的 log pj 求导；最后一类概率由 (386) 对每个自由参数的导数为 −1。
+389	In (388), category ℓ≤d has one nonzero coordinate 1/pℓ; the last category has d entries −1/p(d+1). Use (387) and take the Euclidean norm.	由 (388)，前 d 类各只有一个非零坐标，最后一类有 d 个相同坐标；再用 (387) 计算欧氏范数上界。
+390	Average the score outer products from (388). The first d categories yield a diagonal matrix; the last yields the rank-one term.	对 (388) 的得分外积按类别平均，前 d 类给对角矩阵，最后一类给秩一项。
+391	Choose each category indicator as a bounded statistic. Its expectation is its category probability by (386).	选各类别指示量为有界统计量，其期望由 (386) 就是相应类别概率。
+392	Equation (391) makes μ(p)=p, so distances between moment vectors equal parameter distances exactly.	由 (391) 得 μ(p)=p，因此矩向量距离与参数距离完全相等。
+393	This defines the finite independent product model and the concatenation of its parameter blocks.	这是有限独立乘积模型及其参数块拼接的定义。
+394	For the product law (393), the log-MGF splits into component log-MGFs. Bound each by its sub-Gaussian constant and then their maximum.	由乘积分布 (393)，对数矩生成函数逐分量相加，分别用各次高斯常数，再取最大常数。
+395	Apply the component inverse-Lipschitz condition to each squared parameter-block distance, sum, and upper-bound all Lℓ² by their maximum.	逐块对参数距离平方用逆 Lipschitz 条件，相加后把各 Lℓ² 控制为其最大值。
+396	Define the natural exponential-family density; choose A as the log integral that makes the density integrate to one.	定义自然指数族密度，用归一化积分的对数定义 A，使密度积分为一。
+397	This assumes fixed lower and upper bounds for each sufficient-statistic coordinate on the common support.	这里假设充分统计量每个坐标在共同支撑上有固定上下界。
+398	Define the coordinate range lengths from (397), collect them into w, and take their maximum.	由 (397) 定义各坐标取值范围长度，组成 w 并取其中最大值。
+399	Differentiate the log normalizer in (396). One derivative gives the tilted mean; differentiating that mean gives covariance, as detailed in (400).	对 (396) 的对数归一化项求导，一阶给倾斜分布下均值，再求导给协方差，细节在 (400)。
+400	Write the mean as a normalized integral from (396), differentiate by the quotient rule, and subtract the product of the two means.	由 (396) 将均值写成归一化积分，用商法则求导，减去两个均值的乘积。
+401	Differentiate log pθ in (396) to get T−∇A. Its second moment is the covariance in (399).	对 (396) 的对数密度求导得到 T−∇A，其二阶矩就是 (399) 的协方差。
+402	The directional statistic has range length at most Σ|uj|wj by (397). Apply Hoeffding to its centered version (401), then Cauchy–Schwarz.	由 (397)，方向统计量范围长度至多 Σ|uj|wj；对 (401) 的中心化版本用 Hoeffding，再用 Cauchy–Schwarz。
+403	This is an additional identifiability assumption, a uniform positive lower bound on the Hessian. Bounded statistics alone do not imply it.	这是额外的可识别性假设，要求 Hessian 统一正定；有界统计量本身不能推出它。
+404	Apply the fundamental theorem of calculus to ∇A along θ′+t(θ−θ′); convexity keeps that segment in the parameter region.	沿 θ′+t(θ−θ′) 对 ∇A 用微积分基本定理；凸性保证线段一直处于参数区域内。
+405	Multiply (404) on the left by Δᵀ and apply the Hessian lower bound (403) inside the integral.	将 (404) 左乘 Δᵀ，再在积分内使用 Hessian 下界 (403)。
+406	Cauchy–Schwarz bounds the left side of (405) by ‖Δ‖·‖∇A(θ)−∇A(θ′)‖. Divide by a‖Δ‖, treating Δ=0 separately.	用 Cauchy–Schwarz 控制 (405) 左边，再除以 a‖Δ‖；Δ=0 时结论直接成立。
+407	Subtract each lower endpoint in (397) and divide by its range length (398), mapping Tj to [0,1].	减去 (397) 的各下端点，再除以 (398) 的范围长度，将 Tj 映到 [0,1]。
+408	Take expectation in (407) and use ET=∇A from (399).	对 (407) 取期望，并用 (399) 的 ET=∇A。
+409	Subtract (408) at the two parameter values, then multiply coordinate j by wj using the diagonal matrix W.	将 (408) 在两个参数值下相减，再用对角矩阵 W 对第 j 坐标乘 wj。
+410	Insert (409) into (406), then use the operator norm ‖W‖op=wmax from (398).	把 (409) 代入 (406)，再用 (398) 的 ‖W‖op=wmax。
+411	This specifies the logistic conditional model and defines the link function σ; the covariate law is fixed independently of θ.	这里设定 logistic 条件模型并定义连接函数 σ，协变量分布固定且与 θ 无关。
+412	These are model assumptions: covariates are bounded and their second-moment matrix has no zero-information direction.	这是模型假设：协变量有界，二阶矩阵不存在完全没有信息的方向。
+413	Compactness bounds parameter norms, while the positive-definiteness assumption (412) makes the smallest eigenvalue λZ positive.	参数紧性限制范数，而 (412) 的正定假设保证最小特征值 λZ 为正。
+414	Insert σ(θᵀz) from (411) into the Bernoulli mass function, and collect its log likelihood. The fixed covariate law is part of the dominating measure.	将 (411) 的 σ(θᵀz) 代入伯努利质量函数并整理对数似然，固定协变量分布纳入支配测度。
+415	Differentiate the exponent in (414): the linear label term contributes ZY and the log normalizer contributes Zσ(θᵀZ).	对 (414) 的指数求导，标签线性项贡献 ZY，对数归一化项贡献 Zσ(θᵀZ)。
+416	In (415), condition on Z and use E(Y|Z)=σ(θᵀZ) from (411). Also |Y−σ|≤1 and ‖Z‖≤K by (412).	对 (415) 给定 Z，用 (411) 的标签均值，再用 |Y−σ|≤1 与 (412) 的协变量界。
+417	At fixed Z, the centered scalar uᵀξ has range length |uᵀZ|. Apply Hoeffding and then |uᵀZ|≤K‖u‖ from (412).	固定 Z 后，方向得分的取值范围长度是 |uᵀZ|，先用 Hoeffding，再用 (412) 控制内积。
+418	Define g=E(ZY). Condition on Z and replace Y by its conditional mean from (411), then apply the tower property.	定义 g=E(ZY)，先给定 Z，将 Y 换成 (411) 的条件均值，再用迭代期望。
+419	Differentiate (418) under the fixed covariate expectation. The chain rule gives σ′ times ZZᵀ, justified by bounded Z.	在 (418) 固定协变量分布的期望内求导，链式法则给 σ′ 乘 ZZᵀ；有界 Z 保证求导合法。
+420	Take the second moment of score (415), condition on Z, use Bernoulli variance σ(1−σ), and recognize σ′ in (419).	对得分 (415) 取二阶矩，给定 Z 后用伯努利方差 σ(1−σ)，再认出 (419) 中的 σ′。
+421	Cauchy–Schwarz with (412)–(413) bounds |θᵀZ|. The logistic derivative is even and decreases with |t|, so its minimum occurs at the endpoints.	用 (412)、(413) 和 Cauchy–Schwarz 控制 |θᵀZ|；logistic 导数为偶函数且随绝对值减小，故最小值在端点。
+422	Take the quadratic form of (419), insert σ′≥cσ from (421), and use the eigenvalue lower bound λZ in (413).	对 (419) 取二次型，代入 (421) 的 σ′ 下界，再用 (413) 的最小特征值 λZ。
+423	Integrate the Jacobian (419) along the parameter segment as in (404), take its inner product with θ−θ′, and apply (422).	如 (404)，沿参数线段积分 Jacobian (419)，与参数差取内积，再用 (422)。
+424	Apply Cauchy–Schwarz to the left side of (423) and cancel one factor ‖θ−θ′‖ when it is nonzero.	对 (423) 左边使用 Cauchy–Schwarz，参数差非零时约掉一个范数因子。
+425	From (412), |ZjY|≤K. Add K and divide by 2K to create a [0,1]-valued statistic.	由 (412)，|ZjY|≤K，加 K 再除以 2K，构造 [0,1] 值统计量。
+426	Take the mean of (425) using g from (418). Subtract the result at two parameter values to cancel the fixed shift.	对 (425) 取均值并用 (418) 的 g，在两个参数处相减后固定平移项抵消。
+427	Replace the difference in g in (424) by 2K times the moment difference from (426).	将 (424) 中的 g 差值替换成 (426) 的 2K 倍矩差值。
+428	This specifies a compact positive rate interval, preventing zero rates and unbounded constants in the score and moment bounds.	这里规定紧的正速率区间，避免零速率及得分、矩界中的常数失控。
+429	This is the Poisson mass function with rate in (428), on the fixed counting-measure support of nonnegative integers.	这是速率受 (428) 限制的 Poisson 质量函数，支撑是固定的非负整数集合。
+430	Take logs in (429) and differentiate −λ+x ln λ−ln(x!) with respect to λ.	对 (429) 取对数，再对 −λ+x ln λ−ln(x!) 关于 λ 求导。
+431	Use the score (430) and Poisson mean/variance EX=Var X=λ, then λ≥a from (428).	用 (430) 和 Poisson 的均值、方差都等于 λ，再用 (428) 的 λ≥a。
+432	Insert (430) into the Poisson MGF exp(λ(e^t−1)), subtract the centering term u, and expand the exponential series.	将 (430) 代入 Poisson 矩生成函数，减去中心化项 u，再展开指数级数。
+433	Bound each term of (432) in absolute value using λ≥a and r!≥2, then sum the geometric series for |u|<a.	在 (432) 逐项取绝对值，用 λ≥a 和 r!≥2，再在 |u|<a 时求几何级数。
+434	Compare the numerator and denominator in (433) with the Bernstein template (19); read off vP and bP.	将 (433) 的分子分母与 Bernstein 模板 (19) 比较，读出 vP、bP。
+435	Choose a zero-count indicator as the bounded statistic. Its expectation is Pλ(X=0), obtained by setting x=0 in (429).	选零计数指示量作为有界统计量，其期望等于 (429) 取 x=0 的概率。
+436	Use μ(λ)=e^(−λ) from (435), integrate its derivative between the two rates, and use e^(−t)≥e^(−b₀) on (428).	用 (435) 的均值函数，积分两速率间的导数，再用 (428) 区间上的指数函数下界。
+437	Rearrange (436) by dividing by its positive slope lower bound e^(−b₀).	将 (436) 除以正的斜率下界 e^(−b₀)，反解参数差。
+438	Use |∂λp|=|ξλ|p from (430), then λ≥a, λ≤b₀, and e^(−λ)≤1. Factorial decay makes the resulting series summable.	用 (430) 的导数等于得分乘密度，再代入区间上下界；阶乘衰减保证所得级数可和。
+439	This defines the exponential waiting-time model with the same rate interval (428).	这里定义指数等待时间模型，速率仍取 (428) 的区间。
+440	Take log λ−λx from (439) and differentiate in λ.	对 (439) 的 log λ−λx 关于 λ 求导。
+441	Use (440), EX=1/λ and Var X=1/λ² for the exponential distribution, then apply λ≥a from (428).	用 (440)、指数分布的均值和方差，再用 (428) 的 λ≥a。
+442	Insert density (439) into the exponential-score MGF from (440). Integrate exp(−(λ+u)x) on x≥0, requiring u>−λ.	将 (439) 代入 (440) 得分的矩生成函数，在正半轴积分，收敛要求 u>−λ。
+443	Take logs of (442), then expand ln(1+u/λ) for |u/λ|<1; the linear term cancels.	对 (442) 取对数，在 |u/λ|<1 下展开 ln(1+u/λ)，一次项相消。
+444	Bound the series (443) termwise using λ≥a and 1/r≤1/2 for r≥2, and sum the resulting geometric series.	对 (443) 的级数逐项用 λ≥a 与 1/r≤1/2 控制，再求几何级数。
+445	Match the scalar bound (444) to template (19); its variance coefficient is 1/a² and tail coefficient is 1/a.	将 (444) 与模板 (19) 比较，方差系数为 1/a²，尾部系数为 1/a。
+446	Choose the deadline indicator 1{X≤t}. Integrating density (439) from zero to t gives its mean 1−e^(−λt).	选择期限指示量 1{X≤t}，将 (439) 的密度在零至 t 积分，得到均值。
+447	Differentiate μ in (446) with respect to λ and minimize the positive derivative over λ≤b₀ from (428).	对 (446) 的均值关于 λ 求导，再在 (428) 的 λ≤b₀ 区间取导数下界。
+448	Integrate the positive derivative lower bound (447) between λ and λ′; its constant sign prevents cancellation.	将 (447) 的正导数下界在两速率间积分，固定符号保证不会抵消。
+449	Divide (448) by the positive slope floor t·e^(−b₀t).	将 (448) 除以正的斜率下界 t·e^(−b₀t)。
+450	Differentiate density (439), then use |1−λx|≤1+b₀x and e^(−λx)≤e^(−ax) from (428).	对密度 (439) 求导，再用 (428) 的区间限制分别控制线性因子和指数因子。
+451	This defines a fixed-dimensional independent product of the scalar Poisson or exponential models verified above.	这里定义固定维数的独立乘积模型，每个坐标是前面验证的 Poisson 或指数模型。
+452	For each coordinate use the valid constants (434) or (445), then choose their respective maxima as uniform constants.	每坐标使用 (434) 或 (445) 的合法常数，再分别取最大值作为统一常数。
+453	Independence in (451) factors MGFs. Apply each scalar Bernstein bound and use vj≤v*, bj|uj|≤b*‖u‖ from (452).	由 (451) 的独立性分解矩生成函数，逐坐标用 Bernstein 界，再使用 (452) 的最大常数及方向范数界。
+454	Square the scalar inverse bounds (437) or (449), sum over coordinates, and replace all Lj² by their maximum.	将 (437) 或 (449) 的标量逆界平方，逐坐标相加，再用最大 Lj² 控制全部常数。
+455	This specifies the centered Gaussian covariance model with eigenvalues uniformly restricted to [a,b₀].	这里设定中心高斯协方差模型，并将特征值统一限制在 [a,b₀]。
+456	A symmetric p×p matrix has p free diagonal entries and p(p−1)/2 free off-diagonal entries; add them.	对称 p×p 矩阵有 p 个自由对角元及 p(p−1)/2 个自由非对角元，两者相加。
+457	Choose a basis of symmetric matrices and an affine parameter box contained in the eigenvalue region (455). This defines the covariance parametrization.	选择对称矩阵基及落在 (455) 特征值区域内的仿射参数盒，这里定义协方差参数化。
+458	This defines the linear perturbation map associated with the affine coordinates (457).	定义与仿射坐标 (457) 对应的线性扰动映射。
+459	The basis in (457) makes the linear map (458) invertible in finite dimension. Its smallest and largest singular values give the two norm constants.	(457) 的基使 (458) 成为有限维可逆线性映射，其最小和最大奇异值给出两个范数常数。
+460	Write the multivariate Gaussian density in (455) and take its logarithm, retaining its determinant and quadratic-form terms.	写出 (455) 的多元高斯密度并取对数，保留行列式与二次型项。
+461	The first identity is Jacobi's log-determinant derivative. For the second, differentiate (Σ+tH)(Σ+tH)^(−1)=I and solve for the inverse derivative.	第一式是 Jacobi 对数行列式求导公式；第二式对矩阵与其逆的乘积等于 I 求导，再解出逆矩阵导数。
+462	Differentiate the log likelihood (460) in direction H using both identities (461). The negative inverse derivative makes the quadratic term positive.	在方向 H 上对 (460) 求导并用 (461)，逆矩阵导数的负号使二次项变正。
+463	Use the affine basis (457) to differentiate by each coordinate; linearity of the directional score (462) gives the arbitrary-direction identity.	按 (457) 的仿射基逐坐标求导，方向得分 (462) 的线性性给出任意方向表达式。
+464	Whiten X=Σ^(1/2)G under (455), and define the corresponding transformed perturbation matrix.	在 (455) 下将 X 白化为 Σ^(1/2)G，并定义相应变换后的扰动矩阵。
+465	Substitute X=Σ^(1/2)G into (462) and use trace cyclicity to identify MH from (464).	将白化表达式代入 (462)，用迹的循环不变性认出 (464) 的 MH。
+466	Orthogonally diagonalize MH in (465). Rotational invariance preserves the independent standard Gaussian coordinates, giving a sum of centered squares.	将 (465) 的 MH 正交对角化，由旋转不变性保留独立标准高斯坐标，得到中心化平方和。
+467	Multiply the standard normal density by exp(sGj²/2) and integrate the resulting Gaussian kernel; convergence requires s<1.	将标准高斯密度乘 exp(sGj²/2)，积分所得高斯核，收敛条件为 s<1。
+468	Apply independence to the weighted-square sum (466). Use (467) with s=tγj, include centering factors, and take logs.	对 (466) 的加权平方和用独立性，在 (467) 代入 s=tγj，加入中心化因子再取对数。
+469	Expand −ln(1−z) into its power series and cancel the linear term. Use 1/r≤1/2 for r≥2 and sum the geometric series.	将 −ln(1−z) 展成级数并消去一次项，再用 1/r≤1/2 后求几何级数。
+470	Apply (469) termwise in (468), bound all denominators using max|γj|, and recognize the squared-eigenvalue sum as the Frobenius norm squared.	在 (468) 逐项使用 (469)，用最大 |γj| 统一分母，并把特征值平方和认作 Frobenius 范数平方。
+471	Use submultiplicativity on MH in (464). The eigenvalue lower bound (455) gives ‖Σ^(−1/2)‖op≤a^(−1/2); operator norm is at most Frobenius norm.	对 (464) 用矩阵范数乘积界，(455) 给逆平方根的算子范数界，再用算子范数不超过 Frobenius 范数。
+472	In (470) take t=1 and H=H(u). Use (463) to identify the directional parameter score, then (471) and (459) to bound both matrix norms.	在 (470) 取 t=1、H=H(u)，由 (463) 认出参数方向得分，再用 (471)、(459) 控制矩阵范数。
+473	Match (472) to Bernstein template (19); account for the factor 2 in its denominator when reading off v.	将 (472) 与 Bernstein 模板 (19) 比较，读 v 时要计入分母中的因子二。
+474	In (466), independent centered squares have variance two, so the score variance is ½Σγj². Trace cyclicity converts this to the matrix expression.	在 (466) 中，独立中心化高斯平方的方差为二，得分方差为 ½Σγj²，再用迹循环性改写。
+475	Choose coordinate directions to recover diagonal entries and pairwise-sum directions to recover off-diagonal entries later through (483).	选择坐标轴方向恢复对角元，选择两坐标和方向，以便后面通过 (483) 恢复非对角元。
+476	This constructs one bounded statistic for each direction in (475): exponentiate the negative squared projection with fixed c>0.	对 (475) 每个方向构造一个有界统计量，对负的投影平方乘固定 c>0 后取指数。
+477	The projection vᵀX is N(0,zv), zv=vᵀΣv by (455). Integrate its Gaussian density against the statistic (476) and combine quadratic exponents.	由 (455)，投影是方差 zv 的一维高斯，将其密度乘 (476) 后积分，合并二次指数。
+478	Name the scalar function obtained in (477), then differentiate by the chain rule.	将 (477) 得到的标量函数命名，再用链式法则求导。
+479	From (475), every chosen direction has squared norm one or two. Apply the eigenvalue bounds (455) to vᵀΣv.	由 (475)，所选方向的范数平方为一或二，再对二次型使用 (455) 的特征值界。
+480	The magnitude of f′ in (478) decreases with z. Evaluate it at the largest possible z=2b₀ from (479).	(478) 中导数绝对值随 z 增大而减小，在 (479) 的最大值 z=2b₀ 处求值。
+481	Integrate the negative derivative in (478) between z and z′. Its fixed sign and lower magnitude bound (480) prevent cancellation.	在两点之间积分 (478) 的负导数，由其固定符号和 (480) 的绝对值下界保证距离不抵消。
+482	Apply (481) to each chosen quadratic form, with the moments given by (477); square, sum, and take square roots.	对每个选定二次型用 (481)，矩由 (477) 给出，逐项平方求和再开方。
+483	Expand the quadratic form of ei+ej: it equals Σii+Σjj+2Σij. Rearrange to recover the off-diagonal entry.	展开 ei+ej 的二次型得到 Σii+Σjj+2Σij，再整理恢复非对角元。
+484	Define the corresponding diagonal and pairwise quadratic-form differences for Δ=Σ−Σ′, following (475).	对 Δ=Σ−Σ′ 按 (475) 定义对角及成对二次型的差。
+485	Use (483)–(484) to write all entries of Δ, then (a+b+c)²≤3(a²+b²+c²). Count each diagonal contribution over its p−1 pairs.	用 (483)、(484) 写出 Δ 所有元素，再用三项平方和不等式，并计算每个对角项在 p−1 个配对中的出现次数。
+486	First invert the lower norm inequality (459); then use covariance reconstruction (485) and moment inversion (482).	先反用 (459) 的范数下界，再使用协方差重建界 (485) 与矩反演界 (482)。
+487	In the Gaussian density (460), det Σ≥a^p controls the prefactor and Σ^(−1)≥I/b₀ controls the exponential, by (455).	在 (460) 的高斯密度中，由 (455) 得行列式下界控制前因子、逆矩阵下界控制指数衰减。
+488	This defines the unresolved portion of the critical window after the small- and large-pool matching cases (50)–(56) are excluded.	从临界窗口剔除 (50) 至 (56) 中小样本池和大样本池已吻合的情形，定义剩余未解决范围。
+489	Apply the theorem sandwich (42) in window (488). Use (47)–(49) to discard negligible terms and replace m(1+s) by order ms.	在 (488) 的窗口中用定理夹逼 (42)，借 (47) 至 (49) 去掉可忽略项，并将 m(1+s) 换成 ms 阶。
+490	This is a proposed sufficient bound, not an established theorem. If proved, combine it with entropy budget (118) and Bayes inequality (101) to close the Gaussian gap.	这是提出的充分界，尚未证明；若成立，将其与熵预算 (118)、贝叶斯不等式 (101) 合并即可补上高斯情形缺口。
+491	Union-bound over machine pairs. For each pair, P(intersection nonempty)≤E|Si∩Sj|, then use (52).	对机器对作并集界；每对交集非空的概率不超过交集大小期望，再用 (52)。
+492	For each multiplicity D, (D−1)+≤C(D,2). Sum over IDs, use (52) and pair counting, then divide by nm. The limit requires N/(nm)→∞.	每个重数满足 (D−1)+≤C(D,2)，对索引求和，用 (52) 和配对数取期望，再除以 nm；极限要求 N/(nm)→∞。

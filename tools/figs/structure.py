@@ -124,10 +124,12 @@ def build(html, lang):
     assert len(seen) == 492 and all(v == 1 for v in seen.values())
 
     download = ('Download black-and-white PDF', '下载黑白打印 PDF')[lang]
+    color_download = ('Section III · color speaker PDF', '第三节 · 彩色演讲稿 PDF')[lang]
     label = ('Jump to section', '跳到章节')[lang]
     links = ''.join(f'<a href="#{anchor}">{item[lang]}</a>' for anchor, *item in SECTIONS)
     block = (f'<!--study-links--><nav class="overview-resources" aria-label="{label}">'
              f'<a class="pdf-download" href="assets/downloads/ECE723_Equations_Monochrome.pdf" download>{download}</a>'
+             f'<a class="pdf-download" href="assets/downloads/ECE723_Converse_Color_Speaker.pdf" download>{color_download}</a>'
              f'{links}</nav><!--/study-links-->')
     html, changed = re.subn(r'(<section class="overview" id="overview">\s*<h2[^>]*>[^<]+</h2>)',
                             lambda m: m.group(0) + block, html, count=1)

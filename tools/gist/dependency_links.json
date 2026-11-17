@@ -1,0 +1,851 @@
+{
+  "extra_parents": {
+    "3": [
+      2
+    ],
+    "5": [
+      4
+    ],
+    "6": [
+      5
+    ],
+    "8": [
+      7
+    ],
+    "9": [
+      5,
+      8
+    ],
+    "10": [
+      9
+    ],
+    "11": [
+      6
+    ],
+    "12": [
+      11
+    ],
+    "14": [
+      1
+    ],
+    "15": [
+      14
+    ],
+    "16": [
+      14
+    ],
+    "17": [
+      1
+    ],
+    "18": [
+      14,
+      17
+    ],
+    "20": [
+      19
+    ],
+    "21": [
+      20
+    ],
+    "22": [
+      21
+    ],
+    "23": [
+      19
+    ],
+    "29": [
+      24,
+      28
+    ],
+    "30": [
+      9
+    ],
+    "35": [
+      33,
+      34
+    ],
+    "38": [
+      36,
+      37
+    ],
+    "40": [
+      220
+    ],
+    "41": [
+      365
+    ],
+    "42": [
+      39
+    ],
+    "43": [
+      31
+    ],
+    "44": [
+      43
+    ],
+    "45": [
+      30
+    ],
+    "46": [
+      45
+    ],
+    "64": [
+      66,
+      67
+    ],
+    "65": [
+      70,
+      72
+    ],
+    "78": [
+      77
+    ],
+    "86": [
+      85
+    ],
+    "87": [
+      85
+    ],
+    "89": [
+      86
+    ],
+    "91": [
+      90
+    ],
+    "93": [
+      92
+    ],
+    "95": [
+      94
+    ],
+    "101": [
+      85
+    ],
+    "109": [
+      108
+    ],
+    "113": [
+      10,
+      112
+    ],
+    "114": [
+      112
+    ],
+    "125": [
+      124
+    ],
+    "128": [
+      124
+    ],
+    "135": [
+      121
+    ],
+    "136": [
+      135
+    ],
+    "137": [
+      123
+    ],
+    "139": [
+      138,
+      140,
+      141,
+      142,
+      143,
+      144
+    ],
+    "145": [
+      139
+    ],
+    "147": [
+      146,
+      165,
+      166,
+      167
+    ],
+    "149": [
+      7,
+      8
+    ],
+    "150": [
+      149,
+      7,
+      8
+    ],
+    "160": [
+      151
+    ],
+    "169": [
+      168
+    ],
+    "174": [
+      171,
+      186,
+      187
+    ],
+    "175": [
+      188
+    ],
+    "176": [
+      189
+    ],
+    "177": [
+      190
+    ],
+    "192": [
+      35
+    ],
+    "193": [
+      194
+    ],
+    "197": [
+      196,
+      101,
+      195
+    ],
+    "198": [
+      199
+    ],
+    "212": [
+      211
+    ],
+    "219": [
+      213
+    ],
+    "220": [
+      102
+    ],
+    "230": [
+      229
+    ],
+    "232": [
+      243
+    ],
+    "234": [
+      231,
+      233
+    ],
+    "236": [
+      235
+    ],
+    "237": [
+      238,
+      239
+    ],
+    "245": [
+      232
+    ],
+    "247": [
+      246
+    ],
+    "248": [
+      24,
+      246
+    ],
+    "257": [
+      256
+    ],
+    "260": [
+      259
+    ],
+    "263": [
+      264,
+      266,
+      285
+    ],
+    "266": [
+      261,
+      262,
+      265
+    ],
+    "273": [
+      271,
+      272
+    ],
+    "276": [
+      274
+    ],
+    "278": [
+      277
+    ],
+    "286": [
+      261
+    ],
+    "288": [
+      287
+    ],
+    "290": [
+      288
+    ],
+    "294": [
+      295
+    ],
+    "298": [
+      295
+    ],
+    "303": [
+      302,
+      338
+    ],
+    "304": [
+      253
+    ],
+    "306": [
+      305
+    ],
+    "308": [
+      307
+    ],
+    "309": [
+      304
+    ],
+    "316": [
+      315
+    ],
+    "320": [
+      318,
+      319
+    ],
+    "324": [
+      325
+    ],
+    "330": [
+      327,
+      329,
+      331,
+      332
+    ],
+    "332": [
+      321
+    ],
+    "338": [
+      324
+    ],
+    "341": [
+      339
+    ],
+    "346": [
+      301,
+      341
+    ],
+    "348": [
+      347
+    ],
+    "351": [
+      352,
+      353
+    ],
+    "365": [
+      364
+    ],
+    "367": [
+      366
+    ],
+    "368": [
+      367
+    ],
+    "370": [
+      366
+    ],
+    "375": [
+      374
+    ],
+    "376": [
+      375
+    ],
+    "377": [
+      376
+    ],
+    "379": [
+      378
+    ],
+    "382": [
+      381
+    ],
+    "383": [
+      382
+    ],
+    "384": [
+      380
+    ],
+    "385": [
+      384
+    ],
+    "389": [
+      387,
+      388
+    ],
+    "390": [
+      388
+    ],
+    "392": [
+      391
+    ],
+    "394": [
+      393
+    ],
+    "395": [
+      393
+    ],
+    "399": [
+      400
+    ],
+    "401": [
+      399
+    ],
+    "402": [
+      397,
+      398,
+      401
+    ],
+    "405": [
+      403,
+      404
+    ],
+    "410": [
+      406,
+      409
+    ],
+    "416": [
+      411,
+      412,
+      415
+    ],
+    "417": [
+      416
+    ],
+    "420": [
+      415,
+      419
+    ],
+    "427": [
+      424,
+      426
+    ],
+    "431": [
+      429,
+      430
+    ],
+    "438": [
+      429,
+      430
+    ],
+    "441": [
+      439,
+      440
+    ],
+    "450": [
+      439,
+      440
+    ],
+    "452": [
+      434,
+      445
+    ],
+    "453": [
+      451,
+      452
+    ],
+    "454": [
+      437,
+      449,
+      451
+    ],
+    "456": [
+      455
+    ],
+    "457": [
+      456
+    ],
+    "473": [
+      472
+    ],
+    "474": [
+      466
+    ],
+    "486": [
+      459,
+      482,
+      485
+    ],
+    "487": [
+      455,
+      460
+    ],
+    "489": [
+      488
+    ],
+    "491": [
+      52
+    ],
+    "492": [
+      491
+    ],
+    "75": [
+      18
+    ],
+    "76": [
+      15
+    ],
+    "81": [
+      16
+    ],
+    "120": [
+      23
+    ],
+    "98": [
+      85,
+      96,
+      97
+    ],
+    "204": [
+      200
+    ],
+    "213": [
+      212
+    ],
+    "258": [
+      253
+    ],
+    "259": [
+      253
+    ],
+    "264": [
+      260,
+      261
+    ],
+    "274": [
+      271,
+      272
+    ],
+    "317": [
+      316
+    ],
+    "319": [
+      318
+    ],
+    "323": [
+      306,
+      308
+    ],
+    "333": [
+      306,
+      308,
+      327
+    ],
+    "353": [
+      352
+    ],
+    "415": [
+      414
+    ],
+    "436": [
+      435
+    ],
+    "437": [
+      436
+    ],
+    "467": [
+      466
+    ],
+    "119": [
+      14,
+      15
+    ],
+    "153": [
+      150,
+      152
+    ],
+    "158": [
+      76
+    ],
+    "178": [
+      79
+    ],
+    "181": [
+      178,
+      179,
+      180
+    ],
+    "182": [
+      172
+    ],
+    "184": [
+      147,
+      183
+    ],
+    "195": [
+      193
+    ]
+  },
+  "terminal_uses": {
+    "4": [
+      "Identifies shared observations before encoding in (5).",
+      "在 (5) 编码之前保留共享观测的身份。"
+    ],
+    "13": [
+      "The final theorem compares the two protocol classes in (42).",
+      "最终在 (42) 将两种协议的界串联比较。"
+    ],
+    "27": [
+      "The same randomized threshold construction is implemented in (249)–(251).",
+      "同一种随机阈值构造会在 (249) 至 (251) 中具体实施。"
+    ],
+    "28": [
+      "The moment decoder is implemented and justified in (351)–(357).",
+      "矩解码器在 (351) 至 (357) 中具体实施并说明合法性。"
+    ],
+    "35": [
+      "Supplies the overlap quantity used by the final information bound (192) and envelopes (36)–(37).",
+      "给出信息界 (192) 和包络 (36) 至 (37) 使用的重叠量。"
+    ],
+    "38": [
+      "Interprets the sample floor in (107) as the count of distinct accessible observations.",
+      "将 (107) 的样本下界解释为可访问的不同观测数量。"
+    ],
+    "43": [
+      "Together with (44), establishes the bounded-surplus row of Table I.",
+      "和 (44) 一起确立表 I 的有界剩余量一行。"
+    ],
+    "44": [
+      "Closes the comparison proving the first row of Table I.",
+      "完成表 I 第一行所需的逐项比较。"
+    ],
+    "45": [
+      "With (46), establishes the abundant-surplus row of Table I.",
+      "与 (46) 一起确立表 I 的剩余比特充裕情形。"
+    ],
+    "46": [
+      "Closes the proof that the bit floor is negligible in Table I's abundant-surplus regime.",
+      "证明表 I 剩余比特充裕时比特下限可忽略。"
+    ],
+    "50": [
+      "Makes (49) reduce to d/N, proving the small-pool row of Table I.",
+      "使 (49) 简化为 d/N，从而证明表 I 的小样本池一行。"
+    ],
+    "56": [
+      "Removes the pool term in the large-pool matching case, alongside (55).",
+      "与 (55) 配合，在大样本池上下界吻合的情形排除样本池项。"
+    ],
+    "62": [
+      "Completes the complete-overlap row of Table I.",
+      "完成表 I 中完全重叠一行的上界证明。"
+    ],
+    "63": [
+      "Explains why the unresolved window (488) lies at exponential local sample sizes.",
+      "说明为何未解决窗口 (488) 对应指数级局部样本量。"
+    ],
+    "64": [
+      "This is the polynomial-rate conclusion of Corollary 2.",
+      "这是推论 2 在多项式增长尺度上的结论。"
+    ],
+    "65": [
+      "This is the exponential-rate conclusion of Corollary 2.",
+      "这是推论 2 在指数增长尺度上的结论。"
+    ],
+    "87": [
+      "Checks that the prior used throughout (96)–(118) is normalized.",
+      "检验 (96) 至 (118) 一直使用的先验确实归一化。"
+    ],
+    "89": [
+      "Supplies the prior-information constant in (85), later inserted in (100)–(101).",
+      "给出 (85) 的先验信息常数，随后代入 (100) 至 (101)。"
+    ],
+    "95": [
+      "Supplies the entropy constant in (85), used in the risk and entropy budgets (115) and (198).",
+      "给出 (85) 的熵常数，之后用于风险及熵预算 (115)、(198)。"
+    ],
+    "115": [
+      "Makes the universal bit floor explicit, which is one component of (220).",
+      "将通用比特下限写成显式形式，它是 (220) 的组成项。"
+    ],
+    "129": [
+      "Explains the ln(1/p) cost in (128) as the information cost of conditioning on a rare event.",
+      "将 (128) 中 ln(1/p) 的代价解释为给定罕见事件的相对熵成本。"
+    ],
+    "137": [
+      "Provides the sub-Gaussian counterpart that yields (168)–(169).",
+      "提供次高斯版本，之后得到 (168) 至 (169)。"
+    ],
+    "145": [
+      "Allows Lemma 2 to be applied uniformly at fixed public conditions, as in (165).",
+      "使引理 2 能在固定公共条件下统一使用，如 (165)。"
+    ],
+    "169": [
+      "After averaging over seeds, proves the sharper independent-block statement (148).",
+      "对种子平均后证明更紧的独立块结论 (148)。"
+    ],
+    "191": [
+      "Checks the no-private-data endpoint of the additive shared-data theorem (174).",
+      "检验加性共享数据定理 (174) 在无私有数据时的端点。"
+    ],
+    "220": [
+      "Completes the proof of the lower bound announced in (40).",
+      "完成 (40) 所宣布下界的证明。"
+    ],
+    "230": [
+      "Completes the explicit Gaussian refinement of the converse.",
+      "完成下界证明中的显式高斯细化结果。"
+    ],
+    "235": [
+      "Ensures the denominator in the sampling rule (234) never vanishes at a required step.",
+      "保证抽样规则 (234) 在每个所需步骤的分母不为零。"
+    ],
+    "236": [
+      "Checks that the constructed transition (234) is a probability distribution.",
+      "检验构造出的转移规则 (234) 确实是概率分布。"
+    ],
+    "244": [
+      "Checks that the resampling law is the global iid law of (232), rather than ordinary local replacement sampling.",
+      "检验重采样服从 (232) 的全局独立律，并说明其与本地普通有放回抽样的差别。"
+    ],
+    "257": [
+      "Separates the empirical-moment encoding task from the unavoidable pool error; the final version is (359)–(362).",
+      "将经验矩编码与不可避免的样本池误差分开，最终在 (359) 至 (362) 使用。"
+    ],
+    "264": [
+      "Checks the mean requirement when the robust encoder is applied in (294).",
+      "在 (294) 应用稳健编码器前，检查均值条件。"
+    ],
+    "266": [
+      "Checks the tail requirement when the robust encoder is applied in (294).",
+      "在 (294) 应用稳健编码器前，检查尾部条件。"
+    ],
+    "286": [
+      "Clarifies that the exact variance need not equal the reference variance used in (263).",
+      "说明精确方差不必等于 (263) 使用的参考方差。"
+    ],
+    "308": [
+      "Together with (306), enables the two-component phase measurements analyzed in (323)–(325).",
+      "和 (306) 一起实现 (323) 至 (325) 分析的两分量相位测量。"
+    ],
+    "330": [
+      "Keeps phase inversion local so that the fine-error argument (335)–(337) is valid.",
+      "保持相位反演处于局部有效范围，保证 (335) 至 (337) 的精估误差分析成立。"
+    ],
+    "353": [
+      "Helps justify the measurable choice of a minimizer in (351).",
+      "帮助说明 (351) 可选择可测的最小化点。"
+    ],
+    "365": [
+      "Completes the achievability claim announced in (41).",
+      "完成 (41) 所宣布的可达性上界。"
+    ],
+    "373": [
+      "Verifies score condition (19) for Gaussian means.",
+      "为高斯均值模型验证得分条件 (19)。"
+    ],
+    "377": [
+      "Verifies identifying-moment condition (24) for Gaussian means.",
+      "为高斯均值模型验证可识别矩条件 (24)。"
+    ],
+    "379": [
+      "Verifies the score assumption (19) for the bounded discrete scores in (382) and (389).",
+      "为 (382)、(389) 的有界离散得分验证得分假设 (19)。"
+    ],
+    "383": [
+      "Gives the exact Bernoulli Fisher information and verifies its uniform boundedness.",
+      "给出伯努利 Fisher 信息的精确形式，并验证其统一有界。"
+    ],
+    "385": [
+      "Places the Bernoulli example in the unit-cube domain required by Theorem 1.",
+      "将伯努利示例变换到定理 1 要求的单位立方参数域。"
+    ],
+    "389": [
+      "Together with (379), verifies score condition (19) for the categorical model.",
+      "和 (379) 一起，为类别模型验证得分条件 (19)。"
+    ],
+    "390": [
+      "Gives the exact categorical information matrix, complementing the bound from (389).",
+      "给出类别模型的精确信息矩阵，补充 (389) 的统一界。"
+    ],
+    "392": [
+      "Verifies identifying-moment condition (24) for the categorical model.",
+      "为类别模型验证可识别矩条件 (24)。"
+    ],
+    "394": [
+      "Verifies score condition (19) for finite independent products of these models.",
+      "为这些模型的有限独立乘积验证得分条件 (19)。"
+    ],
+    "395": [
+      "Verifies identifying-moment condition (24) for the same product models.",
+      "为相同乘积模型验证可识别矩条件 (24)。"
+    ],
+    "402": [
+      "Verifies score condition (19) for bounded-statistic exponential families.",
+      "为有界统计量指数族验证得分条件 (19)。"
+    ],
+    "410": [
+      "Verifies identifying-moment condition (24) for the exponential-family example.",
+      "为指数族示例验证可识别矩条件 (24)。"
+    ],
+    "417": [
+      "After averaging over Z, verifies score condition (19) for logistic regression.",
+      "对 Z 平均后，为 logistic 回归验证得分条件 (19)。"
+    ],
+    "420": [
+      "Identifies the moment Jacobian used in (422) with the model's Fisher information.",
+      "将 (422) 使用的矩 Jacobian 认成模型的 Fisher 信息。"
+    ],
+    "427": [
+      "Verifies identifying-moment condition (24) for logistic regression.",
+      "为 logistic 回归验证可识别矩条件 (24)。"
+    ],
+    "431": [
+      "Checks centering and finite information for the Poisson score before its tail analysis (432)–(434).",
+      "在尾部分析 (432) 至 (434) 前，检验 Poisson 得分中心化且信息有限。"
+    ],
+    "438": [
+      "Justifies the likelihood differentiation required for the Poisson version of the converse.",
+      "保证 Poisson 下界证明需要的似然求导合法。"
+    ],
+    "441": [
+      "Checks centering and finite information before the exponential-score tail calculation (442)–(445).",
+      "在指数模型尾部计算 (442) 至 (445) 前，检查得分中心化且信息有限。"
+    ],
+    "450": [
+      "Justifies the likelihood differentiation required for the exponential model's converse.",
+      "保证指数模型下界证明需要的似然求导合法。"
+    ],
+    "453": [
+      "Verifies score condition (19) for products of Poisson and exponential coordinates.",
+      "为 Poisson 和指数坐标的乘积验证得分条件 (19)。"
+    ],
+    "454": [
+      "Verifies identifying-moment condition (24) for those product models.",
+      "为这些乘积模型验证可识别矩条件 (24)。"
+    ],
+    "473": [
+      "Verifies score condition (19) for covariance estimation.",
+      "为协方差估计验证得分条件 (19)。"
+    ],
+    "474": [
+      "Checks that the variance matches the quadratic coefficient underlying (470).",
+      "检验方差与 (470) 所用的二次系数一致。"
+    ],
+    "486": [
+      "Verifies identifying-moment condition (24) for covariance estimation.",
+      "为协方差估计验证可识别矩条件 (24)。"
+    ],
+    "487": [
+      "Supplies the integrable density envelope needed for covariance-model regularity.",
+      "提供协方差模型正则性需要的可积密度包络。"
+    ],
+    "489": [
+      "Displays the remaining mismatch whose possible resolution is stated in (490).",
+      "展示仍未消除的差距，(490) 给出可能填补它的充分条件。"
+    ],
+    "490": [
+      "An open sufficient condition: proving it would give the missing d/(ms) lower bound in (489).",
+      "这是尚未证明的充分条件；若能证明，就能得到 (489) 缺失的 d/(ms) 下界。"
+    ],
+    "491": [
+      "Gives a sufficient no-collision regime, to compare with the weaker repeat-fraction criterion (492).",
+      "给出完全无碰撞的充分条件，用于和 (492) 更弱的重复比例条件比较。"
+    ],
+    "492": [
+      "Ends the appendix by distinguishing a vanishing repeat fraction from a coupling accurate at the target risk scale.",
+      "在附录结尾区分重复比例趋零与耦合误差小于目标风险尺度这两件事。"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 // Section II-B: distinguish definitions, assumptions, constructions, and derivations.
 const T = String.raw;
-module.exports = {
+const origins = {
   14: {
     zh: T`这是两个定义。先对对数密度求梯度，得到一个样本给出的 score；再把这个向量和它的转置相乘并取平均，定义 Fisher 信息矩阵。`,
     en: T`These are two definitions. Differentiate the log density to get the score of one draw. Average the outer product of that score with itself to define the Fisher information matrix.`,
@@ -66,3 +66,15 @@ module.exports = {
     en: T`Use (24) to bound parameter error by a distance between moments. Split that distance at the estimated moment using the triangle inequality. Rule (28) makes the fitted leg no longer than the true leg, which gives the factor of 2.`,
   },
 };
+
+
+// Complete derivations, with explicit equation references, are kept in a reviewable TSV.
+const fs = require('fs');
+const path = require('path');
+for (const line of fs.readFileSync(path.join(__dirname, 'derivations.tsv'), 'utf8').trim().split(/\r?\n/)) {
+  const [number, en, zh] = line.split('\t');
+  if (!en || !zh || origins[number]) throw new Error('Invalid or repeated derivation ' + number);
+  origins[number] = { en, zh };
+}
+if (Object.keys(origins).length !== 492) throw new Error('Expected 492 bilingual derivations');
+module.exports = origins;

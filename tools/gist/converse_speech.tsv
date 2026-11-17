@@ -1,0 +1,158 @@
+73	Let's start with what a message actually is. We generate raw data first and then randomize or compress it. This integral averages the chance of producing this message over every possible dataset.
+74	Now we differentiate the message probability. The protocol is fixed, so the derivative acts on the data density. Writing the density derivative as density times score prepares us for a conditional expectation.
+75	Divide by the probability of the message. The weights now form the posterior distribution of the data given that message. So the message score is the average raw score among datasets compatible with what we saw.
+76	For independent data, the raw scores add. Their means are zero, so cross terms vanish when we compute information. This tells us exactly how much information the uncompressed block has.
+77	I'll give the two scores short names. SZ belongs to the raw observation and ST belongs to the message. These names let us compare them in any direction.
+78	Project both scores onto a direction. A conditional average cannot have a larger second moment than the variable being averaged. That's the whole information-loss argument in one inequality.
+79	Because the directional inequality holds for every vector, we can write it as a matrix inequality. This is the form we'll reuse when we reveal shared observations later.
+80	We'll also need to split information into pieces. Factor the joint likelihood of G and T. Differentiating its logarithm splits the score into the score of G plus the conditional score of T.
+81	For a fixed G, the conditional probabilities of T still sum to one. Their derivative therefore sums to zero. That makes the conditional score mean zero.
+82	This is why the cross term disappears. Once G is fixed, its score is constant, and the remaining conditional score averages to zero.
+83	Expand the squared score from the chain rule. The cross terms have just vanished, leaving the information in G plus the average extra information in T after G is known.
+84	Taking traces turns the matrix identity into a scalar identity. Later, we'll plug this directly into a lower bound on squared estimation error.
+85	We now choose a convenient prior on the parameter cube. It vanishes at the boundary and has explicit entropy and information constants. Those two features make the next part of the proof work cleanly.
+86	This is the information of the prior itself. Think of it as the squared size of the prior score, averaged under the prior.
+87	First check that one coordinate really has total probability one. The sine-squared identity makes this integral immediate. The product prior then normalizes coordinate by coordinate.
+88	Now differentiate the logarithm of that one-dimensional density. We'll square this score to calculate the prior information.
+89	Multiplying the squared score by the density cancels the troublesome sine denominator. The remaining cosine-squared integral gives a fixed contribution per coordinate.
+90	The entropy calculation needs a logarithm of sine. Introduce an exponent a so that differentiating the integral with respect to a will generate exactly that logarithm.
+91	Integration by parts relates the integral at a to the integral at a minus two. We'll differentiate this recurrence at a convenient value.
+92	Here's the short calculation for the log-sine integral. Add its cosine version and use the double-angle formula. After the change of variables, the unknown integral appears on both sides.
+93	Take the logarithmic derivative of the recurrence. The log-sine value we just calculated supplies the remaining constant.
+94	We can now express the expected log sine-squared term under the prior. Changing variables connects it to the derivative of our auxiliary integral.
+95	Finally take minus the expected log density. This gives the entropy per coordinate; the product prior adds those coordinate entropies.
+96	Let's switch from prior calculations to estimation error. D is the risk averaged over both the random parameter and the observed record.
+97	Combine the prior and likelihood into one joint density. Its score is simply the prior score plus the observation score.
+98	Multiply one coordinate of the error by the joint score and integrate by parts. The boundary term vanishes because of our prior. The derivative of the error contributes minus one, leaving exactly one.
+99	Add that identity across all coordinates. Cauchy–Schwarz now relates the number of coordinates to the product of the error size and the score size.
+100	We need the second factor. Expand the joint score into its prior and likelihood parts. The likelihood score averages to zero at each parameter, so their cross term vanishes.
+101	Put those two calculations together and isolate D. This is the Bayesian information-to-error inequality we'll use repeatedly.
+102	A worst-case risk is at least a prior average of that same risk. So every Bayes lower bound we prove also lower-bounds the minimax risk.
+103	Before communication, ask how much distinct data the network can see. A fixed pool observation is missed only if every machine misses it.
+104	Sum the chance of being seen over the pool. The expected distinct count is bounded by both the archive size and the total number of accesses.
+105	Fix the public sampling design and seeds. The transcript is a processing of the distinct accessible observations. Data processing bounds its information by their information.
+106	The design and seeds do not depend on the parameter. Average the conditional information bound without paying any information for that public side information.
+107	Insert this information ceiling into the Bayesian inequality. We obtain the two basic sampling floors. Even unlimited communication cannot beat them.
+108	For the next argument, look at error after a particular record is observed. Its average over records is the same Bayes risk D.
+109	A small error means the posterior is concentrated near the estimate. A Gaussian has the largest entropy at a given second moment, so this gives an upper bound on the remaining uncertainty.
+110	Average that entropy bound over records. Concavity of the logarithm lets us express the result using only the average risk D.
+111	Subtract the remaining uncertainty from the prior uncertainty. The smaller the risk, the more information the record must have conveyed about the parameter.
+112	The public side information started independently of the parameter. It contributes no information by itself, so only the conditional information in the transcript remains.
+113	A transcript has at most two to the B possible endings. Its entropy, and therefore its information about the parameter, cannot exceed B log two.
+114	Place the information required for small error below the bit-budget ceiling. Solving for D produces the communication floor.
+115	Our chosen prior makes the prefactor explicit. The important dependence is the exponential decrease with bits per coordinate.
+116	For the sharper bound, don't spend the entire transcript entropy at once. Name the part that remains after the parameter and public conditions are known.
+117	The transcript entropy splits into information about the parameter and remaining conditional entropy. This identity is the accounting step that links localization to refinement.
+118	Subtract the information requirement from the total budget. Here the original display's h means hT. We'll insert this remaining-entropy bound into the Fisher-information calculation.
+119	Now zoom into one block of independent observations. Its score is the sum of the observation scores.
+120	Independence turns the exponential moment of that sum into a product. Taking logs adds the single-observation bounds, multiplying the variance scale by the block size.
+121	The next lemma asks how much conditioning on an event can shift the block score's mean. The price is controlled by how surprising that event is.
+122	Squaring the shift bound gives one term linear in surprise and another quadratic in surprise. The second term is the extra cost of the Bernstein tail condition.
+123	If the score is sub-Gaussian, the heavy-tail parameter is zero. We can square directly and keep a sharper constant.
+124	Let's name the event's surprise and the conditional score mean. These are the two quantities we're about to compare.
+125	If the conditional mean is nonzero, point a unit vector in its direction. The projection onto this direction equals the full length of that mean.
+126	Apply Jensen to the exponential under the event's conditional law. This turns a conditional mean into something the moment-generating-function bound can control.
+127	Conditioning on the event divides by its probability. Removing the event indicator only increases the positive exponential expectation.
+128	Take logarithms and apply the block tail bound. The event probability becomes the additive surprise term.
+129	That surprise also has an information interpretation. It is exactly the relative entropy paid when we replace the original law by the law conditioned on the event.
+130	Divide by the positive tilt. We now have a family of upper bounds, one for each admissible tilt.
+131	Choose the tilt to balance the two terms. This particular expression also automatically stays inside the moment-generating-function's allowed range.
+132	Check that the proposed tilt is admissible. The same algebra gives a simple expression for the denominator.
+133	Evaluate the first term at that tilt. It gives one square-root contribution plus the linear heavy-tail correction.
+134	Evaluate the second term. It gives the same square-root contribution as the first.
+135	Add the two terms and square. This is the event-score bound stated at the beginning of the lemma.
+136	Treat every possible transcript value as an event and average. Expected surprise is entropy; expected squared surprise remains as the Bernstein correction.
+137	With sub-Gaussian scores, use the sharper event bound before averaging. Then ordinary entropy alone controls the conditional score energy.
+138	We need one more ingredient for general Bernstein scores. LT is the negative log probability of the message that actually occurs.
+139	Even if some messages are extremely rare, a finite alphabet controls the second moment of surprise. Let's prove that by integrating its tail.
+140	If surprise exceeds x, every message in that event has probability below exp minus x. There are only finitely many such messages to add.
+141	No probability can exceed one. Combining that fact with the exponential bound tells us exactly where to split the tail integral.
+142	Write the square of a nonnegative variable as an integral of its tail indicators. Taking expectation produces the tail formula.
+143	Split at B log two. Use the constant probability bound before that point and the exponential bound after it.
+144	Shift the tail integral so it starts at zero. Only the zeroth and first moments of an exponential distribution remain.
+145	The same bound holds after fixing public information, provided the conditional alphabet has the same size limit. Averaging keeps the bound unchanged.
+146	We now have the ingredients for independent machines. Machine i has a private block, and q bounds the largest block size.
+147	This lemma packages the result: transcript information is controlled by block size times conditional entropy, plus a uniform Bernstein correction.
+148	For sub-Gaussian scores, that correction disappears. We'll recover this sharper version after proving the general case.
+149	Fix the seeds and an entire target transcript. For machine i, record every constraint saying its own bits must match the target when it is scheduled to speak.
+150	The target transcript occurs exactly when all the local checklists pass. The converse direction follows by replaying the public schedule one bit at a time.
+151	Give names to the local checklist probabilities, the transcript probability, and each checklist's surprise.
+152	The blocks are independent, so the transcript event factors. Taking a negative logarithm makes its total surprise the sum of local surprises.
+153	Now condition the blocks on this transcript. The joint conditional probability factors into the local conditional probabilities. This is the product posterior behind the rectangle argument.
+154	Name each raw block score and its conditional mean on the transcript leaf. We'll bound those means and then add their squared lengths.
+155	The posterior mean for one block depends only on that block's own checklist. Checks on other independent blocks do not change it.
+156	For two different blocks, conditional independence factors their score outer product into the product of their conditional means.
+157	Average back over transcripts. The original independent block scores have zero cross moment, so the posterior-mean cross terms also cancel in expectation.
+158	Apply the message-score identity to the complete collection of blocks. The transcript score becomes the sum of the block posterior means.
+159	Square that sum and average. The cross terms we just analyzed vanish, leaving a sum of block contributions.
+160	Each block contribution is the score mean conditioned on its checklist. Apply the event-score lemma with that block's probability and size.
+161	Insert the block bounds into the information sum. Replace the individual sizes by the common upper bound q.
+162	The sum of local surprises is the transcript surprise. Its expected value is the conditional transcript entropy.
+163	Because the local surprises are nonnegative, their squared sum dominates the sum of their squares. That controls the quadratic correction without an extra factor of machine count.
+164	We can now express both terms using transcript quantities. One is entropy and the other is the second moment of transcript surprise.
+165	The finite-alphabet lemma bounds that second moment uniformly. This finishes the information calculation for fixed seeds.
+166	The seeds are independent of the parameter. The joint information is therefore the average of the fixed-seed information.
+167	Average the fixed-seed entropy in the same way. This completes the general independent-block lemma.
+168	For sub-Gaussian scores, return to the sharper event inequality. It bounds each block mean using only linear surprise.
+169	Repeat the information sum with this sharper term. After averaging the seeds, this proves the clean sub-Gaussian entropy bound.
+170	We can finally handle overlap. Fix the sampling design and split the pool IDs into those seen by several machines and those owned by exactly one.
+171	Collect the corresponding observation values. G contains each shared observation once, and Vi contains machine i's truly private observations.
+172	These groups use disjoint indices from an independent pool. Their values therefore have a product distribution at each fixed parameter.
+173	A private block is contained in a machine's original local block. So its size cannot exceed m.
+174	The theorem adds the information in shared observations to the entropy-controlled information from private blocks. The rest of this subsection proves that decomposition.
+175	For a simpler form, replace the largest private block by m and remove G from the conditioning of entropy. Both operations can only enlarge the bound.
+176	Sub-Gaussian scores give the same decomposition with the sharper private-block coefficient and no quadratic correction.
+177	For unit-covariance Gaussian means, the variance constant is one. This makes the shared-data and private-data contributions especially explicit.
+178	Fix the seeds and give the decoder G as well as the transcript. Adding an observation cannot reduce information, so the enlarged experiment upper-bounds the original one.
+179	Split the enlarged experiment's information by the chain rule. We need to control the shared-data term and the conditional transcript term separately.
+180	The shared vector contains r independent observations. Its information is r copies of the one-observation information.
+181	Put the data-processing comparison and chain rule together. The shared observations appear additively, before we analyze the remaining transcript.
+182	Now fix G at a value g. The private blocks remain independent because they use disjoint data and were independent of G.
+183	With shared values and seeds fixed, the protocol is a deterministic function of the private blocks. This integral makes the parameter dependence entirely explicit.
+184	We are back in the independent-block setting. Apply the rectangle entropy lemma to this conditional experiment.
+185	Average over the shared observations. Conditional transcript entropy averages naturally, and the alphabet correction stays uniform.
+186	Insert that result into the chain-rule bound. This is the precise fixed-seed shared-plus-private inequality.
+187	Average over the seeds, which contribute no parameter information. Then the single-observation information bound completes the theorem.
+188	To simplify the entropy term, note that revealing G cannot increase conditional entropy. The difference is a nonnegative conditional mutual information.
+189	For sub-Gaussian scores, make the same argument with the sharper rectangle lemma. No squared-surprise term enters.
+190	Let's check Gaussian means directly. The score is observation minus mean, and that residual is standard Gaussian.
+191	As a sanity check, suppose no private observations remain. Then knowing G and the seeds determines the transcript, so only the shared observations can carry information.
+192	The design is random but parameter independent. Apply the fixed-design bound and average, replacing the shared count by its expectation.
+193	Finally average over the prior. The entropy becomes the part of the transcript still uncertain after the parameter, design, and seeds are known.
+194	We now return to the full lower-bound proof. Keep one arbitrary protocol fixed and name its Bayes risk and its remaining conditional entropy.
+195	The shared-data theorem bounds its average transcript information in terms of that remaining entropy.
+196	Collect the fixed coefficient into A and the other information terms into Q. Q includes the prior's information as well as the shared-data and Bernstein contributions.
+197	The Bayesian inequality turns this information ceiling into a risk floor. In reciprocal form, it says the information required for error D cannot exceed what this transcript can provide.
+198	Use the entropy budget from earlier. It limits how much conditional entropy can remain once the message has achieved risk D.
+199	All the constants from the chosen prior and the Gaussian entropy bound are collected here. Their exact value is fixed across sample sizes.
+200	Scale D by the single-machine error scale. The new variable x makes the localization cancellation visible.
+201	Rewrite bits per coordinate using the surplus s. Also replace D by its expression in x.
+202	The two log m terms cancel. This cancellation explains why the refined bound depends on surplus after localization instead of the whole bit budget.
+203	Insert the remaining-entropy bound into the information inequality. We now have one scalar inequality involving only risk and the problem scales.
+204	Replace D by dx over m and divide out the common constants. This prepares the inequality for inversion.
+205	Define t as an inverse of x. A bound above on t will become a bound below on D.
+206	Substitute x in terms of t. The logarithm moves to the left, giving the increasing expression t plus log t.
+207	Expand Q after normalization. We can now see the shared-data term, the Bernstein correction, and the prior contribution separately.
+208	The alphabet correction is at most a constant times the square of the total bit budget plus one.
+209	Group the scales into F. This gives one quantity large enough to absorb every term on the right of our scalar inequality.
+210	Bound that right-hand side by a constant times F. The constant depends on the fixed model, not on the growing sample sizes.
+211	If t is at least one, drop the nonnegative log term. If t is below one, F already exceeds it. Both cases give the same upper bound on t.
+212	Convert back from inverse risk. We obtain the desired refinement denominator, but with one extra squared-bit-budget correction.
+213	We want to remove that extra correction. The next two cases show either that it can be absorbed or that another lower bound already covers the target.
+214	First take m at least n squared. The squared communication budget is then at most a constant times m.
+215	The target denominator already contains m. So in this case adding the squared budget changes the denominator by only a fixed factor.
+216	Now take m below n squared. The localization cost is only logarithmic in n, while the total budget grows linearly in n.
+217	For large n, that logarithmic cost is at most half the available bits per coordinate. The surplus is therefore a positive linear fraction of n.
+218	That much surplus makes the target refinement term no larger than the total-access term. We already proved the corresponding sample floor.
+219	The two cases cover every local sample size. Together they establish the refinement lower bound with no squared-budget term.
+220	Add the refinement term to the sample and bit floors. This is exactly the lower envelope announced in the main theorem.
+221	For Gaussian means we can keep sharper constants. Average the sub-Gaussian shared-data bound over the design and prior.
+222	Insert that sharper information bound into the Bayesian inequality. We'll invert this version explicitly.
+223	Use a slightly simpler inverse-risk variable for the Gaussian case.
+224	Divide the information inequality by md. This expresses t in terms of overlap, remaining entropy, and prior information.
+225	Apply the same entropy budget. Replacing D by its expression in t again cancels the localization log m.
+226	Collect the remaining numerical constants into one logarithm. This will make the final exponential argument compact.
+227	Put the entropy bound into the information bound and move log t to the left. We now have an explicit scalar inequality.
+228	Exponentiate. The left side becomes t times exp t, which has a standard increasing inverse.
+229	That inverse is the principal Lambert W function. This identity defines the function we need.
+230	Apply that inverse and convert back to D. The result is an explicit finite-sample Gaussian risk floor, completing Section III.
