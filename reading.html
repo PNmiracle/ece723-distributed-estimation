@@ -391,6 +391,20 @@ html[lang^="en"] .eq-fig figcaption::before{content:"Diagram"}
 body.no-term-en .term-en{display:none}
 #toggle-en[aria-pressed="false"]{opacity:.7}
 @media print{.term-en{color:#555}}
+</style><style id="compact-reading-toolbar">
+/* Compact reading toolbar: two slim rows, no control wrapping. */
+.topbar .bar-content{max-width:none;min-height:0;padding:5px 16px;display:flex;flex-direction:column;align-items:stretch;gap:4px}
+.topbar .brand{font-size:14px;line-height:20px}
+.topbar .brand small{font-size:12px;padding-inline-start:8px}
+.topbar .tools{display:flex;flex-wrap:nowrap;gap:5px;align-items:center;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.topbar .tools>*{flex-shrink:0}
+.topbar .tools form{gap:4px;font-size:12px}
+.topbar .tools button,.topbar .tools input,.topbar .tools .tlink{font-size:12px;line-height:18px;padding:3px 7px;white-space:nowrap;border-radius:5px}
+.topbar .tools input[type=number]{width:58px}
+.topbar .langsw{flex-shrink:0;margin-left:auto}
+.topbar .langsw a{font-size:12px;line-height:18px;padding:3px 7px}
+:root{--bar:68px}
+@media(max-width:640px){.topbar .bar-content{padding:4px 10px}.topbar .brand small{font-size:11px}}
 </style></head>
 <body>
 <div class="progress" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
