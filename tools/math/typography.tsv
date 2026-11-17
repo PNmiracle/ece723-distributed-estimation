@@ -1,0 +1,424 @@
+# Literal prose fragment<TAB>LaTeX (longest match wins)
+1+s+≥1	1+s_+\ge1
+1+s+≥εn	1+s_+\ge\varepsilon n
+(m/N)²	(m/N)^2
+(n/s)²	(n/s)^2
+‖u‖²/2	\lVert u\rVert^2/2
+‖u‖²	\lVert u\rVert^2
+tr IX≤dv	\operatorname{tr}I_X\le dv
+H(T|G,R) ≤ H(T|R)	H(T\mid G,R)\le H(T\mid R)
+W₀(e^z)	W_0(e^z)
+e^z	e^z
+t≤m	t\le m
+m≥2	m\ge2
+m≥n	m\ge n
+m<n	m<n
+m≤n	m\le n
+1≤m≤n	1\le m\le n
+Bj≥nk/d−1	B_j\ge nk/d-1
+m/q≤3	m/q\le3
+p(1−p)≤1/4	p(1-p)\le1/4
+x≤1/4	x\le1/4
+0<t≤1	0<t\le1
+e^(−λ)≤1	e^{-\lambda}\le1
+∇A	\nabla A
+√ln(1/p)	\sqrt{\ln(1/p)}
+√v	\sqrt v
+sin^(a−1)x·sin x	\sin^{a-1}x\,\sin x
+cos²x=1−sin²x	\cos^2x=1-\sin^2x
+2sin²x=1−cos(2x)	2\sin^2x=1-\cos(2x)
+log w(t)=log 2+2log sin(πt)	\log w(t)=\log 2+2\log\sin(\pi t)
+w(t)=2sin²(πt)	w(t)=2\sin^2(\pi t)
+sin x cos x=sin(2x)/2	\sin x\cos x=\tfrac12\sin(2x)
+F′(0)/F(0)=−log 2	\frac{F'(0)}{F(0)}=-\log 2
+F(2)=π/2	F(2)=\pi/2
+h(w)=−E log w	h(w)=-\mathbb E\log w
+log w=log 2+log sin²(πΘ₁)	\log w=\log 2+\log\sin^2(\pi\Theta_1)
+∂j(θ̂j−θj)=−1	\partial_j(\widehat\theta_j-\theta_j)=-1
+∇p=p∇log p	\nabla p=p\nabla\log p
+B/d=s+(log₂m)/2	\frac Bd=s+\tfrac12\log_2m
+1/m=aB·2^(2s)	\frac1m=a_B\,2^{2s}
+P(Da≥2)=1−P(Da=0)−P(Da=1)	\mathbb P(D_a\ge2)=1-\mathbb P(D_a=0)-\mathbb P(D_a=1)
+1{D≥2}≤C(D,2)	\mathbf1_{\{D\ge2\}}\le\binom D2
+ms≤m(1+s)≤2ms	ms\le m(1+s)\le2ms
+‖x+y‖²≤2‖x‖²+2‖y‖²	\lVert x+y\rVert^2\le2\lVert x\rVert^2+2\lVert y\rVert^2
+‖a+b‖²≤2‖a‖²+2‖b‖²	\lVert a+b\rVert^2\le2\lVert a\rVert^2+2\lVert b\rVert^2
+I(Θ;Y)=h(Θ)−h(Θ|Y)	I(\Theta;Y)=h(\Theta)-h(\Theta\mid Y)
+H(T|W)−H(T|Θ,W)	H(T\mid W)-H(T\mid\Theta,W)
+H(T|G,R)≤H(T|R)	H(T\mid G,R)\le H(T\mid R)
+Hθ(T|G,R=ρ)	H_\theta(T\mid G,R=\rho)
+H(T|Θ,S,R)	H(T\mid\Theta,S,R)
+H(T|W)	H(T\mid W)
+Jπ=4π²d	J_\pi=4\pi^2d
+I(Θ;W)	I(\Theta;W)
+EDY=D	\mathbb E D_Y=D
+eᵀμE=‖μE‖	e^{\mathsf T}\mu_E=\lVert\mu_E\rVert
+(x+y)²≤2x²+2y²	(x+y)^2\le2x^2+2y^2
+λ*=η/(1+bη)	\lambda_* = \frac{\eta}{1+b\eta}
+bλ*<1	b\lambda_*<1
+LT>x	L_T>x
+pT(t)<e^(−x)	p_T(t)<e^{-x}
+M≤2^B	M\le2^B
+2x·1{LT>x}	2x\,\mathbf1_{\{L_T>x\}}
+a=B ln 2	a=B\ln2
+1=e^(a−x)	1=e^{a-x}
+∫e^(−y)dy=1	\int_0^\infty e^{-y}\,dy=1
+∫ye^(−y)dy=1	\int_0^\infty y e^{-y}\,dy=1
+ai(t)aj(t)ᵀ	a_i(t)a_j(t)^{\mathsf T}
+(Σiℓi)²	\bigl(\sum_i\ell_i\bigr)^2
+ΣiAi	\sum_i A_i
+h(π)=d(ln 2−1)	h(\pi)=d(\ln2-1)
+D/d=x/m	\frac Dd=\frac xm
++½ln m	+\tfrac12\ln m
+−½ln m	-\tfrac12\ln m
+t=2/(Ax)	t=\frac2{Ax}
+ln x=ln(2/A)−ln t	\ln x=\ln(2/A)-\ln t
+Amd/2	Amd/2
+t≤C₂F	t\le C_2F
+D=2d/(Amt)	D=\frac{2d}{Amt}
+nk+1≤(k+1)n	nk+1\le(k+1)n
+log₂m<2log₂n	\log_2m<2\log_2n
+log₂n≤nk/(2d)	\log_2n\le\frac{nk}{2d}
+s≥nk/(2d)	s\ge\frac{nk}{2d}
+D/d=1/(mt)	\frac Dd=\frac1{mt}
+2(B/d)ln 2	2\frac Bd\ln2
+ln m+2s ln 2	\ln m+2s\ln2
+ln(2πe)−2ln 2+2	\ln(2\pi e)-2\ln2+2
+ln(πe³/2)	\ln(\pi e^3/2)
+exp(t+ln t)=t·exp(t)	\exp(t+\ln t)=t\exp(t)
+t↦t·exp(t)	t\mapsto t\exp(t)
+t=d/(mD)	t=\frac d{mD}
+Pθ(Zi ∈ Ci for every i | T=t, R=r)	\mathbb P_\theta(Z_i\in C_i\text{ for every }i\mid T=t,R=r)
+p̂−μ	\widehat p-\mu
+(p̂−pN)+(pN−μ)	(\widehat p-p_N)+(p_N-\mu)
+0≤x(1−x)≤1/4	0\le x(1-x)\le\tfrac14
+1−v̂≤1	1-\widehat v\le1
+σw²≥3/(4q)	\sigma_w^2\ge\frac3{4q}
+TV≤√(KL/2)	\operatorname{TV}\le\sqrt{\operatorname{KL}/2}
+aw−1=vp−w	a_w-1=v_p-w
+Var(Ū′)=vp/q	\operatorname{Var}(\overline U')=v_p/q
+Var(Ū)=vp/q	\operatorname{Var}(\overline U)=v_p/q
+Ev̂=vp(1−1/q)	\mathbb E\widehat v=v_p(1-1/q)
+1−p+pe^(it)	1-p+pe^{it}
+(1+cos(tK))/2	\frac{1+\cos(tK)}2
+√m/2<2^J≤√m	\frac{\sqrt m}2<2^J\le\sqrt m
+tj=2^j/m	t_j=\frac{2^j}m
+e^(it)+e^(−it)=2cos t	e^{it}+e^{-it}=2\cos t
+1−cos t≤t²/2	1-\cos t\le t^2/2
+ln(1−x)≥−x/(1−x)	\ln(1-x)\ge-\frac x{1-x}
+|Ft|=|1−p+pe^(it)|^m	|F_t|=|1-p+pe^{it}|^m
+d(arg z)/dp=Im(z′/z)	\frac{d\arg z}{dp}=\operatorname{Im}(z'/z)
+z=1−p+pe^(itj)	z=1-p+pe^{it_j}
+tj sin 1≤sin tj≤tj	t_j\sin1\le\sin t_j\le t_j
+mtj=λj	mt_j=\lambda_j
+1−cos Δ	1-\cos\Delta
+2sin²(Δ/2)	2\sin^2(\Delta/2)
+sin(Δ/2)≥Δ/π	\sin(\Delta/2)\ge\Delta/\pi
+λj=2λj−1	\lambda_j=2\lambda_{j-1}
+ε≤c₂/8	\varepsilon\le c_2/8
+λJ²>m/4	\lambda_J^2>m/4
+u∈[0,1]^d	u\in[0,1]^d
+‖z−μ(ϑ)‖	\lVert z-\mu(\vartheta)\rVert
+‖z′−μ(ϑ)‖	\lVert z'-\mu(\vartheta)\rVert
+η=c+Aθ	\eta=c+A\theta
+‖Au‖≤‖A‖op‖u‖	\lVert Au\rVert\le\lVert A\rVert_{\mathrm{op}}\lVert u\rVert
+θ−θ′=A^(−1)(η−η′)	\theta-\theta'=A^{-1}(\eta-\eta')
+η̂−η=A(θ̂−θ)	\widehat\eta-\eta=A(\widehat\theta-\theta)
+E exp(uᵀG)=exp(‖u‖²/2)	\mathbb E\exp(u^{\mathsf T}G)=\exp(\lVert u\rVert^2/2)
+Xj=θj+Gj	X_j=\theta_j+G_j
+P(Gj≥−θj)=Φ(θj)	\mathbb P(G_j\ge-\theta_j)=\Phi(\theta_j)
+[−M‖u‖,M‖u‖]	[-M\lVert u\rVert,M\lVert u\rVert]
+p,1−p≥a	p,1-p\ge a
+p(1−p)≥a(1−a)	p(1-p)\ge a(1-a)
+ψ(x)=x	\psi(x)=x
+∂pj p(d+1)=−1	\partial_{p_j}p_{d+1}=-1
+μ(p)=p	\mu(p)=p
+Σ|uj|wj	\sum_j|u_j|w_j
+θ′+t(θ−θ′)	\theta'+t(\theta-\theta')
+‖Δ‖·‖∇A(θ)−∇A(θ′)‖	\lVert\Delta\rVert\,\lVert\nabla A(\theta)-\nabla A(\theta')\rVert
+‖W‖op=wmax	\lVert W\rVert_{\mathrm{op}}=w_{\max}
+σ(θᵀz)	\sigma(\theta^{\mathsf T}z)
+Zσ(θᵀZ)	Z\sigma(\theta^{\mathsf T}Z)
+E(Y|Z)=σ(θᵀZ)	\mathbb E(Y\mid Z)=\sigma(\theta^{\mathsf T}Z)
+|Y−σ|≤1	|Y-\sigma|\le1
+‖Z‖≤K	\lVert Z\rVert\le K
+|uᵀZ|≤K‖u‖	|u^{\mathsf T}Z|\le K\lVert u\rVert
+g=E(ZY)	g=\mathbb E(ZY)
+σ(1−σ)	\sigma(1-\sigma)
+|θᵀZ|	|\theta^{\mathsf T}Z|
+σ′≥cσ	\sigma'\ge c_\sigma
+‖θ−θ′‖	\lVert\theta-\theta'\rVert
+−λ+x ln λ−ln(x!)	-\lambda+x\ln\lambda-\ln(x!)
+EX=Var X=λ	\mathbb EX=\operatorname{Var}X=\lambda
+exp(λ(e^t−1))	\exp\bigl(\lambda(e^t-1)\bigr)
+μ(λ)=e^(−λ)	\mu(\lambda)=e^{-\lambda}
+e^(−t)≥e^(−b₀)	e^{-t}\ge e^{-b_0}
+|∂λp|=|ξλ|p	|\partial_\lambda p|=|\xi_\lambda|p
+EX=1/λ	\mathbb EX=1/\lambda
+Var X=1/λ²	\operatorname{Var}X=1/\lambda^2
+exp(−(λ+u)x)	\exp\bigl(-(\lambda+u)x\bigr)
+ln(1+u/λ)	\ln(1+u/\lambda)
+1{X≤t}	\mathbf1_{\{X\le t\}}
+t·e^(−b₀t)	te^{-b_0t}
+|1−λx|≤1+b₀x	|1-\lambda x|\le1+b_0x
+e^(−λx)≤e^(−ax)	e^{-\lambda x}\le e^{-ax}
+vj≤v*, bj|uj|≤b*‖u‖	v_j\le v_*,\quad b_j|u_j|\le b_*\lVert u\rVert
+p(p−1)/2	p(p-1)/2
+(Σ+tH)(Σ+tH)^(−1)=I	(\Sigma+tH)(\Sigma+tH)^{-1}=I
+X=Σ^(1/2)G	X=\Sigma^{1/2}G
+exp(sGj²/2)	\exp(sG_j^2/2)
+max|γj|	\max_j|\gamma_j|
+‖Σ^(−1/2)‖op≤a^(−1/2)	\lVert\Sigma^{-1/2}\rVert_{\mathrm{op}}\le a^{-1/2}
+½Σγj²	\tfrac12\sum_j\gamma_j^2
+N(0,zv)	\mathcal N(0,z_v)
+zv=vᵀΣv	z_v=v^{\mathsf T}\Sigma v
+Σii+Σjj+2Σij	\Sigma_{ii}+\Sigma_{jj}+2\Sigma_{ij}
+Δ=Σ−Σ′	\Delta=\Sigma-\Sigma'
+(a+b+c)²≤3(a²+b²+c²)	(a+b+c)^2\le3(a^2+b^2+c^2)
+det Σ≥a^p	\det\Sigma\ge a^p
+Σ^(−1)≥I/b₀	\Sigma^{-1}\succeq I/b_0
+P(intersection nonempty)≤E|Si∩Sj|	\mathbb P(S_i\cap S_j\ne\varnothing)\le\mathbb E|S_i\cap S_j|
+(D−1)+≤C(D,2)	(D-1)_+\le\binom D2
+2^(−2s)/m	\frac{2^{-2s}}m
+2^(−B/d)	2^{-B/d}
+2^(−Bj−1)	2^{-B_j-1}
+2^Bj	2^{B_j}
+2^B	2^B
+n^α	n^\alpha
+n^β	n^\beta
+q^(−3/2)	q^{-3/2}
+q^(−1/2)	q^{-1/2}
+q^(−3)	q^{-3}
+(Qm)^(−2)	(Qm)^{-2}
+[0,1]^d	[0,1]^d
+A^(−1)	A^{-1}
+Σ^(1/2)	\Sigma^{1/2}
+e^(−b₀t)	e^{-b_0t}
+e^(−b₀)	e^{-b_0}
+e^(−λt)	e^{-\lambda t}
+e^(−λ)	e^{-\lambda}
+e^(−x)	e^{-x}
+e^t	e^t
+sin²(πΘ₁)	\sin^2(\pi\Theta_1)
+log sin x	\log\sin x
+sin x	\sin x
+sin tj	\sin t_j
+cos²	\cos^2
+cos(tK)	\cos(tK)
+cos(α−β)	\cos(\alpha-\beta)
+sin(2x)/2	\sin(2x)/2
+F(a)	F(a)
+F′(2)	F'(2)
+F′(0)	F'(0)
+F(2)	F(2)
+F(0)	F(0)
+a=2	a=2
+x=πt	x=\pi t
+y=2x	y=2x
+log w	\log w
+w(t)	w(t)
+Qj·q	Q_jq
+∂jq	\partial_jq
+θj	\theta_j
+θ̂j	\widehat\theta_j
+log₂√m	\log_2\sqrt m
+log₂m=αlog₂n+O(1)	\log_2m=\alpha\log_2n+O(1)
+log₂m	\log_2m
+log₂n	\log_2n
+−log₂	-\log_2
+1+s+	1+s_+
+s≤s+	s\le s_+
+sj,+	s_{j,+}
+C(N,m)	\binom Nm
+1/C(N,m)	\binom Nm^{-1}
+C(D,2)	\binom D2
+C(n,2)	\binom n2
+floor(B/d)	\lfloor B/d\rfloor
+ceiling(B/d)	\lceil B/d\rceil
+floor(m/2)	\lfloor m/2\rfloor
+floor((log₂m)/2)	\lfloor(\log_2m)/2\rfloor
+1/(4N)	\frac1{4N}
+1/(nm)	\frac1{nm}
+1/(ms)	\frac1{ms}
+1/(mt)	\frac1{mt}
+1/√m	\frac1{\sqrt m}
+1/λj	\frac1{\lambda_j}
+1/a²	\frac1{a^2}
+1/a	\frac1a
+1/q	\frac1q
+1/m	\frac1m
+1/N	\frac1N
+m/N	\frac mN
+m/q	\frac mq
+B/d	\frac Bd
+D/d	\frac Dd
+vp/q²	\frac{v_p}{q^2}
+vp/q	\frac{v_p}q
+ℓ/η	\frac\ell\eta
+vqη/2	\frac{vq\eta}2
+1E/p	\frac{\mathbf1_E}p
+aB	a_B
+Da	D_a
+λn	\lambda_n
+hT	h_T
+LT²	L_T^2
+LT	L_T
+qi	q_i
+Ai	A_i
+ai(t)	a_i(t)
+Ei(t)	E_i(t)
+Si	S_i
+KB	K_B
+JG	J_G
+N(0,Id)	\mathcal N(0,I_d)
+Id	I_d
+r̄	\overline r
+Er(S)=r̄	\mathbb E r(S)=\overline r
+Jπ	J_\pi
+d²/D	\frac{d^2}D
+d/(mD)	\frac d{mD}
+(B+1)²	(B+1)^2
+ln t	\ln t
+ln x	\ln x
+λ*	\lambda_*
+μE	\mu_E
+‖μE‖	\lVert\mu_E\rVert
+u=λe	u=\lambda e
+b=0	b=0
+v=1	v=1
+q=0	q=0
+W₀	W_0
+qi≤q	q_i\le q
+q≤m	q\le m
+N≥m	N\ge m
+n≥1	n\ge1
+s≥εn>0	s\ge\varepsilon n>0
+s≥εn	s\ge\varepsilon n
+s≤C₀	s\le C_0
+s→∞	s\to\infty
+s/n→0	s/n\to0
+s/(1+s)→1	\frac{s}{1+s}\to1
+N≤C₀ms	N\le C_0ms
+N≥c₀n²m/s	N\ge c_0n^2m/s
+C(n,2)≤n²/2	\binom n2\le\frac{n^2}2
+s≥1	s\ge1
+m=N	m=N
+Bj≥B/d−1	B_j\ge B/d-1
+s=o(n)	s=o(n)
+m≈n^α	m\approx n^\alpha
+N≈n^β	N\approx n^\beta
+m≥n²	m\ge n^2
+m<n²	m<n^2
+n²≤m	n^2\le m
+B=nk	B=nk
+t≥1	t\ge1
+t<1	t<1
+t≤F	t\le F
+F≥1	F\ge1
+m≥1	m\ge1
+ln t≥0	\ln t\ge0
+a∈[N]	a\in[N]
+a↦Xa	a\mapsto X_a
+ψj(Y)	\psi_j(Y)
+ψj	\psi_j
+μj(θ)	\mu_j(\theta)
+pN,j	p_{N,j}
+pN	p_N
+Ū′	\overline U'
+Ū−p	\overline U-p
+Ū	\overline U
+v̂	\widehat v
+‖f‖∞	\lVert f\rVert_\infty
+Za	Z_a
+Ya	Y_a
+p+Sa	p+S_a
+aw	a_w
+vp	v_p
+a−1−ln a	a-1-\ln a
+1/a²	\frac1{a^2}
+x(1−x)	x(1-x)
+Bj≤kQj	B_j\le kQ_j
+Qj≤n	Q_j\le n
+Qj≤3q	Q_j\le3q
+1/q≤3/Qj	\frac1q\le\frac3{Q_j}
+Qj≥Bj/k	Q_j\ge B_j/k
+q≥m/3	q\ge m/3
+σ²=1/q	\sigma^2=1/q
+σ=q^(−1/2)	\sigma=q^{-1/2}
+B′−log₂(1/σ)	B'-\log_2(1/\sigma)
+|sj−s|	|s_j-s|
+Bj	B_j
+Qj	Q_j
+CTV	C_{\mathrm{TV}}
+mtj²≤1	mt_j^2\le1
+tj≤1	t_j\le1
+λj=mtj	\lambda_j=mt_j
+λj	\lambda_j
+λJ²	\lambda_J^2
+λJ	\lambda_J
+tj	t_j
+F̂₀	\widehat F_0
+F̃J	\widetilde F_J
+p̂	\widehat p
+4L²	4L^2
+ρn,m	\rho_{n,m}
+θ̂	\widehat\theta
+θ−θ′	\theta-\theta'
+θj′	\theta_j'
+ϕ(1)	\phi(1)
+uᵀξ	u^{\mathsf T}\xi
+Au	Au
+Aᵀ	A^{\mathsf T}
+ξθ	\xi_\theta
+log pη(x)	\log p_\eta(x)
+θ=0	\theta=0
+θ=1	\theta=1
+p=a	p=a
+p=1−a	p=1-a
+ℓ≤d	\ell\le d
+p(d+1)	p_{d+1}
+1/pℓ	1/p_\ell
+1/p(d+1)	1/p_{d+1}
+Lℓ²	L_\ell^2
+T−∇A	T-\nabla A
+ET=∇A	\mathbb ET=\nabla A
+Δᵀ	\Delta^{\mathsf T}
+a‖Δ‖	a\lVert\Delta\rVert
+Δ=0	\Delta=0
+Tj	T_j
+wj	w_j
+σ′	\sigma'
+ZZᵀ	ZZ^{\mathsf T}
+λZ	\lambda_Z
+|ZjY|≤K	|Z_jY|\le K
+λ≥a	\lambda\ge a
+λ≤b₀	\lambda\le b_0
+Pλ(X=0)	\mathbb P_\lambda(X=0)
+λ′	\lambda'
+vP	v_{\mathrm P}
+bP	b_{\mathrm P}
+r!≥2	r!\ge2
+|u|<a	|u|<a
+|u/λ|<1	|u/\lambda|<1
+u>−λ	u>-\lambda
+x≥0	x\ge0
+log λ−λx	\log\lambda-\lambda x
+1/r≤1/2	1/r\le1/2
+r≥2	r\ge2
+Lj²	L_j^2
+[a,b₀]	[a,b_0]
+p×p	p\times p
+MH	M_H
+γj	\gamma_j
+s=tγj	s=t\gamma_j
+s<1	s<1
+−ln(1−z)	-\ln(1-z)
+t=1	t=1
+H=H(u)	H=H(u)
+c>0	c>0
+vᵀX	v^{\mathsf T}X
+vᵀΣv	v^{\mathsf T}\Sigma v
+f′	f'
+z=2b₀	z=2b_0
+ei+ej	e_i+e_j
+N/(nm)→∞	\frac N{nm}\to\infty

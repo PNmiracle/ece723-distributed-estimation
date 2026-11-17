@@ -54,5 +54,8 @@ python3 tools/plain-zh/inject.py
 node tools/figs/inject.js
 python3 tools/figs/structure.py
 
+# Use mathematical typography in prose, proof maps and supplemental symbol keys.
+python3 tools/math/typeset.py reading.html reading-en.html
+
 # Refresh the bilingual lower-bound reader from the guided readers.
 node tools/converse/build.js
