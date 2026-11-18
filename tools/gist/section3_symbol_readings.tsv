@@ -1,0 +1,228 @@
+theta	theta /ˈθiːtə/	西塔
+Theta	capital theta	大写西塔
+ThetaSet	capital theta	大写西塔
+theta_j	theta sub j	西塔，下标 j
+Theta_j	capital theta sub j	大写西塔，下标 j
+hat	theta hat	西塔帽
+hatj	theta hat sub j of lowercase y	西塔帽，下标 j，在小写 y 处取值
+d	lowercase d	小写 d
+Z	capital Z	大写 Z
+z	lowercase z	小写 z
+X	capital X	大写 X
+Xa	capital X sub a	大写 X，下标 a
+Xia	capital X sub i comma a	大写 X，下标 i、a
+T	capital T	大写 T
+tmsg	lowercase t	小写 t
+G	capital G	大写 G
+g	lowercase g	小写 g
+Y	capital Y	大写 Y
+y	lowercase y	小写 y
+R	capital R	大写 R
+rseed	lowercase r	小写 r
+rho	rho /roʊ/	柔
+W	capital W	大写 W
+wpublic	lowercase w	小写 w
+design	script capital S	花体大写 S
+Si	capital S sub i	大写 S，下标 i
+n	lowercase n	小写 n
+m	lowercase m	小写 m
+N	capital N	大写 N
+B	capital B	大写 B
+k	lowercase k	小写 k
+rshared	lowercase r	小写 r
+rbar	r bar	r 横杠
+qi	q sub i	q，下标 i
+qblock	lowercase q	小写 q
+qmax	lowercase q	小写 q
+qprivate	lowercase q	小写 q
+i	lowercase i	小写 i
+j	lowercase j	小写 j
+aindex	lowercase a	小写 a
+apool	lowercase a	小写 a
+adir	lowercase a	小写 a
+u	lowercase u	小写 u
+ellstep	ell, script lowercase l	花体小写 l，读 ell
+Llen	capital L	大写 L
+pZ	p sub theta superscript Z of lowercase z	p，下标西塔、上标 Z，在小写 z 处取值
+pT	p sub theta superscript T of lowercase t	p，下标西塔、上标 T，在小写 t 处取值
+pY	p sub theta superscript Y of lowercase y	p，下标西塔、上标 Y，在小写 y 处取值
+pTfixed	p sub theta of t given R equals r	p 下标西塔，在给定 R 等于 r 时，t 的条件概率
+pTshared	p sub theta of t given G equals g and R equals rho	p 下标西塔，在给定 G 等于 g、R 等于柔时，t 的条件概率
+K	capital K of t given z	大写 K，给定 z 后在 t 处取值
+nuZ	nu sub Z, d z	纽，下标 Z，微分元 d z
+nuY	nu sub Y, d y	纽，下标 Y，微分元 d y
+xi	xi /ksaɪ/ sub theta of capital X	克赛，下标西塔，在大写 X 处取值
+SZ	capital S sub Z	大写 S，下标 Z
+ST	capital S sub T	大写 S，下标 T
+SG	capital S sub G	大写 S，下标 G
+STG	capital S sub T given G	大写 S，下标 T 给定 G
+SGT	capital S sub G comma T	大写 S，下标 G、T
+Aq	capital A sub q	大写 A，下标 q
+Ai	capital A sub i	大写 A，下标 i
+ai	lowercase a sub i of lowercase t	小写 a，下标 i，在小写 t 处取值
+muE	mu /mjuː/ sub E	缪，下标 E
+Qscore	capital Q of theta comma y	大写 Q，参数为西塔、y
+Qjscore	capital Q sub j of capital theta comma Y	大写 Q，下标 j，参数为大写西塔、Y
+qjoint	lowercase q of theta comma y	小写 q，参数为西塔、y
+prior	pi /paɪ/ of theta	派函数在西塔处的值
+priorlaw	pi /paɪ/, the prior law	派，表示先验分布
+Jpi	J sub pi	J，下标派
+JY	J sub Y of capital theta	J，下标 Y，参数为大写西塔
+JZ	J sub Z of theta	J，下标 Z，参数为西塔
+JT	J sub T of theta	J，下标 T，参数为西塔
+JG	J sub G of theta	J，下标 G，参数为西塔
+JGT	J sub G comma T of theta	J，下标 G、T，参数为西塔
+JTG	J sub T given G, of theta semicolon G	J，下标 T 给定 G，参数为西塔，分号后为 G 的取值
+JTR	J sub T comma R of theta	J，下标 T、R，参数为西塔
+Jr	J sub T given R equals r, of theta	J，下标 T 给定 R 等于 r，参数为西塔
+Jrho	J sub T given R equals rho, of theta	J，下标 T 给定 R 等于柔，参数为西塔
+Jgrho	J sub T given G equals g and R equals rho, of theta	J，下标 T 给定 G 等于 g、R 等于柔，参数为西塔
+JGrho	J sub T given G and R equals rho, of theta semicolon G	J，下标 T 给定 G、R 等于柔，参数为西塔，分号后为 G 的取值
+JTSR	J sub T comma script S comma R of theta	J，下标 T、花体 S、R，参数为西塔
+JTSRprior	J sub T comma script S comma R of capital theta	J，下标 T、花体 S、R，参数为大写西塔
+IX	capital I sub X of theta	大写 I，下标 X，参数为西塔
+Id	capital I sub d	大写 I，下标 d
+tr	trace /treɪs/ of	取迹
+Etheta	expectation under theta	在西塔模型下取期望
+Ebayes	expectation	取联合期望
+ER	expectation over R	关于 R 取期望
+EG	expectation over G	关于 G 取期望
+EY	expectation over Y	关于 Y 取期望
+EW	expectation over W	关于 W 取期望
+Eprior	expectation over capital theta	关于大写西塔的先验取期望
+Eprob	expectation; probability	取期望；概率
+norm	norm /nɔːrm/ of the enclosed vector	括号内向量的范数
+inner	inner product of the two enclosed vectors	括号内两个向量的内积
+transpose	transpose /trænˈspoʊz/	转置
+grad	gradient with respect to theta; nabla /ˈnæblə/ sub theta	对西塔的梯度；纳布拉下标西塔
+partial	partial derivative with respect to theta sub j	对西塔的第 j 个坐标求偏导
+psd	is less than or equal to in positive-semidefinite order	在半正定矩阵序下不超过
+H	capital H of T given the stated conditions	给定所列条件后，T 的离散条件熵
+Htheta	capital H sub theta	大写 H，下标西塔
+I	mutual information, conditional on the variables after the bar	互信息；若有条件竖线，则给定竖线后的变量
+hpost	lowercase h of capital theta given Y	给定 Y 后，大写西塔的微分熵
+hprior	lowercase h of pi	先验派的微分熵
+hcoord	lowercase h of w	先验 w 的微分熵
+hT	lowercase h sub T	小写 h，下标 T
+hshort	h equals h sub T	h 等于 h 下标 T
+D	capital D	大写 D
+Dy	capital D sub lowercase y; capital D sub capital Y	大写 D，下标小写 y；大写 D，下标大写 Y
+RBB	R sub B B of N comma m comma n	R，下标 B B，参数依次为 N、m、n
+piNum	pi, approximately three point one four one five nine	派，约等于三点一四一五九
+exp	exponential of z equals e to the z	z 的自然指数，等于 e 的 z 次方
+log	natural log; log	自然对数；读 log 或 ln
+log2	log base two	以二为底的对数
+wprior	w of t	w 在 t 处的值
+tprior	lowercase t	小写 t
+ddt	d by d t	对 t 求导
+aexp	lowercase a	小写 a
+xint	lowercase x	小写 x
+yint	lowercase y	小写 y
+Faux	capital F of a	大写 F 在 a 处的值
+Fprime	capital F prime of a	大写 F 的导数，在 a 处取值
+Iintegral	capital I	大写 I
+Theta1	capital theta sub one	大写西塔，下标一
+Ew	expectation under w	在 w 先验下取期望
+v	lowercase v	小写 v
+b	lowercase b	小写 b
+event	capital E, the event	大写 E，表示事件
+pEvent	p equals probability under theta of event E	p 等于西塔下事件 E 的概率
+ell	ell equals natural log of one over p	花体 l，等于一除以 p 的自然对数
+direction	lowercase e, the unit direction	小写 e，单位方向向量
+lambda	lambda /ˈlæmdə/	兰布达
+eta	eta /ˈeɪtə/	伊塔
+lambdastar	lambda star	兰布达星
+Pbase	sans-serif capital P	无衬线大写 P，原概率分布
+Pevent	sans-serif capital P sub E	无衬线大写 P，下标 E
+KL	relative entropy of P sub E with respect to P	P 下标 E 相对于 P 的相对熵
+indicator	indicator of event E	事件 E 的示性函数
+LT	capital L sub T	大写 L，下标 T
+KB	capital K sub B	大写 K，下标 B
+pTlaw	p sub T of lowercase t; p sub T of capital T	p 下标 T，在小写 t 处取值；在大写 T 处取值
+xsur	lowercase x	小写 x
+M	capital M	大写 M
+Tplus	script capital T sub plus	花体大写 T，下标加号
+athresh	a equals B times natural log of two	a 等于 B 乘二的自然对数
+yshift	y equals x minus a	y 等于 x 减 a
+Zi	capital Z sub i	大写 Z，下标 i
+zi	lowercase z sub i	小写 z，下标 i
+Ei	capital E sub i of t semicolon r	大写 E，下标 i，输入为 t，分号后为 r
+Ci	capital C sub i	大写 C，下标 i
+history	t superscript ell minus one; t sub ell	t，上标 ell 减一；t，下标 ell
+iell	i sub ell of t comma r	i，下标 ell，参数为 t、r
+gell	g sub ell comma r of z sub i and t superscript ell minus one	g，下标 ell、r，输入为 z 下标 i 和 t 上标 ell 减一的前缀
+piLocal	p sub i of t	p，下标 i，在 t 处取值
+pLeaf	p of t	p 在 t 处的值
+ellLocal	ell sub i of t	花体 l，下标 i，在 t 处取值
+Gset	script capital G	花体大写 G
+Vset	script capital V sub i	花体大写 V，下标 i
+Vi	capital V sub i	大写 V，下标 i
+vi	lowercase v sub i	小写 v，下标 i
+Ptheta	capital P sub theta	大写 P，下标西塔
+productLaw	P sub theta to the tensor power q sub i	P 下标西塔的 q 下标 i 次独立乘积
+jointLaw	law under theta of the enclosed variables	在西塔下，括号内变量的联合分布
+protocolF	capital F sub g comma rho	大写 F，下标 g、柔
+conditionalMass	p sub T given W, evaluated at T given W	p 下标 T 给定 W，在 T 给定 W 处取值
+cpi	c sub pi	c，下标派
+Anorm	capital A	大写 A
+Qconst	capital Q	大写 Q
+xnorm	x equals m times D divided by d	x 等于 m 乘 D 再除以 d
+trisk	lowercase t	小写 t
+s	lowercase s	小写 s
+splus	s positive part, equals the maximum of s and zero	s 的正部，等于 s 与零中较大的一个
+Fnorm	capital F	大写 F
+C1	capital C sub one	大写 C，下标一
+C2	capital C sub two	大写 C，下标二
+CK	capital C sub capital K	大写 C，下标大写 K
+n0	n sub zero	n，下标零
+zrhs	lowercase z	小写 z
+W0	Lambert /ˈlæmbərt/ W sub zero	朗伯 W，下标零，主支
+ylambert	lowercase y	小写 y
+lower	script capital L	花体大写 L
+cmodel	lowercase c	小写 c
+asymp	is at least a constant times; is at most a constant times	不小于固定常数倍；不超过固定常数倍
+setsize	cardinality of the enclosed set	括号内集合的元素个数
+setops	intersection; union; set difference	交集；并集；差集
+indexset	bracket capital N; bracket lowercase n	方括号 N；方括号 n，表示从一开始的编号集
+U	capital U; U of script S	大写 U；U 在花体 S 处的值
+JTw	J sub T given W equals w, of theta	J，下标 T 给定 W 等于 w，参数为西塔
+JTWcond	J sub T given W, of theta semicolon W	J，下标 T 给定 W，参数为西塔，分号后为 W 的取值
+JTW	J sub T comma W of theta	J，下标 T、W，参数为西塔
+PG	capital P sub theta	大写 P，下标西塔
+priorScore	two pi times cotangent of pi t	二派乘派 t 的余切
+pTheta	p sub theta of capital T	p，下标西塔，在大写 T 处取值
+jMachine	lowercase j	小写 j
+indexIndicator	indicator that a is in S sub i	a 属于 S 下标 i 的示性函数
+JTfixed	J sub T of theta	J，下标 T，参数为西塔
+JGTfixed	J sub G comma T of theta	J，下标 G、T，参数为西塔
+JTGfixed	J sub T given G, of theta semicolon G	J，下标 T 给定 G，参数为西塔，分号后为 G 的取值
+Itheta	mutual information under theta between T and G given R	在西塔下，给定 R 后，T 与 G 的条件互信息
+RN	d P sub E by d P	P 下标 E 对 P 的密度导数
+econst	Euler’s number e	自然常数 e
+diff	d, the integration differential	d，积分微分元
+cond	given	给定
+infinity	infinity /ɪnˈfɪnəti/	正无穷
+supremum	supremum /suːˈpriːməm/ over	对所列变量取上确界
+minmax	minimum; maximum	最小值；最大值
+summation	sum over	对所列编号求和
+product	product over	对所列编号连乘
+tgeneral	t equals two d divided by A m D	t 等于二 d 除以 A、m、D 的乘积
+tGaussian	t equals d divided by m D	t 等于 d 除以 m、D 的乘积
+sin	sine /saɪn/	正弦
+cos	cosine /ˈkoʊsaɪn/	余弦
+equal	equals	等于
+defined	is defined as	定义为
+leq	is less than or equal to; is at most	小于等于；不超过
+geq	is greater than or equal to; is at least	大于等于；至少
+lt	is less than	小于
+gt	is greater than	大于
+neq	is not equal to	不等于
+belongs	is in; belongs to	属于
+notbelongs	is not in	不属于
+integral	integral of; integrate	积分
+root	square root of	平方根；根号
+square	all squared; the square of	整体平方
+tensor	tensor product; product of independent laws	张量乘积；独立乘积分布
+sumop	plus	加
+minusop	minus; negative	减；负
+cot	cotangent /koʊˈtændʒənt/	余切

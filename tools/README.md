@@ -64,13 +64,25 @@ controls remember the preference across languages.
   `gist/section3_symbol_map.tsv` explicitly lists the definitions repeated under
   each formula. Include every symbol even when a previous formula defined it.
   Keep separate entries for symbols whose meanings change with context.
-- `gist/complete-section3-symbols.py` replaces the 158 individual symbol tables.
+- `gist/section3_lhs.tsv` gives the reviewed complete left-hand expression,
+  its meaning, and English and Chinese readings for each of the 158 formulas.
+  Equation (153) restores the left side continued from the preceding prose;
+  (173) keeps the first complete size constraint, and (213) is a standalone expression.
+- `gist/section3_compounds.tsv` supplies full conditional expectations, entropies,
+  likelihoods and other composite quantities with their arguments and conditions.
+- `gist/section3_symbol_readings.tsv` gives both readings for every basic symbol
+  and operator. Readings repeat per entry, rather than disappearing after a first use.
+- `gist/complete-section3-symbols.py` renders all three levels, always placing the
+  complete left side first. It validates the reviewed left side against the formula,
+  preserves original displayed mathematics and requires both readings for every row.
 - `converse/reading-priorities.py` adds the priority cards, reading routes and
-  speaking bridges. Run this after rebuilding explanations or symbol tables.
+  speaking bridges. Run this after rebuilding explanations or symbol tables, then regenerate
+  the English reader’s Chinese disclosures with `python3 tools/plain-zh/inject.py`.
 
 ```bash
 python3 tools/gist/complete-section3-symbols.py
 python3 tools/converse/reading-priorities.py
+python3 tools/plain-zh/inject.py
 ```
 
 These steps also run at the end of `build_all.sh`. They require Beautiful Soup and

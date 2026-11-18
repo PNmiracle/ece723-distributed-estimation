@@ -47,9 +47,6 @@ node tools/notes/inject-bridges.js
 # Refresh the inline Chinese terminology annotations on the English page.
 python3 tools/term-zh/inject.py
 
-# Refresh the Chinese equation explanations available inside the English cards.
-python3 tools/plain-zh/inject.py
-
 # Restore the original illustrations and fill any remaining gaps.
 node tools/figs/inject.js
 python3 tools/figs/structure.py
@@ -61,6 +58,8 @@ python3 tools/math/reader_typography.py
 python3 tools/reader-size.py
 python3 tools/gist/complete-section3-symbols.py
 python3 tools/converse/reading-priorities.py
+# Refresh Chinese disclosures after the final symbols and priorities.
+python3 tools/plain-zh/inject.py
 
 # Refresh the bilingual lower-bound reader from the guided readers.
 node tools/converse/build.js
