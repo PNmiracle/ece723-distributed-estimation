@@ -55,6 +55,7 @@ node tools/figs/inject.js
 python3 tools/figs/structure.py
 
 # Use mathematical typography in prose, proof maps and supplemental symbol keys.
+python3 tools/math/repair_prose.py
 python3 tools/math/typeset.py reading.html reading-en.html
 python3 tools/reader-size.py
 

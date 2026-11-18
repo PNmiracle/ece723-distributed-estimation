@@ -41,7 +41,7 @@ CSS += '''
 '''
 SCRIPT='''
 (() => {
- const levels=[1,1.15,1.3,1.5], key='ece723-reader-scale';
+ const levels=[1,1.15], key='ece723-reader-scale';
  let size=1.15;
  try { const saved=Number(localStorage.getItem(key)); if(levels.includes(saved))size=saved; } catch {}
  document.documentElement.style.setProperty('--reader-scale',size);
@@ -50,7 +50,7 @@ SCRIPT='''
   if(!tools || document.getElementById('reader-font-size'))return;
   const zh=document.documentElement.lang.startsWith('zh');
   const button=document.createElement('button');button.type='button';button.id='reader-font-size';
-  const hint=zh?'点击切换全局字号：100%、115%、130%、150%':'Change reader text size: 100%, 115%, 130%, 150%';
+  const hint=zh?'点击切换全局字号：100%、115%':'Change reader text size: 100%, 115%';
   button.title=hint;
   function label(){const value=Math.round(size*100)+'%';button.textContent=(zh?'字号：':'Text: ')+value;button.setAttribute('aria-label',hint+'; '+value);}
   label();button.addEventListener('click',()=>{

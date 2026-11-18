@@ -1,0 +1,250 @@
+{
+  "reading.html": [
+    [
+      "para-power-scales",
+      ".para p",
+      "若m",
+      "若 $m\\asymp n^{\\alpha}$ 且 $N\\asymp n^{\\beta}$，其中 $0\\le\\alpha\\le\\beta$ 且 $m\\le N$，"
+    ],
+    [
+      "para-F-derivative",
+      ".para p",
+      "通过积分下取导数得到",
+      "通过在积分号下对参数求导，得到 $F'(a)=\\int_0^{\\pi}\\sin^a(x)\\ln(\\sin x)\\,dx$。"
+    ],
+    [
+      "para-sine-log",
+      ".para p",
+      "基本恒等式",
+      "基本恒等式 $\\int_0^{\\pi}\\ln(\\sin x)\\,dx=-\\pi\\ln2$ 给出 $F'(0)/F(0)=-\\ln2$。为完整起见，令 $I=\\int_0^{\\pi/2}\\ln(\\sin x)\\,dx$，再用对称性把正弦换成余弦，最后使用二倍角公式："
+    ],
+    [
+      "para-Y-likelihood",
+      ".para p",
+      "记 Y 为估计器",
+      "记 $Y$ 为估计器可以使用的全部信息，$p_\\theta^Y$ 为它的似然。例如，$Y$ 可以包括通信记录（transcript）、抽样设计（sampling design），以及为了推导下界而揭示的随机种子。令 $\\widehat\\theta=\\widehat\\theta(Y)$，将其贝叶斯风险（Bayes risk）定义为："
+    ],
+    [
+      "para-estimator-derivative",
+      ".para p",
+      "对",
+      "对 $\\theta_j$ 求导时，估计器的第 $j$ 个坐标 $\\widehat\\theta_j(y)$ 保持固定。因此 $\\widehat\\theta_j(y)-\\theta_j$ 的导数是 $-1$。按这里的正则条件，先验密度在参数区间的边界为零，故分部积分（integration by parts）的边界项消失；剩下积分的是联合密度，积分为 $1$。",
+      "#sec-iii-a"
+    ],
+    [
+      "para-Tonelli",
+      ".para p",
+      "由于L",
+      "由于 $L\\ge0$，对 $L^2=\\int_0^\\infty2x\\,\\mathbf1_{\\{L>x\\}}\\,dx$ 使用 Tonelli 定理可得："
+    ],
+    [
+      "para-local-surprisal",
+      ".para p",
+      "对于第二项期望",
+      "对于第二项期望，由于 $\\ell_i(t)\\ge0$，有："
+    ],
+    [
+      "para-set-difference",
+      ".para p",
+      "因此S",
+      "因此 $S\\setminus D$ 非空。"
+    ],
+    [
+      "para-Bernoulli-groups",
+      ".para p",
+      "为当前目的",
+      "为当前目的，固定伯努利参数 $p\\in[0,1]$。将剩余观测分为两个独立组 $U_1,\\ldots,U_q$ 和 $U'_1,\\ldots,U'_q$，并构造："
+    ],
+    [
+      "para-smoothing-variance",
+      ".para p",
+      "将v",
+      "记 $v_p:=p(1-p)$ 为伯努利观测的方差。$\\overline U$ 的方差为 $v_p/q$。添加的噪声方差近似为 $(1-v_p)/q$，因此组合统计量具有几乎与参数无关的高斯尺度 $q^{-1/2}$。使用独立的第二组观测，可使 $\\widehat v$ 与 $\\overline U$ 独立。"
+    ],
+    [
+      "para-smoothing-lemma",
+      ".para p",
+      "引理5",
+      "引理 5（均匀平滑界）。对所有 $p\\in[0,1]$，(261) 中的统计量 $A$ 满足 $\\mathbb E_p A=p$，且 $A-p$ 是 $\\sqrt{5/(4q)}$-次高斯的。此外，存在绝对常数 $C$，使得："
+    ],
+    [
+      "para-Gaussian-smoothing",
+      ".para p",
+      "尽管f",
+      "尽管 $f$ 不需要连续，$h$ 仍是光滑的。令 $\\varphi$ 为标准高斯密度，且 $\\varphi_w(x)=\\sigma_w^{-1}\\varphi(x/\\sigma_w)$。对定义 $h$ 的卷积求导可得："
+    ],
+    [
+      "para-Gaussian-third-derivative",
+      ".para p",
+      "该积分有限",
+      "该积分有限，因为 $\\varphi^{(3)}(z)=(3z-z^3)\\varphi(z)$。由 (262) 可知 $\\sigma_w^2\\ge3/(4q)$，因此："
+    ],
+    [
+      "para-affine-identification",
+      ".para p",
+      "事实上，把原集中界",
+      "事实上，把原集中界用在 $Au$ 上，再用算子范数（operator norm）控制 $\\lVert Au\\rVert$，就能得到新坐标下的界。同理，若有界矩映射（moment map）能用逆 Lipschitz 常数 $L_\\eta$ 识别原参数，那么同一组统计量也能识别 $\\theta$，因为："
+    ],
+    [
+      "para-Gaussian-inverse",
+      ".para p",
+      "因此 (24) 式恰好有",
+      "因此 (24) 恰好使用 $d$ 个有界矩，且 $L=\\varphi(1)^{-1}$。该论证适用于任意固定的高斯均值紧致盒：将 $\\varphi(1)$ 换成该盒各坐标范围上 $\\varphi$ 的最小值即可。这个最小值严格为正。高斯族具有共同支撑（common support）$\\mathbb R^d$，其光滑似然满足在该紧致集上所需的微分恒等式。",
+      "#sec-v-a"
+    ],
+    [
+      "para-bounded-score",
+      ".para p",
+      "在参数区域内一致成立",
+      "在参数区域内一致成立。对每个 $u\\in\\mathbb R^d$，标量随机变量 $u^{\\mathsf T}\\xi_\\theta(X)$ 均值为零，且位于 $[-M\\lVert u\\rVert,M\\lVert u\\rVert]$ 内。Hoeffding 引理因此给出："
+    ],
+    [
+      "para-bounded-score-constants",
+      ".para p",
+      "因此，统一的得分范数界",
+      "因此，统一的得分范数界可推出 (19)，其中 $v=M^2$ 且 $b=0$。该论证控制了得分坐标的每一组线性组合；各坐标间无需独立。"
+    ],
+    [
+      "para-exp-family-inverse",
+      ".para p",
+      "因此在自然参数坐标中",
+      "因此，在自然参数坐标中，(24) 恰好使用 $d$ 个有界矩，且 $L=w_{\\max}/a$。$\\mu$ 的连续性由 (408) 推出。"
+    ],
+    [
+      "para-logistic-bounded-statistic",
+      ".para p",
+      "为获得取值于",
+      "为得到取值于 $[0,1]^d$ 的统计量，注意到 $|Z_jY|\\le K$，定义："
+    ],
+    [
+      "para-Poisson-regularity",
+      ".para p",
+      "支持集 N",
+      "支撑集 $\\mathbb N$ 不依赖于 $\\lambda$。在 $(0,\\infty)$ 的任意紧子区间上，可以在求和号内对参数求导。例如，在 (428) 的区间上：",
+      "#sec-v-c"
+    ],
+    [
+      "para-product-domain",
+      ".para p",
+      "对满足",
+      "对满足 $b_*\\lVert u\\rVert<1$ 的 $u\\in\\mathbb R^d$，独立性给出：",
+      "#sec-v-c"
+    ],
+    [
+      "para-product-constants",
+      ".para p",
+      "倒数第二个不等式用了",
+      "倒数第二个不等式用了 $b_j|u_j|\\le b_*\\lVert u\\rVert$。这就证明了向量形式的条件 (19)。"
+    ],
+    [
+      "para-covariance-mgf-domain",
+      ".para p",
+      "所以，只要",
+      "所以，只要 $|t|\\lVert M_H\\rVert_{\\mathrm{op}}<1$，就有："
+    ],
+    [
+      "para-covariance-regularity",
+      ".para p",
+      "f) 正则性",
+      "f) 正则性（regularity）与适用性：参数盒内所有协方差矩阵均一致正定，且高斯支撑集为 $\\mathbb R^p$。此外，似然函数及其参数导数在此盒内具有可积的支配函数。例如："
+    ],
+    [
+      "para-covariance-heavy-tail",
+      ".para p",
+      "与高斯均值得分不同",
+      "与高斯均值得分不同，非零的协方差得分并不满足次高斯条件（sub-Gaussian condition）。只要 $H\\ne0$，(466) 中至少有一个特征值 $\\gamma_j$ 非零。相应的矩母函数（moment-generating function）在某个满足 $t\\gamma_j=1$ 的有限 $t$ 处就已发散，因而无法满足要求所有实数 $t$ 上矩母函数均有限的次高斯界。"
+    ],
+    [
+      "caption-prior-information",
+      ".eq-fig figcaption",
+      "先验也有得分",
+      "先验也有得分（对数先验的斜率）；它的平方按先验平均，就是先验信息 $J_\\pi$。"
+    ],
+    [
+      "caption-entropy-budget",
+      ".eq-fig figcaption",
+      "总比特预算",
+      "总比特预算 = 关于 $\\theta$ 的信息 + 剩余熵 $h_T$；误差越小，第一块越大，留给 $h_T$ 的空间越少。"
+    ],
+    [
+      "tip-MGF",
+      ".typeset-prose",
+      "③ 矩母函数",
+      "③ 矩母函数：(19) 左边的 $\\log\\mathbb E_\\theta e^{\\langle u,\\xi_\\theta(X)\\rangle}$ 是什么；(21) 为什么在 $0$ 处的二阶导数是方差；(23) 为什么独立样本的贡献可以相加。"
+    ],
+    [
+      "caption-tilt",
+      " .eq-fig figcaption",
+      "选 λ",
+      "选择 $\\lambda$：两项中，一项随 $\\lambda$ 下降，另一项上升；取它们之和的最小值附近即可，论文给出了显式选择 $\\lambda_*$。"
+    ],
+    [
+      "video-statistical-model",
+      ".typeset-prose",
+      "0:26 起",
+      "0:26 起（第二章开头）：统计模型 $(E,\\{P_\\theta\\}_{\\theta\\in\\Theta})$、参数空间与可识别性"
+    ],
+    [
+      "video-model-family",
+      ".typeset-prose",
+      "本小节的 {P_",
+      "本小节的 $\\{P_\\theta:\\theta\\in\\Theta\\}$ 就是这里定义的统计模型；“可识别性”在 II-B 的有界识别矩里还会出现。"
+    ],
+    [
+      "video-binomial-overlap",
+      ".typeset-prose",
+      "D_a 服从",
+      "$D_a\\sim\\operatorname{Bin}(n,m/N)$；(35) 中的 $\\overline r$ 就是 $N\\mathbb P(D_a\\ge2)$。"
+    ]
+  ],
+  "reading-en.html": [
+    [
+      "para-smoothing-lemma",
+      ".para p",
+      "Lemma 5",
+      "Lemma 5 (Uniform smoothing bound). Uniformly over $p\\in[0,1]$, the statistic $A$ in (261) satisfies $\\mathbb E_p A=p$, and $A-p$ is $\\sqrt{5/(4q)}$-sub-Gaussian. Moreover, for an absolute constant $C$, we have:"
+    ],
+    [
+      "caption-prior-information",
+      ".eq-fig figcaption",
+      "The prior has a score too",
+      "The prior has a score too (the slope of its log); its mean square under the prior is the prior information $J_\\pi$."
+    ],
+    [
+      "caption-entropy-budget",
+      ".eq-fig figcaption",
+      "Total budget",
+      "Total budget = information about $\\theta$ + leftover entropy $h_T$; the smaller the risk, the larger the first piece and the less room for $h_T$."
+    ],
+    [
+      "tip-MGF",
+      ".typeset-prose",
+      "③ MGFs",
+      "③ MGFs: what the left side $\\log\\mathbb E_\\theta e^{\\langle u,\\xi_\\theta(X)\\rangle}$ of (19) means; why its second derivative at $0$ is the variance (21); and why independent samples contribute additively (23)."
+    ],
+    [
+      "caption-tilt",
+      ".eq-fig figcaption",
+      "Choosing",
+      "Choosing $\\lambda$: one term falls and the other rises with $\\lambda$; take a value near the minimum of their sum. The paper gives an explicit choice $\\lambda_*$."
+    ],
+    [
+      "video-statistical-model",
+      ".typeset-prose",
+      "from 0:26",
+      "from 0:26 (start of chapter 2): the statistical model $(E,\\{P_\\theta\\}_{\\theta\\in\\Theta})$, parameter space, and identifiability"
+    ],
+    [
+      "video-model-family",
+      ".typeset-prose",
+      "The family {P_",
+      "The family $\\{P_\\theta:\\theta\\in\\Theta\\}$ here is exactly this statistical model; identifiability returns in the identifying moments of II-B."
+    ],
+    [
+      "video-binomial-overlap",
+      ".typeset-prose",
+      "D_a is Binomial",
+      "$D_a\\sim\\operatorname{Bin}(n,m/N)$; $\\overline r$ in (35) is $N\\mathbb P(D_a\\ge2)$."
+    ]
+  ]
+}

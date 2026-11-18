@@ -17,3 +17,10 @@ Install KaTeX on the Node module path, or set `KATEX_MODULE` to its module path.
 Rendering is strict: malformed expressions stop the build instead of silently
 falling back to plain text. Keep each rule mathematically explicit; the Unicode
 fallback handles only individual symbol tokens, not algebraic interpretation.
+
+`repair_prose.py` applies the reviewed, complete inline expressions in
+`prose_repairs.json`. Use it before `typeset.py`: several translated paragraphs
+previously had their integral limits, powers and indices split across unrelated
+KaTeX spans and plain text. Reconstructing the whole expression also preserves
+its mathematical grouping. Paragraph note buttons are retained, and numbered
+references are linked. The repair pass is idempotent via stable paragraph ids.
