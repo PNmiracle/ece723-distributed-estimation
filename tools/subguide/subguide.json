@@ -270,43 +270,43 @@
 ]
 },
 "sec-iii-b-s2": {
-"zh": [
-"引理 2：自信息平方的平均 $\\lesssim(B\\ln2)^2$。",
-"只在 $b>0$（Bernstein）时用来控制多出来的平方项。"
-],
 "en": [
-"Lemma 2: the mean squared self-information is $\\lesssim(B\\ln2)^2$.",
-"Used only when $b>0$, to control the extra quadratic term."
+"Bounds the second moment of transcript surprisal uniformly over alphabets with at most $2^B$ leaves.",
+"The bound is of order $(B+1)^2$, including small $B$; it controls the correction when $b>0$."
+],
+"zh": [
+"对至多有 $2^B$ 个叶子的记录，统一控制惊讶度二阶矩。",
+"上界为 $(B+1)^2$ 的量级，也覆盖小 $B$；用于控制 $b>0$ 时的修正项。"
 ]
 },
 "sec-iii-c-p1": {
-"zh": [
-"证明矩形性质：固定一条记录，等价于每台机器各自满足一张“清单”。",
-"即使允许交互，记录的概率也能按机器拆成乘积。"
-],
 "en": [
-"Proves the rectangle property: a fixed transcript means each machine meets its own checklist.",
-"Even with interaction, the transcript probability factorizes over machines."
+"Fixes the complete transcript and all seeds, then factors its event into local checklists.",
+"With independent inputs at fixed parameter, both leaf probabilities and conditional block laws factor."
+],
+"zh": [
+"固定完整记录与全部种子，再将其事件拆成逐台机器的检查清单。",
+"固定参数且输入独立时，叶子概率与条件块分布都能分解成乘积。"
 ]
 },
 "sec-iii-c-p2": {
-"zh": [
-"把得分恒等式用到多台机器，逐块套引理 1。",
-"记录的信息 $\\lesssim vq\\times$记录的熵，与机器数 $n$ 无关。"
-],
 "en": [
-"Applies the score identity to many machines and Lemma 1 block by block.",
-"Transcript information $\\lesssim vq\\times$transcript entropy, independent of $n$."
+"Combines posterior block scores, cancels cross terms after averaging, and applies the single-block event bound.",
+"The largest block size scales the entropy term; the tail correction is paid once for the whole transcript."
+],
+"zh": [
+"合并后验块得分，在平均后消去交叉项，再套用单块事件界。",
+"熵项前使用最大块大小，尾修正只对完整记录计算一次。"
 ]
 },
 "sec-iii-c-p3": {
-"zh": [
-"对随机种子平均，完成引理 3；并给出次高斯时更紧的版本。",
-"种子不带参数信息，平均后结论不变。"
-],
 "en": [
-"Averages over the seeds to finish Lemma 3, plus the tighter sub-Gaussian version.",
-"Seeds carry no parameter information, so averaging changes nothing."
+"Averages fixed-seed information and entropy bounds, then repeats with the sharper sub-Gaussian estimate.",
+"The seed law contributes zero Fisher information; the conditional transcript contribution still must be averaged."
+],
+"zh": [
+"对固定种子下的信息界与熵界平均，再用更紧的次高斯估计重复论证。",
+"种子分布本身的 Fisher 信息为零，条件记录的信息贡献仍须取平均。"
 ]
 },
 "sec-iii-d-s1": {
@@ -320,23 +320,23 @@
 ]
 },
 "sec-iii-d-p1": {
-"zh": [
-"固定种子，把共享数据也“白送”给融合中心。",
-"信息只会变多，所以上界依然成立；再用链式法则把共享部分拆出来。"
-],
 "en": [
-"Fixes the seeds and hands the shared data to the fusion center for free.",
-"Information can only grow, so the bound still holds; the chain rule then isolates the shared part."
+"Reveals shared observations only in the Fisher-information comparison, with seeds fixed.",
+"The chain rule accounts separately for shared information; these observations are not free side information in the bit budget."
+],
+"zh": [
+"固定种子，仅在 Fisher 信息的比较中揭示共享观测。",
+"链式法则单独计入共享信息；不能在比特预算中把共享观测当免费辅助信息。"
 ]
 },
 "sec-iii-d-p2": {
-"zh": [
-"固定共享数据后，私有块独立，回到独立块的情形。",
-"直接套用引理 3。"
-],
 "en": [
-"Given the shared data, private blocks are independent — back to the independent-block case.",
-"Lemma 3 applies directly."
+"At each fixed parameter, shared value and seed, the remaining inputs are independent private blocks.",
+"The conditional protocol is parameter independent, so Lemma 3 applies. Prior averaging comes later."
+],
+"zh": [
+"对每个固定参数、共享值与种子，剩余输入为独立私有块。",
+"条件协议的规则不依赖参数，因此可用引理 3；先验平均留到后面。"
 ]
 },
 "sec-iii-d-p3": {
@@ -380,23 +380,23 @@
 ]
 },
 "sec-iii-e-s2": {
-"zh": [
-"把关于误差的对数不等式“取逆”，解出误差的下界。",
-"纯代数：左边递减、右边递增，求出交点。"
-],
 "en": [
-"Inverts the logarithmic inequality to solve for an error lower bound.",
-"Pure algebra: one side decreases, the other increases; find the crossing."
+"Eliminates remaining entropy and bounds a positive reciprocal-risk variable using $t+\\ln t$.",
+"An upper bound on $t$ becomes a lower bound on error; the general result still has a squared-budget correction."
+],
+"zh": [
+"消去剩余熵，通过 $t+\\ln t$ 控制正的风险倒数变量。",
+"$t$ 的上界转成误差下界；一般情形此时仍保留预算平方修正。"
 ]
 },
 "sec-iii-e-s3": {
-"zh": [
-"去掉 Bernstein 带来的多余项 $(B+1)^2$，得到第四项下界。",
-"分 $m\\ge n^2$ 和 $m<n^2$ 两种情况，都无害；主下界 (220) 完成。"
-],
 "en": [
-"Removes the extra Bernstein term $(B+1)^2$ to get the fourth lower-bound term.",
-"Two cases, $m\\ge n^2$ and $m<n^2$, both harmless; the main lower bound (220) is done."
+"Removes the squared-budget correction using the regimes $m\\ge n^2$ and $m<n^2$.",
+"For fixed dimension and per-machine budget, absorb the correction in the first regime; use the access floor in the second for large $n$."
+],
+"zh": [
+"分 $m\\ge n^2$ 与 $m<n^2$ 两种情形，去掉预算平方修正。",
+"固定维度和单机预算：第一种情形吸收修正；第二种在 $n$ 足够大时使用总访问下界。"
 ]
 },
 "sec-iii-e-s4": {

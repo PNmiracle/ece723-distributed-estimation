@@ -25,15 +25,15 @@ for (const row of read('tools/converse/bridges.tsv').trimEnd().split('\n')) {
 if (bridges.size !== 157) throw new Error('Missing equation transitions');
 
 function extract(html) {
-  const start = html.indexOf('<section class="unit unit-h2" id="sec-iii"');
-  const end = html.indexOf('<section class="unit unit-h2" id="sec-iv"');
+  const start = html.search(/<section\b(?=[^>]*\bid="sec-iii")[^>]*>/);
+  const end = html.search(/<section\b(?=[^>]*\bid="sec-iv")[^>]*>/);
   if (start < 0 || end <= start) throw new Error('Cannot locate the lower-bound section');
   const section = html.slice(start, end);
   const events = [];
   function add(patt, get) {
     for (const m of section.matchAll(patt)) events.push({ offset: m.index, ...get(m) });
   }
-  add(/<section class="unit unit-h3" id="([^"]+)"[^>]*>\s*<h3[^>]*>(.*?)<\/h3>/gs,
+  add(/<section\b(?=[^>]*\bclass="unit unit-h3")(?=[^>]*\bid="([^"]+)")[^>]*>\s*<h3[^>]*>(.*?)<\/h3>/gs,
       m => ({type: 'section', id: m[1], title: m[2]}));
   add(/<h4 class="sub-h[^"]*" id="([^"]+)"[^>]*>(.*?)<\/h4>/gs,
       m => ({type: 'subsection', id: m[1], title: m[2]}));

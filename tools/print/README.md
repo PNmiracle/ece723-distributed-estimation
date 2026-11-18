@@ -24,3 +24,21 @@ solid/dashed borders make the distinction work in monochrome as well as color.
 
 The priority pass asserts that all displayed formulas and explanation panels
 remain unchanged. Both passes preserve all 158 formula cards.
+
+## Refresh from the website
+
+`sync_converse_color.py` refreshes the existing speaker layout using the current
+English reader. It retains all 158 displayed formulas, copies the current
+explanations, diagrams, speaking notes and repeated symbol tables, and inserts
+all 22 paragraph guides beneath their matching subheadings. It preserves the
+compact two-column layout and A4 sizing.
+
+```sh
+python3 tools/print/sync_converse_color.py
+```
+
+The reusable print source is
+`assets/downloads/ECE723_Converse_Color_Speaker.html`; render it to the PDF with
+the same basename. Long symbol keys receive a separate full-width line within
+their column, and speaking paragraphs stay intact while formula frames may split.
+The English reader remains the content source; the print HTML supplies the layout.

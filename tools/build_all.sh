@@ -6,6 +6,8 @@ set -e
 cd "$(dirname "$0")/.."
 ONLY="$1"
 
+python3 tools/converse/unpack-reader.py
+
 # section            next anchor   data file              PART (only for sec-vi.js)
 SECTIONS="
 sec-ii-a             sec-ii-b      sec-ii-a.js            -
@@ -47,12 +49,12 @@ node tools/notes/inject-bridges.js
 # Refresh the inline Chinese terminology annotations on the English page.
 python3 tools/term-zh/inject.py
 
-# Refresh the Chinese equation explanations available inside the English cards.
-python3 tools/plain-zh/inject.py
-
 # Restore the original illustrations and fill any remaining gaps.
 node tools/figs/inject.js
 python3 tools/figs/structure.py
+
+# Apply the reviewed converse wording before the final typography pass.
+python3 tools/gist/refine-converse.py
 
 # Use mathematical typography in prose, proof maps and supplemental symbol keys.
 python3 tools/math/repair_prose.py
@@ -61,6 +63,7 @@ python3 tools/math/reader_typography.py
 python3 tools/reader-size.py
 python3 tools/gist/complete-section3-symbols.py
 python3 tools/converse/reading-priorities.py
+python3 tools/plain-zh/inject.py
 
 # Refresh the bilingual lower-bound reader from the guided readers.
 node tools/converse/build.js

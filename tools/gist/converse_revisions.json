@@ -1,0 +1,816 @@
+{
+  "145": {
+    "en": {
+      "why": "Makes the surprisal bound usable after conditioning on seeds; it controls the correction in (165).",
+      "where": "For each $W=w$ with a well-defined conditional law, the protocol still has at most $2^B$ leaves. Apply (139) to that law, then average over $W$."
+    },
+    "zh": {
+      "why": "保证固定种子后仍可使用惊讶度界，为 (165) 控制修正项。",
+      "where": "对每个有定义的条件分布 $W=w$，协议仍至多有 $2^B$ 个叶子。先对该分布使用 (139)，再对 $W$ 平均。"
+    }
+  },
+  "146": {
+    "en": {
+      "why": "Sets the block-size cap used in (147); the shared-data reduction later supplies these private blocks."
+    },
+    "zh": {
+      "why": "规定 (147) 使用的块大小上限；后面把重叠数据化成这种私有块。"
+    }
+  },
+  "147": {
+    "en": {
+      "why": "This is the independent-block information bound used after shared data are fixed in (184).",
+      "what": "For fixed-parameter independent input blocks, the Fisher trace of $(T,R)$ is at most an entropy term scaled by the largest block size, plus one tail correction.",
+      "detail": "The largest block size scales the entropy term, not a sum of all block sizes. Machine count still affects the transcript and its bit budget, but there is no extra factor multiplying the whole bound once per machine. The tail correction is paid once for the complete transcript."
+    },
+    "zh": {
+      "why": "这是独立块信息上界；固定共享数据后，在 (184) 直接使用。",
+      "what": "固定参数下，输入块独立时，$(T,R)$ 的 Fisher 信息迹不超过“最大块大小乘记录条件熵”，再加一份尾修正。",
+      "detail": "熵项前使用最大块大小，而不是全部块大小之和。机器数仍会影响记录及其比特预算，但不会再让整个上界额外乘一次机器数；完整记录只承担一份尾修正。"
+    }
+  },
+  "148": {
+    "en": {
+      "why": "Supplies the sharper private-block bound in (189), leading to the sub-Gaussian result (176).",
+      "where": "Use the sharper sub-Gaussian event bound (123) in (168), sum as in (159)–(162), then average (169) over seeds. Merely setting $b=0$ in (122) would keep the looser coefficient $4$."
+    },
+    "zh": {
+      "why": "在 (189) 给出更紧的私有块上界，最终得到次高斯结论 (176)。",
+      "where": "在 (168) 使用更紧的次高斯事件界 (123)，按 (159)–(162) 求和，再对 (169) 的种子平均。仅在 (122) 令 $b=0$，系数仍是较松的 $4$。"
+    }
+  },
+  "149": {
+    "en": {
+      "why": "Builds the separate local events whose intersection gives the rectangle in (150).",
+      "detail": "Freeze a possible complete transcript and all seeds. Each machine now has its own list of required outputs along that path; the intersection checks every turn assigned to it. If it never speaks, its checklist imposes no restriction."
+    },
+    "zh": {
+      "why": "构造逐台检查的本机事件，它们的交集就是 (150) 的矩形结构。",
+      "detail": "固定一条可能的完整记录和所有种子。每台机器只检查该路径上轮到自己时是否写出了规定比特；交集表示这些检查全部通过。若它从未发言，这份清单不限制其输入。"
+    }
+  },
+  "150": {
+    "en": {
+      "why": "Together with independent inputs, gives the product probability (152) and product posterior (153)."
+    },
+    "zh": {
+      "why": "结合输入独立性，推出 (152) 的乘积概率与 (153) 的乘积后验。"
+    }
+  },
+  "151": {
+    "en": {
+      "why": "The local probabilities feed (152), while their negative logs control score shifts in (160).",
+      "detail": "Work only with leaves satisfying $p(t)>0$. Then every local probability is positive, so each local surprisal is finite and nonnegative. The fixed parameter and seed are suppressed, not removed from the experiment."
+    },
+    "zh": {
+      "why": "本机概率用于 (152)，其负对数在 (160) 控制条件得分均值。",
+      "detail": "只讨论 $p(t)>0$ 的叶子。此时每个本机概率均为正，所以局部惊讶度有限且非负。记号省略了固定参数与种子，并没有取消这些条件。"
+    }
+  },
+  "152": {
+    "en": {
+      "why": "The product law makes total surprisal additive; its expectation becomes transcript entropy in (162)."
+    },
+    "zh": {
+      "why": "乘积概率使总惊讶度可加；再取期望，才在 (162) 变成记录熵。"
+    }
+  },
+  "153": {
+    "en": {
+      "why": "Lets us apply single-block bounds in (155)–(160), even though the communication was interactive.",
+      "what": "At fixed parameter and seeds, conditioning on the entire transcript leaves a product posterior over blocks; block $i$ is restricted only by its own checklist.",
+      "detail": "Write the probability of all test sets and all checklists, then divide by the transcript probability. Both factor across independent blocks. This establishes conditional independence only after the full transcript and all seeds are fixed."
+    },
+    "zh": {
+      "why": "使 (155)–(160) 能逐块套用单块上界，即使协议存在交互。",
+      "what": "固定参数与种子后，再给定完整记录，各数据块的后验仍是乘积分布；第 $i$ 块只受自己的检查清单限制。",
+      "detail": "先写“各块都在测试集合内且全部清单通过”的概率，再除以记录概率。分子、分母都能按独立块分解；因此得到的是固定完整记录和全部种子后的条件独立性。"
+    }
+  },
+  "154": {
+    "en": {
+      "why": "Defines the raw and posterior block scores used in the transcript-score decomposition (158).",
+      "detail": "$A_i$ is the sum of the one-sample log-likelihood gradients in block $i$. The lowercase $a_i(t)$ averages that vector over inputs compatible with transcript $t$ at the fixed seeds; it is generally a nonzero vector."
+    },
+    "zh": {
+      "why": "定义 (158) 拆分记录得分时使用的原始块得分与后验块均值。",
+      "detail": "$A_i$ 是块 $i$ 内逐样本对数似然梯度之和。小写 $a_i(t)$ 则在固定种子后，对所有兼容记录 $t$ 的输入平均这个向量，通常不为零。"
+    }
+  },
+  "155": {
+    "en": {
+      "why": "Identifies the precise local event to which the event-score bound applies in (160)."
+    },
+    "zh": {
+      "why": "确定 (160) 套用事件得分界时，究竟对哪个本机事件条件化。"
+    }
+  },
+  "156": {
+    "en": {
+      "why": "After averaging over transcripts, this factorization gives the zero cross moment in (157).",
+      "what": "For distinct blocks $i\\ne j$, their score outer product factors into posterior means after both $T=t$ and $R=r$ are fixed.",
+      "where": "Use conditional independence from (153), with $A_i$ depending only on block $i$. The result is an outer-product matrix, and requires $i\\ne j$.",
+      "detail": "After fixing the complete transcript and seeds, distinct score vectors are conditionally independent. Their conditional outer-product mean factors into an outer product of their means. Those means need not be zero for the particular transcript."
+    },
+    "zh": {
+      "why": "再对记录平均，这个分解就给出 (157) 的零交叉矩。",
+      "what": "对不同块 $i\\ne j$，同时固定 $T=t$ 与 $R=r$ 后，得分外积的条件期望可分成两个后验均值的外积。",
+      "where": "由 (153) 的条件独立性，且 $A_i$ 只依赖第 $i$ 块，外积的条件期望可以分解。结果是矩阵，要求 $i\\ne j$。",
+      "detail": "固定完整记录与种子后，不同块的得分向量条件独立，因此外积的条件期望可分解为条件均值的外积。对这条特定记录，两个条件均值通常都不为零。"
+    }
+  },
+  "157": {
+    "en": {
+      "why": "Cancels cross terms in (159) only after averaging over the transcript distribution.",
+      "where": "At fixed $R=r$, average (156) over $T$ using the tower property. Before seeing $T$, distinct block scores are independent and have zero mean, so their cross moment is zero.",
+      "detail": "The vectors $a_i(t)$ and $a_j(t)$ need not be orthogonal for an individual transcript. Their outer products average to zero over all transcripts at the fixed seed. That averaged statement is exactly what (159) needs."
+    },
+    "zh": {
+      "why": "只在对记录分布平均后消掉交叉项，用于 (159)，并非每条记录下都为零。",
+      "where": "固定 $R=r$，用塔式法则将 (156) 对 $T$ 平均。观察 $T$ 前，不同块得分独立且均值为零，因此交叉矩为零。",
+      "detail": "对某一条记录，$a_i(t)$ 与 $a_j(t)$ 未必正交。成立的是：固定种子后，它们的外积对所有记录平均为零；(159) 正需要这个平均结论。"
+    }
+  },
+  "158": {
+    "en": {
+      "why": "Converts transcript Fisher information into posterior block-score energies in (159).",
+      "where": "At fixed seeds, apply (75) to the full independent input. Its score is $\\sum_i A_i$; conditional-expectation linearity and (154) give $\\sum_i a_i(T)$."
+    },
+    "zh": {
+      "why": "让 (159) 能把记录 Fisher 信息改写成各后验块得分的平均平方长度。",
+      "where": "固定种子后，对完整独立输入应用 (75)。原始输入的得分为 $\\sum_i A_i$，再用条件期望线性性及 (154)，得到 $\\sum_i a_i(T)$。"
+    }
+  },
+  "159": {
+    "en": {
+      "why": "Makes the information bound a sum of quantities that the single-block estimate (160) can control.",
+      "detail": "The Fisher trace is the mean squared length of the transcript score. Expand the squared sum from (158), then use (157) after averaging: this removes every cross term and leaves the sum of individual mean squared lengths."
+    },
+    "zh": {
+      "why": "将信息量变成逐块求和，使每一项都能由 (160) 控制。",
+      "detail": "Fisher 信息的迹等于记录得分范数平方的平均。将 (158) 中的和展开平方，再在平均后使用 (157)，所有交叉项消失，只剩各向量平方长度的平均之和。"
+    }
+  },
+  "160": {
+    "en": {
+      "why": "Feeds the information sum in (161); its probability is the local checklist probability, not the whole-leaf probability.",
+      "what": "The squared posterior score shift for block $i$ is bounded by its size and its local checklist surprisal $\\ell_i(t)$.",
+      "detail": "Apply the event bound to $Z_i\\in E_i(t)$, whose probability is $p_i(t)$. A rare local event permits a larger upper bound on the mean shift; rarity does not force an actual large shift."
+    },
+    "zh": {
+      "why": "代入 (161) 的信息求和；这里使用本机清单概率，不是整条记录的概率。",
+      "what": "块 $i$ 的后验得分均值的范数平方，由该块大小与本机清单惊讶度 $\\ell_i(t)$ 控制。",
+      "detail": "对事件 $Z_i\\in E_i(t)$ 使用事件界，其概率是 $p_i(t)$。本机事件越罕见，上界可以越大，但不能反过来说实际均值一定偏移得更大。"
+    }
+  },
+  "161": {
+    "en": {
+      "why": "Separates the linear-surprisal term handled by (162) from the squared-surprisal term handled by (163).",
+      "detail": "Insert the single-block bounds into (159). Only the linear term needs $q_i\\le q$; the quadratic local-surprisal terms are kept as a sum, ready for the single global bound (163)."
+    },
+    "zh": {
+      "why": "将问题拆成两部分：一次惊讶度由 (162) 处理，平方项由 (163) 处理。",
+      "detail": "将逐块上界代入 (159)。一次惊讶度项用 $q_i\\le q$ 放宽；局部惊讶度平方项先保留求和，接着由 (163) 用一个整体量控制。"
+    }
+  },
+  "162": {
+    "en": {
+      "why": "Produces the entropy term in (164), avoiding a separate entropy budget for every machine."
+    },
+    "zh": {
+      "why": "产生 (164) 的记录熵项，无需给每台机器单独分配一个总熵预算。"
+    }
+  },
+  "163": {
+    "en": {
+      "why": "Controls all local square terms with one transcript square, so (165) needs only one $K_B$ correction.",
+      "detail": "Each $\\ell_i(t)\\ge0$. Squaring their sum includes all individual squares plus nonnegative cross products. By (152), that sum is the complete transcript surprisal, so we avoid paying a separate $K_B$ for each machine."
+    },
+    "zh": {
+      "why": "用一个完整记录的平方惊讶度控制全部本机平方项，因此 (165) 只需一份 $K_B$ 修正。",
+      "detail": "每个 $\\ell_i(t)\\ge0$。和的平方包括各项平方及非负交叉乘积；由 (152)，这个和就是完整记录的惊讶度。因此无需为每台机器分别付一份 $K_B$。"
+    }
+  },
+  "164": {
+    "en": {
+      "why": "Isolates the only remaining uncontrolled moment, which (165) bounds using the bit budget."
+    },
+    "zh": {
+      "why": "把最后未控制的二阶矩单独列出，再由 (165) 用比特预算控制。"
+    }
+  },
+  "165": {
+    "en": {
+      "why": "Gives the fixed-seed version of (147); (166)–(167) then average out the seeds.",
+      "where": "For each fixed seed, the binary protocol tree has at most $2^B$ leaves. Bound the last moment in (164) by (139); the same $K_B$ works for every seed."
+    },
+    "zh": {
+      "why": "得到 (147) 的固定种子版本；(166)–(167) 再对种子平均。",
+      "where": "对每个固定种子，二进制协议树至多有 $2^B$ 个叶子。用 (139) 控制 (164) 最后的二阶矩，同一个 $K_B$ 对所有种子都有效。"
+    }
+  },
+  "166": {
+    "en": {
+      "why": "Transfers the fixed-seed Fisher bound to joint observations $(T,R)$ without adding a seed-information term."
+    },
+    "zh": {
+      "why": "将固定种子信息界转成 $(T,R)$ 的联合信息界，而种子本身不增加参数信息项。"
+    }
+  },
+  "167": {
+    "en": {
+      "why": "Together with (165)–(166), completes the independent-block bound (147)."
+    },
+    "zh": {
+      "why": "结合 (165)–(166)，完成独立块信息界 (147)。"
+    }
+  },
+  "168": {
+    "en": {
+      "why": "Replaces (160) in the sub-Gaussian proof and yields the sharper coefficient in (169).",
+      "where": "Apply (123), rather than the looser (122) with $b=0$, to the event in (155). This gives coefficient $2vq_i$ and no squared-surprisal term."
+    },
+    "zh": {
+      "why": "在次高斯证明中替代 (160)，从而在 (169) 得到更紧的系数。",
+      "where": "对 (155) 的事件应用 (123)，而非仅在较松的 (122) 令 $b=0$；因此系数是 $2vq_i$，也不含平方惊讶度项。"
+    }
+  },
+  "169": {
+    "en": {
+      "why": "Averaging over seeds as in (166)–(167) proves (148)."
+    },
+    "zh": {
+      "why": "再按 (166)–(167) 对种子平均，即证明 (148)。"
+    }
+  },
+  "170": {
+    "en": {
+      "why": "Separates duplicated observations from exclusive ones, preparing the product experiment in (172).",
+      "detail": "Classify observed pool IDs, not sample values. An ID held by at least two machines is shared; one held by exactly one machine is private. Unobserved IDs belong to neither class, and equal observed values do not make two IDs the same item."
+    },
+    "zh": {
+      "why": "将重复访问的观测与独有观测分开，为 (172) 的乘积实验做准备。",
+      "detail": "分类对象是已访问的池编号，不是样本取值。至少两台机器持有的编号是共享的，仅一台持有的是私有的；未访问编号不属于这两类，取值相同也不代表同一条观测。"
+    }
+  },
+  "171": {
+    "en": {
+      "why": "The shared count gives the additive term in (174); the largest private size controls its entropy term."
+    },
+    "zh": {
+      "why": "共享数量决定 (174) 的加法项，最大私有块大小决定其熵项系数。"
+    }
+  },
+  "172": {
+    "en": {
+      "why": "Justifies both shared-information additivity in (180) and private-block independence in (182).",
+      "detail": "First fix the sampling design and parameter. The selected groups contain disjoint pool indices, and different pool draws are independent under that fixed parameter. This product law is the basis of the conditional reduction, before any prior averaging."
+    },
+    "zh": {
+      "why": "同时支持 (180) 的共享信息可加性，以及 (182) 的私有块独立性。",
+      "detail": "先固定抽样设计与参数。各组使用互不相交的池编号，而不同池观测在固定参数下独立，因此联合分布能写成乘积。随后才能做条件归约，先验平均是在更后面进行的。"
+    }
+  },
+  "173": {
+    "en": {
+      "why": "Allows the sharper size $q$ to be replaced by the simpler uniform size $m$ in (175)."
+    },
+    "zh": {
+      "why": "让 (175) 可以用统一的 $m$ 代替更精细的最大私有块大小 $q$。"
+    }
+  },
+  "174": {
+    "en": {
+      "why": "This is the main overlap bound; (175) turns it into the form needed by the risk proof.",
+      "detail": "Reveal the shared observations only to upper-bound Fisher information. Their total trace is at most $dvr$; after they are fixed, independent private blocks contribute the entropy term and tail correction. Shared observations are counted once per distinct pool ID."
+    },
+    "zh": {
+      "why": "这是处理重叠的主要信息界；(175) 将它改成风险证明需要的形式。",
+      "detail": "仅在信息上界的比较中揭示共享观测。其总信息迹至多为 $dvr$；固定这些值后，独立私有块贡献熵项与尾修正。共享观测按不同池编号计数，每条只算一次。"
+    }
+  },
+  "175": {
+    "en": {
+      "why": "Averages cleanly over random designs in (192), without giving shared data away in the entropy budget.",
+      "detail": "Both replacements enlarge the right side: $q\\le m$, and conditioning additionally on $G$ cannot increase discrete transcript entropy on average. The final entropy conditions only on seeds, which is the form usable in the later bit-budget argument."
+    },
+    "zh": {
+      "why": "便于在 (192) 对随机设计平均，且熵预算中不把共享数据免费送给估计器。",
+      "detail": "两次放宽都使右侧不减：$q\\le m$，且额外给定 $G$ 后，离散记录熵在平均意义下不会增加。最后的熵只给定种子，便于后面接上比特预算。"
+    }
+  },
+  "176": {
+    "en": {
+      "why": "Provides the correction-free route to the Gaussian bound (177)."
+    },
+    "zh": {
+      "why": "给出没有尾修正的路线，用于得到高斯信息界 (177)。"
+    }
+  },
+  "177": {
+    "en": {
+      "why": "Its coefficient $2m$ leads to the explicit Gaussian risk bound starting at (221)."
+    },
+    "zh": {
+      "why": "其中的系数 $2m$ 用于从 (221) 开始推导显式高斯风险下界。"
+    }
+  },
+  "178": {
+    "en": {
+      "why": "Permits the larger experiment $(G,T)$ to upper-bound transcript information in (181).",
+      "detail": "At fixed seeds, discarding $G$ maps $(G,T)$ to $T$. Ordinary data processing therefore puts the smaller Fisher matrix on the transcript side. We use this larger experiment only to construct an upper bound on information."
+    },
+    "zh": {
+      "why": "允许用更丰富的实验 $(G,T)$ 为 (181) 中的记录信息找上界。",
+      "detail": "固定种子后，丢弃 $G$ 就将 $(G,T)$ 变成 $T$。按通常方向使用数据处理不等式，较小的 Fisher 矩阵位于记录一侧；更丰富的实验只用于构造信息上界。"
+    }
+  },
+  "179": {
+    "en": {
+      "why": "Separates the cost of revealing $G$ from the remaining communication information in (181)."
+    },
+    "zh": {
+      "why": "在 (181) 中区分揭示 $G$ 的信息代价与剩余通信信息。"
+    }
+  },
+  "180": {
+    "en": {
+      "why": "Ensures a shared pool item is counted once, even if many machines observed it."
+    },
+    "zh": {
+      "why": "保证同一条共享池观测只算一次，不随访问它的机器数重复计入。"
+    }
+  },
+  "181": {
+    "en": {
+      "why": "The shared term is now explicit; only the conditional transcript term still needs the private-block bound (184)."
+    },
+    "zh": {
+      "why": "共享项已经明确；剩下的条件记录信息项还需由 (184) 的私有块上界控制。"
+    }
+  },
+  "182": {
+    "en": {
+      "why": "Makes the fixed-shared-value experiment in (183) an independent-block problem at each fixed parameter.",
+      "what": "At fixed parameter, shared and private observations are independent; conditioning on $G=g$ leaves the private blocks independent with their original product law.",
+      "detail": "The parameter remains fixed throughout this step. Conditioning on shared values does not change the private product law in (172). If a prior were mixed in first, the common random parameter could create dependence, so prior averaging is deferred to (193)."
+    },
+    "zh": {
+      "why": "保证对每个固定参数，(183) 中固定共享值后的实验都是独立块问题。",
+      "what": "固定参数时，共享观测与私有观测独立；给定 $G=g$ 后，各私有块仍独立，并保持原来的乘积分布。",
+      "detail": "这一步始终固定参数。给定共享值不改变 (172) 的私有乘积分布；若先混入参数先验，共同的随机参数可能造成依赖，因此到 (193) 才做先验平均。"
+    }
+  },
+  "183": {
+    "en": {
+      "why": "Verifies that the conditional protocol is parameter independent, as required to invoke (147) in (184)."
+    },
+    "zh": {
+      "why": "核实条件协议的规则不依赖参数，满足 (184) 套用 (147) 的要求。"
+    }
+  },
+  "184": {
+    "en": {
+      "why": "Bounds the private contribution pointwise in shared values, ready to average in (185).",
+      "detail": "After fixing shared values and every seed, the only random inputs are independent private blocks. The remaining protocol is a parameter-independent function of those inputs, so (147) applies. Its bit-budget correction is uniform in the fixed values."
+    },
+    "zh": {
+      "why": "对每个共享值给出私有部分的上界，随后可在 (185) 平均。",
+      "detail": "固定共享值与全部种子后，随机输入只剩独立私有块。剩余协议是这些输入的不依赖参数的函数，所以可使用 (147)，而比特预算修正对固定值一致有效。"
+    }
+  },
+  "185": {
+    "en": {
+      "why": "Supplies the averaged conditional-information term needed in the chain-rule comparison (186).",
+      "where": "Average the pointwise inequality (184) over the model law of $G$, keeping $\\rho$ fixed. The averaged entropy is $H_\\theta(T\\mid G,R=\\rho)$ and $K_B$ stays unchanged.",
+      "detail": "This averages conditional information matrices, as required by the Fisher chain rule; it does not identify their average with the Fisher information of a mixture. The parameter dependence of the shared-data law is already accounted for by the separate shared-information term."
+    },
+    "zh": {
+      "why": "提供 (186) 的链式法则比较所需的平均条件信息项。",
+      "where": "保持 $\\rho$ 固定，将逐点上界 (184) 对模型中 $G$ 的分布平均。熵项成为 $H_\\theta(T\\mid G,R=\\rho)$，而 $K_B$ 不变。",
+      "detail": "这里平均的是链式法则中的条件信息矩阵，并未把它当成混合分布的 Fisher 信息。共享数据分布对参数的依赖，已由单独的共享信息项计入。"
+    }
+  },
+  "186": {
+    "en": {
+      "why": "Feeds the fixed-seed total information bound into (187); the single-sample trace is then bounded by $dv$."
+    },
+    "zh": {
+      "why": "将固定种子的总信息上界交给 (187)，再把单样本信息迹放宽为 $dv$。"
+    }
+  },
+  "187": {
+    "en": {
+      "why": "Combining this average with (186) and the one-sample bound (22) proves (174).",
+      "where": "Use the seed chain rule (166) to average (186), then apply $\\operatorname{tr}I_X\\le dv$ from (22). Averaging the conditional entropies over seeds gives (174)."
+    },
+    "zh": {
+      "why": "结合 (186) 及单样本信息界 (22)，完成 (174) 的证明。",
+      "where": "用种子链式法则 (166) 对 (186) 平均，再使用 (22) 的 $\\operatorname{tr}I_X\\le dv$。条件熵对种子平均后即得到 (174)。"
+    }
+  },
+  "188": {
+    "en": {
+      "why": "Together with $q\\le m$, converts (174) to the usable bound (175).",
+      "detail": "The inequality concerns averaged conditional entropy: some particular shared value can make a transcript distribution more uncertain, but averaging over shared values reduces entropy by the nonnegative conditional mutual information."
+    },
+    "zh": {
+      "why": "结合 $q\\le m$，将 (174) 转成更易使用的 (175)。",
+      "detail": "不等式比较的是平均条件熵：某个特定共享值可能让记录分布更不确定，但对共享值平均后，熵减少的量正是非负的条件互信息。"
+    }
+  },
+  "189": {
+    "en": {
+      "why": "Repeating the averaging and chain-rule steps gives (176), with no squared-surprisal correction."
+    },
+    "zh": {
+      "why": "再重复平均及链式法则步骤，得到不含平方惊讶度修正的 (176)。"
+    }
+  },
+  "190": {
+    "en": {
+      "why": "Checks the exact model constants $v=1,b=0$ used in (177)."
+    },
+    "zh": {
+      "why": "核实 (177) 使用的高斯模型常数恰为 $v=1,b=0$。"
+    }
+  },
+  "191": {
+    "en": {
+      "why": "Handles the no-private-data edge case directly; no tail correction is needed even for $b>0$.",
+      "detail": "If every visible sample is shared, then at fixed $(G,R)$ the transcript is deterministic and has zero conditional Fisher information. Apply the chain rule directly; merely substituting $q=0$ into (174) would unnecessarily retain a tail correction."
+    },
+    "zh": {
+      "why": "直接处理没有私有数据的边界情形；即使 $b>0$，也不需要尾修正。",
+      "detail": "若所有已访问样本都属共享部分，则固定 $(G,R)$ 后记录是确定的，条件 Fisher 信息为零。应直接用链式法则；仅在 (174) 代入 $q=0$ 会多留一份不需要的尾修正。"
+    }
+  },
+  "192": {
+    "en": {
+      "why": "Introduces the expected shared count $\\bar r$ appearing in the final risk bound."
+    },
+    "zh": {
+      "why": "引入最终风险下界中的平均共享数量 $\\bar r$。"
+    }
+  },
+  "193": {
+    "en": {
+      "why": "Puts information and entropy under the same prior, enabling the van Trees step (197).",
+      "detail": "Average (192) over the same prior used in van Trees. The entropy becomes conditional on the random parameter, design and seeds. Shared values $G$ were revealed only in the information comparison; they must not be silently added as free side information in the bit-budget argument."
+    },
+    "zh": {
+      "why": "使信息与熵处于同一个先验平均下，从而能在 (197) 使用 van Trees。",
+      "detail": "按 van Trees 使用的同一先验平均 (192)，熵便成为给定随机参数、设计与种子后的条件熵。共享值 $G$ 只在信息比较中被揭示，不能在比特预算中偷偷作为免费的辅助信息。"
+    }
+  },
+  "194": {
+    "en": {
+      "why": "Names the two protocol-dependent quantities that (197)–(203) link and then eliminate.",
+      "detail": "$D$ averages squared estimation error over both the prior and data. The residual entropy $h_T$ measures transcript variability after the true parameter, design and seeds are known; it is a conditional-entropy quantity, not a label declaring parts of the message useless."
+    },
+    "zh": {
+      "why": "命名 (197)–(203) 将要联系、并消去其中一个的两个协议相关量。",
+      "detail": "$D$ 同时对先验与数据平均估计误差平方。剩余熵 $h_T$ 衡量：真实参数、设计与种子已知后，记录还会有多少变化。它是条件熵，不能据此把某些消息称为无用的“废话”。"
+    }
+  },
+  "195": {
+    "en": {
+      "why": "Is the information ceiling combined with prior information in (197).",
+      "detail": "Equation (193) is now written using $h_T$. Shared-data information, private-data communication and the tail correction remain separate, which makes the denominator bookkeeping in (196)–(197) straightforward."
+    },
+    "zh": {
+      "why": "这是 (197) 加入先验信息后使用的观测信息上限。",
+      "detail": "用 $h_T$ 缩写 (193) 的条件熵。共享数据信息、私有数据通信贡献及尾修正仍分开列出，便于在 (196)–(197) 整理分母。"
+    }
+  },
+  "196": {
+    "en": {
+      "why": "Keeps prior information inside $Q$, so it is counted exactly once in (197).",
+      "detail": "$A=4v$ is the coefficient before $mh_T$. The constant $Q$ collects the shared-information ceiling, tail correction and prior information; including the prior here means it must not be added again later."
+    },
+    "zh": {
+      "why": "将先验信息收入 $Q$，确保在 (197) 中恰好计算一次。",
+      "detail": "$A=4v$ 是 $mh_T$ 前的系数。$Q$ 合并共享信息上限、尾修正与先验信息；先验已在这里计入，后续不能再加一次。"
+    }
+  },
+  "197": {
+    "en": {
+      "why": "Links small error to a large required entropy term; (202) provides the opposing entropy ceiling.",
+      "where": "Van Trees (101) gives $D\\ge d^2/(\\mathbb E_\\Theta\\operatorname{tr}J+J_\\pi)$. The denominator is at most $Amh_T+Q$ by (195)–(196), so replacing it gives the displayed lower bound.",
+      "detail": "The van Trees denominator includes both observation information and prior information. Bounding that denominator from above makes the reciprocal risk bound weaker but valid. Its equivalent form says the entropy term must be large enough to support a small Bayes error."
+    },
+    "zh": {
+      "why": "小误差要求足够大的剩余熵项；(202) 则给出相反方向的熵上限。",
+      "where": "van Trees (101) 给出 $D\\ge d^2/(\\mathbb E_\\Theta\\operatorname{tr}J+J_\\pi)$。由 (195)–(196)，分母至多为 $Amh_T+Q$，代入便得到所示下界。",
+      "detail": "van Trees 的分母同时包括观测信息与先验信息。用分母的上界替换它，得到较弱但有效的误差下界；等价形式说明，要维持小贝叶斯误差，熵项必须足够大。"
+    }
+  },
+  "198": {
+    "en": {
+      "why": "Provides the entropy ceiling normalized per coordinate, rewritten using surplus in (202).",
+      "detail": "The total transcript entropy is at most $B\\ln2$. Estimation accuracy already requires part of that entropy to identify the parameter, leaving at most the displayed amount as within-parameter variability. The bound uses nats, so bit counts carry a factor $\\ln2$."
+    },
+    "zh": {
+      "why": "给出每坐标的剩余熵上限，再由 (202) 改写成通信余量形式。",
+      "detail": "记录总熵至多为 $B\\ln2$。要达到指定估计误差，已有一部分熵必须用于区分参数，留下的参数内变化至多为右侧。这里用纳特计量，因此比特数需乘 $\\ln2$。"
+    }
+  },
+  "199": {
+    "en": {
+      "why": "Simplifies (198)–(206); it is fixed and does not grow with the sample or bit budget."
+    },
+    "zh": {
+      "why": "简化 (198)–(206)；该常数不随样本量或比特预算增长。"
+    }
+  },
+  "200": {
+    "en": {
+      "why": "Makes the cancellation in (201)–(202) and reciprocal substitution in (205) transparent.",
+      "what": "Set $x=D/(d/m)$: use the usual single-machine error scale $d/m$ as the unit for Bayes risk.",
+      "detail": "This is a change of units: $x=1$ corresponds to error scale $d/m$, while $x<1$ means smaller error. No estimator or protocol is changed by introducing $x$."
+    },
+    "zh": {
+      "why": "使 (201)–(202) 的抵消及 (205) 的倒数换元更清楚。",
+      "what": "定义 $x=D/(d/m)$，以常见的单机误差尺度 $d/m$ 为单位衡量贝叶斯风险。",
+      "detail": "这只是换单位：$x=1$ 对应误差尺度 $d/m$，$x<1$ 表示误差更小。引入 $x$ 不改变估计器或通信协议。"
+    }
+  },
+  "201": {
+    "en": {
+      "why": "Exposes the equal and opposite localization terms that cancel in (202).",
+      "detail": "The first identity is the definition of surplus in (30), not an assumption that the protocol literally sends a localization stage first. The second comes from $D/d=x/m$. Their matching $\\ln m$ terms cancel in the entropy budget."
+    },
+    "zh": {
+      "why": "显露出在 (202) 中恰好一正一负抵消的粗定位项。",
+      "detail": "第一条是 (30) 中通信余量定义的改写，不要求协议真的先发送一段定位信息。第二条来自 $D/d=x/m$；两条中的 $\\ln m$ 项随后在熵预算中抵消。"
+    }
+  },
+  "202": {
+    "en": {
+      "why": "Leaves surplus $s$ in the main entropy term; the separate Bernstein correction remains until (219)."
+    },
+    "zh": {
+      "why": "主熵项中留下通信余量 $s$；另行出现的 Bernstein 修正仍需到 (219) 才处理完。"
+    }
+  },
+  "203": {
+    "en": {
+      "why": "Eliminates $h_T$, reducing the risk proof to a scalar inequality in normalized error.",
+      "detail": "Use the entropy ceiling to eliminate the unknown $h_T$. As error shrinks, $d^2/D$ rises, while the logarithmic term available on the right falls. The two requirements cannot both hold at arbitrarily small error."
+    },
+    "zh": {
+      "why": "消去 $h_T$，将风险证明化成关于归一化误差的标量不等式。",
+      "detail": "用熵上限消去未知的 $h_T$。误差越小，左侧 $d^2/D$ 越大，而右侧可用的对数项越小，因此这两项要求不可能在任意小误差下同时满足。"
+    }
+  },
+  "204": {
+    "en": {
+      "why": "Prepares the change of variables that converts the bound to $t+\\ln t$ in (206)."
+    },
+    "zh": {
+      "why": "为换元做准备，使 (206) 能写成 $t+\\ln t$ 的形式。"
+    }
+  },
+  "205": {
+    "en": {
+      "why": "An upper bound on this $t$ becomes a lower bound on $D$ in (212).",
+      "where": "Define $t=2/(Ax)$ and solve to get $x=2/(At)$. With $D=dx/m$ from (200), this gives $D=2d/(Amt)$."
+    },
+    "zh": {
+      "why": "这个 $t$ 的上界，会在 (212) 转成 $D$ 的下界。",
+      "where": "定义 $t=2/(Ax)$，反解得 $x=2/(At)$。再由 (200) 的 $D=dx/m$，得到 $D=2d/(Amt)$。"
+    }
+  },
+  "206": {
+    "en": {
+      "why": "All error dependence is on the left; (207)–(211) bound and invert the right-hand scale."
+    },
+    "zh": {
+      "why": "所有误差依赖都移到左侧；(207)–(211) 再控制右侧尺度并反解。"
+    }
+  },
+  "207": {
+    "en": {
+      "why": "Identifies which parts of $F$ in (209) control sharing, tails and prior information.",
+      "detail": "The exact normalized terms are $\\bar r/(2m)$ for sharing, $b^2K_B/(vmd)$ for the tail correction, and $2\\pi^2/(vm)$ for the prior. Later comparisons may hide fixed numerical factors, but this line is an equality."
+    },
+    "zh": {
+      "why": "说明 (209) 的 $F$ 分别如何控制共享、尾部与先验信息。",
+      "detail": "精确归一化后，共享项是 $\\bar r/(2m)$，尾修正是 $b^2K_B/(vmd)$，先验项是 $2\\pi^2/(vm)$。后面的量级比较可隐藏固定倍数，但这一行是精确等式。"
+    }
+  },
+  "208": {
+    "en": {
+      "why": "Turns the surprisal correction into the squared-budget term used in (209)."
+    },
+    "zh": {
+      "why": "将惊讶度修正变成 (209) 使用的预算平方项。"
+    }
+  },
+  "209": {
+    "en": {
+      "why": "Provides one positive scale for both the bound (210) and its inversion (211).",
+      "detail": "Use $s_+=\\max\\{s,0\\}$ so the scale stays nonnegative even below the localization threshold. The added $1$ ensures $F\\ge1$, which handles the small-$t$ case in (211)."
+    },
+    "zh": {
+      "why": "为 (210) 的上界及 (211) 的反解提供统一正尺度。",
+      "detail": "使用 $s_+=\\max\\{s,0\\}$，使粗定位门槛以下的负余量也不会把尺度变负。额外加 $1$ 保证 $F\\ge1$，以便处理 (211) 中 $t<1$ 的情形。"
+    }
+  },
+  "210": {
+    "en": {
+      "why": "Reduces all model and communication terms to the single scale used in (211)."
+    },
+    "zh": {
+      "why": "将模型与通信项汇成一个尺度，供 (211) 反解。"
+    }
+  },
+  "211": {
+    "en": {
+      "why": "Combines with the exact relation between $t$ and $D$ to give (212)."
+    },
+    "zh": {
+      "why": "结合 $t$ 与 $D$ 的精确关系，推出 (212)。"
+    }
+  },
+  "212": {
+    "en": {
+      "why": "Gives a valid risk floor already; (214)–(219) remove its unwanted squared-budget correction.",
+      "detail": "An upper bound on the reciprocal-risk variable gives a lower bound on risk. Expanding $mF$ yields the displayed denominator. The squared-budget term is still present here; removing it requires the separate regime argument (214)–(219)."
+    },
+    "zh": {
+      "why": "此时已得到有效风险下界；(214)–(219) 再去掉不希望保留的预算平方修正。",
+      "detail": "风险倒数变量的上界转成风险下界；展开 $mF$ 即得到所示分母。此时预算平方项仍在，要去掉它，还需 (214)–(219) 的分情形论证。"
+    }
+  },
+  "213": {
+    "en": {
+      "why": "States the target scale, not an additional inequality; the next two cases establish it."
+    },
+    "zh": {
+      "why": "这里列的是目标尺度，并非新证明的不等式；接下来分两种情形建立它。"
+    }
+  },
+  "214": {
+    "en": {
+      "why": "Allows (215) to absorb the correction when $m\\ge n^2$, with fixed $k$.",
+      "where": "In the regime $m\\ge n^2$, use the fixed per-machine budget $B=nk$. Since $nk+1\\le(k+1)n$, squaring and using $n^2\\le m$ proves the bound."
+    },
+    "zh": {
+      "why": "在 $m\\ge n^2$ 且 $k$ 固定时，让 (215) 能吸收修正项。",
+      "where": "在 $m\\ge n^2$ 的情形中，使用固定单机预算 $B=nk$。由 $nk+1\\le(k+1)n$，平方后再用 $n^2\\le m$，即得上界。"
+    }
+  },
+  "215": {
+    "en": {
+      "why": "Together with (212), establishes the target scale in the first regime."
+    },
+    "zh": {
+      "why": "结合 (212)，在第一种情形下建立目标下界尺度。"
+    }
+  },
+  "216": {
+    "en": {
+      "why": "Shows that surplus is large in the second regime once the number of machines grows."
+    },
+    "zh": {
+      "why": "说明第二种情形下，机器数增长后通信余量足够大。"
+    }
+  },
+  "217": {
+    "en": {
+      "why": "Makes the reciprocal refinement scale comparable to the access scale in (218).",
+      "where": "For fixed $d$ and $k>0$, choose $n_0$ so that $\\log_2 n\\le nk/(2d)$ for $n\\ge n_0$. Insert this into (216)."
+    },
+    "zh": {
+      "why": "让 (218) 中的精估倒数尺度可以与总访问尺度比较。",
+      "where": "对固定的 $d$ 与 $k>0$，选取 $n_0$，使 $n\\ge n_0$ 时有 $\\log_2 n\\le nk/(2d)$，再代入 (216)。"
+    }
+  },
+  "218": {
+    "en": {
+      "why": "Lets the access-risk bound (107) supply the desired refinement bound in this regime.",
+      "detail": "Here $s>0$, so $s_+=s$ and the target denominator is at least $ms$. Equation (217) gives the reciprocal comparison. Multiply by $d$ to compare risk scales, then invoke the existing access-risk floor (107)."
+    },
+    "zh": {
+      "why": "让已有的总访问风险界 (107) 在这种情形下直接给出所需精估下界。",
+      "detail": "这里 $s>0$，因此 $s_+=s$，目标分母至少为 $ms$。由 (217) 得到倒数比较；再乘 $d$ 才是风险尺度，随后使用已有的总访问风险下界 (107)。"
+    }
+  },
+  "219": {
+    "en": {
+      "why": "Supplies the fourth term of the combined minimax lower bound (220).",
+      "detail": "When $m\\ge n^2$, absorb the correction using (214)–(215). When $m<n^2$ and $n$ is sufficiently large, the access bound is already at least a fixed multiple of the target by (218). The fixed-dimensional asymptotic setting supplies the constants."
+    },
+    "zh": {
+      "why": "给出 (220) 中极小极大风险主下界的第四项。",
+      "detail": "当 $m\\ge n^2$ 时，由 (214)–(215) 吸收修正；当 $m<n^2$ 且 $n$ 足够大时，由 (218)，已有总访问下界已不小于目标尺度的固定倍数。常数取自固定维度的渐近设定。"
+    }
+  },
+  "220": {
+    "en": {
+      "why": "Combines the pool, access, bit and refinement obstructions to prove the lower half of (40).",
+      "where": "Use (102) to pass Bayes-risk floors to minimax risk. Combine the sample floors (107), bit floor (114) and refinement floor (219), then choose one common smaller constant."
+    },
+    "zh": {
+      "why": "合并样本池、总访问、比特与精估四种限制，证明 (40) 的下界部分。",
+      "where": "先用 (102) 将贝叶斯风险下界转为极小极大风险下界，再合并抽样项 (107)、比特项 (114) 与精估项 (219)，统一取一个更小的正常数。"
+    }
+  },
+  "221": {
+    "en": {
+      "why": "Starts a sharper Gaussian calculation without the Bernstein correction used in the general bound."
+    },
+    "zh": {
+      "why": "开启更紧的高斯推导，不再携带一般界中的 Bernstein 修正。"
+    }
+  },
+  "222": {
+    "en": {
+      "why": "Converts the Gaussian information ceiling into the reciprocal-risk inequality normalized in (224).",
+      "detail": "For the chosen prior, van Trees adds $4\\pi^2d$ to the observation-information ceiling (221). Taking the reciprocal-risk form leaves the shared term, remaining-entropy term and prior term separate for the normalization (224)."
+    },
+    "zh": {
+      "why": "将高斯信息上限转成风险倒数不等式，再由 (224) 归一化。",
+      "detail": "对所选先验，van Trees 在观测信息上限 (221) 上加入 $4\\pi^2d$。改写成风险倒数形式后，共享项、剩余熵项、先验项仍分开，便于 (224) 归一化。"
+    }
+  },
+  "223": {
+    "en": {
+      "why": "This new Gaussian normalization is used through (230); it differs from the general-case choice in (205).",
+      "detail": "The symbol $t$ is redefined here as $d/(mD)$ for the Gaussian branch. Use this normalization, not the factor-$2/A$ normalization in (205), in all steps through (230)."
+    },
+    "zh": {
+      "why": "这个新的高斯归一化一直用于 (230)，与一般情形 (205) 的取法不同。",
+      "detail": "高斯分支在这里将 $t$ 重新定义为 $d/(mD)$。直到 (230) 都使用这一归一化，不沿用 (205) 中带 $2/A$ 的取法。"
+    }
+  },
+  "224": {
+    "en": {
+      "why": "Provides the information side of the Gaussian calculation; (225) supplies its entropy side.",
+      "detail": "Divide every term in (222) by the positive factor $md$. The left side becomes $d/(mD)=t$; the three right-hand terms become the shared ratio, twice the entropy per coordinate and the scaled prior information."
+    },
+    "zh": {
+      "why": "给出高斯推导中的信息约束；(225) 再提供熵约束。",
+      "detail": "将 (222) 每一项都除以正数 $md$。左侧为 $d/(mD)=t$；右侧依次变成共享比例、每坐标剩余熵的两倍、归一化先验信息。"
+    }
+  },
+  "225": {
+    "en": {
+      "why": "Eliminates localization cost and expresses the entropy term using the new Gaussian $t$.",
+      "where": "Double (198), substitute $D/d=1/(mt)$ from (223), and use $(2B/d)\\ln2=2s\\ln2+\\ln m$ from (201). The $\\ln m$ terms cancel."
+    },
+    "zh": {
+      "why": "消去粗定位成本，并用新的高斯变量 $t$ 表示剩余熵项。",
+      "where": "将 (198) 乘二，代入 (223) 的 $D/d=1/(mt)$，再用 (201) 的 $(2B/d)\\ln2=2s\\ln2+\\ln m$，两个 $\\ln m$ 项抵消。"
+    }
+  },
+  "226": {
+    "en": {
+      "why": "Makes exponentiation in (228) produce the exact factor $\\pi e^3/2$ in (230)."
+    },
+    "zh": {
+      "why": "让 (228) 取指数后产生 (230) 中的精确因子 $\\pi e^3/2$。"
+    }
+  },
+  "227": {
+    "en": {
+      "why": "Gives an explicit scalar inequality that can be inverted without a large-sample approximation.",
+      "detail": "Call this explicit right side $z$. The left side $t+\\ln t$ is strictly increasing for $t>0$, so the inequality limits how large reciprocal risk can be. The next steps invert it exactly instead of replacing it by an order bound."
+    },
+    "zh": {
+      "why": "得到可直接反解的显式标量不等式，不需要大样本近似。",
+      "detail": "将显式右端记为 $z$。左侧 $t+\\ln t$ 在 $t>0$ 时严格递增，因此限制风险倒数能有多大。接下来做精确反解，不将其仅放宽成量级界。"
+    }
+  },
+  "228": {
+    "en": {
+      "why": "Matches the increasing function whose inverse is defined in (229).",
+      "detail": "Since the exponential is increasing and $t>0$, exponentiating preserves the inequality and gives $e^{t+\\ln t}=te^t$. The value $e^z$ is positive, placing us on the positive principal Lambert branch."
+    },
+    "zh": {
+      "why": "变成 (229) 所定义反函数对应的递增函数形式。",
+      "detail": "指数函数递增，且 $t>0$，所以取指数保留不等号方向，并有 $e^{t+\\ln t}=te^t$。右侧 $e^z>0$，因此使用 Lambert 函数的正值主支。"
+    }
+  },
+  "229": {
+    "en": {
+      "why": "Provides the increasing inverse used to turn (228) into a bound on $t$, then on $D$.",
+      "detail": "On positive inputs, the map $t\\mapsto te^t$ is strictly increasing. Its inverse $W_0$ is therefore increasing too: from $te^t\\le e^z$ we may conclude $t\\le W_0(e^z)$."
+    },
+    "zh": {
+      "why": "给出递增反函数，将 (228) 转成 $t$ 的上界，继而得到 $D$ 的下界。",
+      "detail": "在正数上，映射 $t\\mapsto te^t$ 严格递增，其反函数 $W_0$ 也递增。因此由 $te^t\\le e^z$ 可推出 $t\\le W_0(e^z)$。"
+    }
+  },
+  "230": {
+    "en": {
+      "why": "Is the explicit Gaussian Bayes-risk floor; the minimax risk is no smaller by (102).",
+      "detail": "Insert the full value of $z$ into $t\\le W_0(e^z)$, then use $D=d/(mt)$. This gives the explicit Gaussian Bayes-risk lower bound at the stated finite parameters. Equation (102) transfers it to minimax risk."
+    },
+    "zh": {
+      "why": "给出显式高斯贝叶斯风险下界；再由 (102)，极小极大风险也不能更小。",
+      "detail": "将 $z$ 的完整表达式代入 $t\\le W_0(e^z)$，再用 $D=d/(mt)$，得到所列有限参数下的显式高斯贝叶斯风险下界；(102) 将其转为极小极大风险下界。"
+    }
+  }
+}

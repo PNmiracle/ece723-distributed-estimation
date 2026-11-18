@@ -132,3 +132,18 @@ python3 tools/videos/inject.py     # (optional) video boxes then follow the guid
 ```
 
 If headings are renumbered with `tools/toc/subheads.py`, check that the ids in `subguide.json` still match.
+
+## Reviewed converse explanations (145)–(230)
+
+`gist/converse_revisions.json` records the bilingual revisions to What,
+Where it comes from, Why it matters and selected extended explanations.
+`KATEX_MODULE=/path/to/katex.cjs python3 tools/gist/refine-converse.py`
+refreshes their ordinary build sources, explicit equation dependencies and the
+two rendered readers, preserving formulas, symbol tables, diagrams and speaking
+notes. It also refreshes the 22 Section III paragraph guides from
+`subguide/subguide.json`. The normal build runs this before final prose typesetting.
+Regenerate the English page's Chinese disclosures after the final pass.
+
+The compact print refresh in `print/sync_converse_color.py` then carries the same
+content and paragraph guides into the color speaker edition. Expanded per-entry
+bilingual pronunciation tables remain withdrawn.

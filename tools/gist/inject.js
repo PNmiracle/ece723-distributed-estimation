@@ -57,9 +57,9 @@ const CSS = `<style id="gist-css">
 for (const [file, lang] of [['reading.html', 'zh'], ['reading-en.html', 'en']]) {
   let s = fs.readFileSync(file, 'utf8');
   s = s.replace(/<!--gist-->[\s\S]*?<!--\/gist-->/g, '')
-    .replace(/<span class="eq-level-legend" data-hl-ui>[^<]*<\/span>/, '');
+    .replace(/<span class="eq-level-legend" data-hl-ui(?:="")?>[^<]*<\/span>/, '');
   const seen = new Set();
-  s = s.replace(/(<figure class="equation" id="eq-(\d+)">(?:(?!<\/figure>)[\s\S])*<\/figure>\s*<aside class="plain"><span class="plain-tag">[^<]*<\/span>)/g, (m, whole, n) => {
+  s = s.replace(/(<figure class="equation" id="eq-(\d+)">(?:(?!<\/figure>)[\s\S])*<\/figure>\s*<aside class="plain"(?:\s[^>]*)?><span class="plain-tag">[^<]*<\/span>)/g, (m, whole, n) => {
     if (!G[lang][n]?.every(t => typeof t === 'string' && t.trim())) throw new Error(`no gist for eq ${n} (${lang})`);
     if (seen.has(n)) throw new Error(`${file}: duplicate eq ${n}`);
     seen.add(n);

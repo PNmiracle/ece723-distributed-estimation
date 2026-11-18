@@ -578,347 +578,347 @@
 ],
 "145": [
 "对每种固定的公开条件分别数消息，界都一样；再把这些条件平均也不会变大。",
-"给定种子后照样成立"
+"保证固定种子后仍可使用惊讶度界，为 (165) 控制修正项。"
 ],
 "146": [
 "先分析机器各自拥有独立私有样本的情形，每块可能为空，也不会超过 $q$ 条。",
-"III-C 先处理没有重叠的情形"
+"规定 (147) 使用的块大小上限；后面把重叠数据化成这种私有块。"
 ],
 "147": [
-"独立私有块下，消息里可保留的总信息受两项控制：平均惊讶乘最大块大小，以及厚尾带来的修正。",
-"主项随最大私有块大小与记录熵相乘；额外项通过总比特预算进入。"
+"固定参数下，输入块独立时，$(T,R)$ 的 Fisher 信息迹不超过“最大块大小乘记录条件熵”，再加一份尾修正。",
+"这是独立块信息上界；固定共享数据后，在 (184) 直接使用。"
 ],
 "148": [
 "得分次高斯时，消息的信息只需要用它的平均惊讶来控制，不需要惊讶的平方。",
-"系数减半、没有常数项"
+"在 (189) 给出更紧的私有块上界，最终得到次高斯结论 (176)。"
 ],
 "149": [
 "假定黑板最后写成 $t$，回看机器 $i$ 负责的位置：它的本地数据必须能逐条重现那些位。",
-"记录对它的数据提的全部要求"
+"构造逐台检查的本机事件，它们的交集就是 (150) 的矩形结构。"
 ],
 "150": [
 "所有机器都通过各自的检查，就会按同一公开顺序重现整份记录；反过来也成立。",
-"交互时也成立，是引理 3 的关键"
+"结合输入独立性，推出 (152) 的乘积概率与 (153) 的乘积后验。"
 ],
 "151": [
 "分开记机器通过本地检查的概率、整份记录出现的概率，以及通过本地检查的惊讶程度。",
-"后面几步的记号"
+"本机概率用于 (152)，其负对数在 (160) 控制条件得分均值。"
 ],
 "152": [
 "原始块独立，本地检查的概率相乘；取负对数后，每台机器的惊讶可以相加。",
-"独立 + 矩形 ⇒ 熵可以按机器拆开"
+"乘积概率使总惊讶度可加；再取期望，才在 (162) 变成记录熵。"
 ],
 "153": [
-"同时要求「通过检查」和「落在指定集合」，再除以通过检查的概率，条件概率依然能逐台拆开。",
-"每块只受自己清单影响"
+"固定参数与种子后，再给定完整记录，各数据块的后验仍是乘积分布；第 $i$ 块只受自己的检查清单限制。",
+"使 (155)–(160) 能逐块套用单块上界，即使协议存在交互。"
 ],
 "154": [
 "先求机器整块数据的得分，再问：只知道整份记录和随机数时，这个得分平均是多少？",
-"后面逐块计算"
+"定义 (158) 拆分记录得分时使用的原始块得分与后验块均值。"
 ],
 "155": [
 "固定记录后，别的机器的检查不会再改变本机的条件分布，只需看本机通过了哪些检查。",
-"可以对每块单独用引理 1"
+"确定 (160) 套用事件得分界时，究竟对哪个本机事件条件化。"
 ],
 "156": [
-"记录固定后，两块数据仍各按自己的条件分布变化，所以它们得分的乘积平均可以拆成两个平均值。",
-"为交叉项消失做准备"
+"对不同块 $i\\ne j$，同时固定 $T=t$ 与 $R=r$ 后，得分外积的条件期望可分成两个后验均值的外积。",
+"再对记录平均，这个分解就给出 (157) 的零交叉矩。"
 ],
 "157": [
 "再对所有记录取平均，就回到原始独立块的乘积平均；每块均值为零，所以总交叉项为零。",
-"交叉项是在对整份记录分布平均后才消失。"
+"只在对记录分布平均后消掉交叉项，用于 (159)，并非每条记录下都为零。"
 ],
 "158": [
 "整份记录的得分是原始总得分的条件平均；可以逐台机器先平均，最后再相加。",
-"得分恒等式用在多机器上"
+"让 (159) 能把记录 Fisher 信息改写成各后验块得分的平均平方长度。"
 ],
 "159": [
 "把记录得分平方再平均；不同块的交叉项平均抵消，只剩每台机器贡献的平方。",
-"交叉项按 (157) 消失"
+"将信息量变成逐块求和，使每一项都能由 (160) 控制。"
 ],
 "160": [
-"机器的检查清单越罕见，知道它被满足就可能越明显地改变得分平均；单块界量化这个变化。",
-"每块的偏移由它的惊讶度控制"
+"块 $i$ 的后验得分均值的范数平方，由该块大小与本机清单惊讶度 $\\ell_i(t)$ 控制。",
+"代入 (161) 的信息求和；这里使用本机清单概率，不是整条记录的概率。"
 ],
 "161": [
 "逐块代入偏移界，把私有块大小统一放宽到最大值 $q$，再对记录平均。",
-"信息 $\\le$ 惊讶度之和 + 平方和"
+"将问题拆成两部分：一次惊讶度由 (162) 处理，平方项由 (163) 处理。"
 ],
 "162": [
 "先把每台的惊讶加起来，得到整条记录的惊讶；按记录出现概率取平均就是熵。",
-"把信息和熵连起来"
+"产生 (164) 的记录熵项，无需给每台机器单独分配一个总熵预算。"
 ],
 "163": [
 "每台的惊讶非负，所以先加再平方包含额外的非负交叉项，足以盖住平方和。",
-"把平方项换成自信息平方"
+"用一个完整记录的平方惊讶度控制全部本机平方项，因此 (165) 只需一份 $K_B$ 修正。"
 ],
 "164": [
 "第一部分用记录熵来写；厚尾那部分用整条记录惊讶的平方平均来写。",
-"差引理 2 就完成"
+"把最后未控制的二阶矩单独列出，再由 (165) 用比特预算控制。"
 ],
 "165": [
 "固定随机数后，记录的种类仍不超过 $2^B$，因此平方惊讶可以统一换成 $K_B$。",
-"固定种子的 (147)"
+"得到 (147) 的固定种子版本；(166)–(167) 再对种子平均。"
 ],
 "166": [
 "随机数独立于参数；把每种随机数下的信息取平均，就得到记录连同随机数的信息。",
-"去掉“固定种子”"
+"将固定种子信息界转成 $(T,R)$ 的联合信息界，而种子本身不增加参数信息项。"
 ],
 "167": [
 "先为每个随机数算记录熵，再按随机数分布加权；这就是以随机数为条件的熵。",
-"(147) 证毕"
+"结合 (165)–(166)，完成独立块信息界 (147)。"
 ],
 "168": [
 "得分次高斯时，块的平方偏移只与块大小和这次检查的惊讶成正比。",
-"没有平方惊讶度项"
+"在次高斯证明中替代 (160)，从而在 (169) 得到更紧的系数。"
 ],
 "169": [
 "用较紧的单块界加总，在固定随机数下就只留下 $2vq$ 倍的记录熵。",
-"得到 (148)"
+"再按 (166)–(167) 对种子平均，即证明 (148)。"
 ],
 "170": [
 "同一编号若被至少两台拿到，放进共享区；只在某台清单出现，就放进它的私有区。",
-"III-D 处理重叠的第一步"
+"将重复访问的观测与独有观测分开，为 (172) 的乘积实验做准备。"
 ],
 "171": [
 "先读出共享区和各私有区的样本值，再数每区有几条；$q$ 是最大的私有区大小。",
-"定义 $r$、$q_i$、$q$ 这些计数"
+"共享数量决定 (174) 的加法项，最大私有块大小决定其熵项系数。"
 ],
 "172": [
 "设计固定后，这些组由互不重复的池子编号组成，所以组与组独立，组内也是独立抽样结果。",
-"可以分开计算信息"
+"同时支持 (180) 的共享信息可加性，以及 (182) 的私有块独立性。"
 ],
 "173": [
 "一台机器至多有 $m$ 条私有数据，因为私有区只是它那 $m$ 条数据的一部分。",
-"后面把 $q$ 放宽成 $m$"
+"让 (175) 可以用统一的 $m$ 代替更精细的最大私有块大小 $q$。"
 ],
 "174": [
 "先把共享样本按每条最多 $dv$ 计入上界；剩下的私有数据，靠已知共享值后的通信熵来限制。",
-"共享样本按条数加信息，私有部分受熵限制"
+"这是处理重叠的主要信息界；(175) 将它改成风险证明需要的形式。"
 ],
 "175": [
 "用每台的样本总数代替最大私有块，并允许更大的熵上界，得到一个更容易用的式子。",
-"后面 III-E 直接代入这个形式"
+"便于在 (192) 对随机设计平均，且熵预算中不把共享数据免费送给估计器。"
 ],
 "176": [
 "若次高斯条件成立，共享项不变，私有项用更紧的线性熵界，也没有平方惊讶的修正。",
-"去掉 Bernstein 项、系数减半"
+"给出没有尾修正的路线，用于得到高斯信息界 (177)。"
 ],
 "177": [
 "单位协方差的高斯均值模型中，每条共享样本的迹是 $d$，私有部分最多是块大小乘两倍的熵。",
-"常数完全显式"
+"其中的系数 $2m$ 用于从 (221) 开始推导显式高斯风险下界。"
 ],
 "178": [
 "同时观察共享数据和记录，至少能做只看记录能做的事，因此信息不会更少。",
-"给信息找上界时可以这么做"
+"允许用更丰富的实验 $(G,T)$ 为 (181) 中的记录信息找上界。"
 ],
 "179": [
 "把联合观察的信息拆开：一块是直接看到共享值，另一块是知道这些值后，记录还能告诉你的信息。",
-"把共享部分单独拿出来"
+"在 (181) 中区分揭示 $G$ 的信息代价与剩余通信信息。"
 ],
 "180": [
 "共享编号看似被多台拿到，但每个编号只给一份独立数据；信息只加 $r$ 次。",
-"$r$ 条独立共享样本的信息"
+"保证同一条共享池观测只算一次，不随访问它的机器数重复计入。"
 ],
 "181": [
 "用「额外公开共享数据」这个更强的观察方式给原记录的信息作上界。",
-"剩下的只需处理私有部分"
+"共享项已经明确；剩下的条件记录信息项还需由 (184) 的私有块上界控制。"
 ],
 "182": [
-"公开共享样本不会改变其余编号的数据分布：给定参数，私有块仍互相独立。",
-"回到独立块的情形"
+"固定参数时，共享观测与私有观测独立；给定 $G=g$ 后，各私有块仍独立，并保持原来的乘积分布。",
+"保证对每个固定参数，(183) 中固定共享值后的实验都是独立块问题。"
 ],
 "183": [
 "共享值和随机数固定后，对每组私有数据都能重放黑板；对写出目标记录的那些私有数据求概率。",
-"参数只通过私有数据进入"
+"核实条件协议的规则不依赖参数，满足 (184) 套用 (147) 的要求。"
 ],
 "184": [
 "共享值与随机数都固定时，剩下的是独立私有块，直接套用III-C 得到的块信息界。",
-"这一步用的是 III-C 的引理 3，对固定共享值的独立私有块应用它。"
+"对每个共享值给出私有部分的上界，随后可在 (185) 平均。"
 ],
 "185": [
 "每组共享值都有同一个形式的界；平均后只把固定共享值下的熵换成以共享值为条件的熵。",
-"去掉“固定 $G$”"
+"提供 (186) 的链式法则比较所需的平均条件信息项。"
 ],
 "186": [
 "把直接观察共享样本的信息和私有通信界相加，就卡住固定随机数下的记录信息。",
-"代回 (181)"
+"将固定种子的总信息上界交给 (187)，再把单样本信息迹放宽为 $dv$。"
 ],
 "187": [
 "随机数本身不贡献参数信息；把固定随机数的结论平均，就得到联合信息界。",
-"定理 2 完成"
+"结合 (186) 及单样本信息界 (22)，完成 (174) 的证明。"
 ],
 "188": [
 "知道共享值后，记录的不确定性平均会减少；减少量正是共享值与记录的条件互信息。",
-"把 (174) 放宽成 (175)"
+"结合 $q\\le m$，将 (174) 转成更易使用的 (175)。"
 ],
 "189": [
 "在次高斯情形，只对私有块套用更紧的界；给定共享值后消息的熵仍是控制量。",
-"得到 (176)"
+"再重复平均及链式法则步骤，得到不含平方惊讶度修正的 (176)。"
 ],
 "190": [
 "用观测减去候选均值就是得分；在真参数下它是标准高斯，方向方差为 1。",
-"高斯例子的常数"
+"核实 (177) 使用的高斯模型常数恰为 $v=1,b=0$。"
 ],
 "191": [
 "若每条可见数据都被共享，没有任何私有块；记录的信息至多是直接看这 $r$ 条独立数据的信息。",
-"极端情形的检验"
+"直接处理没有私有数据的边界情形；即使 $b>0$，也不需要尾修正。"
 ],
 "192": [
 "从固定抽样清单改为对所有清单取平均：共享数变成期望，消息熵也按清单平均。",
-"$\\bar r$ 就是这样进入下界的"
+"引入最终风险下界中的平均共享数量 $\\bar r$。"
 ],
 "193": [
 "再按先验平均每个参数下的信息界，熵就变成「知道参数和公开条件之后」的剩余熵。",
-"下界第四项里 $\\bar r$ 的来源"
+"使信息与熵处于同一个先验平均下，从而能在 (197) 使用 van Trees。"
 ],
 "194": [
 "用 $D$ 表示先验平均的平方误差，用 $h_T$ 表示参数、清单和随机数已知后，记录还剩多少不确定性。",
-"接下来，一个不等式连接误差和信息，另一个用误差限制剩余熵。"
+"命名 (197)–(203) 将要联系、并消去其中一个的两个协议相关量。"
 ],
 "195": [
 "联合信息最多由三部分解释：共享样本、剩余通信熵乘块大小，以及允许厚尾的代价。",
-"信息界的最终形式"
+"这是 (197) 加入先验信息后使用的观测信息上限。"
 ],
 "196": [
 "把剩余熵前的系数叫 $A$，把共享、厚尾和先验信息的三项一起叫 $Q$。",
-"让后面的式子更短"
+"将先验信息收入 $Q$，确保在 (197) 中恰好计算一次。"
 ],
 "197": [
 "van Trees 要求信息至少能支持 $d^2/D$；把上一步的信息上限放到右边，就能约束误差。",
-"信息界变成误差界"
+"小误差要求足够大的剩余熵项；(202) 则给出相反方向的熵上限。"
 ],
 "198": [
 "先把总熵预算分摊到每个坐标，再代入先验熵；要求的误差越小，能剩下的熵越少。",
-"误差越小，$h_T$ 越受限"
+"给出每坐标的剩余熵上限，再由 (202) 改写成通信余量形式。"
 ],
 "199": [
 "把先验熵和高斯熵公式中不随样本量变化的数字收进一个常数。",
-"打包"
+"简化 (198)–(206)；该常数不随样本量或比特预算增长。"
 ],
 "200": [
-"先把总误差除以维度，再和一台机器的 $1/m$ 尺度相比，得到无量纲的比例 $x$。",
-"换成无量纲变量"
+"定义 $x=D/(d/m)$，以常见的单机误差尺度 $d/m$ 为单位衡量贝叶斯风险。",
+"使 (201)–(202) 的抵消及 (205) 的倒数换元更清楚。"
 ],
 "201": [
 "把总位数拆成定位成本与余量，同时把单位坐标的误差拆成标准化误差与单机尺度。",
-"为抵消 $\\tfrac12\\ln m$ 做准备"
+"显露出在 (202) 中恰好一正一负抵消的粗定位项。"
 ],
 "202": [
 "两处 $\\tfrac12\\ln m$ 正好抵消，所以每个坐标的剩余熵只看余量、常数和相对误差。",
-"定位花费被抵消，只剩余量"
+"主熵项中留下通信余量 $s$；另行出现的 Bernstein 修正仍需到 (219) 才处理完。"
 ],
 "203": [
 "用熵预算把未知的剩余熵换掉：左边误差越小越大，右边却因对数项随误差变小而下降。",
-"解释了结论里为什么是余量 $s$ 而不是 $B$"
+"消去 $h_T$，将风险证明化成关于归一化误差的标量不等式。"
 ],
 "204": [
 "把各项除掉共同的尺度，得到同一个 $x$ 的倒数和对数之间的不等式。",
-"下一步把它“取逆”"
+"为换元做准备，使 (206) 能写成 $t+\\ln t$ 的形式。"
 ],
 "205": [
 "改用与误差成反比的 $t$：控制 $t$ 最大能有多大，就能限制误差最小能有多小。",
-"变成 $t+\\ln t\\le\\cdots$ 的形式"
+"这个 $t$ 的上界，会在 (212) 转成 $D$ 的下界。"
 ],
 "206": [
 "用 $t$ 代替 $x$ 后，把对数移到左边；右边只剩协议设置和固定常数。",
-"准备取逆"
+"所有误差依赖都移到左侧；(207)–(211) 再控制右侧尺度并反解。"
 ],
 "207": [
 "把修正项除以统一尺度后，分别看到共享量与块大小之比、厚尾预算和先验代价。",
-"看清每一项来源"
+"说明 (209) 的 $F$ 分别如何控制共享、尾部与先验信息。"
 ],
 "208": [
 "平方惊讶的界包含关于 $B$ 的平方、一次和常数项，统一用 $(B+1)^2$ 控制。",
-"控制 Bernstein 修正的大小"
+"将惊讶度修正变成 (209) 使用的预算平方项。"
 ],
 "209": [
 "把正余量、共享规模和厚尾修正都放进 $F$，再加 1，保证它至少为 1。",
-"简化右边"
+"为 (210) 的上界及 (211) 的反解提供统一正尺度。"
 ],
 "210": [
 "把右侧的每一项都用 $F$ 的常数倍盖住，得到只需要控制一个尺度的式子。",
-"整理后的不等式"
+"将模型与通信项汇成一个尺度，供 (211) 反解。"
 ],
 "211": [
 "若 $t\\ge1$，对数项非负，直接丢掉它；若 $t<1$，$F\\ge1$ 已足够控制它。",
-"对数不等式取逆的结果"
+"结合 $t$ 与 $D$ 的精确关系，推出 (212)。"
 ],
 "212": [
 "把 $t$ 的上界换回误差下界，精修分母暂时还多出一个与总比特数平方同阶的修正。",
-"比目标多一项 $(B+1)^2$"
+"此时已得到有效风险下界；(214)–(219) 再去掉不希望保留的预算平方修正。"
 ],
 "213": [
 "证明真正想得到的精修误差尺度只有块大小、剩余比特和共享样本，不留平方预算项。",
-"要去掉 $(B+1)^2$"
+"这里列的是目标尺度，并非新证明的不等式；接下来分两种情形建立它。"
 ],
 "214": [
 "如果本地数据至少有 $n^2$ 条，那么固定每台比特数时，平方预算至多是本地数据量的常数倍。",
-"多余项被吸收"
+"在 $m\\ge n^2$ 且 $k$ 固定时，让 (215) 能吸收修正项。"
 ],
 "215": [
 "此时把平方预算并入分母已有的 $m$ 项，只会改变常数，不改变误差量级。",
-"情况一得到目标"
+"结合 (212)，在第一种情形下建立目标下界尺度。"
 ],
 "216": [
 "若本地数据量不到 $n^2$，每坐标的定位成本至多是 $\\log_2n$，比线性增长的总位数少很多。",
-"余量很大"
+"说明第二种情形下，机器数增长后通信余量足够大。"
 ],
 "217": [
 "机器足够多时，对数级定位成本花不掉一半预算，余量至少有每坐标预算的一半。",
-"余量与 $n$ 同阶"
+"让 (218) 中的精估倒数尺度可以与总访问尺度比较。"
 ],
 "218": [
 "这个情形下，精修项至多与已经证明的总访问项一样大（差一个常数），不用另证。",
-"情况二里多余项无关紧要"
+"让已有的总访问风险界 (107) 在这种情形下直接给出所需精估下界。"
 ],
 "219": [
 "两种本地数据规模都覆盖了：一边吸收多余项，另一边直接用访问项，就得到第四条误差下限。",
-"两种情况合并"
+"给出 (220) 中极小极大风险主下界的第四项。"
 ],
 "220": [
 "池子、访问次数、有限位数和精修四条限制同时成立，因此取其中最大者。",
-"证明了定理 1 的下界 (40)"
+"合并样本池、总访问、比特与精估四种限制，证明 (40) 的下界部分。"
 ],
 "221": [
 "单位协方差高斯模型没有厚尾项，先验平均后的信息界只剩共享信息和剩余熵两项。",
-"系数是 $2m$"
+"开启更紧的高斯推导，不再携带一般界中的 Bernstein 修正。"
 ],
 "222": [
 "向高斯模型的信息上限加上先验信息，就能约束平方误差的倒数。",
-"准备显式下界"
+"将高斯信息上限转成风险倒数不等式，再由 (224) 归一化。"
 ],
 "223": [
 "把误差改写成相对于单机尺度的倒数：$t$ 越大，意味着平均误差越小。",
-"高斯情形的变量"
+"这个新的高斯归一化一直用于 (230)，与一般情形 (205) 的取法不同。"
 ],
 "224": [
 "整体除以 $md$，信息上限变成共享规模比例、每坐标熵和先验常数三项。",
-"得到关于 $t$ 的不等式"
+"给出高斯推导中的信息约束；(225) 再提供熵约束。"
 ],
 "225": [
 "代入 $D=d/(mt)$ 后，误差的对数里出现的 $\\ln m$ 抵消定位成本，留下 $-\\ln t$。",
-"$\\ln m$ 再次抵消"
+"消去粗定位成本，并用新的高斯变量 $t$ 表示剩余熵项。"
 ],
 "226": [
 "常数和可以写成一个对数，便于下一步取指数时直接变成乘数。",
-"整理常数"
+"让 (228) 取指数后产生 (230) 中的精确因子 $\\pi e^3/2$。"
 ],
 "227": [
 "把熵界代入信息界，再把 $-\\ln t$ 移到左边；右边的每项都可以直接计算。",
-"准备用 Lambert W 求解"
+"得到可直接反解的显式标量不等式，不需要大样本近似。"
 ],
 "228": [
 "两边取指数保留不等号，把和变成乘积 $te^t$。",
-"取指数"
+"变成 (229) 所定义反函数对应的递增函数形式。"
 ],
 "229": [
 "给定正数 $y$，找那个乘以自身指数后恰好等于 $y$ 的正数；这个反函数叫 $W_0$。",
-"$te^t$ 的反函数"
+"给出递增反函数，将 (228) 转成 $t$ 的上界，继而得到 $D$ 的下界。"
 ],
 "230": [
 "用 $W_0$ 解出 $t$ 能有多大，再取倒数，得到不必让样本量趋于无穷的具体高斯误差下限。",
-"完全显式、非渐近"
+"给出显式高斯贝叶斯风险下界；再由 (102)，极小极大风险也不能更小。"
 ],
 "231": [
 "机器只能重抽自己清单里的编号，一共输出 $m$ 次，允许同一编号再出现。",
@@ -2548,347 +2548,347 @@
 ],
 "145": [
 "Count messages under each fixed public condition. The bound is uniform, so it survives averaging over conditions.",
-"Still holds given the seeds"
+"Makes the surprisal bound usable after conditioning on seeds; it controls the correction in (165)."
 ],
 "146": [
 "Start with independent private samples on each machine. A block may be empty but contains no more than $q$ draws.",
-"III-C first handles the no-overlap case"
+"Sets the block-size cap used in (147); the shared-data reduction later supplies these private blocks."
 ],
 "147": [
-"With independent private blocks, total message information is bounded by mean surprise scaled by the largest block size, plus a heavier-tail correction.",
-"The main term scales with maximum block size times entropy; the extra term depends on the bit budget."
+"For fixed-parameter independent input blocks, the Fisher trace of $(T,R)$ is at most an entropy term scaled by the largest block size, plus one tail correction.",
+"This is the independent-block information bound used after shared data are fixed in (184)."
 ],
 "148": [
 "For sub-Gaussian scores, mean transcript surprise alone bounds the information. Its square is no longer needed.",
-"Half the constant, no extra term"
+"Supplies the sharper private-block bound in (189), leading to the sub-Gaussian result (176)."
 ],
 "149": [
 "Assume the board ends at $t$. The local data on machine $i$ must reproduce every bit it was scheduled to write.",
-"All the transcript asks of its data"
+"Builds the separate local events whose intersection gives the rectangle in (150)."
 ],
 "150": [
 "If every machine passes its own checklist, the public schedule reproduces the whole transcript. Conversely, that transcript implies all checks pass.",
-"Holds even with interaction; the key to Lemma 3"
+"Together with independent inputs, gives the product probability (152) and product posterior (153)."
 ],
 "151": [
 "Keep separate the chance of passing one machine’s checks, the transcript’s probability, and the surprise of those local checks.",
-"Notation for the next steps"
+"The local probabilities feed (152), while their negative logs control score shifts in (160)."
 ],
 "152": [
 "Independent input blocks make the checklist probabilities multiply. Taking negative logs makes the local surprises add.",
-"Independence + rectangle ⇒ entropy splits by machine"
+"The product law makes total surprisal additive; its expectation becomes transcript entropy in (162)."
 ],
 "153": [
-"Require both checklist passage and membership in a test set. Dividing by the passage probability still factors the conditional probability by machine.",
-"Each block depends only on its own checklist"
+"At fixed parameter and seeds, conditioning on the entire transcript leaves a product posterior over blocks; block $i$ is restricted only by its own checklist.",
+"Lets us apply single-block bounds in (155)–(160), even though the communication was interactive."
 ],
 "154": [
 "Sum the scores in one block, then ask what that sum averages to given only the transcript and the seeds.",
-"Computed block by block"
+"Defines the raw and posterior block scores used in the transcript-score decomposition (158)."
 ],
 "155": [
 "For a fixed transcript, other machines’ checks do not further change this block’s conditional law. Only its own checklist matters.",
-"Lemma 1 applies block by block"
+"Identifies the precise local event to which the event-score bound applies in (160)."
 ],
 "156": [
-"Given the transcript, the blocks are conditionally independent, so their mean score product factors.",
-"Prepares the vanishing cross terms"
+"For distinct blocks $i\\ne j$, their score outer product factors into posterior means after both $T=t$ and $R=r$ are fixed.",
+"After averaging over transcripts, this factorization gives the zero cross moment in (157)."
 ],
 "157": [
 "Average over transcripts to recover the original independent score product. Both original scores have mean zero.",
-"Cross terms vanish after averaging over the transcript distribution."
+"Cancels cross terms in (159) only after averaging over the transcript distribution."
 ],
 "158": [
 "The transcript score is the conditional mean of the total raw score. Take each block’s mean first and then add.",
-"The score identity for many machines"
+"Converts transcript Fisher information into posterior block-score energies in (159)."
 ],
 "159": [
 "Square and average the transcript score. Cross terms cancel on average, leaving the squared contributions from individual machines.",
-"Cross terms vanish by (157)"
+"Makes the information bound a sum of quantities that the single-block estimate (160) can control."
 ],
 "160": [
-"The rarer a machine’s checklist, the more learning that it passed can shift its mean score. The single-block bound quantifies the change.",
-"Each block’s shift is controlled by its surprise"
+"The squared posterior score shift for block $i$ is bounded by its size and its local checklist surprisal $\\ell_i(t)$.",
+"Feeds the information sum in (161); its probability is the local checklist probability, not the whole-leaf probability."
 ],
 "161": [
 "Insert each block’s shift bound, replace its size by the common cap $q$, and average over transcripts.",
-"Information $\\le$ sum of surprises + squares"
+"Separates the linear-surprisal term handled by (162) from the squared-surprisal term handled by (163)."
 ],
 "162": [
 "Add the per-machine surprises to get the transcript’s surprise. Its probability-weighted average is entropy.",
-"Connects information to entropy"
+"Produces the entropy term in (164), avoiding a separate entropy budget for every machine."
 ],
 "163": [
 "Local surprises are nonnegative, so the square of their sum includes extra nonnegative cross terms and bounds the sum of squares.",
-"Turns squares into squared self-information"
+"Controls all local square terms with one transcript square, so (165) needs only one $K_B$ correction."
 ],
 "164": [
 "Write the first contribution as transcript entropy and the heavier-tail contribution as mean squared transcript surprise.",
-"Lemma 2 finishes it"
+"Isolates the only remaining uncontrolled moment, which (165) bounds using the bit budget."
 ],
 "165": [
 "With seeds fixed, at most $2^B$ transcripts remain possible, so $K_B$ uniformly bounds their mean squared surprise.",
-"(147) for a fixed seed"
+"Gives the fixed-seed version of (147); (166)–(167) then average out the seeds."
 ],
 "166": [
 "The seeds are independent of the parameter. Average the information for each seed to get the information in the transcript and seeds together.",
-"Removes the fixed seed"
+"Transfers the fixed-seed Fisher bound to joint observations $(T,R)$ without adding a seed-information term."
 ],
 "167": [
 "Compute transcript entropy for each seed and weight by the seed distribution. That is entropy conditional on the seeds.",
-"Completes (147)"
+"Together with (165)–(166), completes the independent-block bound (147)."
 ],
 "168": [
 "For sub-Gaussian scores, the squared shift has a bound proportional only to block size times checklist surprise.",
-"No squared-surprise term"
+"Replaces (160) in the sub-Gaussian proof and yields the sharper coefficient in (169)."
 ],
 "169": [
 "Summing the sharper block bounds leaves only $2vq$ times transcript entropy for each fixed seed.",
-"Gives (148)"
+"Averaging over seeds as in (166)–(167) proves (148)."
 ],
 "170": [
 "Put IDs seen by at least two machines in the shared set. Put an ID seen only by one machine in its private set.",
-"The first step in handling overlap in III-D"
+"Separates duplicated observations from exclusive ones, preparing the product experiment in (172)."
 ],
 "171": [
 "Read the sample values in the shared and private sets, then count each set. The largest private size is $q$.",
-"Defines the counts $r$, $q_i$, $q$"
+"The shared count gives the additive term in (174); the largest private size controls its entropy term."
 ],
 "172": [
 "For a fixed design the groups use disjoint pool IDs, so the groups and their constituent draws are independent.",
-"So their information can be counted separately"
+"Justifies both shared-information additivity in (180) and private-block independence in (182)."
 ],
 "173": [
 "A machine has at most $m$ private items because the private set is a subset of its $m$ observed items.",
-"Later $q$ is relaxed to $m$"
+"Allows the sharper size $q$ to be replaced by the simpler uniform size $m$ in (175)."
 ],
 "174": [
 "In the upper bound, allow up to $dv$ information for each shared draw. Bound the private contribution by transcript entropy after the shared values are revealed.",
-"Shared samples add information per item; private parts are limited by entropy"
+"This is the main overlap bound; (175) turns it into the form needed by the risk proof."
 ],
 "175": [
 "Use total local size in place of the largest private block and allow a larger entropy bound. The result is easier to use.",
-"III-E plugs this form in directly"
+"Averages cleanly over random designs in (192), without giving shared data away in the entropy budget."
 ],
 "176": [
 "In the sub-Gaussian case, the shared term stays, while the private term uses the sharper linear entropy bound with no squared-surprise correction.",
-"No Bernstein term, half the constant"
+"Provides the correction-free route to the Gaussian bound (177)."
 ],
 "177": [
 "For Gaussian means with identity covariance, each shared draw contributes trace $d$, and the private part is bounded by block size times twice the entropy.",
-"All constants explicit"
+"Its coefficient $2m$ leads to the explicit Gaussian risk bound starting at (221)."
 ],
 "178": [
 "Observing shared data alongside the transcript allows everything one could do with the transcript alone, so information cannot decrease.",
-"Allowed when upper-bounding information"
+"Permits the larger experiment $(G,T)$ to upper-bound transcript information in (181)."
 ],
 "179": [
 "Split joint information into what the shared values tell you and what the transcript still adds once those values are known.",
-"Separates the shared part"
+"Separates the cost of revealing $G$ from the remaining communication information in (181)."
 ],
 "180": [
 "Several machines can hold the same ID, but it supplies one independent draw. Add information just $r$ times.",
-"Information of $r$ independent shared samples"
+"Ensures a shared pool item is counted once, even if many machines observed it."
 ],
 "181": [
 "Upper-bound the original transcript’s information using the more informative experiment that also reveals shared data.",
-"Only the private part remains"
+"The shared term is now explicit; only the conditional transcript term still needs the private-block bound (184)."
 ],
 "182": [
-"Revealing shared draws does not alter the law of the remaining IDs. For a given parameter the private blocks are still independent.",
-"Back to the independent-block case"
+"At fixed parameter, shared and private observations are independent; conditioning on $G=g$ leaves the private blocks independent with their original product law.",
+"Makes the fixed-shared-value experiment in (183) an independent-block problem at each fixed parameter."
 ],
 "183": [
 "With shared values and seeds fixed, replay the board for each private input and sum the probability of those producing the target transcript.",
-"The parameter enters only through private data"
+"Verifies that the conditional protocol is parameter independent, as required to invoke (147) in (184)."
 ],
 "184": [
 "With shared values and seeds fixed, the inputs are independent private blocks, so the earlier block information bound applies.",
-"This applies Lemma 3 from III-C to independent private blocks at fixed shared values."
+"Bounds the private contribution pointwise in shared values, ready to average in (185)."
 ],
 "185": [
 "The same form of bound holds for each shared value. Averaging turns fixed-value entropy into entropy conditional on the shared data.",
-"Removes the fixed $G$"
+"Supplies the averaged conditional-information term needed in the chain-rule comparison (186)."
 ],
 "186": [
 "Add the information from directly observing shared samples to the private communication bound to cap fixed-seed transcript information.",
-"Plugged back into (181)"
+"Feeds the fixed-seed total information bound into (187); the single-sample trace is then bounded by $dv$."
 ],
 "187": [
 "The seeds themselves add no parameter information. Average the fixed-seed result to obtain the joint bound.",
-"Completes Theorem 2"
+"Combining this average with (186) and the one-sample bound (22) proves (174)."
 ],
 "188": [
 "Knowing the shared values reduces transcript uncertainty on average by exactly their conditional mutual information.",
-"Relaxes (174) to (175)"
+"Together with $q\\le m$, converts (174) to the usable bound (175)."
 ],
 "189": [
 "In the sub-Gaussian case, apply the sharper bound to the private blocks. Entropy given the shared values is still the control quantity.",
-"Gives (176)"
+"Repeating the averaging and chain-rule steps gives (176), with no squared-surprisal correction."
 ],
 "190": [
 "Subtract the mean from the observation to get the score. Under the true parameter the score is standard Gaussian, with variance 1 in each unit direction.",
-"Constants of the Gaussian example"
+"Checks the exact model constants $v=1,b=0$ used in (177)."
 ],
 "191": [
 "If all visible draws are shared, there are no private blocks. The transcript cannot contain more information than the $r$ independent draws themselves.",
-"A sanity check at the extreme"
+"Handles the no-private-data edge case directly; no tail correction is needed even for $b>0$."
 ],
 "192": [
 "Move from fixed sampling lists to an average over designs. The shared count becomes its expectation and the entropy is averaged as well.",
-"This is how $\\bar r$ enters the lower bound"
+"Introduces the expected shared count $\\bar r$ appearing in the final risk bound."
 ],
 "193": [
 "Average the information bound over parameters drawn from the prior. The entropy is now what remains given the parameter and public conditions.",
-"The source of $\\bar r$ in the fourth lower-bound term"
+"Puts information and entropy under the same prior, enabling the van Trees step (197)."
 ],
 "194": [
 "Use $D$ for prior-averaged squared error and $h_T$ for the uncertainty in the transcript when the parameter is known.",
-"One inequality relates error to information; another bounds leftover entropy in terms of error."
+"Names the two protocol-dependent quantities that (197)–(203) link and then eliminate."
 ],
 "195": [
 "The joint information has three contributions to its upper bound: shared draws, leftover transcript entropy scaled by block size, and the heavier-tail correction.",
-"The final form of the information bound"
+"Is the information ceiling combined with prior information in (197)."
 ],
 "196": [
 "Call the entropy coefficient $A$ and bundle shared information, the tail correction and prior information into $Q$.",
-"Shortens the next formulas"
+"Keeps prior information inside $Q$, so it is counted exactly once in (197)."
 ],
 "197": [
 "Van Trees requires enough information to support $d^2/D$. Cap that information with the previous upper bound to constrain the error.",
-"Turns the information bound into an error bound"
+"Links small error to a large required entropy term; (202) provides the opposing entropy ceiling."
 ],
 "198": [
 "Divide the entropy budget by dimension and insert the prior entropy. Smaller target error leaves less entropy available.",
-"Smaller error restricts $h_T$ more"
+"Provides the entropy ceiling normalized per coordinate, rewritten using surplus in (202)."
 ],
 "199": [
 "Collect the numerical terms from the prior and Gaussian entropy into one constant.",
-"Bundling"
+"Simplifies (198)–(206); it is fixed and does not grow with the sample or bit budget."
 ],
 "200": [
-"Divide total error by dimension and measure it against one machine’s $1/m$ scale to get the dimensionless ratio $x$.",
-"A dimensionless variable"
+"Set $x=D/(d/m)$: use the usual single-machine error scale $d/m$ as the unit for Bayes risk.",
+"Makes the cancellation in (201)–(202) and reciprocal substitution in (205) transparent."
 ],
 "201": [
 "Split total bits into localization cost and surplus, and split per-coordinate error into its normalized value times the single-machine scale.",
-"Prepares the cancellation of $\\tfrac12\\ln m$"
+"Exposes the equal and opposite localization terms that cancel in (202)."
 ],
 "202": [
 "The two $\\tfrac12\\ln m$ terms cancel, so leftover entropy per coordinate depends on surplus, a constant and relative error.",
-"The localization cost cancels; only the surplus remains"
+"Leaves surplus $s$ in the main entropy term; the separate Bernstein correction remains until (219)."
 ],
 "203": [
 "Eliminate the unknown leftover entropy with its budget. Smaller error makes the left side larger but lowers the logarithmic term on the right.",
-"Explains why the result involves the surplus $s$, not $B$"
+"Eliminates $h_T$, reducing the risk proof to a scalar inequality in normalized error."
 ],
 "204": [
 "Divide out the common scale to relate the reciprocal of $x$ to its logarithm.",
-"Next it is inverted"
+"Prepares the change of variables that converts the bound to $t+\\ln t$ in (206)."
 ],
 "205": [
 "Switch to $t$, which is inversely proportional to error. An upper bound on $t$ gives a lower bound on error.",
-"Gives the form $t+\\ln t\\le\\cdots$"
+"An upper bound on this $t$ becomes a lower bound on $D$ in (212)."
 ],
 "206": [
 "Substitute $t$ for $x$ and move the logarithm left. Only the protocol settings and constants remain on the right.",
-"Ready to invert"
+"All error dependence is on the left; (207)–(211) bound and invert the right-hand scale."
 ],
 "207": [
 "After scaling, separate the shared count relative to block size, the heavier-tail budget, and the prior contribution.",
-"Shows where each part comes from"
+"Identifies which parts of $F$ in (209) control sharing, tails and prior information."
 ],
 "208": [
 "The squared-surprise bound has quadratic, linear and constant terms in $B$. Bound them together by a constant times $(B+1)^2$.",
-"Controls the Bernstein correction"
+"Turns the surprisal correction into the squared-budget term used in (209)."
 ],
 "209": [
 "Put the positive surplus, shared scale and tail correction into $F$, plus 1 to keep it at least 1.",
-"Simplifies the right side"
+"Provides one positive scale for both the bound (210) and its inversion (211)."
 ],
 "210": [
 "Bound every right-hand term by a constant times $F$ to reduce the inequality to a single scale.",
-"The tidy inequality"
+"Reduces all model and communication terms to the single scale used in (211)."
 ],
 "211": [
 "For $t\\ge1$, the log is nonnegative and can be dropped. For $t<1$, $F\\ge1$ already bounds it.",
-"The inverted logarithmic inequality"
+"Combines with the exact relation between $t$ and $D$ to give (212)."
 ],
 "212": [
 "Convert the bound on $t$ back to an error floor. The refinement denominator still includes a correction of order the squared bit budget.",
-"One extra term $(B+1)^2$ compared with the target"
+"Gives a valid risk floor already; (214)–(219) remove its unwanted squared-budget correction."
 ],
 "213": [
 "The desired refinement bound should depend on block size, surplus and shared samples, with no squared-budget term.",
-"The $(B+1)^2$ must go"
+"States the target scale, not an additional inequality; the next two cases establish it."
 ],
 "214": [
 "If local sample size is at least $n^2$, the squared budget is at most a constant times local size for fixed bits per machine.",
-"The extra term is absorbed"
+"Allows (215) to absorb the correction when $m\\ge n^2$, with fixed $k$."
 ],
 "215": [
 "In this case, absorb the squared budget into the existing $m$ term. It changes only a constant, not the rate.",
-"Case 1 gives the target"
+"Together with (212), establishes the target scale in the first regime."
 ],
 "216": [
 "If local size is below $n^2$, localization costs at most $\\log_2n$ bits per coordinate, much less than the linearly growing budget.",
-"The surplus is large"
+"Shows that surplus is large in the second regime once the number of machines grows."
 ],
 "217": [
 "With enough machines, the logarithmic localization cost uses less than half the budget, leaving at least half the bits per coordinate as surplus.",
-"The surplus is of order $n$"
+"Makes the reciprocal refinement scale comparable to the access scale in (218)."
 ],
 "218": [
 "Here the refinement term is at most a constant times the already-proved access term, so that bound handles it.",
-"In case 2 the extra term is irrelevant"
+"Lets the access-risk bound (107) supply the desired refinement bound in this regime."
 ],
 "219": [
 "Both local-size cases are covered: absorb the correction in one and use the access bound in the other to obtain the fourth lower-bound scale.",
-"Both cases combined"
+"Supplies the fourth term of the combined minimax lower bound (220)."
 ],
 "220": [
 "The pool, access, bit and refinement constraints all apply, so take the largest of their four lower bounds.",
-"Proves the lower bound (40) of Theorem 1"
+"Combines the pool, access, bit and refinement obstructions to prove the lower half of (40)."
 ],
 "221": [
 "With identity-covariance Gaussian data, there is no heavier-tail correction. Shared data and leftover entropy are the only two terms in the averaged information bound.",
-"Coefficient $2m$"
+"Starts a sharper Gaussian calculation without the Bernstein correction used in the general bound."
 ],
 "222": [
 "Add prior information to the Gaussian transcript bound to constrain the reciprocal of mean squared error.",
-"Toward an explicit bound"
+"Converts the Gaussian information ceiling into the reciprocal-risk inequality normalized in (224)."
 ],
 "223": [
 "Use the reciprocal of error relative to the single-machine scale: larger $t$ means smaller average error.",
-"The Gaussian-case variable"
+"This new Gaussian normalization is used through (230); it differs from the general-case choice in (205)."
 ],
 "224": [
 "Divide by $md$ to get a shared-to-local ratio, entropy per coordinate and a scaled prior constant.",
-"An inequality in $t$"
+"Provides the information side of the Gaussian calculation; (225) supplies its entropy side."
 ],
 "225": [
 "With $D=d/(mt)$, the $\\ln m$ in log-error cancels localization cost, leaving $-\\ln t$.",
-"$\\ln m$ cancels again"
+"Eliminates localization cost and expresses the entropy term using the new Gaussian $t$."
 ],
 "226": [
 "Write the numerical constants as one log so exponentiating will turn them into a single multiplier.",
-"Tidies constants"
+"Makes exponentiation in (228) produce the exact factor $\\pi e^3/2$ in (230)."
 ],
 "227": [
 "Insert the entropy budget and move $-\\ln t$ to the left. Every term on the right is now explicit.",
-"Ready for Lambert W"
+"Gives an explicit scalar inequality that can be inverted without a large-sample approximation."
 ],
 "228": [
 "Exponentiation preserves the inequality and turns the sum on the left into the product $te^t$.",
-"Exponentiate"
+"Matches the increasing function whose inverse is defined in (229)."
 ],
 "229": [
 "For positive $y$, find the positive number that times its own exponential equals $y$. This inverse is $W_0$.",
-"The inverse of $te^t$"
+"Provides the increasing inverse used to turn (228) into a bound on $t$, then on $D$."
 ],
 "230": [
 "Use $W_0$ to bound $t$ and invert that bound. The resulting Gaussian risk floor applies without taking a large-sample limit.",
-"Fully explicit and non-asymptotic"
+"Is the explicit Gaussian Bayes-risk floor; the minimax risk is no smaller by (102)."
 ],
 "231": [
 "A machine can resample only IDs on its own list. It makes $m$ draws and may repeat an ID.",

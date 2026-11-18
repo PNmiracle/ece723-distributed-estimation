@@ -126,10 +126,10 @@
 142	Write LT² as the integral of 2x·1{LT>x}, then exchange expectation and integration by Tonelli since the integrand is nonnegative.	将 LT² 写成 2x·1{LT>x} 的积分，被积函数非负，因此由 Tonelli 交换期望和积分。
 143	Insert (141) into (142). Split at a=B ln 2, where 1=e^(a−x), and evaluate the two pieces.	把 (141) 代入 (142)，在两种上界相等的 a=B ln 2 处分段，再计算积分。
 144	In the second integral of (143), set y=x−a. Use ∫e^(−y)dy=1 and ∫ye^(−y)dy=1 on the positive half-line.	在 (143) 的第二项令 y=x−a，再用正半轴上指数密度积分和其一阶矩都为一。
-145	For every fixed W=w, apply (139) to its conditional transcript alphabet, then average over W.	固定每个 W=w，对条件记录字母表使用 (139)，最后对 W 平均。
+145	For each $W=w$ with a well-defined conditional law, the protocol still has at most $2^B$ leaves. Apply (139) to that law, then average over $W$.	对每个有定义的条件分布 $W=w$，协议仍至多有 $2^B$ 个叶子。先对该分布使用 (139)，再对 $W$ 平均。
 146	This specifies the independent-block experiment, with machine i holding qi samples and q bounding every block size.	这是独立块实验的设定，机器 i 持有 qi 个样本，q 是统一的块大小上界。
 147	Use the rectangle factorization (150)–(153), score identity (158), and event bounds (160)–(165); average the result over seeds via (166).	使用矩形分解 (150) 至 (153)、得分恒等式 (158) 和事件界 (160) 至 (165)，再用 (166) 对种子平均。
-148	Repeat the rectangle argument using (123) instead of (122). The quadratic surprisal term disappears, giving (168)–(169).	在矩形论证中用 (123) 替换 (122)，惊奇度平方项消失，得到 (168) 至 (169)。
+148	Use the sharper sub-Gaussian event bound (123) in (168), sum as in (159)–(162), then average (169) over seeds. Merely setting $b=0$ in (122) would keep the looser coefficient $4$.	在 (168) 使用更紧的次高斯事件界 (123)，按 (159)–(162) 求和，再对 (169) 的种子平均。仅在 (122) 令 $b=0$，系数仍是较松的 $4$。
 149	Fix the seeds and a target transcript. Intersect the constraints on machine i at every step where that machine is scheduled to speak.	固定种子与目标记录，对所有安排机器 i 发言的步骤，把其必须满足的条件取交集。
 150	A realized transcript makes every local check true. Conversely, induction along the public schedule shows all local checks reproduce every bit and termination.	实际记录必然满足所有本机检查；反过来沿公共调度逐步归纳，所有检查保证每个比特和停止时刻都一致。
 151	These definitions name each local check probability, the complete leaf probability, and local surprisal.	这些定义分别命名本机检查概率、完整叶子概率和局部惊奇度。
@@ -137,19 +137,19 @@
 153	Write the conditional probability as a joint probability divided by p(t). Both numerator and denominator factor across independent blocks using (150) and (152).	把条件概率写成联合概率除以 p(t)，分子分母都由独立性、(150) 和 (152) 逐块分解。
 154	Define Ai as the raw score of block i and ai(t) as its mean given the transcript and fixed seeds.	定义 Ai 为块 i 的原始得分，ai(t) 为给定通信记录和固定种子后的均值。
 155	In the product conditional law (153), block i is conditioned only on its own checklist event Ei(t). Apply that marginal law to Ai.	在 (153) 的条件乘积分布中，块 i 只需满足自身检查事件 Ei(t)，将这一边缘分布用于 Ai。
-156	Under (153), blocks i and j remain conditionally independent. The conditional mean of their outer product factors into ai(t)aj(t)ᵀ.	由 (153)，块 i 和 j 在条件下仍独立，其外积的条件平均分解为 ai(t)aj(t)ᵀ。
-157	Average (156) over T with the tower property. The original block scores are independent and centered, so their unconditional cross moment is zero.	对 (156) 的 T 用迭代期望，回到原始块得分；块独立且均值为零，因此交叉矩为零。
-158	Apply (75) to the complete-data score ΣiAi, then use linearity of conditional expectation and (154).	对完整数据得分 ΣiAi 应用 (75)，再用条件期望的线性性和 (154)。
+156	Use conditional independence from (153), with $A_i$ depending only on block $i$. The result is an outer-product matrix, and requires $i\ne j$.	由 (153) 的条件独立性，且 $A_i$ 只依赖第 $i$ 块，外积的条件期望可以分解。结果是矩阵，要求 $i\ne j$。
+157	At fixed $R=r$, average (156) over $T$ using the tower property. Before seeing $T$, distinct block scores are independent and have zero mean, so their cross moment is zero.	固定 $R=r$，用塔式法则将 (156) 对 $T$ 平均。观察 $T$ 前，不同块得分独立且均值为零，因此交叉矩为零。
+158	At fixed seeds, apply (75) to the full independent input. Its score is $\sum_i A_i$; conditional-expectation linearity and (154) give $\sum_i a_i(T)$.	固定种子后，对完整独立输入应用 (75)。原始输入的得分为 $\sum_i A_i$，再用条件期望线性性及 (154)，得到 $\sum_i a_i(T)$。
 159	The trace of Fisher information is the expected squared score norm. Insert (158), expand the square, and remove cross terms by (157).	Fisher 信息迹是得分范数平方的期望；代入 (158)，展开后用 (157) 消掉交叉项。
 160	Apply the event-score bound (122) to machine i's block and its local event, using (155) and the probabilities in (151).	用 (155) 和 (151)，对机器 i 的块及本机事件应用得分事件界 (122)。
 161	Substitute (160) into the sum in (159) and replace qi by its uniform upper bound q.	将 (160) 代入 (159) 的求和，再将 qi 放大到统一上界 q。
 162	Replace the sum of local surprisals by total surprisal using (152). Its conditional average is the definition of transcript entropy.	用 (152) 将局部惊奇度之和换成总惊奇度，其条件平均按定义就是记录熵。
 163	All ℓi are nonnegative, so expanding (Σiℓi)² adds only nonnegative cross terms. Use (152) for the final equality.	所有 ℓi 非负，展开和的平方只增加非负交叉项；最后一个等号用 (152)。
 164	Apply (162) to the first expectation in (161), and (163) to the second.	对 (161) 的第一个期望用 (162)，第二个期望用 (163)。
-165	The fixed-seed transcript has at most 2^B leaves. Apply Lemma 2, equation (139), to the last expectation in (164).	固定种子的记录最多 2^B 个叶子，对 (164) 最后一项用引理 2，即 (139)。
+165	For each fixed seed, the binary protocol tree has at most $2^B$ leaves. Bound the last moment in (164) by (139); the same $K_B$ works for every seed.	对每个固定种子，二进制协议树至多有 $2^B$ 个叶子。用 (139) 控制 (164) 最后的二阶矩，同一个 $K_B$ 对所有种子都有效。
 166	Apply the Fisher chain rule to (T,R). The seed law does not depend on θ, so its own information contribution is zero.	对 (T,R) 用 Fisher 链式法则；种子分布不依赖 θ，因此自身信息贡献为零。
 167	This is the definition of conditional entropy as an average over the conditioning variable R.	这是条件熵的定义，即对条件变量 R 的不同取值取平均。
-168	Apply the sub-Gaussian event bound (123) to the local conditioning event in (155).	对 (155) 的本机条件事件使用次高斯事件界 (123)。
+168	Apply (123), rather than the looser (122) with $b=0$, to the event in (155). This gives coefficient $2vq_i$ and no squared-surprisal term.	对 (155) 的事件应用 (123)，而非仅在较松的 (122) 令 $b=0$；因此系数是 $2vq_i$，也不含平方惊讶度项。
 169	Insert (168) into (159), use qi≤q, and convert the sum of surprisals to entropy via (162).	把 (168) 代入 (159)，用 qi≤q，再由 (162) 将惊奇度之和换成熵。
 170	Fix the design. Define shared indices by multiplicity at least two, and private indices by removing every other machine's list from Si.	固定设计后，以至少两次出现定义共享索引；从 Si 中去掉其他机器的全部索引，得到私有索引。
 171	Collect observation values over the index sets (170), and define r, qi, q as their cardinalities and largest private block size.	按 (170) 的索引集合收集样本值，再用集合大小及最大私有块大小定义 r、qi、q。
@@ -166,9 +166,9 @@
 182	In (172), the private blocks are independent of G, so conditioning on G leaves their product law unchanged.	由 (172)，私有块与 G 独立，因此给定 G 后仍是原来的乘积分布。
 183	At fixed g and seeds ρ, the transcript is a deterministic map of private blocks. Integrate its output indicator against (182).	固定 g 与种子 ρ 后，记录是私有块的确定函数，将其输出事件指示量按 (182) 积分。
 184	The experiment (183) has independent private blocks of size at most q, so Lemma 3, equation (147), applies directly.	(183) 中私有块独立、大小至多 q，因此直接使用引理 3 的 (147)。
-185	Average (184) over G at the fixed parameter. Conditional entropy averages to Hθ(T|G,R=ρ), while KB is uniform.	固定参数后对 G 平均 (184)，条件熵合成 Hθ(T|G,R=ρ)，KB 则是统一常数。
+185	Average the pointwise inequality (184) over the model law of $G$, keeping $\rho$ fixed. The averaged entropy is $H_\theta(T\mid G,R=\rho)$ and $K_B$ stays unchanged.	保持 $\rho$ 固定，将逐点上界 (184) 对模型中 $G$ 的分布平均。熵项成为 $H_\theta(T\mid G,R=\rho)$，而 $K_B$ 不变。
 186	Insert (185) into the chain-rule comparison (181), retaining the exact one-sample Fisher trace.	将 (185) 代入链式法则比较 (181)，保留单样本 Fisher 信息迹的精确形式。
-187	Use the chain rule and the parameter independence of R, exactly as in (166).	与 (166) 相同，用链式法则及 R 不依赖参数这一事实。
+187	Use the seed chain rule (166) to average (186), then apply $\operatorname{tr}I_X\le dv$ from (22). Averaging the conditional entropies over seeds gives (174).	用种子链式法则 (166) 对 (186) 平均，再使用 (22) 的 $\operatorname{tr}I_X\le dv$。条件熵对种子平均后即得到 (174)。
 188	Expand conditional mutual information between T and G given R as an entropy difference. Its nonnegativity gives the inequality.	将给定 R 后 T 与 G 的条件互信息展开成两个熵的差，再用互信息非负。
 189	At fixed G and seeds, replace (147) by its b=0 version (148).	固定 G 和种子后，把 (147) 换成 b=0 的版本 (148)。
 190	Differentiate the Gaussian location log density. The residual is N(0,Id), whose covariance and log-MGF are Id and ‖u‖²/2.	对高斯位置模型的对数密度求导；残差服从 N(0,Id)，其协方差与对数矩生成函数分别给出后两式。
@@ -178,7 +178,7 @@
 194	Define the Bayes risk and conditional transcript entropy for the chosen protocol, with the same prior as (85).	对选定协议使用 (85) 的先验，定义贝叶斯风险和条件记录熵。
 195	This is (193) with hT abbreviated using (194).	这就是 (193)，只用 (194) 将条件熵缩写为 hT。
 196	Group the coefficient 4v as A and all information terms not multiplying hT as Q, including Jπ=4π²d.	把系数 4v 记成 A，把所有不乘 hT 的信息项合并为 Q，其中包括先验信息 4π²d。
-197	Apply the Bayesian inequality (101) to (195), add prior information, and substitute (196). Rearranging gives the equivalent reciprocal form.	将贝叶斯不等式 (101) 用于 (195)，加入先验信息并代入 (196)，整理得到等价倒数形式。
+197	Van Trees (101) gives $D\ge d^2/(\mathbb E_\Theta\operatorname{tr}J+J_\pi)$. The denominator is at most $Amh_T+Q$ by (195)–(196), so replacing it gives the displayed lower bound.	van Trees (101) 给出 $D\ge d^2/(\mathbb E_\Theta\operatorname{tr}J+J_\pi)$。由 (195)–(196)，分母至多为 $Amh_T+Q$，代入便得到所示下界。
 198	Divide entropy budget (118) by d, substitute h(π)=d(ln 2−1), and separate the constant from log(D/d).	将熵预算 (118) 除以 d，代入先验熵，再把常数与 log(D/d) 分开。
 199	This defines the constant collected from the prior entropy and Gaussian maximum-entropy factor in (198).	定义这个常数，用来收集 (198) 中先验熵与高斯最大熵系数的常数项。
 200	Define x by scaling D with m/d, the inverse of the single-machine risk scale.	将 D 乘 m/d 来定义 x，以单机器风险尺度的倒数归一化。
@@ -186,7 +186,7 @@
 202	Substitute both identities (201) into (198). The +½ln m and −½ln m terms cancel.	将 (201) 两式代入 (198)，其中正负的 ½ln m 相互抵消。
 203	Substitute the upper bound on hT in (202) into the right-hand side of (197).	把 (202) 对 hT 的上界代入 (197) 右边。
 204	Replace D by dx/m in (203), then divide both sides by Amd/2.	在 (203) 中用 D=dx/m，再将两边除以 Amd/2。
-205	Define the reciprocal-risk variable t=2/(Ax), then solve for x and D using (200).	定义倒数风险变量 t=2/(Ax)，再结合 (200) 解出 x 和 D。
+205	Define $t=2/(Ax)$ and solve to get $x=2/(At)$. With $D=dx/m$ from (200), this gives $D=2d/(Amt)$.	定义 $t=2/(Ax)$，反解得 $x=2/(At)$。再由 (200) 的 $D=dx/m$，得到 $D=2d/(Amt)$。
 206	In (204), substitute ln x=ln(2/A)−ln t from (205), then move ln t to the left.	在 (204) 中代入由 (205) 得到的 ln x，再把 ln t 移到左边。
 207	Insert A and Q from (196), divide each term by Amd/2, and simplify its constants.	代入 (196) 的 A、Q，将每一项除以 Amd/2，再化简常数。
 208	From (139), KB is a quadratic polynomial in B with fixed coefficients, so it is bounded by a fixed multiple of (B+1)².	由 (139)，KB 是系数固定的 B 的二次多项式，因此可用 (B+1)² 的固定倍数控制。
@@ -195,18 +195,18 @@
 211	Split into t≥1, where ln t≥0 lets you drop it in (210), and t<1, where t≤F since F≥1.	分 t≥1 与 t<1：前者在 (210) 去掉非负 ln t，后者由 F≥1 直接得 t≤F。
 212	Insert t≤C₂F into D=2d/(Amt) from (205), then expand mF using (209).	把 t≤C₂F 代入 (205) 的 D 表达式，再用 (209) 展开 mF。
 213	This states the target refinement term after removing the extra quadratic correction in (212); (214)–(218) justify that removal.	这里写出从 (212) 去掉额外平方修正后的目标精估项，去除依据在 (214) 至 (218)。
-214	In the case m≥n², use B=nk and nk+1≤(k+1)n, then square and apply n²≤m.	在 m≥n² 时，用 B=nk 及 nk+1≤(k+1)n，平方后再用 n²≤m。
+214	In the regime $m\ge n^2$, use the fixed per-machine budget $B=nk$. Since $nk+1\le(k+1)n$, squaring and using $n^2\le m$ proves the bound.	在 $m\ge n^2$ 的情形中，使用固定单机预算 $B=nk$。由 $nk+1\le(k+1)n$，平方后再用 $n^2\le m$，即得上界。
 215	Bound the added correction by (214). The base denominator is at least m, so that correction costs only a fixed multiplicative factor.	用 (214) 控制新增修正；原分母至少为 m，所以修正只导致固定倍数的增大。
 216	In the case m<n², log₂m<2log₂n. Substitute this in the definition of s in (30).	在 m<n² 时 log₂m<2log₂n，把它代入 (30) 的 s 定义。
-217	For fixed d,k and sufficiently large n, log₂n≤nk/(2d). Insert this into (216).	d、k 固定且 n 足够大时，log₂n≤nk/(2d)，将其代入 (216)。
+217	For fixed $d$ and $k>0$, choose $n_0$ so that $\log_2 n\le nk/(2d)$ for $n\ge n_0$. Insert this into (216).	对固定的 $d$ 与 $k>0$，选取 $n_0$，使 $n\ge n_0$ 时有 $\log_2 n\le nk/(2d)$，再代入 (216)。
 218	The target denominator is at least ms. Apply s≥nk/(2d) from (217), then take reciprocals.	目标分母至少为 ms，用 (217) 的 s 下界，再取倒数。
 219	For m≥n², use (212) and (215). For m<n², (218) shows that the sample lower bound (107) already dominates the target term.	m≥n² 时用 (212)、(215)；m<n² 时，(218) 表明样本下界 (107) 已控制目标项。
-220	Combine the two sample floors (107), the bit floor (114), and the refinement floor (219), choosing the smallest fixed constant.	合并 (107) 的两个样本项、(114) 的比特项和 (219) 的精估项，取各固定常数中最小者。
+220	Use (102) to pass Bayes-risk floors to minimax risk. Combine the sample floors (107), bit floor (114) and refinement floor (219), then choose one common smaller constant.	先用 (102) 将贝叶斯风险下界转为极小极大风险下界，再合并抽样项 (107)、比特项 (114) 与精估项 (219)，统一取一个更小的正常数。
 221	Average the sharper Gaussian information inequality (177) over the design and prior.	对更紧的高斯信息不等式 (177) 在设计与先验下平均。
 222	Apply (101) to (221), include Jπ=4π²d, and rearrange to bound d²/D.	对 (221) 使用 (101)，加入 Jπ=4π²d，再整理为对 d²/D 的界。
 223	This defines a new reciprocal-risk variable specifically for the Gaussian calculation.	这是高斯计算专用的一个新的倒数风险变量定义。
 224	Divide (222) by md and identify d/(mD) as t using (223).	将 (222) 除以 md，再由 (223) 把 d/(mD) 认成 t。
-225	Multiply entropy budget (198) by two, use D/d=1/(mt), and replace 2(B/d)ln 2 by ln m+2s ln 2.	将熵预算 (198) 乘二，用 D/d=1/(mt)，并替换 2(B/d)ln 2；ln m 项抵消。
+225	Double (198), substitute $D/d=1/(mt)$ from (223), and use $(2B/d)\ln2=2s\ln2+\ln m$ from (201). The $\ln m$ terms cancel.	将 (198) 乘二，代入 (223) 的 $D/d=1/(mt)$，再用 (201) 的 $(2B/d)\ln2=2s\ln2+\ln m$，两个 $\ln m$ 项抵消。
 226	Collect logarithms: ln(2πe)−2ln 2+2 equals ln(πe³/2).	合并对数：ln(2πe)−2ln 2+2 等于 ln(πe³/2)。
 227	Substitute (225) and constant identity (226) into (224), then move ln t to the left.	把 (225)、常数恒等式 (226) 代入 (224)，再将 ln t 移到左边。
 228	Name the right-hand side of (227) z, then exponentiate: exp(t+ln t)=t·exp(t).	将 (227) 右边记作 z，再取指数；exp(t+ln t)=t·exp(t)。

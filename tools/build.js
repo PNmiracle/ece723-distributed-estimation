@@ -40,7 +40,7 @@ for (const n of Object.keys(notes).map(Number)) {
   const fe = sec.indexOf('</figure>', f) + 9;
   let rest = sec.slice(fe);
   const lead = rest.match(/^\s*/)[0];
-  if (rest.slice(lead.length).startsWith('<aside class="plain">')) {
+  if (/^<aside class="plain"(?:\s[^>]*)?>/.test(rest.slice(lead.length))) {
     rest = rest.slice(rest.indexOf('</aside>') + 8); replaced++;
   } else inserted++;
   sec = sec.slice(0, fe) + '\n' + aside(n) + (rest.startsWith('\n') ? '' : '\n') + rest;

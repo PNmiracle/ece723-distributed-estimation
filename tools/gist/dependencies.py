@@ -25,15 +25,21 @@ CSS = '''
 
 
 def references(text):
+    text = re.sub(r'\$[^$]+\$', '', text)
     values = set(map(int, REFERENCE.findall(text)))
     for a, b in RANGE.findall(text):
         values.update(range(int(a), int(b) + 1))
     return {n for n in values if 1 <= n <= 492}
 
 
+MATH = {}
+
 def linked(text):
-    return REFERENCE.sub(lambda m: f'<a class="eq-ref" href="#eq-{m[1]}">({m[1]})</a>'
-                         if 1 <= int(m[1]) <= 492 else m[0], escape(text))
+    parts = re.split(r'\$([^$]+)\$', text)
+    return ''.join(MATH[part] if i % 2 else REFERENCE.sub(
+        lambda m: f'<a class="eq-ref" href="#eq-{m[1]}">({m[1]})</a>'
+        if 1 <= int(m[1]) <= 492 else m[0], escape(part))
+        for i, part in enumerate(parts))
 
 
 def load():
@@ -42,6 +48,18 @@ def load():
         cwd=HERE, text=True, capture_output=True, check=True)
     notes = {int(n): item for n, item in json.loads(result.stdout).items()}
     assert set(notes) == set(range(1, 493))
+    expressions = sorted({tex for note in notes.values() for text in note.values()
+                          for tex in re.findall(r'\$([^$]+)\$', text)})
+    renderer = r"""
+const fs=require('fs');let k;
+for(const name of [process.env.KATEX_MODULE,'katex','/opt/npm-tools/node_modules/katex'])if(name)try{k=require(name);break}catch{}
+if(!k)throw Error('KaTeX unavailable');const out={};
+for(const t of JSON.parse(fs.readFileSync(0,'utf8')))out[t]=k.renderToString(t,{output:'htmlAndMathml',throwOnError:true,strict:'error'});
+process.stdout.write(JSON.stringify(out));
+"""
+    rendered = subprocess.run(['node','-e',renderer],input=json.dumps(expressions),
+                              text=True,capture_output=True,check=True)
+    MATH.update(json.loads(rendered.stdout))
     graph = json.loads((HERE/'dependency_links.json').read_text())
     parents = {n: sorted({r for r in references(item['en']) if r < n}
                          | set(graph['extra_parents'].get(str(n), [])))
@@ -54,7 +72,7 @@ def load():
     return notes, parents, users, graph['terminal_uses']
 
 
-def build(html, lang, notes, parents, users, terminal):
+def build(html, lang, notes, parents, users, terminal, numbers=None):
     html = re.sub(r'<style id="derivation-links">.*?</style>\n?', '', html, flags=re.S)
     number = 0
     observed = set()
@@ -63,6 +81,8 @@ def build(html, lang, notes, parents, users, terminal):
         number += 1
         n = number
         observed.add(n)
+        if numbers is not None and n not in numbers:
+            return match[0]
         fragment = BeautifulSoup(match[0], 'html.parser')
         gist = fragment.select_one('.plain-gist')
         assert gist is not None, n

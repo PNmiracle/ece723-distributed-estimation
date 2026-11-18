@@ -123,3 +123,10 @@ en: {
   },
 },
 };
+
+// Reviewed converse explanations (145)–(230).
+for (const [number, langs] of Object.entries(require('../gist/converse_revisions.json'))) {
+  for (const [lang, revision] of Object.entries(langs)) {
+    if (revision.detail && module.exports[lang]?.notes[number]) module.exports[lang].notes[number] = [revision.detail];
+  }
+}

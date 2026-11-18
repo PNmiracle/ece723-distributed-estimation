@@ -18,7 +18,7 @@ const CSS = `<style id="prose-tip-css">
 for (const [page, lang, label] of [['reading.html','zh','举个例子'], ['reading-en.html','en','Example']]) {
   const file = path.join(root, page);
   let s = fs.readFileSync(file, 'utf8')
-    .replace(/ <button type="button" class="nref prose-tip"[^>]*>[^<]*<\/button>/g, '')
+    .replace(/ <button\b(?=[^>]*\bclass="nref prose-tip")[^>]*>[^<]*<\/button>/g, '')
     .replace(/<style id="prose-tip-css">[\s\S]*?<\/style>/, '');
   const notes = {};
   for (const [n, entries] of Object.entries(bridges)) {
@@ -37,7 +37,7 @@ for (const [page, lang, label] of [['reading.html','zh','举个例子'], ['readi
     const chip = ` <button type="button" class="nref prose-tip" data-note="${id}" data-hl-ui>${label}</button>`;
     s = before.replace(ending, `${chip}</p>$1`) + s.slice(i);
   }
-  const data = /(<script type="application\/json" id="gl-data">)([\s\S]*?)(<\/script>)/;
+  const data = /(<script\b(?=[^>]*\btype="application\/json")(?=[^>]*\bid="gl-data")[^>]*>)([\s\S]*?)(<\/script>)/;
   if (!data.test(s)) throw new Error(`${page}: note store not found`);
   s = s.replace(data, (_, start, json, end) => {
     const d = JSON.parse(json);
