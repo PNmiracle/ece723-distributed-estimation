@@ -513,7 +513,64 @@ html[lang^="en"] .eq-fig figcaption::before{content:"Diagram"}
 .proof-step{display:block}
 .proof-step .typeset-prose>.katex{font-size:1.03em}
 .formula-prelude .katex{font-size:1em}
-</style></head>
+</style><style id="reader-size">
+@media screen {
+ :root{--reader-scale:1.15}
+ html[lang] .paper,.overview,.recap{font-size:calc(1.05rem * var(--reader-scale))}
+ html[lang] .guide{font-size:calc(.97rem * var(--reader-scale))}
+ html[lang] .plain{font-size:calc(.93rem * var(--reader-scale))}
+ html[lang] .plain-syms{font-size:calc(.9rem * var(--reader-scale))}
+ html[lang] .guide-tag,.plain-tag,.plain-sub,.gist-k{font-size:calc(.72rem * var(--reader-scale))}
+ html[lang] .sym-say,.skim{font-size:calc(.8rem * var(--reader-scale))}
+ html[lang] .howto{font-size:calc(.92rem * var(--reader-scale))}
+ html[lang] .ov-card{font-size:calc(.95rem * var(--reader-scale))}
+ html[lang] .ov-card h4{font-size:calc(1rem * var(--reader-scale))}
+ html[lang] .ov-table{font-size:calc(.9rem * var(--reader-scale))}
+ html[lang] .paper table{font-size:calc(.94rem * var(--reader-scale))}
+ html[lang] .paper html[lang] .refs{font-size:calc(.93rem * var(--reader-scale))}
+ html[lang] .recap details{font-size:calc(.95rem * var(--reader-scale))}
+ html[lang] .unit-h2>.sec-h{font-size:calc(1.55rem * var(--reader-scale))}
+ html[lang] .unit-h3>.sec-h{font-size:calc(1.2rem * var(--reader-scale))}
+ .topbar .tools #reader-font-size{font-variant-numeric:tabular-nums;min-width:94px;font-size:12px;line-height:18px}
+}
+
+@media screen {
+ html[lang="en"] .paper,html[lang="en"] .overview,html[lang="en"] .recap{font-size:calc(1.125rem * var(--reader-scale))}
+ html[lang="en"] .plain,html[lang="en"] .guide,html[lang="en"] .ov-card{font-size:calc(1.0625rem * var(--reader-scale))}
+ html[lang="en"] .plain-syms{font-size:.95em}
+ html[lang="en"] .sym-say{font-size:.86em}
+ html[lang="en"] .plain-sub,html[lang="en"] .guide-tag,html[lang="en"] .plain-tag{font-size:calc(.8rem * var(--reader-scale))}
+ html[lang="en"] .howto,html[lang="en"] .ov-table{font-size:calc(1rem * var(--reader-scale))}
+ html[lang="en"] .unit-h2>.sec-h{font-size:calc(1.6rem * var(--reader-scale))}
+ html[lang="en"] .unit-h3>.sec-h{font-size:calc(1.3rem * var(--reader-scale))}
+}
+</style>
+<script id="reader-size-control">
+(() => {
+ const levels=[1,1.15,1.3,1.5], key='ece723-reader-scale';
+ let size=1.15;
+ try { const saved=Number(localStorage.getItem(key)); if(levels.includes(saved))size=saved; } catch {}
+ document.documentElement.style.setProperty('--reader-scale',size);
+ function setup(){
+  const tools=document.querySelector('.topbar .tools');
+  if(!tools || document.getElementById('reader-font-size'))return;
+  const zh=document.documentElement.lang.startsWith('zh');
+  const button=document.createElement('button');button.type='button';button.id='reader-font-size';
+  const hint=zh?'点击切换全局字号：100%、115%、130%、150%':'Change reader text size: 100%, 115%, 130%, 150%';
+  button.title=hint;
+  function label(){const value=Math.round(size*100)+'%';button.textContent=(zh?'字号：':'Text: ')+value;button.setAttribute('aria-label',hint+'; '+value);}
+  label();button.addEventListener('click',()=>{
+   size=levels[(levels.indexOf(size)+1)%levels.length];
+   document.documentElement.style.setProperty('--reader-scale',size);
+   try{localStorage.setItem(key,String(size));}catch{}
+   label();
+  });
+  tools.insertBefore(button,tools.querySelector('.langsw'));
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+})();
+</script>
+</head>
 <body>
 <div aria-hidden="true" class="progress"><div class="progress-bar" id="progress-bar"></div></div>
 <header class="topbar"><div class="bar-content">
@@ -536,7 +593,7 @@ html[lang^="en"] .eq-fig figcaption::before{content:"Diagram"}
 <p class="howto"><span class="demo-term">Dotted-underlined</span> terms open an explanation; <button class="nref" data-note="read-tips" type="button">note</button> buttons open side notes. Blue boxes are <b>section guides</b>; green boxes right after equations explain them <b>in plain words</b>. The paper text below is the authors' original, set as real text in the paper's own typeface (copying a passage gives formulas as <code>$TeX$</code>), with all 492 equations numbered as in the original. Green <b>💡 intuition</b> chips open picture-style explanations of the hardest passages; click a green box's tag to fold it; press <span class="qj-kbd">⌘K</span> / <span class="qj-kbd">Ctrl K</span> to jump to any equation or heading. Selecting text never opens a popup, so highlighter extensions keep working.<span class="eq-level-legend" data-hl-ui="">Equation priorities: Core for the main argument, Proof step to follow the proof, Detail for working through the algebra.</span></p>
 </header>
 <section class="overview" id="overview">
-<h2 class="ov-h">The big picture: one-page overview</h2><!--study-links--><nav aria-label="Jump to section" class="overview-resources"><a class="pdf-download" download="" href="assets/downloads/ECE723_Equations_Monochrome.pdf">Download black-and-white PDF</a><a class="pdf-download" download="" href="assets/downloads/ECE723_Converse_Color_Speaker.pdf">Section III · color speaker PDF</a><a href="#sec-i">Introduction</a><a href="#sec-ii">Model and results</a><a href="#sec-iii">Converse</a><a href="#sec-iv">Achievability</a><a href="#sec-v">Examples</a><a href="#sec-vi">Discussion</a><a href="#appendix">Appendix</a></nav><!--/study-links-->
+<h2 class="ov-h">The big picture: one-page overview</h2><!--study-links--><nav aria-label="Jump to section" class="overview-resources"><a class="pdf-download" download="" href="assets/downloads/ECE723_Equations_Monochrome.pdf">Download black-and-white PDF</a><a class="pdf-download" download="" href="assets/downloads/ECE723_Converse_Color_Speaker.pdf">Section III · color speaker PDF</a><a href="#sec-i">Introduction</a><a href="#sec-ii">Model and results</a><a href="#sec-iii">Converse</a><a href="#sec-iv">Achievability</a><a href="#sec-v">Examples</a><a href="#sec-vi">Discussion</a><a href="#appendix">Appendix</a><a class="pdf-download" href="assets/downloads/ECE723_Converse_Monochrome_Speaker.pdf" download>Section III · black-and-white speaker PDF</a></nav><!--/study-links-->
 <p class="lead">The paper studies a practical question: <b>many machines each draw a random part of one shared database, and each may send only a few bits to a center — how accurately can the center estimate an unknown parameter?</b> Unlike the classical setting, the machines' data <b>may overlap</b>. <button class="nref" data-note="read-tips" type="button">note</button></p>
 <div class="ov-grid">
 <div class="ov-card"><h4>The setup</h4>

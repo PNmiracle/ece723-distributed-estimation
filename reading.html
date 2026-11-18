@@ -432,7 +432,64 @@ body.no-term-en .term-en{display:none}
 .proof-step{display:block}
 .proof-step .typeset-prose>.katex{font-size:1.03em}
 .formula-prelude .katex{font-size:1em}
-</style></head>
+</style><style id="reader-size">
+@media screen {
+ :root{--reader-scale:1.15}
+ html[lang] .paper,.overview,.recap{font-size:calc(1.05rem * var(--reader-scale))}
+ html[lang] .guide{font-size:calc(.97rem * var(--reader-scale))}
+ html[lang] .plain{font-size:calc(.93rem * var(--reader-scale))}
+ html[lang] .plain-syms{font-size:calc(.9rem * var(--reader-scale))}
+ html[lang] .guide-tag,.plain-tag,.plain-sub,.gist-k{font-size:calc(.72rem * var(--reader-scale))}
+ html[lang] .sym-say,.skim{font-size:calc(.8rem * var(--reader-scale))}
+ html[lang] .howto{font-size:calc(.92rem * var(--reader-scale))}
+ html[lang] .ov-card{font-size:calc(.95rem * var(--reader-scale))}
+ html[lang] .ov-card h4{font-size:calc(1rem * var(--reader-scale))}
+ html[lang] .ov-table{font-size:calc(.9rem * var(--reader-scale))}
+ html[lang] .paper table{font-size:calc(.94rem * var(--reader-scale))}
+ html[lang] .paper html[lang] .refs{font-size:calc(.93rem * var(--reader-scale))}
+ html[lang] .recap details{font-size:calc(.95rem * var(--reader-scale))}
+ html[lang] .unit-h2>.sec-h{font-size:calc(1.55rem * var(--reader-scale))}
+ html[lang] .unit-h3>.sec-h{font-size:calc(1.2rem * var(--reader-scale))}
+ .topbar .tools #reader-font-size{font-variant-numeric:tabular-nums;min-width:94px;font-size:12px;line-height:18px}
+}
+
+@media screen {
+ html[lang="en"] .paper,html[lang="en"] .overview,html[lang="en"] .recap{font-size:calc(1.125rem * var(--reader-scale))}
+ html[lang="en"] .plain,html[lang="en"] .guide,html[lang="en"] .ov-card{font-size:calc(1.0625rem * var(--reader-scale))}
+ html[lang="en"] .plain-syms{font-size:.95em}
+ html[lang="en"] .sym-say{font-size:.86em}
+ html[lang="en"] .plain-sub,html[lang="en"] .guide-tag,html[lang="en"] .plain-tag{font-size:calc(.8rem * var(--reader-scale))}
+ html[lang="en"] .howto,html[lang="en"] .ov-table{font-size:calc(1rem * var(--reader-scale))}
+ html[lang="en"] .unit-h2>.sec-h{font-size:calc(1.6rem * var(--reader-scale))}
+ html[lang="en"] .unit-h3>.sec-h{font-size:calc(1.3rem * var(--reader-scale))}
+}
+</style>
+<script id="reader-size-control">
+(() => {
+ const levels=[1,1.15,1.3,1.5], key='ece723-reader-scale';
+ let size=1.15;
+ try { const saved=Number(localStorage.getItem(key)); if(levels.includes(saved))size=saved; } catch {}
+ document.documentElement.style.setProperty('--reader-scale',size);
+ function setup(){
+  const tools=document.querySelector('.topbar .tools');
+  if(!tools || document.getElementById('reader-font-size'))return;
+  const zh=document.documentElement.lang.startsWith('zh');
+  const button=document.createElement('button');button.type='button';button.id='reader-font-size';
+  const hint=zh?'点击切换全局字号：100%、115%、130%、150%':'Change reader text size: 100%, 115%, 130%, 150%';
+  button.title=hint;
+  function label(){const value=Math.round(size*100)+'%';button.textContent=(zh?'字号：':'Text: ')+value;button.setAttribute('aria-label',hint+'; '+value);}
+  label();button.addEventListener('click',()=>{
+   size=levels[(levels.indexOf(size)+1)%levels.length];
+   document.documentElement.style.setProperty('--reader-scale',size);
+   try{localStorage.setItem(key,String(size));}catch{}
+   label();
+  });
+  tools.insertBefore(button,tools.querySelector('.langsw'));
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+})();
+</script>
+</head>
 <body>
 <div aria-hidden="true" class="progress"><div class="progress-bar" id="progress-bar"></div></div>
 <header class="topbar"><div class="bar-content">
@@ -455,7 +512,7 @@ body.no-term-en .term-en{display:none}
 <p class="howto"><span class="demo-term">虚线下划线</span>的术语可以点开看解释；<button class="nref" data-note="read-tips" type="button">注</button> 是补充笔记；蓝色框是每节的<b>通俗导读</b>，绿色框是紧跟在公式后的<b>人话</b>解读。正文保留了论文的全部内容和全部 492 条公式（编号与原文一致）。绿色 <b>💡 形象解释</b> 是给最难段落的直观说明；点绿色框左上角的标签可以折叠；按 <span class="qj-kbd">⌘K</span> / <span class="qj-kbd">Ctrl K</span> 可快速跳到任意公式或标题。选中文字时不会弹窗，不影响高亮插件。<span class="eq-level-legend" data-hl-ui="">公式阅读顺序：必读抓主线，关键推导串起证明，推导细节按需查。</span></p>
 </header>
 <section class="overview" id="overview">
-<h2 class="ov-h">先看全局：一页速览</h2><!--study-links--><nav aria-label="跳到章节" class="overview-resources"><a class="pdf-download" download="" href="assets/downloads/ECE723_Equations_Monochrome.pdf">下载黑白打印 PDF</a><a class="pdf-download" download="" href="assets/downloads/ECE723_Converse_Color_Speaker.pdf">第三节 · 彩色演讲稿 PDF</a><a href="#sec-i">引言</a><a href="#sec-ii">模型与结果</a><a href="#sec-iii">下界</a><a href="#sec-iv">上界</a><a href="#sec-v">示例</a><a href="#sec-vi">讨论</a><a href="#appendix">附录</a></nav><!--/study-links-->
+<h2 class="ov-h">先看全局：一页速览</h2><!--study-links--><nav aria-label="跳到章节" class="overview-resources"><a class="pdf-download" download="" href="assets/downloads/ECE723_Equations_Monochrome.pdf">下载黑白打印 PDF</a><a class="pdf-download" download="" href="assets/downloads/ECE723_Converse_Color_Speaker.pdf">第三节 · 彩色演讲稿 PDF</a><a href="#sec-i">引言</a><a href="#sec-ii">模型与结果</a><a href="#sec-iii">下界</a><a href="#sec-iv">上界</a><a href="#sec-v">示例</a><a href="#sec-vi">讨论</a><a href="#appendix">附录</a><a class="pdf-download" href="assets/downloads/ECE723_Converse_Monochrome_Speaker.pdf" download>第三节 · 黑白演讲稿 PDF</a></nav><!--/study-links-->
 <p class="lead">这篇论文研究一个很现实的问题：<b>很多台机器从同一个数据库里各自随机抽一部分数据，每台只能给中心发很少的比特，中心最多能把未知参数估计得多准？</b>与经典设定的区别是，机器们抽到的数据<b>可能重叠</b>。<button class="nref" data-note="read-tips" type="button">注</button></p>
 <div class="ov-grid">
 <div class="ov-card"><h4>舞台设定</h4>
