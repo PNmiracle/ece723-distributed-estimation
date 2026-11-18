@@ -513,7 +513,25 @@ html[lang^="en"] .eq-fig figcaption::before{content:"Diagram"}
 .proof-step{display:block}
 .proof-step .typeset-prose>.katex{font-size:1.03em}
 .formula-prelude .katex{font-size:1em}
-</style><style id="reader-size">
+</style><style id="reader-math-typography">
+/* Match the original numbered equations. Keep KaTeX's internal glyph fonts,
+   script sizing and operator spacing, rather than inheriting prose fonts. */
+@media screen {
+ html[lang]{--reader-math-scale:1.21}
+ html[lang="en"]{--reader-math-scale:1.04}
+ html[lang] :is(.paper,.overview,.recap) .katex{
+  font-family:KaTeX_Main,"Times New Roman",serif;
+  font-size:calc(1em * var(--reader-math-scale));
+  font-weight:400;
+  font-style:normal;
+  text-rendering:auto;
+ }
+ html[lang] .prose-formula,html[lang] .imath{
+  font-style:normal;
+ }
+}
+</style>
+<style id="reader-size">
 @media screen {
  :root{--reader-scale:1.15}
  html[lang] .paper,.overview,.recap{font-size:calc(1.05rem * var(--reader-scale))}

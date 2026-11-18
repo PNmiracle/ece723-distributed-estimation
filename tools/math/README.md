@@ -24,3 +24,9 @@ previously had their integral limits, powers and indices split across unrelated
 KaTeX spans and plain text. Reconstructing the whole expression also preserves
 its mathematical grouping. Paragraph note buttons are retained, and numbered
 references are linked. The repair pass is idempotent via stable paragraph ids.
+
+`reader_typography.py` makes inline and added prose mathematics use the same
+KaTeX font and relative size as the existing numbered equations. The original
+language-specific scales (1.21 for Chinese and 1.04 for English) are preserved.
+KaTeX's internal italic, bold, operator and script glyph rules remain intact.
+The reader's global text-size control scales prose and mathematics together.
