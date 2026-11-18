@@ -1,0 +1,158 @@
+73	theta Z z T tmsg pZ pT K nuZ cond
+74	theta Z z T tmsg pZ pT K nuZ grad xi cond log
+75	theta Z T pZ pT grad Etheta xi cond log
+76	theta Z Xa aindex qblock xi JZ IX grad pZ summation log
+77	theta Z T SZ ST pZ pT grad log
+78	theta Z T adir SZ ST JT JZ Etheta transpose cond
+79	theta Z T JT JZ psd
+80	theta G T SGT SG STG cond
+81	theta G T STG Etheta cond
+82	theta G T SG STG Etheta transpose cond
+83	theta G T JGT JG JTG EG PG cond
+84	theta G T JGT JG JTG EG tr cond
+85	theta theta_j d j prior Jpi hprior piNum product log sin
+86	theta prior Jpi grad norm log diff
+87	tprior wprior piNum diff sin
+88	tprior wprior piNum ddt log priorScore
+89	tprior wprior piNum priorScore diff cos
+90	aexp Faux xint piNum diff sin
+91	aexp Faux
+92	Iintegral xint yint piNum log diff sin cos
+93	Faux Fprime log
+94	Theta1 wprior Ew Fprime piNum log sin
+95	Theta1 wprior Ew hcoord piNum log sin
+96	D hat Y Theta Ebayes norm
+97	theta y Y prior pY qjoint Qscore grad log
+98	theta theta_j Theta Theta_j Y y j hatj Qjscore qjoint partial nuY Ebayes diff
+99	d hat Theta Qscore Ebayes norm inner
+100	Theta priorlaw Qscore Jpi JY Eprior Ebayes tr norm
+101	D d Theta priorlaw Jpi JY Eprior tr
+102	theta ThetaSet hat prior D Etheta norm diff supremum
+103	apool Si i n m N Eprob setops
+104	N n m Eprob U minmax
+105	theta T W wpublic d v design tr U JTw cond
+106	theta T W d v Eprob EW tr U JTW JTWcond cond
+107	RBB d v N n m Eprob piNum asymp U minmax
+108	D Dy Y y Theta hat EY Ebayes norm cond
+109	Theta Y y hat Dy d hpost piNum econst log cond
+110	Theta Y Dy D d hpost EY piNum econst log cond
+111	Theta T W D d I hprior piNum econst log
+112	Theta T W I cond
+113	Theta T W I H B log cond
+114	D d hprior piNum exp B
+115	D d piNum econst B
+116	hT T Theta W H cond
+117	T Theta W H I hT cond
+118	hshort B hprior d D piNum econst log
+119	theta Aq qblock aindex Xa xi summation
+120	theta Aq qblock aindex Xa xi u v b Etheta norm transpose log exp summation
+121	theta Aq qblock event pEvent v b Etheta norm log cond
+122	theta Aq qblock event pEvent v b Etheta norm log cond
+123	theta Aq qblock event pEvent v Etheta norm log cond
+124	theta Aq event pEvent ell muE Etheta log qblock cond
+125	muE direction event Aq norm
+126	theta muE direction event Aq lambda Etheta norm transpose exp qblock cond
+127	theta Aq direction event pEvent indicator lambda Etheta transpose exp qblock cond
+128	muE ell pEvent qblock v b lambda norm event
+129	Pbase Pevent event pEvent KL indicator log RN
+130	muE ell pEvent qblock v b lambda norm event
+131	eta lambdastar ell pEvent v qblock b event
+132	lambdastar eta b
+133	lambdastar eta ell pEvent v qblock b event
+134	lambdastar eta v qblock b ell pEvent event
+135	muE ell pEvent v qblock b norm event
+136	theta Aq T qblock v b Htheta Etheta pTheta log norm cond
+137	theta Aq T qblock v Htheta Etheta norm cond
+138	T LT pTlaw log
+139	T pTlaw Eprob KB B log
+140	T tmsg LT xsur pTlaw Tplus M B Eprob exp summation
+141	T LT xsur B Eprob exp minmax
+142	T LT xsur Eprob diff infinity
+143	T LT xsur athresh B Eprob exp diff infinity
+144	xsur athresh yshift B exp diff infinity
+145	T W conditionalMass KB B Eprob log cond
+146	Zi i Xia qi qmax
+147	theta T R JTR tr v qmax Htheta b KB B cond
+148	theta T R JTR tr v qmax Htheta cond
+149	Zi zi Ei tmsg rseed R i iell gell history ellstep Llen setops
+150	T tmsg Zi Ei i n R rseed setops
+151	theta T tmsg Zi Ei R rseed piLocal pLeaf ellLocal Etheta Eprob log cond
+152	T tmsg piLocal pLeaf ellLocal i n log summation product
+153	theta Zi Ci Ei tmsg piLocal i n T R rseed Eprob cond product
+154	theta Ai ai qi i aindex Xia xi T tmsg R rseed Etheta cond summation
+155	theta Ai ai Zi Ei tmsg Etheta cond
+156	theta Ai ai i jMachine T tmsg R rseed Etheta transpose cond
+157	theta Ai ai i jMachine T R rseed Etheta transpose cond
+158	theta T R rseed Ai ai i n pTfixed Etheta grad log cond summation
+159	theta T R rseed Jr tr ai i n Etheta norm cond summation
+160	ai tmsg qi v b ellLocal i norm
+161	theta T R rseed Jr tr v qmax b ellLocal i Etheta cond summation
+162	theta T R rseed ellLocal pLeaf Htheta Etheta log cond summation
+163	tmsg ellLocal pLeaf i log summation
+164	theta T R rseed Jr tr v qmax Htheta b pLeaf Etheta log cond
+165	theta T R rseed Jr tr v qmax Htheta b KB B cond
+166	theta T R rseed JTR Jr tr ER cond
+167	theta T R rseed Htheta ER cond
+168	ai tmsg qi v ellLocal i norm
+169	theta T R rseed Jr tr v qmax Htheta cond
+170	Gset Vset Si apool i jMachine n N setops indexset indexIndicator summation
+171	G Vi Gset Vset Xa apool i rshared qi qprivate n setsize indexset N cond minmax
+172	theta G Vi n rshared qi Ptheta productLaw jointLaw i
+173	qi qprivate i m
+174	theta T R G JTR tr d v rshared qprivate Htheta b KB B cond
+175	theta T R JTR tr d v rshared m Htheta b KB B cond
+176	theta T R G JTR tr d v rshared qprivate Htheta cond
+177	theta T R G JTR tr d rshared qprivate m Htheta cond
+178	theta T G JTfixed JGTfixed psd
+179	theta T G JGTfixed JG JTGfixed tr EG Ptheta rshared productLaw cond
+180	theta G X JG IX rshared
+181	theta T G X JTfixed IX JTGfixed rshared EG tr cond
+182	theta G g Vi n qi Ptheta productLaw jointLaw i cond
+183	theta T tmsg G g R rho Vi vi qi n protocolF pTshared Ptheta productLaw i diff cond product
+184	theta T G g R rho Jgrho tr v qprivate Htheta b KB B cond
+185	theta T G R rho JGrho tr EG v qprivate Htheta b KB B cond
+186	theta T G R rho Jrho IX X tr rshared v qprivate Htheta b KB B cond
+187	theta T R rho JTR Jrho tr ER cond
+188	theta T G R Htheta Itheta cond
+189	theta T G g R rho Jgrho tr v qprivate Htheta cond
+190	theta X xi IX Id u Etheta norm transpose exp log
+191	theta T R X JTR IX tr rshared d v
+192	theta T design R JTSR tr d v rbar m Htheta b KB B cond
+193	Theta JTSRprior Eprior tr d v rbar m T design R H b KB B cond
+194	D hat Theta Ebayes norm hT T design R H cond
+195	Theta JTSRprior Eprior tr d v rbar m hT b KB B
+196	Anorm Qconst d v rbar b KB B Jpi piNum
+197	D d Anorm m hT Qconst
+198	hT d B cpi D piNum econst log
+199	cpi piNum econst log
+200	xnorm m D d
+201	B d s m D xnorm log log2
+202	hT d s cpi xnorm log m D
+203	d D Anorm m hT Qconst s cpi xnorm log
+204	Anorm xnorm s cpi Qconst m d log D
+205	tgeneral Anorm xnorm D d m
+206	tgeneral s cpi Anorm Qconst m d log D
+207	Qconst Anorm m d rbar b KB B v piNum
+208	KB CK B
+209	Fnorm splus s rbar m B
+210	tgeneral C1 Fnorm log D d m Anorm
+211	tgeneral C2 Fnorm D d m Anorm
+212	D d Anorm C2 m Fnorm splus s rbar B asymp
+213	d m splus s rbar
+214	B n k m
+215	m splus s rbar B k
+216	s n k d m log2 log
+217	s n k d n0
+218	m splus s rbar d k n asymp
+219	RBB N m n d splus s rbar asymp
+220	RBB N m n d cmodel B splus s rbar lower minmax
+221	Theta JTSRprior Eprior tr d rbar m hT
+222	d D rbar m hT Jpi piNum
+223	tGaussian d m D
+224	tGaussian rbar m hT d piNum D
+225	hT d B D s tGaussian piNum econst m log
+226	piNum econst log
+227	tGaussian s rbar m piNum econst log D d
+228	tGaussian zrhs exp D d m
+229	W0 ylambert exp
+230	D d m W0 s rbar piNum exp log

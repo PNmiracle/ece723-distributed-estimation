@@ -50,6 +50,32 @@ To add a pronunciation, add a row to the `D` list in `say.js` (regex on the TeX,
 
 `build.js` throws on any KaTeX error, so a typo in the TeX stops the build instead of reaching the site.
 
+## Section III: reading priorities, speaking notes and complete symbols
+
+Both readers use the same 28 core / 64 important / 66 skimmable priorities as
+`print/converse_priorities.json`. The reading-mode control collapses other cards;
+all original formulas and explanations remain available, and equation links reopen
+their target card. Speaking notes can be toggled individually or together. Both
+controls remember the preference across languages.
+
+- `gist/converse_speech.tsv` and `gist/converse_speech.zh.tsv` contain the English
+  and Chinese speaking bridges for every equation (73)–(230).
+- `gist/section3_symbols.tsv` defines each symbol in both languages;
+  `gist/section3_symbol_map.tsv` explicitly lists the definitions repeated under
+  each formula. Include every symbol even when a previous formula defined it.
+  Keep separate entries for symbols whose meanings change with context.
+- `gist/complete-section3-symbols.py` replaces the 158 individual symbol tables.
+- `converse/reading-priorities.py` adds the priority cards, reading routes and
+  speaking bridges. Run this after rebuilding explanations or symbol tables.
+
+```bash
+python3 tools/gist/complete-section3-symbols.py
+python3 tools/converse/reading-priorities.py
+```
+
+These steps also run at the end of `build_all.sh`. They require Beautiful Soup and
+KaTeX (`KATEX_MODULE` may point to a local KaTeX module).
+
 ## Highlights & notes (`highlights/`)
 
 `hl.js` + `hl.css` add highlighting and note-taking to the reading pages:

@@ -59,6 +59,8 @@ python3 tools/math/repair_prose.py
 python3 tools/math/typeset.py reading.html reading-en.html
 python3 tools/math/reader_typography.py
 python3 tools/reader-size.py
+python3 tools/gist/complete-section3-symbols.py
+python3 tools/converse/reading-priorities.py
 
 # Refresh the bilingual lower-bound reader from the guided readers.
 node tools/converse/build.js

@@ -1,0 +1,212 @@
+theta	\theta	Unknown parameter vector; held fixed in model expectations with this subscript.	未知参数向量；带此下标的模型期望把参数固定。
+Theta	\Theta	Random parameter drawn from the chosen prior.	按选定先验抽取的随机参数。
+ThetaSet	\Theta	Parameter set in this formula; here the capital letter denotes a set, not a random draw.	本式中的参数集合；这里的大写字母表示集合，不是先验随机参数。
+theta_j	\theta_j	Coordinate j of the fixed parameter.	固定参数的第 j 个坐标。
+Theta_j	\Theta_j	Coordinate j of the prior-random parameter.	先验随机参数的第 j 个坐标。
+hat	\widehat\theta	Estimator computed from the available observations.	根据可用观测计算的参数估计量。
+hatj	\widehat\theta_j(y)	Coordinate j of the estimator at a fixed observed record y.	在固定记录 y 下，估计量的第 j 个坐标。
+d	d	Dimension of the parameter vector.	参数向量的维数。
+Z	Z	Raw observation or data block before processing.	加工成消息之前的原始观测或数据块。
+z	z	A possible realized value of the raw observation.	原始观测的一种可能取值。
+X	X	One original observation from the model.	模型产生的单个原始观测。
+Xa	X_a	Observation indexed by a; the index is local or from the pool as specified in this formula.	编号为 a 的观测；本式按块内编号或样本池编号使用。
+Xia	X_{i,a}	Observation a in machine i's independent block.	机器 i 的独立数据块内第 a 个观测。
+T	T	The processed message, or the full protocol transcript when several machines communicate.	加工后的消息；多机通信时表示完整通信记录。
+tmsg	t	A fixed candidate message or complete target transcript.	一条固定的候选消息或目标通信记录。
+G	G	Additional observed variable; from (170) onward it is the vector of shared observations.	额外观测变量；从 (170) 起，具体指共享观测组成的向量。
+g	g	A fixed realized value of the shared-observation vector.	共享观测向量的一个固定取值。
+Y	Y	All information available to the estimator.	估计器可以使用的全部信息。
+y	y	A fixed realized observation record.	观测记录的一种固定取值。
+R	R	Public and private random seeds, independent of the parameter.	与参数独立的公共、私有随机种子。
+rseed	r	A fixed realization of the seeds in this independent-block argument; not a sample count.	本段独立块论证中固定的种子取值；不是样本数。
+rho	\rho	A fixed seed realization, renamed to distinguish it from the shared count.	固定的种子取值；改用此字母以区别共享样本数。
+W	W	Public side information: sampling design and random seeds, independent of the parameter.	公开辅助信息，包括抽样设计与种子；其分布不依赖参数。
+wpublic	w	A fixed realization of the public side information.	公开辅助信息的一个固定取值。
+design	\mathcal S	The collection of all machines' sampled index sets.	所有机器抽样编号集合组成的抽样设计。
+Si	S_i	The set of pool indices accessible to machine i.	机器 i 可以访问的样本池编号集合。
+n	n	Number of machines.	机器数量。
+m	m	Number of original observations available to each machine.	每台机器原本可访问的观测数。
+N	N	Number of observation indices in the common pool, even if some observed values coincide.	公共样本池中的观测条目数，按编号计数；不同条目的取值可以相同。
+B	B	Total communication budget in bits, summed over all machines.	所有机器合计的通信预算，单位是比特。
+k	k	Fixed bit budget per machine.	每台机器固定的比特预算。
+rshared	r	Number of distinct shared pool indices for the fixed design.	固定设计下，不同共享样本编号的个数。
+rbar	\bar r	Expected number of distinct shared indices, averaged over the random design.	对随机抽样设计平均后的不同共享样本数。
+qi	q_i	Size of machine i's independent block; in the overlap argument, its private block size.	机器 i 的独立块大小；重叠论证中指其私有块大小。
+qblock	q	Number of independent observations in the block whose scores are summed.	当前得分求和所覆盖的独立观测数。
+qmax	q	Uniform upper bound on the independent block sizes of the machines.	各机器独立块大小的统一上界。
+qprivate	q	Largest private block size after all shared observations have been removed.	去掉全部共享观测后，最大的私有块大小。
+i	i	Machine or block index.	机器或数据块的编号。
+j	j	Coordinate index; in the two-block cross terms, a different block index.	坐标编号；比较两个块的交叉项时，表示另一个块的编号。
+aindex	a	Observation index within a block.	数据块内的观测编号。
+apool	a	An index in the common pool.	公共样本池中的编号。
+adir	a	An arbitrary deterministic direction vector for comparing information matrices.	比较信息矩阵时任取的确定方向向量。
+u	u	Arbitrary direction used to test an exponential moment or a quadratic form.	检验指数矩或二次型时任取的方向向量。
+ellstep	\ell	Communication-round index in the checklist construction.	构造检查清单时的通信轮次编号。
+Llen	L	Length of the fixed target transcript in bits.	固定目标记录的长度，单位为比特。
+pZ	p_\theta^Z(z)	Density or mass of the raw observation at parameter theta.	给定参数时，原始观测的密度或概率质量。
+pT	p_\theta^T(t)	Probability or density of the processed message at parameter theta.	给定参数时，加工后消息的概率或密度。
+pY	p_\theta^Y(y)	Likelihood of the complete available record.	全部可用记录的似然。
+pTfixed	p_\theta(t\mid R=r)	Transcript probability with the parameter and seed realization fixed.	固定参数和种子取值后的通信记录概率。
+pTshared	p_\theta(t\mid G=g,R=\rho)	Transcript probability after fixing shared observations and seeds.	固定共享观测及种子后的通信记录概率。
+K	K(t\mid z)	Processing rule: probability of output t from raw input z; independent of the parameter.	给定原始输入 z 后输出 t 的加工规则；规则不依赖参数。
+nuZ	\nu_Z(dz)	Reference measure used to integrate over raw data.	对原始数据积分时使用的基准测度。
+nuY	\nu_Y(dy)	Reference measure for the available observation record.	可用观测记录对应的基准测度。
+xi	\xi_\theta(X)	One-observation score: parameter gradient of the log likelihood; a vector.	单个观测的得分：对参数求对数似然的梯度，是向量。
+SZ	S_Z	Raw-data score, the parameter gradient of its log density.	原始数据得分，即原始数据对数密度对参数的梯度。
+ST	S_T	Processed-message score, the parameter gradient of its log probability.	消息得分，即消息对数概率对参数的梯度。
+SG	S_G	Score of G: parameter gradient of its log density.	G 的得分，即其对数密度对参数的梯度。
+STG	S_{T\mid G}	Conditional transcript score: parameter gradient of its conditional log likelihood after G is known.	给定 G 后的记录得分，即条件对数似然对参数的梯度。
+SGT	S_{G,T}	Score of the joint observation G and T: gradient of the joint log likelihood.	联合观测 G 与 T 的得分，即联合对数似然的梯度。
+Aq	A_q	Raw block score: sum of the parameter gradients of log likelihoods over q independent observations; q is the block size.	原始块得分：q 个独立观测的对数似然梯度之和；q 是块大小。
+Ai	A_i	Raw score of machine i: sum of its one-observation log-likelihood gradient vectors before observing the transcript.	机器 i 的原始块得分：看到记录前，把本机各观测的对数似然梯度相加。
+ai	a_i(t)	Mean of the raw block score conditional on transcript t and the fixed seeds.	固定种子并给定记录 t 后，原始块得分的条件均值。
+muE	\mu_E	Mean of the raw block score after conditioning on event E.	给定事件 E 发生后，原始块得分的条件均值。
+Qscore	Q(\theta,y)	Score of the joint prior-and-observation density; prior score plus likelihood score.	先验与观测联合密度的得分，等于先验得分加似然得分。
+Qjscore	Q_j(\Theta,Y)	Coordinate j of the joint prior-and-observation score.	先验与观测联合得分的第 j 个坐标。
+qjoint	q(\theta,y)	Joint density of the prior-random parameter and observation record; not a block size.	随机参数与观测记录的联合密度；这里不是块大小。
+prior	\pi(\theta)	Chosen smooth prior density on the parameter cube, zero on its boundary.	参数立方体上的光滑先验密度，在边界处为零。
+priorlaw	\pi	The distribution from which the random parameter is drawn.	随机参数所服从的先验分布。
+Jpi	J_\pi	Scalar prior information: prior mean of the squared norm of the prior score.	标量先验信息：先验得分范数平方在先验下的平均。
+JY	J_Y(\Theta)	Observation Fisher information matrix evaluated at the prior-random parameter.	在先验随机参数处计算的观测 Fisher 信息矩阵。
+JZ	J_Z(\theta)	Raw-data Fisher information matrix: expectation of the raw score vector times its transpose.	原始数据的 Fisher 信息矩阵，即原始得分向量乘其转置的期望。
+JT	J_T(\theta)	Message/transcript Fisher information matrix: expectation of its score vector times its transpose.	消息／记录的 Fisher 信息矩阵，即其得分向量乘其转置的期望。
+JG	J_G(\theta)	Fisher matrix of G: expected outer product of its score; G is shared data in the overlap argument.	G 的 Fisher 矩阵，即其得分外积的期望；重叠论证中 G 是共享数据。
+JGT	J_{G,T}(\theta)	Fisher information matrix of the enlarged joint observation G and T.	扩大后的联合观测 G 与 T 的 Fisher 信息矩阵。
+JTG	J_{T\mid G}(\theta;G)	Conditional Fisher information of T at the realized G; outer expectations average over G.	在给定 G 取值处，T 的条件 Fisher 信息；外层期望再对 G 平均。
+JTR	J_{T,R}(\theta)	Information matrix of transcript and seeds jointly; seeds themselves carry no parameter information.	记录与种子的联合信息矩阵；种子本身不含参数信息。
+Jr	J_{T\mid R=r}(\theta)	Transcript information matrix for one fixed seed realization r.	种子固定为 r 时，通信记录的信息矩阵。
+Jrho	J_{T\mid R=\rho}(\theta)	Transcript information matrix for one fixed seed realization rho.	种子固定为 rho 时，通信记录的信息矩阵。
+Jgrho	J_{T\mid G=g,R=\rho}(\theta)	Transcript information matrix with both shared values and seeds fixed.	共享值与种子都固定后，通信记录的信息矩阵。
+JGrho	J_{T\mid G,R=\rho}(\theta;G)	Conditional transcript information at a realized G, for fixed seeds rho.	固定种子 rho、给定 G 的实际取值时，记录的条件信息矩阵。
+JTSR	J_{T,\mathcal S,R}(\theta)	Joint information matrix of transcript, design and seeds, at a fixed parameter.	固定参数下，记录、抽样设计和种子的联合信息矩阵。
+JTSRprior	J_{T,\mathcal S,R}(\Theta)	The same joint information matrix evaluated at the prior-random parameter.	在先验随机参数处计算的记录、设计与种子的联合信息矩阵。
+IX	I_X(\theta)	Fisher information matrix of one original observation; not an identity matrix.	单个原始观测的 Fisher 信息矩阵；不是单位矩阵。
+Id	I_d	Identity matrix in the parameter dimension.	参数维度上的单位矩阵。
+tr	\operatorname{tr}	Trace, the sum of diagonal entries; turns a Fisher matrix into total scalar information.	迹，即对角元之和；把 Fisher 矩阵变成总的标量信息量。
+Etheta	\mathbb E_\theta	Expectation under the observation model with the parameter fixed; bars indicate additional conditioning.	固定参数、按观测模型取期望；竖线右边是额外给定的条件。
+Ebayes	\mathbb E	Joint average over the parameter prior and observations in the Bayesian argument.	贝叶斯论证中，同时对参数先验与观测取联合平均。
+ER	\mathbb E_R	Average over the parameter-independent random seeds.	对与参数独立的随机种子取平均。
+EG	\mathbb E_G	Average over the distribution of G at the fixed parameter.	固定参数后，对 G 的分布取平均。
+EY	\mathbb E_Y	Average over the observation record under the joint Bayesian model.	在联合贝叶斯模型下，对观测记录取平均。
+EW	\mathbb E_W	Average over public side information, whose distribution is parameter independent.	对分布不依赖参数的公开辅助信息取平均。
+Eprior	\mathbb E_\Theta	Average over the chosen prior distribution of the parameter.	对所选参数先验分布取平均。
+Eprob	\mathbb E,\ \mathbb P	Expectation and probability for the random sampling or transcript experiment in this formula.	本式随机抽样或记录实验中的期望与概率。
+norm	\|\cdot\|	Euclidean length of a vector; the superscript 2 means its squared length.	向量的欧氏长度；上标 2 表示长度的平方。
+inner	\langle\cdot,\cdot\rangle	Euclidean inner product of two vectors.	两个向量的欧氏内积。
+transpose	(\cdot)^\top	Transpose swaps rows and columns; a transposed vector times a vector gives an inner product, and the reversed order gives an outer-product matrix.	转置交换行列；转置向量乘向量形成内积，反过来相乘则形成外积矩阵。
+grad	\nabla_\theta	Gradient with respect to all parameter coordinates.	对全部参数坐标求梯度。
+partial	\partial_{\theta_j}	Derivative in parameter coordinate j while the observed record is held fixed.	固定观测记录，对参数的第 j 个坐标求导。
+psd	\preceq	Positive-semidefinite matrix order: no more information in any direction.	半正定矩阵序：在每个方向上的信息都不更多。
+H	H(T\mid\cdot)	Discrete transcript entropy in nats, with the variables after the bar treated as known.	离散记录的条件熵，以自然对数计量；竖线后的量视为已知。
+Htheta	H_\theta	Discrete transcript entropy at a fixed parameter; any variables after the conditioning bar are treated as known.	固定参数时的离散通信记录熵；条件竖线后的公开／共享信息视为已知。
+I	I(\cdot;\cdot\mid\cdot)	Mutual information: reduction in uncertainty, optionally conditional on known variables.	互信息，即不确定性的减少；竖线后可指定已知条件。
+hpost	h(\Theta\mid Y)	Differential entropy of the continuous parameter posterior, averaged over records when Y is random.	连续参数后验的微分熵；Y 为随机记录时再对记录平均。
+hprior	h(\pi)	Differential entropy of the parameter prior.	参数先验的微分熵。
+hcoord	h(w)	Differential entropy of one coordinate of the chosen prior.	选定先验的单坐标微分熵。
+hT	h_T	Transcript entropy remaining after the parameter and all stated public conditions are known.	知道参数以及本式公开条件后，通信记录仍然剩下的条件熵。
+hshort	h=h_T	The h in this display abbreviates the remaining transcript entropy defined in (116).	本显示式的 h 是 (116) 定义的剩余通信熵的简写。
+D	D	Bayes squared-error risk: average squared distance between estimator and prior-random parameter.	贝叶斯平方误差风险：估计量与先验随机参数之间距离平方的平均。
+Dy	D_y,\ D_Y	Posterior mean squared error at record y, and the same quantity evaluated at random record Y.	给定记录 y 的后验均方误差，以及在随机记录 Y 处取值的同一个量。
+RBB	R_{\mathrm{BB}}(N,m,n)	Worst-case squared-error risk optimized over admissible blackboard protocols and decoders.	在合法黑板协议与解码器中优化后的最坏情形平方误差风险。
+piNum	\pi\approx3.14159	The numerical circle constant; distinct from the prior density written as a function.	圆周率常数；与写成函数形式的先验密度区分。
+exp	\exp(z)=e^z	Natural exponential function; here the base e is Euler's number.	自然指数函数；这里的底数 e 是自然常数。
+log	\ln,\ \log	Natural logarithm in these information calculations; entropies are in nats.	本段信息计算使用的自然对数；熵以自然对数单位计量。
+log2	\log_2	Base-two logarithm, used to express communication budgets in bits.	以 2 为底的对数，用于以比特表示通信预算。
+wprior	w(t)	One-coordinate prior density, twice the squared sine over the unit interval.	单位区间上的单坐标先验密度，等于两倍的正弦平方。
+tprior	t	Coordinate value within the unit interval for the one-dimensional prior calculation.	一维先验计算中，单位区间内的坐标取值。
+ddt	\frac d{dt}	Ordinary derivative with respect to this coordinate value.	对该坐标取值求普通导数。
+aexp	a	Auxiliary real exponent of the sine integral; not an observation index.	正弦积分的辅助实指数；这里不是观测编号。
+xint	x	Dummy integration variable in the trigonometric integral.	三角积分中的积分变量。
+yint	y	Integration variable after the double-angle change of variables.	二倍角换元后的积分变量。
+Faux	F(a)	Auxiliary integral of a sine power over the interval from zero to pi.	从零到圆周率区间上，正弦幂的辅助积分。
+Fprime	F'(a)	Derivative of the auxiliary integral with respect to its exponent.	辅助积分对指数参数的导数。
+Iintegral	I	Integral of log sine from zero to half pi, introduced for the entropy calculation.	为算熵引入的对数正弦积分，积分区间为零到半个圆周率。
+Theta1	\Theta_1	First coordinate of a parameter sampled from the chosen prior.	按所选先验抽样的参数的第一个坐标。
+Ew	\mathbb E_w	Expectation under the one-coordinate prior density w.	按单坐标先验密度 w 取期望。
+v	v	Variance-scale constant in the Bernstein score moment bound.	Bernstein 得分指数矩上界中的方差尺度常数。
+b	b	Tail-scale constant in that bound; zero in the sub-Gaussian case.	该上界中的尾部尺度常数；次高斯情形为零。
+event	E	Conditioning event, with strictly positive probability.	用来条件化的事件，其概率严格为正。
+pEvent	p=\mathbb P_\theta(E)	Probability of the conditioning event, at the fixed parameter.	固定参数时，条件化事件发生的概率。
+ell	\ell=\ln(1/p)	Event surprisal: rarer events have larger values.	事件的惊讶度：事件越罕见，这个值越大。
+direction	e	Unit vector pointing along the conditional score mean when that mean is nonzero.	条件得分均值非零时，指向该均值方向的单位向量。
+lambda	\lambda	Positive exponential tilt; it must stay in the stated moment-bound domain.	正的指数倾斜参数，必须位于本式规定的指数矩有效范围。
+eta	\eta	Auxiliary positive scale used to balance the two tilt-bound terms.	用于平衡倾斜上界两项的辅助正尺度。
+lambdastar	\lambda_*	Chosen admissible tilt obtained from the auxiliary scale.	由辅助尺度构造出的合法倾斜参数。
+Pbase	\mathsf P	Original distribution before conditioning on the event.	给定事件之前的原分布。
+Pevent	\mathsf P_E	Distribution obtained by conditioning the original distribution on E.	把原分布对事件 E 条件化后得到的分布。
+KL	D(\mathsf P_E\|\mathsf P)	Relative entropy of the conditioned law from the original law; not estimation risk here.	条件分布相对原分布的相对熵；这里不是估计风险。
+indicator	\mathbf1_E	Indicator: one when event E occurs, otherwise zero.	事件指示量：事件 E 发生时为一，否则为零。
+LT	L_T	Self-information of the realized transcript: negative log of its probability.	实际出现的通信记录的自信息，即其概率的负对数。
+KB	K_B	Uniform second-moment bound for transcript surprisal, determined only by the bit budget.	记录惊讶度二阶矩的统一上界，只由总比特预算确定。
+pTlaw	p_T(t),\ p_T(T)	Transcript probability mass at a possible value and at the randomly realized value.	记录在某个可能取值处、以及在实际随机取值处的概率质量。
+xsur	x	Nonnegative threshold or integration variable for transcript surprisal.	记录惊讶度的非负阈值或积分变量。
+M	M	Number of transcript values with positive probability, at most two to the total bit budget.	概率为正的记录取值数量，至多为总比特预算对应的二进制叶子数。
+Tplus	\mathcal T_+	Set of transcript values having positive probability.	所有概率为正的记录取值组成的集合。
+athresh	a=B\ln2	Threshold where the constant and exponential tail bounds meet; not a sample index.	常数尾界与指数尾界的交点；这里不是样本编号。
+yshift	y=x-a	Shifted nonnegative tail-integration variable.	平移后从零开始的尾积分变量。
+Zi	Z_i	Full independent input block of machine i.	机器 i 的完整独立输入块。
+zi	z_i	A candidate realized value for machine i's input block.	机器 i 输入块的一种候选取值。
+Ei	E_i(t;r)	Machine i's local checklist event required for transcript t at fixed seeds r.	固定种子 r 时，为产生记录 t，机器 i 必须通过的本机检查事件。
+Ci	C_i	An arbitrary measurable test set for block i, used to state conditional independence.	针对块 i 的任意可测测试集合，用于表达条件独立性。
+history	t^{\ell-1},\ t_\ell	Target transcript prefix before round ell, and the target bit in that round.	第 ell 轮之前的目标记录前缀，以及这一轮的目标比特。
+iell	i_\ell(t,r)	Machine scheduled to speak at round ell by the fixed public schedule.	按固定公开调度，在第 ell 轮发言的机器编号。
+gell	g_{\ell,r}(z_i,t^{\ell-1})	The bit that machine i's encoding rule emits from its own input and public history.	机器 i 的编码规则根据本机输入与公开历史产生的比特。
+piLocal	p_i(t)	Probability that machine i's checklist passes, with the parameter and seeds fixed.	固定参数与种子后，机器 i 通过本机清单的概率。
+pLeaf	p(t)	Probability of the complete target transcript at the fixed parameter and seeds.	固定参数与种子时，完整目标通信记录的概率。
+ellLocal	\ell_i(t)	Local surprisal: negative log of the probability that checklist i passes.	本机惊讶度：第 i 个清单通过概率的负对数。
+Gset	\mathcal G	Set of pool indices observed by at least two machines; an index set, not observed values.	至少被两台机器观察的池编号集合；是编号，不是观测值。
+Vset	\mathcal V_i	Indices observed only by machine i.	只有机器 i 观察到的样本编号集合。
+Vi	V_i	Vector of actual observation values at machine i's private indices.	机器 i 的私有编号对应的实际观测值向量。
+vi	v_i	A realized private-observation vector; not the variance constant v.	私有观测向量的一种取值；不是方差常数 v。
+Ptheta	P_\theta	Distribution of one original pool observation at the fixed parameter.	固定参数时，样本池中单个原始观测的分布。
+productLaw	P_\theta^{\otimes q_i}	Law of an independent block of the indicated size; tensor products mean independence.	指定大小的独立观测块的分布；张量乘积表示独立。
+jointLaw	\mathcal L_\theta(\cdot)	Joint distribution of the listed random vectors at the fixed parameter.	固定参数后，括号内随机向量的联合分布。
+protocolF	F_{g,\rho}	Deterministic protocol map from private blocks to a transcript, once shared values and seeds are fixed.	固定共享值与种子后，把私有块映射为记录的确定协议函数。
+conditionalMass	p_{T\mid W}(T\mid W)	Conditional probability of the realized transcript after the public information is fixed.	固定公开辅助信息后，实际记录的条件概率。
+cpi	c_\pi	Fixed constant from prior entropy and the Gaussian maximum-entropy inequality.	先验熵和高斯最大熵不等式合并产生的固定常数。
+Anorm	A	Fixed positive coefficient of the private-block entropy term, equal to four times the score variance scale.	私有块熵项的固定正系数，等于得分方差尺度常数的四倍。
+Qconst	Q	All information terms not multiplied by remaining entropy: sharing, tail correction and prior information.	不乘剩余熵的信息项总和，包括共享数据、尾部修正和先验信息。
+xnorm	x=mD/d	Risk normalized by the one-machine error scale.	按单机误差尺度归一化后的风险。
+trisk	t	Positive reciprocal-risk variable defined locally in (205) or (223); not a transcript value here.	本段在 (205) 或 (223) 定义的正的风险倒数变量；这里不是记录取值。
+s	s	Communication surplus per coordinate after paying the localization cost.	每坐标支付粗定位成本后，剩余的通信预算。
+splus	s_+=\max\{s,0\}	Nonnegative part of the communication surplus.	通信剩余预算的非负部分。
+Fnorm	F	Combined positive scale for surplus, overlap and the squared-budget correction; not the sine integral.	合并剩余预算、重叠量及预算平方修正的正尺度；这里不是正弦积分。
+C1	C_1	Fixed comparison constant depending only on the fixed model.	只依赖固定模型的比较常数。
+C2	C_2	Fixed constant used when inverting the scalar logarithmic inequality.	反解标量对数不等式时使用的固定常数。
+CK	C_K	Fixed constant bounding the transcript-surprisal correction by the squared budget scale.	用预算平方尺度控制记录惊讶度修正的固定常数。
+n0	n_0	Threshold number of machines beyond which the stated asymptotic comparison holds.	机器数超过此门槛后，本式的渐近比较成立。
+zrhs	z	Explicit right-hand side of the Gaussian scalar inequality, named before exponentiation.	高斯标量不等式的明确右端，在取指数前记为 z。
+W0	W_0	Positive principal Lambert W branch, inverse to positive t times its exponential.	Lambert W 的正主支，用于反解正变量乘其指数的函数。
+ylambert	y	Positive input argument to the Lambert W function.	Lambert W 函数的正输入参数。
+lower	\mathcal L	Lower-envelope expression combining the sample, bit and refinement floors.	合并抽样、比特与精估误差下限的下包络表达式。
+cmodel	c	Positive constant depending only on fixed model parameters, not growing sample sizes.	只依赖固定模型参数、不随样本量增长的正常数。
+asymp	\gtrsim,\ \lesssim	Inequality up to a fixed positive multiplicative constant.	允许相差一个固定正常数倍的不等式。
+setsize	|\cdot|	Number of indices in the displayed set; not a vector norm here.	所示集合的编号个数；这里不是向量范数。
+setops	\cap,\ \cup,\ \setminus	Set intersection, union and difference, respectively.	依次表示集合的交集、并集和差集。
+indexset	[N],\ [n]	Integer index sets from one to the pool size or the machine count.	从一到样本池大小、或从一到机器数的整数编号集合。
+U	U,\ U(\mathcal S)	Number of distinct pool indices seen by at least one machine under the given design.	给定抽样设计下，至少被一台机器看到的不同样本池编号数。
+JTw	J_{T\mid W=w}(\theta)	Transcript Fisher information after public information is fixed at w.	公开辅助信息固定为 w 后，通信记录的 Fisher 信息矩阵。
+JTWcond	J_{T\mid W}(\theta;W)	Conditional transcript information at the realized public information W.	在公开辅助信息 W 的实际取值处，记录的条件信息矩阵。
+JTW	J_{T,W}(\theta)	Joint Fisher information of transcript and public information; the latter is parameter independent.	记录与公开辅助信息的联合 Fisher 信息；辅助信息本身不依赖参数。
+PG	P_\theta	In this generic chain rule, the model distribution of the additional observation G.	在本条一般链式法则中，表示额外观测 G 的模型分布。
+priorScore	2\pi\cot(\pi t)	Score of the one-coordinate prior: derivative of its log density.	单坐标先验的得分，即其对数密度的导数。
+pTheta	p_\theta(T)	Probability of the realized transcript at a fixed parameter; the superscript T is suppressed.	固定参数时，实际记录的概率；这里省略了表示记录的上标 T。
+jMachine	j	A second machine/block index, different from i in these cross terms or set differences.	另一个机器／块编号；本式交叉项或集合差中与 i 不同。
+indexIndicator	\mathbf1\{a\in S_i\}	One if machine i has access to pool index a, and zero otherwise.	机器 i 能访问池编号 a 时为一，否则为零。
+JTfixed	J_T(\theta)	Transcript information with seeds held fixed in this shared-data comparison.	本段共享数据比较中，固定随机种子时的记录信息矩阵。
+JGTfixed	J_{G,T}(\theta)	Joint information of G and T with random seeds held fixed.	随机种子固定时，G 与 T 的联合信息矩阵。
+JTGfixed	J_{T\mid G}(\theta;G)	Transcript information conditional on realized G, while seeds remain fixed.	种子保持固定、给定 G 实际取值后，记录的条件信息矩阵。
+Itheta	I_\theta(T;G\mid R)	Conditional mutual information in the model with the parameter fixed.	固定参数的模型中，给定种子后的条件互信息。
+RN	\frac{d\mathsf P_E}{d\mathsf P}	Density ratio of the event-conditioned law relative to the original law.	事件条件分布相对于原分布的密度比。
+econst	e	Euler's number, the base of the natural logarithm.	自然常数，即自然对数的底数。
+diff	\mathrm d	Integration differentials: integrate over the displayed variable, not the parameter dimension.	积分微分元：对所示变量积分；这里的 d 不是参数维数。
+cond	\mid	Conditioning bar: the variables or event on its right are treated as known.	条件竖线：右侧的变量取值或事件视为已知。
+infinity	\infty	Unbounded upper integration limit.	积分上限无界，延伸到无穷。
+supremum	\sup	Largest possible risk over the parameter set, or its least upper bound.	参数集合上风险的上确界，即最坏情形的风险上界。
+minmax	\min,\ \max	Smallest or largest of the listed quantities.	所列量中最小或最大的一个。
+summation	\sum	Add over the displayed index range.	按所示编号范围求和。
+product	\prod	Multiply over the displayed index range.	按所示编号范围连乘。
+tgeneral	t=\frac{2d}{AmD}	Positive scaled reciprocal Bayes risk in the general Bernstein argument; larger values mean smaller error.	一般 Bernstein 论证中的正的缩放风险倒数；数值越大，误差越小。
+tGaussian	t=\frac d{mD}	Reciprocal risk in the Gaussian branch, normalized by the one-machine error scale.	高斯分支中，按单机误差尺度归一化的风险倒数。
+sin	\sin	Sine function; its argument is measured in radians.	正弦函数；自变量按弧度计。
+cos	\cos	Cosine function; its argument is measured in radians.	余弦函数；自变量按弧度计。
