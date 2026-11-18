@@ -9,10 +9,10 @@ ROOT = HERE.parents[1]
 ASSET = Path("assets/reading-plain-zh.js")
 EXPECTED = set(map(str, range(1, 493)))
 BOXES = re.compile(
-    r'<figure class="equation" id="eq-(\d+)">.*?</figure>\s*<aside class="plain"(?:\s[^>]*)?>(.*?)</aside>',
+    r'<figure class="equation" id="eq-(\d+)">.*?</figure>\s*<aside class="plain">(.*?)</aside>',
     flags=re.S,
 )
-HEADER = re.compile(r'^<span class="plain-tag">[^<]*</span><!--gist--><span class="eq-level [^"]+" data-hl-ui(?:="")?>[^<]*</span>')
+HEADER = re.compile(r'^<span class="plain-tag">[^<]*</span><!--gist--><span class="eq-level [^"]+" data-hl-ui>[^<]*</span>')
 REQUIRED = ['plain-gist', 'plain-syms', 'plain-more']
 
 

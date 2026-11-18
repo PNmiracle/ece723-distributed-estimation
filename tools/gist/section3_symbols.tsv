@@ -81,7 +81,7 @@ JGrho	J_{T\mid G,R=\rho}(\theta;G)	Conditional transcript information at a reali
 JTSR	J_{T,\mathcal S,R}(\theta)	Joint information matrix of transcript, design and seeds, at a fixed parameter.	固定参数下，记录、抽样设计和种子的联合信息矩阵。
 JTSRprior	J_{T,\mathcal S,R}(\Theta)	The same joint information matrix evaluated at the prior-random parameter.	在先验随机参数处计算的记录、设计与种子的联合信息矩阵。
 IX	I_X(\theta)	Fisher information matrix of one original observation; not an identity matrix.	单个原始观测的 Fisher 信息矩阵；不是单位矩阵。
-Id	I_d	The d by d identity matrix: ones on the diagonal and zeros elsewhere.	d 乘 d 的单位矩阵：对角元为一，其余为零。
+Id	I_d	Identity matrix in the parameter dimension.	参数维度上的单位矩阵。
 tr	\operatorname{tr}	Trace, the sum of diagonal entries; turns a Fisher matrix into total scalar information.	迹，即对角元之和；把 Fisher 矩阵变成总的标量信息量。
 Etheta	\mathbb E_\theta	Expectation under the observation model with the parameter fixed; bars indicate additional conditioning.	固定参数、按观测模型取期望；竖线右边是额外给定的条件。
 Ebayes	\mathbb E	Joint average over the parameter prior and observations in the Bayesian argument.	贝叶斯论证中，同时对参数先验与观测取联合平均。
@@ -130,14 +130,14 @@ pEvent	p=\mathbb P_\theta(E)	Probability of the conditioning event, at the fixed
 ell	\ell=\ln(1/p)	Event surprisal: rarer events have larger values.	事件的惊讶度：事件越罕见，这个值越大。
 direction	e	Unit vector pointing along the conditional score mean when that mean is nonzero.	条件得分均值非零时，指向该均值方向的单位向量。
 lambda	\lambda	Positive exponential tilt; it must stay in the stated moment-bound domain.	正的指数倾斜参数，必须位于本式规定的指数矩有效范围。
-eta	\eta	Auxiliary nonnegative scale balancing the two tilt-bound terms; positive when the event probability is below one.	平衡倾斜上界两项的辅助非负尺度；事件概率小于一时为正。
+eta	\eta	Auxiliary positive scale used to balance the two tilt-bound terms.	用于平衡倾斜上界两项的辅助正尺度。
 lambdastar	\lambda_*	Chosen admissible tilt obtained from the auxiliary scale.	由辅助尺度构造出的合法倾斜参数。
 Pbase	\mathsf P	Original distribution before conditioning on the event.	给定事件之前的原分布。
 Pevent	\mathsf P_E	Distribution obtained by conditioning the original distribution on E.	把原分布对事件 E 条件化后得到的分布。
 KL	D(\mathsf P_E\|\mathsf P)	Relative entropy of the conditioned law from the original law; not estimation risk here.	条件分布相对原分布的相对熵；这里不是估计风险。
 indicator	\mathbf1_E	Indicator: one when event E occurs, otherwise zero.	事件指示量：事件 E 发生时为一，否则为零。
 LT	L_T	Self-information of the realized transcript: negative log of its probability.	实际出现的通信记录的自信息，即其概率的负对数。
-KB	K_B	Uniform second-moment bound for transcript surprisal: $K_B=(B\ln2)^2+2B\ln2+2$.	记录惊讶度二阶矩的统一上界：$K_B=(B\ln2)^2+2B\ln2+2$，只由比特预算确定。
+KB	K_B	Uniform second-moment bound for transcript surprisal, determined only by the bit budget.	记录惊讶度二阶矩的统一上界，只由总比特预算确定。
 pTlaw	p_T(t),\ p_T(T)	Transcript probability mass at a possible value and at the randomly realized value.	记录在某个可能取值处、以及在实际随机取值处的概率质量。
 xsur	x	Nonnegative threshold or integration variable for transcript surprisal.	记录惊讶度的非负阈值或积分变量。
 M	M	Number of transcript values with positive probability, at most two to the total bit budget.	概率为正的记录取值数量，至多为总比特预算对应的二进制叶子数。
@@ -202,7 +202,7 @@ econst	e	Euler's number, the base of the natural logarithm.	自然常数，即�
 diff	\mathrm d	Integration differentials: integrate over the displayed variable, not the parameter dimension.	积分微分元：对所示变量积分；这里的 d 不是参数维数。
 cond	\mid	Conditioning bar: the variables or event on its right are treated as known.	条件竖线：右侧的变量取值或事件视为已知。
 infinity	\infty	Unbounded upper integration limit.	积分上限无界，延伸到无穷。
-supremum	\sup	Least upper bound of the risks over the parameter set, including when no largest value is attained.	参数集合上所有风险的最小上界，表示最坏情形风险。
+supremum	\sup	Largest possible risk over the parameter set, or its least upper bound.	参数集合上风险的上确界，即最坏情形的风险上界。
 minmax	\min,\ \max	Smallest or largest of the listed quantities.	所列量中最小或最大的一个。
 summation	\sum	Add over the displayed index range.	按所示编号范围求和。
 product	\prod	Multiply over the displayed index range.	按所示编号范围连乘。
@@ -210,19 +210,3 @@ tgeneral	t=\frac{2d}{AmD}	Positive scaled reciprocal Bayes risk in the general B
 tGaussian	t=\frac d{mD}	Reciprocal risk in the Gaussian branch, normalized by the one-machine error scale.	高斯分支中，按单机误差尺度归一化的风险倒数。
 sin	\sin	Sine function; its argument is measured in radians.	正弦函数；自变量按弧度计。
 cos	\cos	Cosine function; its argument is measured in radians.	余弦函数；自变量按弧度计。
-equal	=	The quantities on the two sides are equal.	两边的量相等。
-defined	:=	Defines the notation on the left using the expression on the right.	用右侧表达式定义左侧记号。
-leq	\le	The scalar on the left is no larger than the scalar on the right.	左侧标量不超过右侧标量。
-geq	\ge	The scalar on the left is at least the scalar on the right.	左侧标量不小于右侧标量。
-lt	<	Strictly smaller than the quantity on the right.	严格小于右边的量。
-gt	>	Strictly greater than the quantity on the right.	严格大于右边的量。
-neq	\ne	The two indices or quantities are different.	两个编号或量不相同。
-belongs	\in	The item is an element of the set on the right.	左边的元素属于右边的集合。
-notbelongs	\notin	The item is absent from the set on the right.	左边的元素不属于右边的集合。
-integral	\int	Integrate over the displayed range and measure; the differential identifies the variable.	按所示范围和测度积分；微分元指定积分变量。
-root	\sqrt{\cdot}	Nonnegative square root of the enclosed nonnegative scalar.	括号中非负标量的非负平方根。
-square	(\cdot)^2	Square the entire enclosed scalar or norm, after carrying out the operations inside.	先完成括号内标量或范数的运算，再将整体平方。
-tensor	\otimes,\ \bigotimes	Independent product of probability laws; repeated tensor products build independent blocks.	概率分布的独立乘积；重复张量乘积构造独立数据块。
-sumop	+	Add the displayed scalars, vectors or matrices of matching dimensions.	将所示的同维标量、向量或矩阵相加。
-minusop	-	Subtract the following quantity; in a negative exponent it marks its sign.	减去后面的量；负指数中的减号表示负号。
-cot	\cot	Cotangent, equal to cosine divided by sine where sine is nonzero.	余切函数；正弦非零时等于余弦除以正弦。
