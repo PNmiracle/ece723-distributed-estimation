@@ -257,6 +257,11 @@ website=head+'<link rel="stylesheet" href="tools/bilingual/style.css"><link rel=
 assert '@@BILINGUAL_MATH_' not in website
 (ROOT/'bilingual.html').write_text(website)
 
+# The full guided view reuses the reviewed, aligned original-text rows.
+from guided import build as build_guided
+guided_report=build_guided(ens,zhs,rows,head,header,column_key,toc(tree),substitute(pair('paper-title',title_en,title_zh,'title-pair')))
+print('Guided bilingual reader:',json.dumps(guided_report))
+
 print_script='''<script>document.fonts.ready.then(()=>{for(const host of document.querySelectorAll('.math-source')){const k=host.querySelector('.katex');if(!k)continue;const max=host.clientWidth;const width=k.getBoundingClientRect().width;if(width>max)host.style.fontSize=(Math.max(.65,max/width)*100)+'%';}for(const host of document.querySelectorAll('.column .katex')){const max=host.closest('.column').clientWidth;const width=host.getBoundingClientRect().width;if(width>max)host.style.fontSize=(max/width)+'em';}document.documentElement.dataset.printReady='true';});</script>'''
 output=ROOT/'assets/downloads';output.mkdir(parents=True,exist_ok=True)
 for chapter, roman, label, first, last, heading_count in [

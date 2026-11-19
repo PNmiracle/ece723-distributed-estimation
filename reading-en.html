@@ -631,7 +631,7 @@ html[lang^="en"] .eq-fig figcaption::before{content:"Diagram"}
 <button id="open-gloss" type="button">Glossary</button>
 <a class="tlink" href="roadmap-en.html" target="_blank">Roadmap ↗</a><!--vid:tb--><a class="tlink" href="roadmap-en.html#videos" target="_blank">📺 Video path ↗</a><!--/vid-->
 <button aria-pressed="true" id="toggle-marks" type="button">Term marks: on</button>
-<div aria-label="Language" class="langsw" role="group"><a class="" data-lang-link="" href="reading.html">中</a><a class="on" data-lang-link="" href="reading-en.html">EN</a></div>
+<div aria-label="Language" class="langsw" role="group"><a id="reader-bilingual-link" href="reading-bilingual.html?view=both" title="左英文、右中文">EN | 中</a><a class="" data-lang-link="" href="reading.html">中</a><a class="on" data-lang-link="" href="reading-en.html">EN</a></div>
 </div>
 </div></header>
 <div class="layout">
@@ -4379,4 +4379,4 @@ document.addEventListener('copy', e => {
     gist.after(panel);
   }
 })();
-</script></body></html>
+</script><script id="reader-bilingual-navigation">(()=>{const a=document.getElementById("reader-bilingual-link");const update=()=>a.href="reading-bilingual.html?view=both"+location.hash;update();addEventListener("hashchange",update);})();</script></body></html>

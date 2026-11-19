@@ -550,7 +550,7 @@ body.no-term-en .term-en{display:none}
 <button id="open-gloss" type="button">术语表</button>
 <a class="tlink" href="roadmap.html" target="_blank">学习路线 ↗</a><!--vid:tb--><a class="tlink" href="roadmap.html#videos" target="_blank">📺 视频路线 ↗</a><!--/vid-->
 <button aria-pressed="true" id="toggle-marks" type="button">术语标记：开</button>
-<div aria-label="Language" class="langsw" role="group"><a class="on" data-lang-link="" href="reading.html">中</a><a class="" data-lang-link="" href="reading-en.html">EN</a></div>
+<div aria-label="Language" class="langsw" role="group"><a id="reader-bilingual-link" href="reading-bilingual.html?view=both" title="左英文、右中文">EN | 中</a><a class="on" data-lang-link="" href="reading.html">中</a><a class="" data-lang-link="" href="reading-en.html">EN</a></div>
 </div>
 </div></header>
 <div class="layout">
@@ -4168,4 +4168,4 @@ fromHash(); addEventListener('hashchange', fromHash);
  document.getElementById('equation-jump')?.addEventListener('submit',()=>{const card=document.getElementById('eq-'+document.getElementById('eq-input').value)?.closest('.equation-priority-card');if(card)card.open=true;},true);
  let printState;addEventListener('beforeprint',()=>{printState=[...cards,...speech].map(x=>[x,x.open]);printState.forEach(([x])=>x.open=true);});addEventListener('afterprint',()=>printState?.forEach(([x,open])=>x.open=open));
 })();
-</script></body></html>
+</script><script id="reader-bilingual-navigation">(()=>{const a=document.getElementById("reader-bilingual-link");const update=()=>a.href="reading-bilingual.html?view=both"+location.hash;update();addEventListener("hashchange",update);})();</script></body></html>

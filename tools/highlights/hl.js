@@ -171,7 +171,7 @@
       const label = section && section.querySelector(lane);
       const sub = block?.matches('figure.equation') ? T.eq + ' (' + block.id.replace('eq-', '') + ')' : block?.matches('.guide-pair') ? (EN ? 'Reading guide' : '通俗导读') : '';
       const rect = el.getBoundingClientRect();
-      return {sec: label ? fullText(label).trim() : '', sub, order: rect.top + scrollY + rect.left / 1e4, link: block?.id ? '#' + block.id : ''};
+      return {sec: label ? fullText(label).trim() : '', sub, order: (block ? Array.prototype.indexOf.call(MAIN.children,block) : 1e6) * 1e6 + (it.start || 0), link: block?.id ? '#' + block.id : ''};
     }
     const sec = el.closest('section');
     const h = sec && sec.querySelector('.sec-h, h2, h3');

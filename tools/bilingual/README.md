@@ -56,3 +56,10 @@ stable paragraph, guide or equation IDs. All three language views share the
 `notes:bilingual.html` browser store. Cmd+K / Ctrl+K toggles the notes panel;
 JSON backup/restore and Markdown export are available there. Print sources do
 not load the notes interface. Existing guided readers keep their own stores.
+
+`guided.py` also builds `reading-bilingual.html`: all 492 equations and their
+complete English-left / Chinese-right plain-language explanations, diagrams,
+symbol keys, plus 158 speaking bridges. It reuses the reviewed original-text
+rows and chapter guides, and adds the one-page overview. `guided.css` provides
+responsive teaching panels. Notes use a separate `notes:reading-bilingual.html`
+store with the same Cmd+K shortcut, backup and export behavior.
