@@ -67,3 +67,6 @@ python3 tools/plain-zh/inject.py
 
 # Refresh the bilingual lower-bound reader from the guided readers.
 node tools/converse/build.js
+
+# Rebuild the native-text paper comparison and Section III print source.
+python3 tools/bilingual/build.py
