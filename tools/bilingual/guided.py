@@ -49,9 +49,9 @@ def build(english, chinese, rows, head, header, column_key, toc_html, title_pair
     header=header.replace('⌂ 论文对照','⌂ 一口气读懂').replace('英文正文 · 逐段对照 · 多级目录','左英文 · 右中文 · 全部 492 条公式')
     header=header.replace('<form id="equation-jump">','<a class="pdf-link" href="bilingual.html?view=both" data-en="Paper text" data-zh="论文原文对照">论文原文对照</a><form id="equation-jump">')
     html=(head.replace(' · 中英论文对照</title>',' · 一口气读懂·中英对照</title>')+
-          '<link rel="stylesheet" href="tools/bilingual/style.css"><link rel="stylesheet" href="tools/bilingual/guided.css"><link rel="stylesheet" href="tools/highlights/hl.css"></head><body class="guided-reader">'+header+
+          '<link rel="stylesheet" href="tools/bilingual/style.css"><link rel="stylesheet" href="tools/bilingual/guided.css"><link rel="stylesheet" href="tools/highlights/hl.css"><link rel="stylesheet" href="tools/bilingual/search.css"></head><body class="guided-reader">'+header+
           '<div class="layout"><aside class="sidebar"><details id="sections" open><summary data-en="Reading outline" data-zh="阅读目录 · 展开子标题">阅读目录 · 展开子标题</summary><nav><details class="toc-node toc-leaf"><summary><a href="#overview"><span class="toc-en">One-page overview</span><span class="toc-zh">一页总览</span></a></summary></details>'+toc_html+'</nav></details></aside><main>'+column_key+title_pair+overview+''.join(out)+
-          '</main></div><script src="tools/bilingual/reader.js"></script><script src="tools/highlights/hl.js" data-bilingual-notes></script></body></html>')
+          '</main></div><script src="tools/bilingual/reader.js"></script><script src="tools/bilingual/search.js"></script><script src="tools/highlights/hl.js" data-bilingual-notes></script></body></html>')
     (ROOT/'reading-bilingual.html').write_text(html)
     # Keep the entry point when the source readers are rebuilt from scratch.
     for filename in ['reading.html','reading-en.html']:

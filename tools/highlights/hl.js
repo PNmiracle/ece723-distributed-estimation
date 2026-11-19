@@ -34,7 +34,7 @@
   const TEXT_MODEL = 2;
   const BLOCKS = BILINGUAL ? 'main > .pair, main > figure.equation' : 'figure.equation';
   if (BILINGUAL) {
-    T.empty = EN ? 'Select text to highlight and annotate it, or hover over a paragraph, reading guide or formula and choose “＋ Note”. Use ⌘K / Ctrl+K to open this panel. Notes are saved in this browser; use JSON backup to move them to another device.' : '选中文字可高亮并写笔记；将鼠标移到段落、导读或公式上，点击“＋ 笔记”。⌘K / Ctrl+K 打开或收起此面板。笔记保存在本浏览器，可用 JSON 备份转移到其他设备。';
+    T.empty = EN ? 'Select text to highlight and annotate it, or hover over a paragraph, reading guide or formula and choose “＋ Note”. Open this panel using the Notes button. Notes are saved in this browser; use JSON backup to move them to another device.' : '选中文字可高亮并写笔记；将鼠标移到段落、导读或公式上，点击“＋ 笔记”。点击顶部“笔记”按钮打开此面板。笔记保存在本浏览器，可用 JSON 备份转移到其他设备。';
   }
 
   function validBilingualItem(x) {
@@ -421,18 +421,9 @@
   function openPanel() { panel.hidden = false; open.setAttribute('aria-expanded','true'); renderPanel(); }
   function closePanel() { panel.hidden = true; open.setAttribute('aria-expanded','false'); }
   if (BILINGUAL) {
-    open.title = EN ? 'Open notes (⌘K / Ctrl+K)' : '打开笔记（⌘K / Ctrl+K）';
-    open.setAttribute('aria-keyshortcuts','Meta+K Control+K');
+    open.title = EN ? 'Open notes' : '打开笔记';
     open.setAttribute('aria-expanded','false');
-    open.insertBefore(document.createTextNode(/Mac|iPhone|iPad/.test(navigator.platform) ? ' ⌘K ' : ' Ctrl+K '),open.querySelector('b'));
     panel.setAttribute('role','complementary');panel.setAttribute('aria-label',T.title);
-    document.addEventListener('keydown', e => {
-      if ((e.metaKey || e.ctrlKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase()==='k') {
-        e.preventDefault(); if(e.repeat)return;
-        if(panel.hidden){pop.hidden=true;openPanel();panel.querySelector('[data-a="close"]').focus();}
-        else {closePanel();open.focus();}
-      }
-    });
   }
   open.addEventListener('click', () => panel.hidden ? openPanel() : closePanel());
   function jumpTo(it) {

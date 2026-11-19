@@ -53,7 +53,7 @@ all 25 heading/guide pairs and equations (231)–(365), saved as
 The comparison page loads the shared `tools/highlights/hl.js` notes interface
 with `data-bilingual-notes`. Selection highlights and block notes attach to
 stable paragraph, guide or equation IDs. All three language views share the
-`notes:bilingual.html` browser store. Cmd+K / Ctrl+K toggles the notes panel;
+`notes:bilingual.html` browser store. The Notes button toggles the notes panel;
 JSON backup/restore and Markdown export are available there. Print sources do
 not load the notes interface. Existing guided readers keep their own stores.
 
@@ -62,4 +62,7 @@ complete English-left / Chinese-right plain-language explanations, diagrams,
 symbol keys, plus 158 speaking bridges. It reuses the reviewed original-text
 rows and chapter guides, and adds the one-page overview. `guided.css` provides
 responsive teaching panels. Notes use a separate `notes:reading-bilingual.html`
-store with the same Cmd+K shortcut, backup and export behavior.
+store with the same Notes button, backup and export behavior.
+
+`search.js` / `search.css` provide Cmd+K / Ctrl+K full-text search and
+equation/heading navigation on both comparison pages. Notes have no Cmd+K binding.
