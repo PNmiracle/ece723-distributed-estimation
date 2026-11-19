@@ -277,3 +277,7 @@ for chapter, roman, label, first, last, heading_count in [
     (output/f'ECE723_Section{roman}_Bilingual.html').write_text(print_html)
 (HERE/'build-report.json').write_text(json.dumps({'paragraph_pairs':pair_count,'native_equations':492,'heading_count':85,'bilingual_guides':len(GUIDES),'section_iii_equations':158,'section_iii_headings':28,'section_iii_guides':28,'section_iv_equations':135,'section_iv_headings':25,'section_iv_guides':25,'reviewed_anchor_groups':len(REVIEW),'inline_math_expressions':len(expressions)},indent=2)+'\n')
 print((HERE/'build-report.json').read_text())
+
+# Keep generated comparison pages consistent with the shared site controls.
+import sys
+subprocess.run([sys.executable,str(ROOT/"tools/site-chrome/inject.py"),"bilingual.html","reading-bilingual.html"],check=True)

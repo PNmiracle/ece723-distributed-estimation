@@ -70,3 +70,6 @@ node tools/converse/build.js
 
 # Rebuild the native-text paper comparison and Section III print source.
 python3 tools/bilingual/build.py
+
+# Apply compact headers and a contents toggle to every root web page.
+python3 tools/site-chrome/inject.py

@@ -294,7 +294,7 @@ details.vids:not([open]){padding-bottom:8px}
 details.vids>summary:hover{color:#3d2a6b}
 .vids-hint{font-weight:400;color:#8a7fa3;margin-left:6px;font-size:.74rem;letter-spacing:0}
 details.vids[open] .vids-hint{display:none}
-</style><!--/vid--></head>
+</style><!--/vid--><link id="site-chrome-css" rel="stylesheet" href="tools/site-chrome/chrome.css"></head>
 <body>
 <div class="progress"><div class="progress-bar" id="pbar"></div></div>
 <header class="topbar"><div class="bar">
@@ -3162,4 +3162,4 @@ if (location.hash.startsWith('#c-')) setTimeout(() => goto(location.hash.slice(3
   });
 })();
 </script>
-</body></html>
+<script id="site-chrome-js" src="tools/site-chrome/chrome.js"></script></body></html>
