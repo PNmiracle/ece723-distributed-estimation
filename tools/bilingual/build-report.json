@@ -2,8 +2,10 @@
   "paragraph_pairs": 766,
   "native_equations": 492,
   "heading_count": 85,
+  "bilingual_guides": 85,
   "section_iii_equations": 158,
   "section_iii_headings": 28,
+  "section_iii_guides": 28,
   "reviewed_anchor_groups": 128,
-  "inline_math_expressions": 1085
+  "inline_math_expressions": 1110
 }

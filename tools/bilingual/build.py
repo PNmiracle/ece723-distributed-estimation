@@ -4,7 +4,8 @@
 The two readers supply the paper paragraphs and identical numbered equations.
 Stable heading/equation/table anchors align passages before individual paragraphs
 are paired. translation_review.json records human-reviewed repairs, including
-English omissions checked against the original paper. Teaching notes are excluded.
+English omissions checked against the original paper. Bilingual reading guides
+are separate from the original paper text at every heading level.
 """
 from pathlib import Path
 from bs4 import BeautifulSoup, NavigableString
@@ -19,6 +20,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 REVIEW = json.loads((HERE / 'translation_review.json').read_text())
+GUIDES = json.loads((HERE / 'guides.json').read_text())
 spec = importlib.util.spec_from_file_location('prose_math', ROOT / 'tools/math/typeset.py')
 prose_math = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(prose_math)
@@ -130,6 +132,19 @@ def pair(ident, en, zh, classes='', level=None, chapter='', section=''):
             f'<div class="column chinese" lang="zh-Hans"><{tag}>{prose_html(zh,"zh")}</{tag}></div></div>')
 
 
+def guide_pair(ident, chapter, section):
+    data = GUIDES[ident]
+    columns = []
+    for language, css, label in [('en', 'english', 'Plain-language guide'),
+                                 ('zh', 'chinese', '通俗导读')]:
+        sentences = ' '.join(data[language])
+        columns.append(f'<div class="column {css}" lang="{language if language == "en" else "zh-Hans"}">'
+                       f'<div class="guide-label">{label}</div><p>{prose_html(sentences,language)}</p></div>')
+    return (f'<aside id="guide-{ident}" class="pair guide-pair" data-guide-for="{ident}" '
+            f'data-chapter="{chapter}" data-section="{section}">'
+            + ''.join(columns) + '</aside>')
+
+
 ens, ene = events('reading-en.html')
 zhs, zhe = events('reading.html')
 en_anchors = [(k, i, n) for k, i, n in ene if k != 'p']
@@ -171,6 +186,7 @@ for (kind, ident, en), (_, _, zh) in zip(en_anchors, zh_anchors):
         et, zt = source_text(en), source_text(zh)
         headings.append({'id':ident,'level':level,'en':et,'zh':zt,'chapter':chapter})
         rows.append(pair(ident, et, zt, f'heading-pair heading-level-{level}', level, chapter, section))
+        rows.append(guide_pair(ident, chapter, section))
     elif kind == 'equation':
         number = ident.split('-')[1]
         math = str(en.select_one('.math-source'))
@@ -207,6 +223,7 @@ def substitute(text):
 
 rows = [substitute(r) for r in rows]
 assert len(headings) == 85
+assert {h['id'] for h in headings} == set(GUIDES), 'Every heading needs exactly one bilingual guide'
 assert pair_count == 766
 
 # Build a real tree, so proof steps live beneath their containing subsection.
@@ -243,9 +260,10 @@ assert '@@BILINGUAL_MATH_' not in website
 section_rows=[r for r in rows if 'data-chapter="sec-iii"' in r]
 assert sum('class="equation"' in r for r in section_rows)==158
 assert sum('heading-pair' in r for r in section_rows)==28
+assert sum('guide-pair' in r for r in section_rows)==28
 print_script='''<script>document.fonts.ready.then(()=>{for(const host of document.querySelectorAll('.math-source')){const k=host.querySelector('.katex');if(!k)continue;const max=host.clientWidth;const width=k.getBoundingClientRect().width;if(width>max)host.style.fontSize=(Math.max(.65,max/width)*100)+'%';}for(const host of document.querySelectorAll('.column .katex')){const max=host.closest('.column').clientWidth;const width=host.getBoundingClientRect().width;if(width>max)host.style.fontSize=(max/width)+'em';}document.documentElement.dataset.printReady='true';});</script>'''
 print_html=head+'<style>'+(HERE/'style.css').read_text()+'</style></head><body><div class="layout"><main><div class="print-meta">ECE 723 · Section III: Converse / 下界证明 · Equations (73)–(230) · English left / 中文右侧</div>'+column_key+''.join(section_rows)+'</main></div>'+print_script+'</body></html>'
 output=ROOT/'assets/downloads';output.mkdir(parents=True,exist_ok=True)
 (output/'ECE723_SectionIII_Bilingual.html').write_text(print_html)
-(HERE/'build-report.json').write_text(json.dumps({'paragraph_pairs':pair_count,'native_equations':492,'heading_count':85,'section_iii_equations':158,'section_iii_headings':28,'reviewed_anchor_groups':len(REVIEW),'inline_math_expressions':len(expressions)},indent=2)+'\n')
+(HERE/'build-report.json').write_text(json.dumps({'paragraph_pairs':pair_count,'native_equations':492,'heading_count':85,'bilingual_guides':len(GUIDES),'section_iii_equations':158,'section_iii_headings':28,'section_iii_guides':28,'reviewed_anchor_groups':len(REVIEW),'inline_math_expressions':len(expressions)},indent=2)+'\n')
 print((HERE/'build-report.json').read_text())

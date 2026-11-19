@@ -1,9 +1,10 @@
 # Native-text bilingual paper
 
 `build.py` builds `bilingual.html` and the Section III print source from the paper
-paragraphs in `reading-en.html` and `reading.html`. Teaching summaries, diagrams,
-video links, speaker notes and recap panels are intentionally excluded from this
-paper comparison. The separate guided readers retain those features.
+paragraphs in `reading-en.html` and `reading.html`. Diagrams, video links, speaker notes and recap panels are excluded from this
+paper comparison. `guides.json` supplies a short bilingual reading aid under
+every chapter, subsection and proof-step heading, before the original text.
+The 85 guide pairs are labeled and visually separated from the paper itself. The separate guided readers retain those features.
 
 The two languages share the same ordered heading, equation and table anchors.
 Paragraphs are aligned within each anchor interval, then paired individually;
@@ -26,8 +27,8 @@ is M_H, not an unindexed M.
 
 The multilevel outline contains 85 heading pairs, including 61 subheadings and
 nested proof steps. The Section III print source keeps its 28 heading pairs,
-158 equations (73)–(230), all original connecting prose and the reviewed Chinese
-translation. English is on the left, Chinese on the right, with shared equations
+158 equations (73)–(230), all original connecting prose, the reviewed Chinese
+translation and 28 bilingual reading guides. English is on the left, Chinese on the right, with shared equations
 across the page. Print headings are bold and larger at each level.
 
 Rebuild with:

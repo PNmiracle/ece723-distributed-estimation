@@ -1,0 +1,852 @@
+{
+  "sec-ii-a-s1": {
+    "zh": [
+      "交代数据从哪来：一个装着 $N$ 条独立样本的公共池，参数 $\\theta$ 在单位立方体里。",
+      "全局只有这 $N$ 条数据；同一个编号就是同一条样本，不能当成两份。"
+    ],
+    "en": [
+      "Sets up the data: a common pool of $N$ i.i.d. samples, with $\\theta$ in the unit cube.",
+      "There are only $N$ samples; the same index is the same sample, never two copies."
+    ]
+  },
+  "sec-ii-a-s2": {
+    "zh": [
+      "交代每台机器怎么拿数据：各自独立地从池里不放回取 $m$ 条，抽样设计公开。",
+      "机器之间会抽到同一条样本，这种“重叠”是全文的新难点。"
+    ],
+    "en": [
+      "How machines get data: each draws $m$ items independently without replacement; the design is public.",
+      "Machines can draw the same sample — this overlap is the paper’s new difficulty."
+    ]
+  },
+  "sec-ii-a-s3": {
+    "zh": [
+      "定义随机种子和非交互协议：每台只看自己的数据，各发一条 $k$ 比特消息。",
+      "最简单的协议；论文的上界只用它就够了。"
+    ],
+    "en": [
+      "Defines the seeds and the noninteractive protocol: each machine sends one $k$-bit message from its own data.",
+      "The simplest protocol — and enough for the upper bound."
+    ]
+  },
+  "sec-ii-a-s4": {
+    "zh": [
+      "定义黑板协议：大家轮流写比特、都能看到黑板，谁下一个写只由公开历史决定。",
+      "允许交互是最强的设定，下界要对它也成立；记录的熵 $\\le B\\ln2$ 从这里来。"
+    ],
+    "en": [
+      "Defines blackboard protocols: machines take turns writing public bits; who speaks next depends only on the public history.",
+      "Interaction is the strongest setting, so the lower bound must cover it; transcript entropy $\\le B\\ln2$ comes from here."
+    ]
+  },
+  "sec-ii-a-s5": {
+    "zh": [
+      "定义估计量和 minimax 风险，并指出黑板协议的最优误差不超过非交互的。",
+      "全文要算的就是 $R_{\\mathrm A}(N,m,n)$；只需证 BB 的下界和 NI 的上界。"
+    ],
+    "en": [
+      "Defines the estimator and the minimax risk, and notes blackboard is at least as good as noninteractive.",
+      "The target is $R_{\\mathrm A}(N,m,n)$; it suffices to lower-bound BB and upper-bound NI."
+    ]
+  },
+  "sec-ii-b-s1": {
+    "zh": [
+      "列出下界需要的正则性：有密度、支撑不随参数变、能交换求导与积分。",
+      "这些条件保证 score 均值为零，Fisher 信息有意义。"
+    ],
+    "en": [
+      "Lists the regularity the lower bound needs: densities, fixed support, swapping derivative and integral.",
+      "They make the score mean-zero and Fisher information meaningful."
+    ]
+  },
+  "sec-ii-b-s2": {
+    "en": [
+      "The Bernstein score condition (19) uniformly controls every direction of the score.",
+      "It bounds information in each unit direction by $v$ and bounds the full Fisher-information trace by $dv$; later it limits score shifts after learning an event."
+    ],
+    "zh": [
+      "Bernstein 得分条件 (19) 对得分的每个方向给出一致控制。",
+      "每个单位方向的信息至多为 $v$，Fisher 信息矩阵的迹至多为 $dv$；后面还用它限制得知一个事件后得分均值的偏移。"
+    ]
+  },
+  "sec-ii-b-s3": {
+    "zh": [
+      "给出上界的唯一假设 (24)：有 $d$ 个取值在 $[0,1]$ 的矩，能稳定地反推参数。",
+      "上界的路线就是“分布式地估矩，再反解参数”。"
+    ],
+    "en": [
+      "States the upper bound’s only assumption (24): $d$ moments in $[0,1]$ that identify the parameter stably.",
+      "The upper bound = estimate moments in a distributed way, then invert."
+    ]
+  },
+  "sec-ii-b-s4": {
+    "zh": [
+      "说明两组假设分别给谁用：下界用 (19)，上界用 (24)。",
+      "两边要同时成立，才能得到“上下界同阶”的结论。"
+    ],
+    "en": [
+      "Says which side uses which assumption: (19) for the lower bound, (24) for the upper.",
+      "Both are needed only when matching the two bounds."
+    ]
+  },
+  "sec-ii-c-s1": {
+    "zh": [
+      "定义总预算 $B$、余量 $s$ 和比特底线 $a_B$。",
+      "$s$ = 每维比特减去“定位到单机精度”要花的 $\\tfrac12\\log_2 m$；它决定比特是不是瓶颈。"
+    ],
+    "en": [
+      "Defines the budget $B$, the surplus $s$ and the bit floor $a_B$.",
+      "$s$ = bits per coordinate minus the $\\tfrac12\\log_2 m$ needed to localize; it decides whether bits are the bottleneck."
+    ]
+  },
+  "sec-ii-c-s2": {
+    "zh": [
+      "定义访问重数 $D_a$、共享观测数 $r$ 和它的期望 $\\bar r$。",
+      "$\\bar r$ 只出现在下界里，正是上下界唯一的差别。"
+    ],
+    "en": [
+      "Defines the access multiplicity $D_a$, the shared count $r$ and its mean $\\bar r$.",
+      "$\\bar r$ appears only in the lower bound — the only difference between the bounds."
+    ]
+  },
+  "sec-ii-c-s3": {
+    "zh": [
+      "定义下界包络 $\\mathcal L$（地板）和上界包络 $\\mathcal U$（天花板），逐项解释四个瓶颈。",
+      "四项分别是：池子大小、总访问量、总比特、定位与精修；两者只差第四项里的 $\\bar r$。"
+    ],
+    "en": [
+      "Defines the lower envelope $\\mathcal L$ (floor) and upper envelope $\\mathcal U$ (ceiling) and explains the four bottlenecks.",
+      "Pool size, total accesses, total bits, localization-and-refinement; they differ only by $\\bar r$ in the fourth term."
+    ]
+  },
+  "sec-ii-c-s4": {
+    "zh": [
+      "给出定理 1 和推论 1：在表 I 的五种情形下上下界同阶。",
+      "这些情形里问题完全解决，而且交互不能改进误差的量级。"
+    ],
+    "en": [
+      "States Theorem 1 and Corollary 1: the bounds match in the five regimes of Table I.",
+      "In these regimes the problem is solved and interaction cannot improve the rate."
+    ]
+  },
+  "sec-ii-c-p1": {
+    "zh": [
+      "证明表 I 第 1 行：余量有界。",
+      "这时比特是唯一的瓶颈，误差 $\\asymp da_B$。"
+    ],
+    "en": [
+      "Proves row 1 of Table I: bounded surplus.",
+      "Bits are the only bottleneck; error $\\asymp da_B$."
+    ]
+  },
+  "sec-ii-c-p2": {
+    "zh": [
+      "证明表 I 第 2 行：余量与 $n$ 成正比。",
+      "比特充足，只剩“能看到多少不同样本”这一限制。"
+    ],
+    "en": [
+      "Proves row 2 of Table I: surplus proportional to $n$.",
+      "Bits are plentiful; only the number of distinct samples limits."
+    ]
+  },
+  "sec-ii-c-p3": {
+    "zh": [
+      "进入临界窗口（$s\\to\\infty$、$s/n\\to0$），化简包络并证明第 3 行（池子小）。",
+      "窗口里只剩 $1/N$ 和 $1/(ms)$ 两项；池子小时误差 $\\asymp d/N$。"
+    ],
+    "en": [
+      "Enters the critical window ($s\\to\\infty$, $s/n\\to0$), simplifies the envelopes and proves row 3 (small pool).",
+      "Only $1/N$ and $1/(ms)$ remain; with a small pool the error is $\\asymp d/N$."
+    ]
+  },
+  "sec-ii-c-p4": {
+    "zh": [
+      "证明第 4 行：池子很大时，共享样本很少。",
+      "$\\bar r\\lesssim ms$，所以 $\\bar r$ 不碍事，误差 $\\asymp d/(ms)$。"
+    ],
+    "en": [
+      "Proves row 4: with a large pool, few samples are shared.",
+      "$\\bar r\\lesssim ms$, so it is harmless; error $\\asymp d/(ms)$."
+    ]
+  },
+  "sec-ii-c-p5": {
+    "zh": [
+      "证明第 5 行：完全重叠（$m=N$）时，所有机器算同一个经验矩。",
+      "比特可以“合在一起用”，误差 $\\asymp d(1/N+a_B)$；重叠不全是坏事。"
+    ],
+    "en": [
+      "Proves row 5: under full overlap ($m=N$) all machines compute the same empirical moment.",
+      "Bits can be pooled; error $\\asymp d(1/N+a_B)$ — overlap is not always bad."
+    ]
+  },
+  "sec-ii-c-s5": {
+    "zh": [
+      "给出推论 2：多项式耦合与指数速率。",
+      "多项式增长全部解决；只有单机数据随 $n$ 指数增长时才可能落进未解决区间。"
+    ],
+    "en": [
+      "States Corollary 2: polynomial couplings and exponential rates.",
+      "All polynomial growth is solved; only exponentially large local data can hit the open window."
+    ]
+  },
+  "sec-iii-a-s1": {
+    "zh": [
+      "推导得分恒等式：经过与参数无关的处理后，消息的 score 是原始 score 的条件期望。",
+      "这是整个下界的地基：压缩只会把信息平均掉。"
+    ],
+    "en": [
+      "Derives the score identity: after a $\\theta$-free processing, the message score is the conditional mean of the raw score.",
+      "The foundation of the lower bound: compression only averages information away."
+    ]
+  },
+  "sec-iii-a-s2": {
+    "zh": [
+      "由条件 Jensen 得到 Fisher 版数据处理不等式，再给出 Fisher 信息的链式法则。",
+      "加工不增加信息；联合信息可以拆成两块相加（III-D 靠它单独处理共享数据）。"
+    ],
+    "en": [
+      "Gets the Fisher data-processing inequality from conditional Jensen, then the chain rule.",
+      "Processing adds no information; joint information splits into two parts (III-D uses this for shared data)."
+    ]
+  },
+  "sec-iii-a-s3": {
+    "zh": [
+      "选一个两端为零的平滑先验，算出它的 Fisher 信息和微分熵。",
+      "这两个常数分别进入 van Trees 的分母和熵预算。"
+    ],
+    "en": [
+      "Picks a smooth prior vanishing at the edges and computes its Fisher information and entropy.",
+      "These two constants feed the van Trees denominator and the entropy budget."
+    ]
+  },
+  "sec-iii-a-s4": {
+    "zh": [
+      "用分部积分加 Cauchy–Schwarz 证明 van Trees 不等式。",
+      "误差 $\\ge d^2$/(平均信息 + 先验信息)：从此“证下界” = “给信息找上界”。"
+    ],
+    "en": [
+      "Proves the van Trees inequality by integration by parts and Cauchy–Schwarz.",
+      "Error $\\ge d^2$/(average information + prior information): lower-bounding error = upper-bounding information."
+    ]
+  },
+  "sec-iii-a-s5": {
+    "en": [
+      "Count how many distinct observations are accessible and apply the information bound to them.",
+      "This yields a sample-count lower bound even with unlimited communication; its order is $d/\\min\\{N,nm\\}$, with constants depending on the model."
+    ],
+    "zh": [
+      "先计算实际能访问多少条不同观测，再对它们应用信息上界。",
+      "即使通信无限，也会得到由样本数量决定的误差下界，量级为 $d/\\min\\{N,nm\\}$，常数取决于模型。"
+    ]
+  },
+  "sec-iii-a-s6": {
+    "zh": [
+      "把误差和互信息联系起来：误差要小，记录就必须传足够多关于 $\\Theta$ 的信息。",
+      "用的是“给定方差时高斯熵最大”。"
+    ],
+    "en": [
+      "Links error to mutual information: small error forces the transcript to carry much about $\\Theta$.",
+      "Uses “the Gaussian maximizes entropy for a given variance”."
+    ]
+  },
+  "sec-iii-a-s7": {
+    "zh": [
+      "$B$ 比特至多传 $B$ 比特信息，得到比特底线；再把记录的熵拆成参数信息和剩余熵 $h_T$。",
+      "前三项下界到这里齐了；熵预算 (118) 是 III-E 的关键输入。"
+    ],
+    "en": [
+      "$B$ bits carry at most $B$ bits, giving the bit floor; then split transcript entropy into parameter information and leftover $h_T$.",
+      "The first three lower-bound terms are done; the entropy budget (118) is III-E’s key input."
+    ]
+  },
+  "sec-iii-b-s1": {
+    "zh": [
+      "引理 1：得知一个概率为 $p$ 的事件，最多能把块 score 推偏多少。",
+      "偏移 $\\lesssim\\sqrt{vq\\ln(1/p)}+b\\ln(1/p)$：越罕见越有料，但只按对数增长。"
+    ],
+    "en": [
+      "Lemma 1: how far learning an event of probability $p$ can shift a block score.",
+      "Shift $\\lesssim\\sqrt{vq\\ln(1/p)}+b\\ln(1/p)$: rarer events say more, but only logarithmically."
+    ]
+  },
+  "sec-iii-b-s2": {
+    "en": [
+      "Bounds the second moment of transcript surprisal uniformly over alphabets with at most $2^B$ leaves.",
+      "The bound is of order $(B+1)^2$, including small $B$; it controls the correction when $b>0$."
+    ],
+    "zh": [
+      "对至多有 $2^B$ 个叶子的记录，统一控制惊讶度二阶矩。",
+      "上界为 $(B+1)^2$ 的量级，也覆盖小 $B$；用于控制 $b>0$ 时的修正项。"
+    ]
+  },
+  "sec-iii-c-p1": {
+    "en": [
+      "Fixes the complete transcript and all seeds, then factors its event into local checklists.",
+      "With independent inputs at fixed parameter, both leaf probabilities and conditional block laws factor."
+    ],
+    "zh": [
+      "固定完整记录与全部种子，再将其事件拆成逐台机器的检查清单。",
+      "固定参数且输入独立时，叶子概率与条件块分布都能分解成乘积。"
+    ]
+  },
+  "sec-iii-c-p2": {
+    "en": [
+      "Combines posterior block scores, cancels cross terms after averaging, and applies the single-block event bound.",
+      "The largest block size scales the entropy term; the tail correction is paid once for the whole transcript."
+    ],
+    "zh": [
+      "合并后验块得分，在平均后消去交叉项，再套用单块事件界。",
+      "熵项前使用最大块大小，尾修正只对完整记录计算一次。"
+    ]
+  },
+  "sec-iii-c-p3": {
+    "en": [
+      "Averages fixed-seed information and entropy bounds, then repeats with the sharper sub-Gaussian estimate.",
+      "The seed law contributes zero Fisher information; the conditional transcript contribution still must be averaged."
+    ],
+    "zh": [
+      "对固定种子下的信息界与熵界平均，再用更紧的次高斯估计重复论证。",
+      "种子分布本身的 Fisher 信息为零，条件记录的信息贡献仍须取平均。"
+    ]
+  },
+  "sec-iii-d-s1": {
+    "zh": [
+      "把样本分成共享组和各机器的私有组，并陈述定理 2。",
+      "共享数据按条数加信息（每条 $\\le dv$），私有部分受记录熵限制。"
+    ],
+    "en": [
+      "Splits samples into a shared group and private groups, and states Theorem 2.",
+      "Shared data add information per item ($\\le dv$ each); private parts are limited by transcript entropy."
+    ]
+  },
+  "sec-iii-d-p1": {
+    "en": [
+      "Reveals shared observations only in the Fisher-information comparison, with seeds fixed.",
+      "The chain rule accounts separately for shared information; these observations are not free side information in the bit budget."
+    ],
+    "zh": [
+      "固定种子，仅在 Fisher 信息的比较中揭示共享观测。",
+      "链式法则单独计入共享信息；不能在比特预算中把共享观测当免费辅助信息。"
+    ]
+  },
+  "sec-iii-d-p2": {
+    "en": [
+      "At each fixed parameter, shared value and seed, the remaining inputs are independent private blocks.",
+      "The conditional protocol is parameter independent, so Lemma 3 applies. Prior averaging comes later."
+    ],
+    "zh": [
+      "对每个固定参数、共享值与种子，剩余输入为独立私有块。",
+      "条件协议的规则不依赖参数，因此可用引理 3；先验平均留到后面。"
+    ]
+  },
+  "sec-iii-d-p3": {
+    "zh": [
+      "对共享数据的取值和种子平均，完成定理 2。",
+      "再用熵的链式法则把条件熵放宽成更好用的形式 (175)。"
+    ],
+    "en": [
+      "Averages over the shared data and seeds to finish Theorem 2.",
+      "The entropy chain rule then relaxes it to the handier form (175)."
+    ]
+  },
+  "sec-iii-d-p4": {
+    "zh": [
+      "次高斯和高斯情形下的更紧版本。",
+      "高斯时常数完全显式。"
+    ],
+    "en": [
+      "Tighter versions for sub-Gaussian and Gaussian scores.",
+      "Constants are fully explicit in the Gaussian case."
+    ]
+  },
+  "sec-iii-d-s2": {
+    "zh": [
+      "解释共享项：它直接相加、不乘熵；并把抽样设计也平均掉。",
+      "下界里的 $\\bar r$ 就是在这里进来的；它也是 gap 的来源。"
+    ],
+    "en": [
+      "Interprets the shared term (added, not multiplied by entropy) and averages over the design.",
+      "This is where $\\bar r$ enters the lower bound — and the source of the gap."
+    ]
+  },
+  "sec-iii-e-s1": {
+    "zh": [
+      "把信息界代进 van Trees，再和熵预算合并。",
+      "关键时刻：定位花费 $\\tfrac12\\ln m$ 被抵消，只剩余量 $s$。"
+    ],
+    "en": [
+      "Plugs the information bound into van Trees and combines it with the entropy budget.",
+      "The key moment: the localization cost $\\tfrac12\\ln m$ cancels, leaving the surplus $s$."
+    ]
+  },
+  "sec-iii-e-s2": {
+    "en": [
+      "Eliminates remaining entropy and bounds a positive reciprocal-risk variable using $t+\\ln t$.",
+      "An upper bound on $t$ becomes a lower bound on error; the general result still has a squared-budget correction."
+    ],
+    "zh": [
+      "消去剩余熵，通过 $t+\\ln t$ 控制正的风险倒数变量。",
+      "$t$ 的上界转成误差下界；一般情形此时仍保留预算平方修正。"
+    ]
+  },
+  "sec-iii-e-s3": {
+    "en": [
+      "Removes the squared-budget correction using the regimes $m\\ge n^2$ and $m<n^2$.",
+      "For fixed dimension and per-machine budget, absorb the correction in the first regime; use the access floor in the second for large $n$."
+    ],
+    "zh": [
+      "分 $m\\ge n^2$ 与 $m<n^2$ 两种情形，去掉预算平方修正。",
+      "固定维度和单机预算：第一种情形吸收修正；第二种在 $n$ 足够大时使用总访问下界。"
+    ]
+  },
+  "sec-iii-e-s4": {
+    "zh": [
+      "高斯均值情形下保留所有常数，用 Lambert W 写出显式下界。",
+      "一个完全显式、非渐近的下界。"
+    ],
+    "en": [
+      "For the Gaussian mean, keeps all constants and writes an explicit bound via Lambert W.",
+      "A fully explicit, non-asymptotic lower bound."
+    ]
+  },
+  "sec-iv-a-s1": {
+    "en": [
+      "Lemma 4 resamples only from a machine’s own subset, yet produces i.i.d. uniform pool indices after averaging over that random subset.",
+      "This is an exact distributional identity, not an approximation that assumes overlaps are rare."
+    ],
+    "zh": [
+      "引理 4 只在本机子集内重抽样，但对随机子集平均后，所得编号恰好与从全池独立均匀抽取相同。",
+      "这是精确的分布恒等式，不是建立在“重叠很少”假设上的近似。"
+    ]
+  },
+  "sec-iv-a-s2": {
+    "en": [
+      "Condition on the whole sample pool while leaving access sets and private resampling randomness random.",
+      "The resampled observations are then i.i.d. from the empirical pool law, allowing independent-input encoders to be used conditionally."
+    ],
+    "zh": [
+      "固定整个样本池，但仍保留访问集与私有重抽样随机性。",
+      "此时重抽样观测独立同分布于池的经验分布，因此可以在这一条件实验中使用要求独立输入的编码器。"
+    ]
+  },
+  "sec-iv-a-s3": {
+    "zh": [
+      "把有界矩随机化成伯努利硬币，每台的正面计数服从二项分布。",
+      "问题变成：分布式地估 $d$ 个伯努利参数。"
+    ],
+    "en": [
+      "Randomizes bounded moments into Bernoulli coins; each machine’s head count is Binomial.",
+      "The problem becomes distributed estimation of $d$ Bernoulli parameters."
+    ]
+  },
+  "sec-iv-a-s4": {
+    "zh": [
+      "算经验矩的池子误差，并把总误差拆成通信误差 + 池子误差。",
+      "池子误差 $\\le d/(4N)$ 是固定的，后面只需控制通信误差。"
+    ],
+    "en": [
+      "Computes the pool error and splits total error into communication + pool.",
+      "The pool error $\\le d/(4N)$ is fixed; only communication error remains."
+    ]
+  },
+  "sec-iv-b-s1": {
+    "zh": [
+      "引入外部工具：Cai–Wei 的稳健标量编码保证。",
+      "只要输入近似高斯、次高斯，就能达到“样本、比特、精修”三项最大值。"
+    ],
+    "en": [
+      "Brings in the external tool: the Cai–Wei robust scalar encoding guarantee.",
+      "Near-Gaussian, sub-Gaussian inputs achieve the max of the sample, bit and refinement terms."
+    ]
+  },
+  "sec-iv-b-s2": {
+    "zh": [
+      "构造平滑统计量：样本均值加一点补齐方差的高斯噪声。",
+      "让离散的二项计数变得像高斯，满足编码保证的输入条件（引理 5）。"
+    ],
+    "en": [
+      "Builds the smoothed statistic: the sample mean plus Gaussian noise topping up the variance.",
+      "Makes the discrete binomial look Gaussian, meeting the encoder’s input condition (Lemma 5)."
+    ]
+  },
+  "sec-iv-b-p1": {
+    "zh": [
+      "验证平滑统计量无偏、次高斯。",
+      "编码保证的两个条件之一。"
+    ],
+    "en": [
+      "Checks that the smoothed statistic is unbiased and sub-Gaussian.",
+      "One of the encoder’s two conditions."
+    ]
+  },
+  "sec-iv-b-p2": {
+    "zh": [
+      "用高斯模糊把任意有界测试函数变光滑，并控制它的三阶导数。",
+      "为下一步的 Lindeberg 替换做准备。"
+    ],
+    "en": [
+      "Smooths any bounded test function with a Gaussian and bounds its third derivative.",
+      "Prepares the Lindeberg replacement."
+    ]
+  },
+  "sec-iv-b-p3": {
+    "zh": [
+      "Lindeberg 替换：把伯努利项逐个换成同均值、同方差的高斯。",
+      "每换一个误差约 $q^{-3/2}$，总共 $\\lesssim q^{-1/2}$：统计量接近高斯。"
+    ],
+    "en": [
+      "Lindeberg replacement: swap Bernoulli terms one by one for Gaussians with the same mean and variance.",
+      "Each swap costs ≈ $q^{-3/2}$, total $\\lesssim q^{-1/2}$: the statistic is near Gaussian."
+    ]
+  },
+  "sec-iv-b-p4": {
+    "zh": [
+      "修正剩余的方差不匹配，用 Pinsker 不等式控制。",
+      "TV 距离 $\\lesssim q^{-1/2}$，引理 5 完成。"
+    ],
+    "en": [
+      "Fixes the remaining variance mismatch with Pinsker’s inequality.",
+      "TV distance $\\lesssim q^{-1/2}$; Lemma 5 done."
+    ]
+  },
+  "sec-iv-b-s3": {
+    "zh": [
+      "把 $B$ 个比特轮流分给 $d$ 个坐标。",
+      "每个坐标约 $B/d$ 比特、约 $n$ 台机器参与。"
+    ],
+    "en": [
+      "Deals the $B$ bits round-robin to the $d$ coordinates.",
+      "Each coordinate gets ≈ $B/d$ bits and ≈ $n$ machines."
+    ]
+  },
+  "sec-iv-b-s4": {
+    "zh": [
+      "逐项检查编码保证的条件在每个坐标上都成立。",
+      "可以放心套用 Cai–Wei 的结论。"
+    ],
+    "en": [
+      "Checks the encoder’s conditions for each coordinate.",
+      "The Cai–Wei result can be applied."
+    ]
+  },
+  "sec-iv-b-s5": {
+    "zh": [
+      "把编码保证给出的三项，逐一换成天花板 $\\mathcal U$ 里的对应项。",
+      "大块情形的通信误差 $\\lesssim$ 天花板。"
+    ],
+    "en": [
+      "Converts the encoder’s three terms into the matching terms of the ceiling $\\mathcal U$.",
+      "In the large-block case, communication error $\\lesssim$ the ceiling."
+    ]
+  },
+  "sec-iv-c-p1": {
+    "zh": [
+      "说明小块情形可以用私有随机性，并概述证明步骤。",
+      "路线：一比特测量 → 灵敏度 → 逐级定位 → 精修。"
+    ],
+    "en": [
+      "Notes that private randomness is allowed and outlines the small-block proof.",
+      "Route: one-bit measurements → sensitivity → successive localization → refinement."
+    ]
+  },
+  "sec-iv-c-p2": {
+    "zh": [
+      "用 1 比特测量二项计数的特征函数（一根“表针”）的实部和虚部。",
+      "一比特就能无偏地读出表针位置。"
+    ],
+    "en": [
+      "Measures the real and imaginary parts of the binomial’s characteristic function (a “clock hand”) with one bit.",
+      "One bit reads the hand’s position unbiasedly."
+    ]
+  },
+  "sec-iv-c-p3": {
+    "zh": [
+      "选一串翻倍的频率，并证明表针长度不会缩成一个点。",
+      "最快一级的灵敏度对应单机精度 $1/\\sqrt m$。"
+    ],
+    "en": [
+      "Chooses doubling frequencies and shows the hand never shrinks to a point.",
+      "The fastest level’s sensitivity matches single-machine precision $1/\\sqrt m$."
+    ]
+  },
+  "sec-iv-c-p4": {
+    "zh": [
+      "给每一级分配机器做粗测量，并定义“一切顺利”事件。",
+      "出错概率很小，粗定位只用很少的机器。"
+    ],
+    "en": [
+      "Assigns machines to coarse measurements at each level and defines the “all good” event.",
+      "Failure is unlikely, and localization uses few machines."
+    ]
+  },
+  "sec-iv-c-p5": {
+    "zh": [
+      "解码器逐级缩小可行区间：先看时针，再看分针。",
+      "每升一级区间缩一半，最后定位到 $1/\\sqrt m$ 精度。"
+    ],
+    "en": [
+      "The decoder shrinks the feasible interval level by level: hour hand, then minute hand.",
+      "Each level halves the interval, ending at precision $1/\\sqrt m$."
+    ]
+  },
+  "sec-iv-c-p6": {
+    "en": [
+      "Use fresh machines for a finer estimate at the highest frequency, then decode inside the already localized interval.",
+      "Under the small-block allocation conditions, the squared-error guarantee has order $1/(Qm)$ using one-bit messages."
+    ],
+    "zh": [
+      "用新机器在最高频率上做更精确的测量，再在已经定位的区间内解码。",
+      "在本节的小样本块与机器分配条件下，一比特消息即可达到 $1/(Qm)$ 量级的平方误差保证。"
+    ]
+  },
+  "sec-iv-c-s1": {
+    "zh": [
+      "把引理 6 用到每个坐标（每组约 $n/d$ 台机器）。",
+      "小块情形的误差 $\\lesssim 1/(nm)$，也在天花板以内。"
+    ],
+    "en": [
+      "Applies Lemma 6 coordinate by coordinate (≈ $n/d$ machines each).",
+      "Small-block error $\\lesssim 1/(nm)$, also within the ceiling."
+    ]
+  },
+  "sec-i": {
+    "en": [
+      "More machines can send more bits, but overlapping data do not create new independent samples. This section explains why counting machines alone gives the wrong picture.",
+      "Keep three limits in mind: the number of distinct samples, the total communication budget, and the bits needed to locate the parameter before refining it."
+    ],
+    "zh": [
+      "机器越多，能发送的比特越多；但重复读取同一条样本，并不会增加独立数据。本章先说明为什么不能只按机器数量估算精度。",
+      "后面始终围绕三个限制：能看到多少不同样本、总共能传多少比特，以及精细估计前要先花多少比特确定参数的大致位置。"
+    ]
+  },
+  "sec-ii": {
+    "en": [
+      "This is the map for the rest of the paper: define the experiment, state the assumptions, and display the risk bounds.",
+      "Read the model in II-A, separate the two sets of assumptions in II-B, then use II-C and Table I to see where the bounds match."
+    ],
+    "zh": [
+      "本章是全文地图：先把实验规则讲清楚，再列出假设，最后给出误差上下界。",
+      "II-A 规定数据与通信方式，II-B 区分上下界各自需要的假设，II-C 和表 I 告诉你哪些情形已经解决。"
+    ]
+  },
+  "sec-ii-a": {
+    "en": [
+      "A pool has $N$ observations; each of $n$ machines independently chooses $m$ distinct indices and communicates at most $k$ bits. The center must estimate the same unknown parameter.",
+      "The definitions distinguish noninteractive messages from public blackboard interaction. Both obey the total budget $B=nk$, which later limits transcript entropy."
+    ],
+    "zh": [
+      "池中有 $N$ 条观测；$n$ 台机器各自独立抽取 $m$ 个不同编号，每台最多传 $k$ 比特，中心据此估计同一个未知参数。",
+      "本节区分一次发送的非交互协议与公开黑板上的交互协议。两者都受总预算 $B=nk$ 限制，后面就用它约束通信记录的熵。"
+    ]
+  },
+  "sec-ii-b": {
+    "en": [
+      "The lower bound controls likelihood sensitivity through a regular model and a Bernstein condition on the score. The upper bound instead needs bounded moments that identify the parameter stably.",
+      "These assumptions do different jobs. They are needed together when claiming matching upper and lower rates, rather than for every intermediate argument."
+    ],
+    "zh": [
+      "下界需要正则模型与得分的 Bernstein 条件，用来限制数据对参数的敏感度；上界则需要能够稳定反推出参数的有界矩。",
+      "两组假设各司其职。只有要宣布上下界同阶时，才需同时满足它们；不能把某一边的假设误当成另一边的前提。"
+    ]
+  },
+  "sec-ii-c": {
+    "en": [
+      "The surplus $s$ measures the bits left after coarse localization. The lower and upper envelopes collect the competing sample and communication bottlenecks.",
+      "Theorem 1 gives the envelopes; Table I says when they match. The shared-sample correction explains the remaining intermediate-overlap gap."
+    ],
+    "zh": [
+      "余量 $s$ 衡量扣除粗定位成本后还剩多少比特。上下界包络把样本量、访问量和通信量造成的瓶颈合到一起。",
+      "定理 1 给出总界，表 I 列出上下界何时一致；下界中的共享样本修正项，则解释了中等重叠区间为何仍有缺口。"
+    ]
+  },
+  "sec-iii": {
+    "en": [
+      "This chapter proves that every allowed protocol must make a certain amount of error, even with interaction. Its strategy is to upper-bound available information, then convert that into a lower bound on error.",
+      "III-A builds the tools; III-B and III-C control private blocks; III-D adds shared observations; III-E combines everything with the bit budget."
+    ],
+    "zh": [
+      "本章证明：任何符合规则的协议，即使允许交互，也不可能把误差无限压低。路线是先限制可获得的信息，再把信息上界转换成误差下界。",
+      "III-A 准备工具，III-B、III-C 控制私有样本块，III-D 加入共享观测，III-E 最后与比特预算合并。"
+    ]
+  },
+  "sec-iii-a": {
+    "en": [
+      "Processed data inherit the conditional mean of the raw score. This yields information data processing, a chain rule, and a Bayesian inequality connecting information to squared error.",
+      "The section then extracts the distinct-sample and bit-budget floors. Its leftover-entropy budget is saved for the harder bound in III-E."
+    ],
+    "zh": [
+      "加工后的数据，其得分等于原始得分的条件均值。由此得到信息的数据处理不等式、链式法则，以及把信息转换成平方误差下界的贝叶斯不等式。",
+      "接着先拿到不同样本数量与比特预算给出的简单下界，再留下一个“剩余熵预算”，供 III-E 处理更难的一项。"
+    ]
+  },
+  "sec-iii-b": {
+    "en": [
+      "How much can learning an event shift a block score? Lemma 1 turns event rarity into a logarithmic bound on that shift.",
+      "Averaging over message events turns the logarithm into entropy. Lemma 2 controls the squared-logarithm correction required by Bernstein tails."
+    ],
+    "zh": [
+      "得知某个事件发生后，样本块得分的均值最多能偏移多少？引理 1 把这种偏移限制在事件稀有程度的对数量级。",
+      "对各条消息对应的事件平均，就把对数概率变成熵；Bernstein 尾部多出来的对数平方项，则交给引理 2 控制。"
+    ]
+  },
+  "sec-iii-c": {
+    "en": [
+      "Start with independent private blocks and allow the machines to interact. At fixed parameter and seeds, a complete transcript event factors into local input constraints.",
+      "That rectangle structure preserves conditional block independence. It lets the proof combine block-score bounds while charging the correction to the whole transcript only once."
+    ],
+    "zh": [
+      "先处理私有样本块相互独立、但机器之间可以交互的情形。固定参数和种子后，一条完整通信记录对应的事件可拆成各机器的局部输入条件。",
+      "这一“矩形结构”保留了条件块独立性，使各块得分界能够合并，并且修正项只需对完整通信记录计算一次。"
+    ]
+  },
+  "sec-iii-d": {
+    "en": [
+      "Partition the actual observations into a shared group and disjoint private groups. Reveal the shared group in the information comparison, then apply III-C to the remaining private blocks.",
+      "The chain rule adds the shared group’s information once. It is not free side information in the communication-entropy budget; keeping those two steps separate is essential."
+    ],
+    "zh": [
+      "把实际观测分成共享组与互不重叠的私有组。在信息比较中先揭示共享组，再对剩余私有块应用 III-C 的结果。",
+      "链式法则把共享组的信息计入一次；但在通信熵预算中，不能把它当作免费辅助信息。这两个步骤必须分清。"
+    ]
+  },
+  "sec-iii-e": {
+    "en": [
+      "Now assemble the shared-observation information bound, van Trees, and the leftover-entropy budget. The coarse-localization cost cancels, exposing the surplus $s$.",
+      "Solve the resulting logarithmic inequality, absorb the Bernstein correction in the appropriate regimes, then combine all risk floors. The Gaussian ending keeps explicit constants."
+    ],
+    "zh": [
+      "现在把共享观测信息界、van Trees 不等式和剩余熵预算拼起来。粗定位成本在合并时抵消，真正起作用的余量 $s$ 随之显现。",
+      "接着解对数不等式，在相应情形下吸收 Bernstein 修正，再合并所有误差下限；最后的高斯版本保留显式常数。"
+    ]
+  },
+  "sec-iv": {
+    "en": [
+      "This chapter constructs a noninteractive protocol to reach the upper envelope. Rather than estimating the parameter directly, it first estimates bounded identifying moments.",
+      "The route is exact resampling, Bernoulli randomization, communication-efficient moment estimation, and stable inversion back to the parameter."
+    ],
+    "zh": [
+      "本章构造达到上界包络的非交互协议。先不直接估参数，而是估计能够识别参数的有界矩。",
+      "路线依次是：精确重抽样、伯努利随机化、节省通信的矩估计，最后稳定地反推出参数。"
+    ]
+  },
+  "sec-iv-a": {
+    "en": [
+      "Local subsets overlap, so using their raw samples as independent blocks would be wrong. The resampling rule produces exactly the required independent draws after averaging over the random access sets.",
+      "Conditional on the pool, Bernoulli randomization reduces the task to estimating its empirical moments. This separates communication error from the finite-pool sampling error."
+    ],
+    "zh": [
+      "本地子集存在重叠，不能直接把原始数据当成独立样本块。这里设计的重抽样规则，在对随机访问集平均后，精确地产生所需的独立抽取。",
+      "给定样本池，再用伯努利随机化把任务化为估计池中的经验矩，从而将通信误差与有限样本池的抽样误差分开。"
+    ]
+  },
+  "sec-iv-b": {
+    "en": [
+      "When local blocks are large, smooth a binomial statistic with Gaussian noise so it meets a robust scalar encoder’s input conditions.",
+      "The proof checks bias, concentration and total variation carefully, allocates bits across coordinates, and translates the encoder’s bound into the upper envelope."
+    ],
+    "zh": [
+      "本地样本块较大时，给二项统计量加入高斯噪声，使它满足稳健标量编码器的输入条件。",
+      "证明先核对无偏性、集中性和全变差距离，再按坐标分配比特，最后把编码器的误差界转换为论文的上界包络。"
+    ]
+  },
+  "sec-iv-c": {
+    "en": [
+      "For small blocks, use a direct one-bit construction instead of the Gaussian approximation. Bits estimate the real and imaginary parts of a characteristic function.",
+      "Increasing frequencies act like progressively finer clock hands: first locate the parameter, then refine it with fresh machines under this section’s allocation conditions."
+    ],
+    "zh": [
+      "小样本块改用直接的一比特构造，不走高斯近似。发送的比特用来估计特征函数的实部与虚部。",
+      "逐渐升高的频率像越来越精细的钟表指针：先确定参数所在区间，再在本节的机器分配条件下，用新机器精修。"
+    ]
+  },
+  "sec-iv-d": {
+    "en": [
+      "The preceding sections estimate the empirical moments. Clip those estimates and choose a parameter whose moment vector is nearest to them.",
+      "The inverse-Lipschitz assumption converts moment error into parameter error. Adding the finite-pool error completes the noninteractive upper bound."
+    ],
+    "zh": [
+      "前面已经估出了经验矩。本节先截断这些估计，再选择矩向量与它们最接近的参数。",
+      "逆 Lipschitz 假设把矩误差转换为参数误差；加上有限样本池的误差，就完成非交互上界的证明。"
+    ]
+  },
+  "sec-v": {
+    "en": [
+      "The abstract theorem becomes useful only after checking its two assumptions in real models. This chapter supplies those checks, starting with how fixed affine reparameterization changes constants.",
+      "Bounded scores lead to sub-Gaussian examples; unbounded scores motivate the broader Bernstein condition. Bounded identifying moments provide the matching construction."
+    ],
+    "zh": [
+      "抽象定理要能用，必须在具体模型中验证两组假设。本章逐一核对，并先说明固定仿射重参数化为何只改变常数。",
+      "得分有界时可走次高斯路线；得分无界时，较宽的 Bernstein 条件就派上用场。有界识别矩则为相应的上界构造提供入口。"
+    ]
+  },
+  "sec-v-a": {
+    "en": [
+      "Gaussian means give the cleanest running example: the score is Gaussian, while threshold indicators give bounded moments that identify the mean.",
+      "The bounded-score criterion then covers Bernoulli and multinomial models on parameter regions kept away from degenerate probabilities."
+    ],
+    "zh": [
+      "高斯均值是最直观的例子：得分本身为高斯，阈值指示函数则给出能够识别均值的有界矩。",
+      "随后利用有界得分准则，处理参数远离退化概率的伯努利模型与多项分布模型。"
+    ]
+  },
+  "sec-v-b": {
+    "en": [
+      "In bounded-statistic exponential families, the score is a centered sufficient statistic. A uniform covariance lower bound makes its mean informative enough to invert.",
+      "Logistic regression follows a similar route with bounded covariates and a nondegenerate second-moment matrix. These conditions verify the theorem rather than define a new protocol."
+    ],
+    "zh": [
+      "对统计量有界的指数族，得分就是中心化的充分统计量；一致的协方差下界保证其均值包含足够信息，可以稳定反演。",
+      "逻辑回归采用相近思路，使用有界协变量与非退化二阶矩矩阵。这些条件是在验证已有定理，而非另造一套协议。"
+    ]
+  },
+  "sec-v-c": {
+    "en": [
+      "Poisson and exponential scores are unbounded, so a bounded-score argument is unavailable. Their moment-generating functions still satisfy a Bernstein bound near zero.",
+      "Fixed event indicators provide bounded identifying moments on compact parameter intervals. This shows why allowing $b>0$ expands the theorem’s scope."
+    ],
+    "zh": [
+      "泊松与指数分布的得分无界，不能直接套用有界得分论证；但它们的矩母函数在零附近仍满足 Bernstein 界。",
+      "在固定的紧参数区间内，用事件指示函数即可构造有界识别矩。这说明允许 $b>0$ 能把定理扩展到哪些模型。"
+    ]
+  },
+  "sec-v-d": {
+    "en": [
+      "Here the parameter is a covariance matrix, and each directional score is a Gaussian quadratic form. Its tails require the Bernstein version of the theorem.",
+      "Bounded functions of directional projections identify the directional variances; a suitable collection of directions then recovers the covariance matrix."
+    ],
+    "zh": [
+      "这里要估计的是协方差矩阵，各方向得分为高斯二次型，因此需要定理的 Bernstein 版本来控制尾部。",
+      "方向投影的有界函数可以识别对应方向的方差；选取合适的一组方向，就能恢复整个协方差矩阵。"
+    ]
+  },
+  "sec-vi": {
+    "en": [
+      "The resolved regimes are summarized, then the remaining intermediate-overlap window is isolated. The lower envelope contains a shared-sample correction that the current upper envelope lacks.",
+      "Closing the gap requires either a stronger information bound or a construction that exploits overlap better. Even Gaussian mean estimation still leaves this question open."
+    ],
+    "zh": [
+      "本章汇总已经解决的情形，并指出尚未解决的中等重叠窗口：当前下界包络含有共享样本修正，而上界包络没有对应项。",
+      "缩小这一缺口，需要更强的信息界，或更善于利用重叠的构造；即使只考虑高斯均值，问题也仍未解决。"
+    ]
+  },
+  "appendix": {
+    "en": [
+      "A vanishing fraction of repeated accesses is much weaker than having no collisions at all. Pairwise overlap counting distinguishes these two claims.",
+      "Neither alone transfers an exponentially small risk through coupling: the coupling failure probability must be smaller than the target error scale, not merely tend to zero."
+    ],
+    "zh": [
+      "重复访问比例趋于零，远弱于完全没有碰撞。通过计算成对访问集的重叠，本附录把这两个说法区分开。",
+      "二者本身都不足以通过耦合转移指数小的风险：耦合失败概率必须小于目标误差量级，仅仅趋于零还不够。"
+    ]
+  },
+  "references": {
+    "en": [
+      "These are the external results supporting the proof: communication lower bounds, robust distributed encoders, Bayesian information inequalities, and concentration tools.",
+      "Use the citation numbers in the main text to trace an imported result back to its source; the paper’s own numbered equations remain above."
+    ],
+    "zh": [
+      "这里列出证明借用的外部结果，包括通信下界、稳健分布式编码、贝叶斯信息不等式与集中性工具。",
+      "正文中的引用编号可帮助追溯某条外部结论的来源；本文自己的公式编号则保留在前面的正文中。"
+    ]
+  }
+}
