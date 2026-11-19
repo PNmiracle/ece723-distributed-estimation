@@ -49,3 +49,10 @@ the print source as `ECE723_SectionIII_Bilingual.pdf`.
 The Section IV edition uses the same layout and rendering process. It contains
 all 25 heading/guide pairs and equations (231)–(365), saved as
 `assets/downloads/ECE723_SectionIV_Bilingual.html` and `.pdf`.
+
+The comparison page loads the shared `tools/highlights/hl.js` notes interface
+with `data-bilingual-notes`. Selection highlights and block notes attach to
+stable paragraph, guide or equation IDs. All three language views share the
+`notes:bilingual.html` browser store. Cmd+K / Ctrl+K toggles the notes panel;
+JSON backup/restore and Markdown export are available there. Print sources do
+not load the notes interface. Existing guided readers keep their own stores.

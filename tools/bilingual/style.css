@@ -23,3 +23,10 @@ body.view-en .column.chinese,body.view-zh .column.english,body.view-en .column-k
 .guide-pair::after{border-color:#ccdfed}
 @media(max-width:680px){.guide-pair{padding:9px 11px;margin-bottom:8px}.guide-pair .column{font-size:.95rem}.guide-pair .chinese{margin-top:8px;padding-top:8px;border-color:#d0dfec}}
 @media print{.guide-pair{margin:0 0 4pt;padding:4pt 6pt;break-inside:avoid;break-after:avoid;border:0.6pt solid #a8bacb;border-left:1.7pt solid #527797;border-radius:2pt;background:#f5f8fb}.guide-pair .column{font-size:8.5pt;line-height:1.38;color:#172b3d}.guide-label{font-size:7pt;line-height:1.2;margin-bottom:2pt;color:#254e70}.guide-pair .chinese{margin:0;padding:0;border:0}}
+
+/* Notes use stable paper anchors and never appear in the print editions. */
+[hidden]{display:none!important}
+.bar-tools .hl-open,.bar-tools .hl-mode{font:inherit;font-size:.8rem;white-space:nowrap;margin-right:0}
+.hl-ui input[type=checkbox]{width:auto}
+.hl-ui button:focus-visible{outline:2px solid #3978b4;outline-offset:2px}
+@media print{.hl-open,.hl-mode,.hl-ui,.hl-badge{display:none!important}}

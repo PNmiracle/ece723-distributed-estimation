@@ -2,6 +2,7 @@
 (() => {
   const MAIN = document.querySelector('main');
   if (!MAIN) return;
+  const BILINGUAL = !!document.querySelector('script[data-bilingual-notes]');
   const PAGE = (location.pathname.split('/').pop() || 'index.html');
   const KEY = 'notes:' + PAGE;
   const EN = (document.documentElement.lang || '').startsWith('en');
@@ -31,12 +32,25 @@
   // Older highlights counted neither guide nor summary text in their offsets.
   const LEGACY_SKIP = SKIP + ', .plain-gist, .sub-guide';
   const TEXT_MODEL = 2;
-  const BLOCKS = 'figure.equation';
+  const BLOCKS = BILINGUAL ? 'main > .pair, main > figure.equation' : 'figure.equation';
+  if (BILINGUAL) {
+    T.empty = EN ? 'Select text to highlight and annotate it, or hover over a paragraph, reading guide or formula and choose “＋ Note”. Use ⌘K / Ctrl+K to open this panel. Notes are saved in this browser; use JSON backup to move them to another device.' : '选中文字可高亮并写笔记；将鼠标移到段落、导读或公式上，点击“＋ 笔记”。⌘K / Ctrl+K 打开或收起此面板。笔记保存在本浏览器，可用 JSON 备份转移到其他设备。';
+  }
+
+  function validBilingualItem(x) {
+    return x && typeof x==='object' && /^[a-z0-9_-]{1,100}$/i.test(x.id || '') &&
+      typeof x.anchor==='string' && /^[a-z0-9_-]{1,160}$/i.test(x.anchor) &&
+      COLORS.includes(x.color) && typeof x.note==='string' && typeof x.text==='string' &&
+      Number.isFinite(x.t) && (x.kind==='block' ? Number.isInteger(x.idx) && x.idx>=-1 :
+        x.kind==='text' && Number.isInteger(x.start) && Number.isInteger(x.end) &&
+        x.start>=0 && x.end>x.start && typeof x.pre==='string' && typeof x.suf==='string');
+  }
 
   /* ---------- storage ---------- */
   let items = [];
-  try { const j = JSON.parse(localStorage.getItem(KEY) || '{}'); items = Array.isArray(j.items) ? j.items : []; } catch (e) { items = []; }
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({v: 1, page: PAGE, items})); } catch (e) {} updCount(); };
+  try { const j = JSON.parse(localStorage.getItem(KEY) || '{}'); items = Array.isArray(j.items) ? j.items.filter(x => !BILINGUAL || validBilingualItem(x)) : []; } catch (e) { items = []; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify({v: 1, page: PAGE, items})); } catch (e) { if (BILINGUAL) { say(EN ? 'Could not save in this browser. Export a backup.' : '浏览器无法保存，请导出备份。'); return false; } } updCount(); return true; };
+  if (BILINGUAL) addEventListener('pagehide', save);
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
   const byId = id => items.find(x => x.id === id);
   const tgt = e => (e.target && e.target.nodeType === 1) ? e.target : ((e.target && e.target.parentElement) || document.body);
@@ -116,7 +130,7 @@
   }
   function blockEl(it) {
     const root = document.getElementById(it.anchor) || MAIN;
-    if (root.matches && root.matches('figure.equation') && it.idx === -1) return root;
+    if (root.matches && root.matches(BLOCKS) && it.idx === -1) return root;
     const list = [...root.querySelectorAll(BLOCKS)];
     return list[it.idx] || null;
   }
@@ -150,6 +164,15 @@
     let el = it.kind === 'block' ? blockEl(it) : document.querySelector(`[data-hl="${it.id}"]`);
     if (!el) el = document.getElementById(it.anchor);
     if (!el) return {sec: '', sub: '', order: 1e12, link: ''};
+    if (BILINGUAL) {
+      const block = el.closest('.pair, figure.equation');
+      const section = block && document.getElementById(block.dataset.section || block.id);
+      const lane = document.body.classList.contains('view-en') ? '.english' : '.chinese';
+      const label = section && section.querySelector(lane);
+      const sub = block?.matches('figure.equation') ? T.eq + ' (' + block.id.replace('eq-', '') + ')' : block?.matches('.guide-pair') ? (EN ? 'Reading guide' : '通俗导读') : '';
+      const rect = el.getBoundingClientRect();
+      return {sec: label ? fullText(label).trim() : '', sub, order: rect.top + scrollY + rect.left / 1e4, link: block?.id ? '#' + block.id : ''};
+    }
     const sec = el.closest('section');
     const h = sec && sec.querySelector('.sec-h, h2, h3');
     let sub = '';
@@ -307,14 +330,14 @@
     plus.hidden = false; plus.style.left = (r.right + scrollX - plus.offsetWidth - 4) + 'px'; plus.style.top = (r.top + scrollY + 4) + 'px';
   });
   function blockKey(el) {
-    if (el.matches('figure.equation') && el.id) return {anchor: el.id, idx: -1};
+    if (el.matches(BLOCKS) && el.id) return {anchor: el.id, idx: -1};
     const root = el.parentElement.closest('[id]') || MAIN;
     return {anchor: root.id || 'top', idx: [...root.querySelectorAll(BLOCKS)].indexOf(el)};
   }
   function addBlock(el, open) {
     if (el.dataset.hlb) return openPop(el.dataset.hlb);
     const k = blockKey(el);
-    const label = el.matches('figure.equation') ? T.eq + ' (' + el.id.replace('eq-', '') + ')' : T.block;
+    const label = el.matches('figure.equation') ? T.eq + ' (' + el.id.replace('eq-', '') + ')' : BILINGUAL ? fullText(el.querySelector(document.body.classList.contains('view-en') ? '.english' : '.chinese') || el).trim().slice(0,240) : T.block;
     const it = {id: uid(), kind: 'block', color: 'y', note: '', anchor: k.anchor, idx: k.idx, text: label, t: Date.now()};
     items.push(it); paint(it); save(); renderPanel(); plus.hidden = true;
     if (open) openPop(it.id);
@@ -343,7 +366,7 @@
       clearTimeout(t);
       t = setTimeout(() => {
         if (!items.includes(it)) return;
-        save(); repaint(it); renderPanel();
+        if (save() === false) return; repaint(it); renderPanel();
         saved.classList.add('on'); setTimeout(() => saved.classList.remove('on'), 900);
       }, 350);
     });
@@ -395,12 +418,27 @@
     }
     panel.querySelector('.hl-list').innerHTML = html || `<div class="hl-empty">${T.empty}</div>`;
   }
-  function openPanel() { panel.hidden = false; renderPanel(); }
-  function closePanel() { panel.hidden = true; }
+  function openPanel() { panel.hidden = false; open.setAttribute('aria-expanded','true'); renderPanel(); }
+  function closePanel() { panel.hidden = true; open.setAttribute('aria-expanded','false'); }
+  if (BILINGUAL) {
+    open.title = EN ? 'Open notes (⌘K / Ctrl+K)' : '打开笔记（⌘K / Ctrl+K）';
+    open.setAttribute('aria-keyshortcuts','Meta+K Control+K');
+    open.setAttribute('aria-expanded','false');
+    open.insertBefore(document.createTextNode(/Mac|iPhone|iPad/.test(navigator.platform) ? ' ⌘K ' : ' Ctrl+K '),open.querySelector('b'));
+    panel.setAttribute('role','complementary');panel.setAttribute('aria-label',T.title);
+    document.addEventListener('keydown', e => {
+      if ((e.metaKey || e.ctrlKey) && !e.altKey && !e.shiftKey && e.key.toLowerCase()==='k') {
+        e.preventDefault(); if(e.repeat)return;
+        if(panel.hidden){pop.hidden=true;openPanel();panel.querySelector('[data-a="close"]').focus();}
+        else {closePanel();open.focus();}
+      }
+    });
+  }
   open.addEventListener('click', () => panel.hidden ? openPanel() : closePanel());
   function jumpTo(it) {
     const el = it.kind === 'block' ? blockEl(it) : document.querySelector(`[data-hl="${it.id}"]`);
     if (!el) return;
+    if (BILINGUAL) { const lane=el.closest('.column'); if(lane && getComputedStyle(lane).display==='none')document.querySelector('[data-view=both]').click(); }
     const fold = el.closest && el.closest('.plain.folded'); if (fold) fold.classList.remove('folded');
     el.scrollIntoView({block: 'center', behavior: 'smooth'});
     const fl = it.kind === 'block' ? [el] : [...document.querySelectorAll(`[data-hl="${it.id}"]`)];
@@ -432,9 +470,11 @@
     const file = ev.target.files[0]; if (!file) return;
     file.text().then(t => {
       try {
-        const j = JSON.parse(t); const add = (j.items || []).filter(x => x && x.id && !byId(x.id));
+        const j = JSON.parse(t);
+        if(BILINGUAL && (!Array.isArray(j.items) || (j.page && j.page!==PAGE) || !j.items.every(validBilingualItem))) throw new Error('Invalid backup');
+        const add = (j.items || []).filter(x => x && x.id && !byId(x.id));
         items.push(...add); save(); add.forEach(paint); renderPanel(); say(T.imported + ' ' + add.length);
-      } catch (err) {}
+      } catch (err) { if(BILINGUAL)say(EN ? 'Invalid backup; existing notes were kept.' : '备份格式不正确，原有笔记已保留。'); }
       ev.target.value = '';
     });
   });
