@@ -251,19 +251,24 @@ title_en='Communication-Constrained Parameter Estimation From Overlapping Sample
 title_zh='基于重叠样本的通信受限参数估计'
 head='<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+title_en+' · 中英论文对照</title><style>'+katex_css+'</style>'
 column_key='<div class="column-key"><span>ENGLISH · ORIGINAL PAPER</span><span>中文 · 对照译文</span></div>'
-header='''<header class="topbar"><div class="bar-content"><div class="brand"><a href="index.html">⌂ 论文对照</a><small>英文正文 · 逐段对照 · 多级目录</small></div><div class="bar-tools"><form id="equation-jump"><label for="eq-input" data-en="Equation" data-zh="跳到公式">跳到公式</label><input id="eq-input" aria-label="Equation number" type="number" min="1" max="492" placeholder="1–492" required><button type="submit" data-en="Go" data-zh="跳转">跳转</button></form><a class="pdf-link" href="assets/downloads/ECE723_SectionIII_Bilingual.pdf" data-en="Section III PDF" data-zh="第三章对照 PDF">第三章对照 PDF</a><nav class="langsw" aria-label="Language view"><a href="?view=both" data-view="both">EN | 中</a><a href="?view=en" data-view="en">EN</a><a href="?view=zh" data-view="zh">中文</a></nav></div></div></header>'''
+header='''<header class="topbar"><div class="bar-content"><div class="brand"><a href="index.html">⌂ 论文对照</a><small>英文正文 · 逐段对照 · 多级目录</small></div><div class="bar-tools"><form id="equation-jump"><label for="eq-input" data-en="Equation" data-zh="跳到公式">跳到公式</label><input id="eq-input" aria-label="Equation number" type="number" min="1" max="492" placeholder="1–492" required><button type="submit" data-en="Go" data-zh="跳转">跳转</button></form><a class="pdf-link" href="assets/downloads/ECE723_SectionIII_Bilingual.pdf" data-en="Section III PDF" data-zh="第三章对照 PDF">第三章对照 PDF</a><a class="pdf-link" href="assets/downloads/ECE723_SectionIV_Bilingual.pdf" data-en="Section IV PDF" data-zh="第四章对照 PDF">第四章对照 PDF</a><nav class="langsw" aria-label="Language view"><a href="?view=both" data-view="both">EN | 中</a><a href="?view=en" data-view="en">EN</a><a href="?view=zh" data-view="zh">中文</a></nav></div></div></header>'''
 website=head+'<link rel="stylesheet" href="tools/bilingual/style.css"></head><body>'+header+'<div class="layout"><aside class="sidebar"><details id="sections" open><summary data-en="Paper sections" data-zh="论文目录 · 展开子标题">论文目录 · 展开子标题</summary><nav>'+toc(tree)+'</nav></details></aside><main>'+column_key+substitute(pair('paper-title',title_en,title_zh,'title-pair'))+''.join(rows)+'</main></div><script src="tools/bilingual/reader.js"></script></body></html>'
 # The title contains no math, so rendering cannot introduce any new expression.
 assert '@@BILINGUAL_MATH_' not in website
 (ROOT/'bilingual.html').write_text(website)
 
-section_rows=[r for r in rows if 'data-chapter="sec-iii"' in r]
-assert sum('class="equation"' in r for r in section_rows)==158
-assert sum('heading-pair' in r for r in section_rows)==28
-assert sum('guide-pair' in r for r in section_rows)==28
 print_script='''<script>document.fonts.ready.then(()=>{for(const host of document.querySelectorAll('.math-source')){const k=host.querySelector('.katex');if(!k)continue;const max=host.clientWidth;const width=k.getBoundingClientRect().width;if(width>max)host.style.fontSize=(Math.max(.65,max/width)*100)+'%';}for(const host of document.querySelectorAll('.column .katex')){const max=host.closest('.column').clientWidth;const width=host.getBoundingClientRect().width;if(width>max)host.style.fontSize=(max/width)+'em';}document.documentElement.dataset.printReady='true';});</script>'''
-print_html=head+'<style>'+(HERE/'style.css').read_text()+'</style></head><body><div class="layout"><main><div class="print-meta">ECE 723 · Section III: Converse / 下界证明 · Equations (73)–(230) · English left / 中文右侧</div>'+column_key+''.join(section_rows)+'</main></div>'+print_script+'</body></html>'
 output=ROOT/'assets/downloads';output.mkdir(parents=True,exist_ok=True)
-(output/'ECE723_SectionIII_Bilingual.html').write_text(print_html)
-(HERE/'build-report.json').write_text(json.dumps({'paragraph_pairs':pair_count,'native_equations':492,'heading_count':85,'bilingual_guides':len(GUIDES),'section_iii_equations':158,'section_iii_headings':28,'section_iii_guides':28,'reviewed_anchor_groups':len(REVIEW),'inline_math_expressions':len(expressions)},indent=2)+'\n')
+for chapter, roman, label, first, last, heading_count in [
+    ('sec-iii', 'III', 'Converse / 下界证明', 73, 230, 28),
+    ('sec-iv', 'IV', 'Achievability / 可达性与上界构造', 231, 365, 25),
+]:
+    section_rows=[r for r in rows if f'data-chapter="{chapter}"' in r]
+    assert sum('class="equation"' in r for r in section_rows)==last-first+1
+    assert sum('heading-pair' in r for r in section_rows)==heading_count
+    assert sum('guide-pair' in r for r in section_rows)==heading_count
+    meta=f'ECE 723 · Section {roman}: {label} · Equations ({first})–({last}) · English left / 中文右侧'
+    print_html=head+'<style>'+(HERE/'style.css').read_text()+'</style></head><body><div class="layout"><main><div class="print-meta">'+meta+'</div>'+column_key+''.join(section_rows)+'</main></div>'+print_script+'</body></html>'
+    (output/f'ECE723_Section{roman}_Bilingual.html').write_text(print_html)
+(HERE/'build-report.json').write_text(json.dumps({'paragraph_pairs':pair_count,'native_equations':492,'heading_count':85,'bilingual_guides':len(GUIDES),'section_iii_equations':158,'section_iii_headings':28,'section_iii_guides':28,'section_iv_equations':135,'section_iv_headings':25,'section_iv_guides':25,'reviewed_anchor_groups':len(REVIEW),'inline_math_expressions':len(expressions)},indent=2)+'\n')
 print((HERE/'build-report.json').read_text())

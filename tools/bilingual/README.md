@@ -45,3 +45,7 @@ backgrounds enabled and CSS page size respected; wait for
 `document.documentElement.dataset.printReady === 'true'` so fonts and formula
 widths have settled. The PDF linked from the comparison page is stored alongside
 the print source as `ECE723_SectionIII_Bilingual.pdf`.
+
+The Section IV edition uses the same layout and rendering process. It contains
+all 25 heading/guide pairs and equations (231)–(365), saved as
+`assets/downloads/ECE723_SectionIV_Bilingual.html` and `.pdf`.
