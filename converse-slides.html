@@ -137,7 +137,7 @@ body.audience #view{inset:0}
 .bridge{display:flex;justify-content:space-between;gap:16px;font-size:14px;color:var(--mut);border-top:1px solid var(--rule);padding-top:6px;margin-top:8px}
 .bridge span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bridge b{font-weight:600;color:var(--pr)}.E .bridge b{color:var(--acc)}
-.goal{border:1.5px solid var(--acc);background:var(--acct);border-radius:8px;padding:7px 10px 8px;margin-bottom:10px;font-size:14.5px;line-height:1.35}
+.goal{position:sticky;top:0;z-index:3;border:1.5px solid var(--acc);background:linear-gradient(var(--acct),var(--acct)),var(--bg);border-radius:8px;padding:7px 10px 8px;margin-bottom:10px;font-size:14.5px;line-height:1.35}
 .goal .gh{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;color:var(--acc);margin-bottom:3px}
 .goal .gh i{font-style:normal;color:var(--mut);font-weight:500}
 .goal.done .gh i{color:var(--acc)}
@@ -182,6 +182,9 @@ body.audience #view{inset:0}
 .wf{display:grid;grid-template-columns:auto auto auto minmax(0,1fr);gap:3px 10px;align-items:baseline;font-size:14px;line-height:1.35;margin:2px 0 6px}
 .wf .wn{font-weight:600}.wf .wl{color:var(--pr);white-space:nowrap}.wf .wr{color:var(--mut)}
 .rh .lg{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.rh .lg .chip{font-size:11.5px;padding:0 6px}
+.card .cm{line-height:1.35}.card .cm b{font-weight:600}
+.card .cl{font-size:12.5px;color:var(--pr);margin-top:1px}
+.card.use .cl{color:var(--acc)}
 .hid{visibility:hidden;opacity:0}
 [data-s]{transition:opacity .3s}
 .grow[data-s],.growx[data-s],.hb>div.growx{transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .3s}
@@ -727,24 +730,25 @@ const stage=document.getElementById('stage'),view=document.getElementById('view'
 const NM={"146": "Independent blocks", "7": "Public-history rule", "19": "Score condition", "147": "Lemma 3", "148": "Lemma 3 with b = 0", "149": ["Checklist E_i", "III-C"], "150": "Rectangle identity", "152": "Probability factorizes", "153": "Conditional independence", "73-76": ["Score identity S_T = E[S_Z | T]", "III-A"], "157": "Cross terms vanish", "158": "Transcript score = Σ a_i", "159": "Fisher info = Σ E‖a_i‖²", "160": "Per-machine bound", "162": "Surprisals → entropy", "165": "Lemma 3 at a fixed seed", "123": "Lemma 1", "139": "Lemma 2", "170": "Shared index set", "171": "Private sets, r and q", "172": "Shared and private independent", "77-79": "Data processing", "80-84": "Fisher chain rule", "178": "Reveal G", "179": "Chain-rule split", "180": "Shared information ≤ dvr", "184": "Conditional Lemma 3", "174": "Theorem 2", "175": "Relaxed Theorem 2", "188": "Conditioning reduces entropy", "Da": "Access count D_a", "35": "Expected shared count r̄", "193": "Averaged Theorem 2", "194": "D and h_T", "195": "Ceiling in terms of h_T", "196": "Constants A, Q", "197": "Risk via van Trees", "85-95": "Prior constants", "96-102": "van Trees", "117": "Entropy split", "118": "Entropy budget", "198": "Budget per coordinate", "200": "Normalized risk x", "30": "Localization surplus s", "201": "Two rewrites", "202": "After cancellation", "203": "Combined bound", "204": "Scaled form", "205": "Variable t", "206": "t + ln t form", "207": "Three scales", "208": "K_B bound", "209": "Collected scale F", "210": "t + ln t ≤ C₁F", "211": "t ≤ C₂F", "212": "Floor with (B+1)²", "213": "Target floor", "214": "Case A bound", "215": "(B+1)² absorbed", "216–217": "Case B surplus", "218": "Dominated by d/(nm)", "219": "Refinement floor", "107": "Sample-size floor", "115": "Bit-precision floor", "220": "Main converse", "177": ["Theorem 2, Gaussian form", "III-D"], "221": "Gaussian ceiling", "222": "Gaussian van Trees", "223–224": "Normalized t", "227": "t + ln t ≤ z", "228–229": "Lambert W bound", "230": "Explicit Gaussian floor"};
 const nmOf=k=>{const v=NM[k];return Array.isArray(v)?v[0]:(v||(EQ[k]&&EQ[k][0])||'')};
 const secOf=i=>{const e=slides[i].querySelector('.sec');return e?(e.firstChild&&e.firstChild.textContent||e.textContent).trim():''};
-const OCC={};slides.forEach((sl,si)=>[...sl.querySelectorAll('.ln')].forEach((l,li)=>{const k=l.dataset.eq;if(k)(OCC[k]=OCC[k]||[]).push([si,li])}));
+const OCC={};slides.forEach((sl,si)=>[...sl.querySelectorAll('.ln')].forEach((l,li)=>{const mm=/\\\[([\s\S]*?)\\\]/.exec(l.textContent);l._tex=mm?mm[1].trim():'';const k=l.dataset.eq;if(k)(OCC[k]=OCC[k]||[]).push([si,li,l])}));
 function prov(k,si,li){
   const m=/^(fact|asm|def|above):(.*)$/.exec(k);
   if(m){const T={fact:['fact','standard fact','s-fact'],asm:['assumption','model assumption','s-fact'],def:['definition','definition','s-fact'],above:['↑ above','this slide, above','s-here']}[m[1]];return {lab:T[0],name:m[2],loc:T[1],cls:T[2]}}
   const occ=(OCC[k]||[]).filter(([a,b])=>a<si||(a===si&&b<li));
-  if(occ.length){const [a]=occ[occ.length-1];return a===si?{lab:lab(k),name:nmOf(k),loc:'this slide, above',cls:'s-here',k}:{lab:lab(k),name:nmOf(k),loc:`slide ${a+1} · ${secOf(a)}`,cls:'s-today',k}}
+  if(occ.length){const [a,,el]=occ[occ.length-1];return a===si?{lab:lab(k),name:nmOf(k),loc:'this slide, above',cls:'s-here',k,tex:el._tex}:{lab:lab(k),name:nmOf(k),loc:`slide ${a+1} · ${secOf(a)}`,cls:'s-today',k,tex:el._tex}}
   const src=(EQ[k]&&EQ[k][1])||(Array.isArray(NM[k])&&NM[k][1])||'paper';
-  return {lab:lab(k),name:nmOf(k),loc:`${src} · ${OLD.has(k)?'proved last class':STATED.has(k)?'stated last class':'cited from the paper'}`,cls:'s-old',k};
+  return {lab:lab(k),name:nmOf(k),loc:`${src} · ${OLD.has(k)?'proved last class':STATED.has(k)?'stated last class':'cited from the paper'}`,cls:'s-old',k,tex:EQ[k]?EQ[k][2]:''};
 }
 for(const sl of slides){
   const si=slides.indexOf(sl);
   [...sl.querySelectorAll('.ln')].forEach((ln,li)=>{
-    const fr=(ln.dataset.from||'').split(';;').map(x=>x.trim()).filter(Boolean).map(x=>{const i=x.indexOf('::');const k=i<0?x:x.slice(0,i);return Object.assign(prov(k.trim(),si,li),{role:i<0?'':x.slice(i+2).trim()})});
+    const fr=(ln.dataset.from||'').split(';;').map(x=>x.trim()).filter(Boolean).map(x=>{const i=x.indexOf('::');const k=i<0?x:x.slice(0,i);return Object.assign(prov(k.trim(),si,li),{role:i<0?'':x.slice(i+2).trim(),key:k.trim()})});
     ln._from=fr;
-    const uses=new Set((ln.dataset.uses||'').split(',').filter(Boolean));fr.forEach(f=>{if(f.k)uses.add(f.k)});ln.dataset.uses=[...uses].join(',');
+    const uses=new Set((ln.dataset.uses||'').split(',').filter(Boolean));fr.forEach(f=>{if(f.k)uses.add(f.k)});ln.dataset.uses=[...uses].join(',');ln._uses=[...uses,...fr.filter(f=>!f.k&&!f.key.startsWith('above:')).map(f=>f.key)];
   });
 }
 for(const sl of slides){
+  const si=slides.indexOf(sl);
   for(const ln of sl.querySelectorAll('.ln')){
     const fr=ln._from||[];
     const via=document.createElement('div');via.className='via';
@@ -765,7 +769,14 @@ for(const sl of slides){
   const body=sl.querySelector('.body[data-rail]');
   if(body){
     const rail=document.createElement('aside');rail.className='rail';
-    rail.innerHTML='<div class="rh">Equations used <span class="lg"><span class="chip s-here">this slide</span><span class="chip s-today">earlier today</span><span class="chip s-old">last class / paper</span><span class="chip s-fact">fact</span></span></div>'+body.dataset.rail.split(',').map(k=>{const e=EQ[k];return `<div class="card" data-k="${k}"><span class="src">${e[1]}</span><span class="no">${lab(k)}</span> ${e[0]}${OLD.has(k)?'<span class="badge old">last class ✓</span>':STATED.has(k)?'<span class="badge old">stated last class</span>':NEWK.has(k)?'<span class="badge nw">new</span>':''}<div class="ct">\\(${e[2]}\\)</div></div>`}).join('');
+    const items=[],seenK=new Set();
+    [...sl.querySelectorAll('.ln')].forEach(l=>(l._from||[]).forEach(f=>{if(f.key.startsWith('above:')||seenK.has(f.key))return;seenK.add(f.key);items.push(f)}));
+    body.dataset.rail.split(',').filter(Boolean).forEach(k=>{if(!seenK.has(k)){seenK.add(k);items.push(Object.assign(prov(k,si,0),{key:k,role:''}))}});
+    rail.innerHTML='<div class="rh">Inputs used on this slide <span class="lg"><span class="chip s-here">this slide</span><span class="chip s-today">earlier today</span><span class="chip s-old">last class / paper</span><span class="chip s-fact">fact / assumption</span></span></div>';
+    items.forEach(f=>{const c=document.createElement('div');c.className='card';c.dataset.k=f.key;
+      const badge=f.k&&OLD.has(f.k)?'<span class="badge old">last class ✓</span>':f.k&&STATED.has(f.k)?'<span class="badge old">stated last class</span>':f.k&&NEWK.has(f.k)?'<span class="badge nw">new</span>':'';
+      c.innerHTML=`<div class="cm"><span class="chip ${f.cls}">${esc(f.lab)}</span> <b>${esc(f.name)}</b>${badge}</div><div class="cl">${esc(f.loc.replace('this slide, above','this slide'))}</div>`+(f.tex?`<div class="ct">\\(${esc(f.tex)}\\)</div>`:'');
+      rail.append(c)});
     body.append(rail);
     const rf=body.querySelector('.railfig');if(rf)rail.insertBefore(rf,rail.firstChild);
     if(sl.dataset.goal){const g=document.createElement('div');g.className='goal';g.innerHTML=`<div class="gh"><span>Current goal · target ${lab(sl.dataset.goalEq)}</span><i>in progress</i></div><div class="gt">\\(${esc(sl.dataset.goalTex)}\\)</div>${esc(sl.dataset.goal)}<div class="gn"><b>Then:</b> ${esc(sl.dataset.goalNext)}</div>`;rail.insertBefore(g,rail.firstChild)}
@@ -801,14 +812,15 @@ function render(){
   for(const ln of sl.querySelectorAll('.ln:not([data-s])'))ln.classList.toggle('cur',step===0);
   for(const e of sl.querySelectorAll('[data-on]'))e.classList.toggle('on',step>=+e.dataset.on);
   for(const ln of sl.querySelectorAll('.ln')){
-    const s=+(ln.dataset.s||0);const u=(ln.dataset.uses||'').split(',').filter(Boolean);
+    const s=+(ln.dataset.s||0);const u=ln._uses||(ln.dataset.uses||'').split(',').filter(Boolean);
     if(s<=step)u.forEach(k=>seen.add(k));
     if(s===step)u.forEach(k=>used.add(k));
   }
   for(const c of sl.querySelectorAll('.card')){
-    const k=c.dataset.k;const onSlide=[...sl.querySelectorAll('.ln')].some(l=>(l.dataset.uses||'').split(',').includes(k));
+    const k=c.dataset.k;const onSlide=[...sl.querySelectorAll('.ln')].some(l=>(l._uses||(l.dataset.uses||'').split(',')).includes(k));
     c.classList.toggle('use',used.has(k));c.classList.toggle('seen',seen.has(k)||!onSlide);
   }
+  {const rl=sl.querySelector('.rail'),cu=rl&&rl.querySelector('.card.use');if(cu)setTimeout(()=>{const g=rl.querySelector('.goal'),gh=g?g.offsetHeight+10:0;const top=cu.offsetTop-rl.offsetTop;if(top<rl.scrollTop+gh||top+cu.offsetHeight>rl.scrollTop+rl.clientHeight)rl.scrollTo({top:Math.max(0,top-gh-8),behavior:'smooth'})},50)}
   const gl=sl.querySelector('.goal');if(gl){const tgt=[...sl.querySelectorAll('.ln')].find(l=>l.dataset.eq===sl.dataset.goalEq&&+(l.dataset.s||0)<=step);const ok=!!tgt&&!(sl.dataset.goalEq==='194');gl.classList.toggle('done',ok);gl.querySelector('.gh i').textContent=ok?'✓ reached':'in progress';}
   const c=sl.querySelector('.ln.cur');
   setTimeout(()=>{if(c){const d=c.closest('.deriv');if(d){const top=c.offsetTop-d.offsetTop;if(top+c.offsetHeight>d.scrollTop+d.clientHeight||top<d.scrollTop)d.scrollTo({top:Math.max(0,top-d.clientHeight+c.offsetHeight+16),behavior:'smooth'})}}
