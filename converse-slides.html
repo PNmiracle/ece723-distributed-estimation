@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Section III Converse Proof</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: a calm lecture-hall proof, one idea per click, nothing decorative.
+   IDEA: a scientific plate. The derivation is the figure; cited equations hang in a numbered ledger beside it.
+   PICTURE: the live derivation column, with the equation ledger lighting up whatever the current line uses.
+   COLOUR and TYPE: white ground, ink, prussian for C/D and references, carmine for III-E and the line being derived. Literata throughout.
+   LAYOUT: 16:9 stage scaled to the window; title band, E-trail strip, derivation left, ledger right, controls below. */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0f1217);--ink:light-dark(#10131a,#e7e9ee);--mut:light-dark(#5a6170,#9ba3b3);
+--rule:light-dark(#dde2ea,#2a313c);--acc:light-dark(#c1121f,#ff6b6b);--pr:light-dark(#0b4f8a,#79b6ff);
+--acct:light-dark(#c1121f12,#ff6b6b1f);--prt:light-dark(#0b4f8a10,#79b6ff1a);--card:light-dark(#fbfcfd,#151a21)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:21px/1.45 Literata,Georgia,serif;overflow:hidden}
+#view{position:fixed;inset:0 0 52px 0;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1280px;height:720px;transform-origin:0 0;cursor:pointer}
+.slide{position:absolute;inset:0;padding:30px 44px 22px;display:none;flex-direction:column}
+.slide.act{display:flex}
+.hd{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--rule);padding-bottom:10px}
+.sec{font-size:16px;font-weight:600;color:var(--pr);white-space:nowrap}
+.E .sec{color:var(--acc)}
+h1{font-size:50px;line-height:1.05;margin:0;font-weight:600;text-wrap:balance}
+h2{font-size:32px;line-height:1.1;margin:0;font-weight:600;text-wrap:balance}
+.trail{display:flex;gap:6px;align-items:center;margin:10px 0 2px;font-size:15px;color:var(--mut);flex-wrap:wrap}
+.trail span{padding:2px 9px;border:1px solid var(--rule);border-radius:20px;white-space:nowrap}
+.trail span.done{color:var(--ink);border-color:var(--mut)}
+.trail span.here{color:#fff;background:var(--acc);border-color:var(--acc)}
+.trail i{font-style:normal}
+.body{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 318px;gap:24px;min-height:0;margin-top:12px}
+.body.full{grid-template-columns:minmax(0,1fr)}
+.deriv{overflow-y:auto;padding-right:6px;scrollbar-width:thin}
+.ln{position:relative;padding:3px 78px 5px 14px;border-radius:8px;margin:2px 0;transition:background .25s}
+.ln .via{font-size:15px;color:var(--mut);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ln .via b{font-weight:500;color:var(--mut)}
+.ln .tag{position:absolute;right:10px;top:50%;transform:translateY(-30%);font-size:18px;color:var(--pr);font-weight:600;white-space:nowrap}
+.ln.cur{background:var(--acct)}
+.ln.cur .tag{color:var(--acc)}
+.ln.box{border:1.5px solid var(--acc)}
+.chip{font-size:14px;padding:0 7px;border-radius:12px;background:var(--prt);color:var(--pr);font-weight:600;white-space:nowrap}
+.ln.cur .chip{background:var(--acc);color:#fff}
+.note{font-size:18px;color:var(--mut);padding:4px 14px}
+.note strong{color:var(--ink);font-weight:600}
+.say{font-size:20px;padding:8px 14px;margin:6px 0;border-radius:8px;background:var(--prt)}
+.E .say{background:var(--acct)}
+.rail{border-left:1px solid var(--rule);padding-left:16px;overflow-y:auto;scrollbar-width:thin}
+.rail .rh{font-size:14px;color:var(--mut);margin-bottom:8px}
+.card{border:1px solid var(--rule);background:var(--card);border-radius:8px;padding:6px 10px 7px;margin-bottom:8px;opacity:.38;transition:all .25s;font-size:15px}
+.card.seen{opacity:1}
+.card.use{opacity:1;border-color:var(--acc);box-shadow:0 0 0 2px var(--acct);background:var(--acct)}
+.card .no{color:var(--pr);font-weight:600}
+.card.use .no{color:var(--acc)}
+.card .src{float:right;color:var(--mut);font-size:13px}
+.card .ct{margin-top:3px;font-size:16px;overflow-x:auto;overflow-y:hidden}
+.ann{max-height:0;opacity:0;overflow:hidden;transition:max-height .35s,opacity .3s,margin .3s;border-left:2px solid var(--acc);padding-left:12px;margin-left:4px}
+.ln.cur .ann,body.allann .ann{max-height:420px;opacity:1;margin:4px 0 6px 4px}
+body.allann .ln:not(.cur) .ann{border-left-color:var(--rule)}
+.ann .how{font-size:15.5px;line-height:1.4;margin:0 0 4px}
+.ann .how b,.ann .sh{font-weight:600;color:var(--acc);font-size:13px}
+.ann .sy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 18px;font-size:15px;line-height:1.35}
+.ann .sy div{display:flex;gap:8px;align-items:baseline}
+.ann .sy .t{flex:none;color:var(--pr);min-width:44px}
+.ann .sy .d{color:var(--mut)}
+.row .ann .sy{grid-template-columns:minmax(0,1fr)}
+.tb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;margin-top:4px}
+.tcol{border:1px solid var(--rule);border-radius:10px;padding:10px 14px;background:var(--card)}
+.tcol.new{border-color:var(--acc)}
+.th{font-size:16px;font-weight:600;color:var(--pr);margin-bottom:6px}.tcol.new .th{color:var(--acc)}
+.ti{font-size:16.5px;line-height:1.4;margin:5px 0}.ti .chip{margin-right:4px}
+.tcol.new .chip{background:var(--acct);color:var(--acc)}
+.mini{border-collapse:collapse;margin:6px 0;font-size:16px}.mini td,.mini th{border:1px solid var(--rule);padding:2px 12px;text-align:center}.mini th{font-weight:500;color:var(--mut)}
+.badge{font-size:12px;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:4px;white-space:nowrap}
+.badge.old{background:var(--prt);color:var(--pr)}.badge.nw{background:var(--acct);color:var(--acc)}
+
+/* --- figures & motion --- */
+.fig2 text{font:14px Literata,serif;fill:var(--mut)}
+.fig2 .lbl{font-size:15px;fill:var(--ink)}
+.draw{stroke-dasharray:1000;stroke-dashoffset:1000;transition:stroke-dashoffset 1.3s ease-out}
+.draw.on{stroke-dashoffset:0}
+.grow{transform-box:fill-box;transform-origin:0% 100%;transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.grow.hid{transform:scale(0)}
+.growx{transform-box:fill-box;transform-origin:0% 50%;transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.growx.hid{transform:scaleX(0)}
+.mv{transition:transform .9s cubic-bezier(.3,.7,.2,1),fill .4s}
+.mv.on{transform:translate(var(--tx),var(--ty))}
+.fade{transition:opacity .5s}.fade.on{opacity:0}
+.pts circle{transition:fill .5s,opacity .5s;fill:var(--mut);opacity:.45}
+.pts.on circle.in{fill:var(--acc);opacity:1}
+.dot circle{fill:var(--card);stroke:var(--mut);stroke-width:1.5;transition:fill .5s,stroke .5s}
+.dot text{font-size:13px;fill:var(--ink)}
+.dot.sh.on circle{fill:var(--acct);stroke:var(--acc);stroke-width:2.5}
+.dot.pv.on circle{fill:var(--prt);stroke:var(--pr);stroke-width:2.5}
+.slide.act .bit{animation:pop .45s var(--d) both}
+.slide.act .flash{animation:flash .9s var(--d) both}
+@keyframes pop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes flash{0%{fill:transparent}40%{fill:var(--acct)}100%{fill:transparent}}
+.railfig{border:1px solid var(--rule);border-radius:8px;padding:8px 10px;margin-bottom:12px;background:var(--card);font-size:14px}
+.railfig .cap{font-size:13.5px;color:var(--mut);margin-top:4px;line-height:1.35}
+.hb{display:flex;height:30px;border-radius:5px;overflow:hidden;font-size:12.5px;color:#fff;font-weight:600}
+.hb>div{display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;transition:flex-basis .9s cubic-bezier(.3,.7,.2,1),opacity .4s}
+.splitI.on{flex-basis:78%!important}
+.cells{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin:6px 0}
+.cells i{height:24px;border-radius:3px;background:var(--rule);transition:background .4s}
+.cells.on i.l{background:var(--mut)}.cells.on i.s{background:var(--acc)}
+.bars .tr i{width:0!important;transition:width 1s cubic-bezier(.3,.7,.2,1)}
+.bars:not(.hid) .tr i{width:var(--w)!important}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+
+/* --- presenter mode --- */
+#pv{display:none}
+body.presenter #view{right:38%}
+body.presenter #pv{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:52px;width:38%;border-left:1px solid var(--rule);background:var(--card);z-index:5}
+#pvh{padding:12px 18px 10px;border-bottom:1px solid var(--rule);font-size:15px;color:var(--mut)}
+#pvh b{display:block;color:var(--ink);font-size:18px;font-weight:600;margin-top:2px}
+#scr{flex:1;overflow-y:auto;padding:10px 14px 40vh;scroll-behavior:smooth}
+#scr .st{padding:9px 12px;border-radius:8px;margin:5px 0;font-size:17px;line-height:1.5;opacity:.5;transition:opacity .2s,background .2s}
+#scr .st .kk{display:block;font-size:12.5px;font-weight:600;color:var(--mut);margin-bottom:2px}
+#scr .st.now{opacity:1;background:var(--acct);box-shadow:inset 3px 0 0 var(--acc)}
+#scr .st.now .kk{color:var(--acc)}
+#scr .st.done{opacity:.72}
+.read{display:block;margin:6px 0;padding:4px 10px;border-left:3px solid var(--pr);background:var(--prt);color:var(--pr);font-style:italic;border-radius:0 6px 6px 0}
+.read::before{content:"Read: ";font-style:normal;font-weight:600}
+#scr .tr{margin:12px 0 0;padding:9px 12px;border:1.5px dashed var(--acc);border-radius:8px;font-size:16.5px}
+#scr .tr::before{content:"Transition → next slide";display:block;font-size:12.5px;font-weight:600;color:var(--acc)}
+#scr .eqs{font-size:13.5px;color:var(--mut);margin:2px 12px 8px}
+#pvmsg{font-size:13.5px;color:var(--acc);padding:0 16px}
+body.audience #hud,body.audience #pv,body.audience #notes{display:none!important}
+body.audience #view{inset:0}
+.bridge{display:flex;justify-content:space-between;gap:16px;font-size:14px;color:var(--mut);border-top:1px solid var(--rule);padding-top:6px;margin-top:8px}
+.bridge span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bridge b{font-weight:600;color:var(--pr)}.E .bridge b{color:var(--acc)}
+.goal{border:1.5px solid var(--acc);background:var(--acct);border-radius:8px;padding:7px 10px 8px;margin-bottom:10px;font-size:14.5px;line-height:1.35}
+.goal .gh{display:flex;justify-content:space-between;font-size:12.5px;font-weight:600;color:var(--acc);margin-bottom:3px}
+.goal .gh i{font-style:normal;color:var(--mut);font-weight:500}
+.goal.done .gh i{color:var(--acc)}
+.goal .gt{margin:2px 0 4px;font-size:15.5px;overflow-x:auto;overflow-y:hidden}
+.goal .gn{font-size:13px;color:var(--mut);margin-top:3px}
+.goal .gn b{color:var(--pr);font-weight:600}
+.strat{display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:26px;height:100%}
+.flow{display:flex;flex-direction:column;gap:0}
+.fb{display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:12px;border:1.5px solid var(--rule);border-radius:10px;padding:7px 12px;background:var(--card);transition:opacity .4s,transform .5s cubic-bezier(.2,.7,.2,1),border-color .3s,background .3s}
+.fb.hid{transform:translateY(-12px)}
+.fb .fn{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:600;font-size:16px;background:var(--prt);color:var(--pr)}
+.fb b{font-weight:600;font-size:18px}
+.fb .fm{font-size:18px;margin-top:1px}
+.fb .ft{font-size:13.5px;color:var(--mut);text-align:right;max-width:190px;line-height:1.3}
+.fb.q{border-style:dashed}
+.fb.q .fn{background:var(--rule);color:var(--ink)}
+.fb.cur{border-color:var(--acc);background:var(--acct)}
+.fb.cur .fn{background:var(--acc);color:#fff}
+.fb.sh{border-color:var(--acc)}.fb.sh .fn{background:var(--acct);color:var(--acc)}
+.fb.pv{border-color:var(--pr)}.fb.pv .fn{background:var(--prt);color:var(--pr)}
+.fb.box2{border:2px solid var(--acc)}
+.fsplit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.fsplit .fb{grid-template-columns:30px minmax(0,1fr)}
+.fsplit .fb .ft{grid-column:1/-1;text-align:left;max-width:none}
+.fa{text-align:center;font-size:22px;color:var(--mut);height:24px;line-height:24px;transition:opacity .3s}
+.fa2{display:grid;grid-template-columns:1fr 1fr;text-align:center;font-size:22px;color:var(--mut);height:24px;line-height:24px}
+.tech{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.3;margin:4px 0 8px}
+.tech th{text-align:left;font-weight:600;color:var(--mut);font-size:13px;border-bottom:1px solid var(--rule);padding:3px 4px}
+.tech td{padding:4px 4px;border-bottom:1px solid var(--rule);vertical-align:top}
+.tech td:first-child{white-space:nowrap;font-weight:600;color:var(--pr);padding-right:8px}
+.tech tr.cur td{background:var(--acct)}.tech tr.cur td:first-child{color:var(--acc)}
+.motto{font-size:17px;font-weight:600;text-align:center;padding:7px 10px;border-radius:8px;border:1.5px solid var(--acc);color:var(--acc);margin:6px 0}
+.hid{visibility:hidden;opacity:0}
+[data-s]{transition:opacity .3s}
+.grow[data-s],.growx[data-s],.hb>div.growx{transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .3s}
+.hb>div.splitI,.hb>div.splitH{transition:flex-basis .9s cubic-bezier(.3,.7,.2,1)}
+.k{color:var(--acc);fill:var(--acc)}.p{color:var(--pr);fill:var(--pr)}
+mjx-container[display="true"]{margin:2px 0 !important}
+mjx-container{color:inherit}
+.row{display:flex;gap:22px;align-items:flex-start}
+.row>.grow{flex:1}
+svg.pic text{font:15px Literata,serif;fill:var(--mut)}
+.chain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:26px}
+.blk{border:1px solid var(--rule);border-radius:10px;padding:14px 16px;background:var(--card)}
+.blk .no{font-size:15px;color:var(--pr);font-weight:600}
+.blk.e .no{color:var(--acc)}
+.blk h3{margin:2px 0 6px;font-size:22px;font-weight:600}
+.blk p{margin:0;font-size:17px;color:var(--mut)}
+.arrow{font-size:28px;color:var(--mut);text-align:center}
+.grid6{border-collapse:collapse;font-size:18px;margin:6px 0 4px}
+.grid6 td,.grid6 th{width:56px;height:40px;text-align:center;border:1px solid var(--rule)}
+.grid6 th{font-weight:500;color:var(--mut)}
+.grid6 td.on{background:var(--acct);color:var(--acc);font-weight:600}
+.grid6 td.pv.on{background:var(--prt);color:var(--pr)}
+.grid6 th.on{color:var(--acc)}
+.bars{margin:8px 14px}
+.bar{display:grid;grid-template-columns:200px minmax(0,1fr) 60px;align-items:center;gap:12px;font-size:17px;margin:5px 0}
+.bar .tr{height:20px;background:var(--rule);border-radius:4px;overflow:hidden}
+.bar .tr i{display:block;height:100%;background:var(--pr)}
+.bar.on .tr i{background:var(--acc)}.bar.on{font-weight:600;color:var(--acc)}
+.terms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:10px 0}
+.term{border:1px solid var(--rule);border-radius:8px;padding:8px 10px;font-size:16px;background:var(--card)}
+.term .chip{float:right}
+.term b{display:block;font-weight:600;margin:4px 0 2px}
+.term span.m{color:var(--mut)}
+#hud{position:fixed;left:0;right:0;bottom:0;height:52px;display:flex;align-items:center;gap:10px;padding:0 12px;border-top:1px solid var(--rule);font-size:15px;background:var(--bg)}
+#hud button{font:inherit;min-width:44px;height:40px;padding:0 12px;border:1px solid var(--rule);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
+#hud button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#prog{flex:1;height:6px;background:var(--rule);border-radius:3px;overflow:hidden;display:flex}
+#prog i{display:block;height:100%}
+#clock{font-variant-numeric:tabular-nums;white-space:nowrap}
+#clock.late{color:var(--acc)}
+#ctr{white-space:nowrap;color:var(--mut)}
+#notes{position:fixed;left:0;right:0;bottom:52px;max-height:32vh;overflow:auto;padding:12px 18px;background:var(--card);border-top:1px solid var(--rule);font-size:17px;display:none}
+#notes.show{display:block}
+aside.notes{display:none}
+@media(max-width:600px){#hud .opt{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="view"><div id="stage">
+
+<!-- 0 · Title + roadmap -->
+<section class="slide" data-plan="55">
+  <div class="sec" style="margin-top:20px">ECE 723 · Final project · Section III, the converse</div>
+  <h1 style="margin-top:10px">Why no protocol can beat the lower bound</h1>
+  <p style="font-size:22px;color:var(--mut);margin:12px 0 0">Proof of the main lower bound, Sections III-C → III-D → III-E</p>
+  <div class="chain">
+    <div class="blk" data-s="1"><div class="no">III-C · Lemma 3 · (147)</div><h3>Independent blocks</h3><p>An interactive transcript can carry Fisher information only in proportion to its entropy.</p></div>
+    <div class="blk" data-s="2"><div class="no">III-D · Theorem 2 · (174)</div><h3>Overlapping samples</h3><p>Split off the shared draws: they add a separate term \(dvr\) instead of multiplying the entropy.</p></div>
+    <div class="blk e" data-s="3"><div class="no">III-E · Main converse · (220)</div><h3>Information ceiling → error floor</h3><p>Combine with van Trees and the bit budget to get a risk floor for every protocol.</p></div>
+  </div>
+  <div class="say" data-s="4" style="margin-top:22px;font-size:22px">Goal: for every admissible blackboard protocol and estimator,
+    \[ R_{\mathrm{BB}}(N,m,n)\ \ge\ c\,d\,\max\Big\{\tfrac1N,\ \tfrac1{nm},\ 2^{-2B/d},\ \tfrac{1}{m(1+s_+)+\bar r}\Big\}=c\,\mathcal L . \]</div>
+  <aside class="notes">Open: last class gave us the score identity, data processing, the chain rule and van Trees. Today: how much can an interactive conversation retain, and what does that imply for accuracy? Click through the three blocks. Most of the time goes to III-E.</aside>
+</section>
+
+<!-- 1 · Toolbox from last class -->
+<section class="slide" data-plan="65">
+  <div class="hd"><span class="sec">Bridge from last class</span><h2>What we reuse, and what is new today</h2></div>
+  <div class="body full">
+    <div class="deriv">
+      <div class="tb">
+        <div class="tcol" data-s="1"><div class="th">Proved last class: we only cite</div>
+          <div class="ti"><span class="chip">(73)–(76)</span> Score of a compressed message = average score of the inputs that produce it: \(S_T=\mathbb E[S_Z\mid T]\)</div>
+          <div class="ti"><span class="chip">(76)</span> Independent samples: cross terms vanish, \(J_Z=q\,I_X\)</div>
+          <div class="ti"><span class="chip">(77)–(79)</span> Data processing: \(J_T\preceq J_Z\)</div>
+          <div class="ti"><span class="chip">(19)–(22)</span> Score condition ⇒ \(I_X\preceq vI_d\)</div>
+          <div class="ti"><span class="chip">(85)–(102)</span> Bayes risk ≤ minimax; prior \(\prod2\sin^2\pi\theta_j\); van Trees \(D\ge d^2/(\mathbb E\,\mathrm{tr}J+4\pi^2d)\)</div>
+          <div class="ti"><span class="chip">(107)</span> Centralized floors \(d/N,\ d/(nm)\)</div>
+          <div class="ti"><span class="chip">\(D_a\)</span> Access count \(D_a\sim\mathrm{Bin}(n,m/N)\); distinct samples \(u\le\min\{N,nm\}\)</div>
+        </div>
+        <div class="tcol new" data-s="2"><div class="th">New today: we must explain</div>
+          <div class="ti"><span class="chip">(80)–(84)</span> Fisher chain rule: only stated last class; needed in III-D</div>
+          <div class="ti"><span class="chip">(123), (139)</span> Lemma 1 and Lemma 2: how rare messages limit the score</div>
+          <div class="ti"><span class="chip">(150)–(165)</span> Rectangle → conditional independence → entropy</div>
+          <div class="ti"><span class="chip">(170)–(193)</span> Shared vs private samples, \(\bar r\)</div>
+          <div class="ti"><span class="chip">(115)–(118)</span> Bit budget: the third, communication floor</div>
+          <div class="ti"><span class="chip">(194)–(220)</span> Turning information into an error floor</div>
+        </div>
+      </div>
+      <div class="say" data-s="3"><strong>Why may the converse allow interaction?</strong> \(R_{\mathrm{BB}}\le R_{\mathrm{NI}}\). A lower bound for the larger blackboard class and an upper bound for the smaller non-interactive class sandwich both: \(c\,\mathcal L\le R_{\mathrm{BB}}\le R_{\mathrm{NI}}\le C\,\mathcal U\).</div>
+    </div>
+  </div>
+  <aside class="notes">Last class covered the score identity, data processing, J_Z = q I_X, the prior and van Trees, and the centralized floors. I will cite those and not redo them. New today: the chain rule (only stated last class), Lemmas 1–2 by intuition, the rectangle argument, shared samples, and the bit budget. Then the sandwich: interaction is allowed here because a lower bound for a larger class is stronger; the professor's point is that the non-interactive scheme already matches in most regimes.</aside>
+</section>
+
+<!-- 1 · III-C setup -->
+<section class="slide" data-plan="50" data-goal-eq="147" data-goal-tex="\mathrm{tr}\,J_{T,R}\le 4vq\,H_\theta(T\mid R)+2b^2K_B" data-goal="State Lemma 3: an interactive transcript carries Fisher information at most proportional to its entropy." data-goal-next="Proof on the next two slides; used again in III-D (184).">
+  <div class="hd"><span class="sec">III-C · 1 / 3</span><h2>Setting: independent blocks, an interactive blackboard</h2></div>
+  <div class="body" data-rail="146,7,19">
+    <div class="deriv">
+      <div class="row" style="align-items:center"><div class="grow"><div class="note"><strong>Machines</strong> \(i=1,\dots,n\) each hold an independent block \(Z_i=(X_{i,1},\dots,X_{i,q_i})\), \(q_i\le q\). <strong>Seeds</strong> \(R\). Machines write bits on a public blackboard; total budget \(B\) bits. The server sees the full transcript \(T\).</div></div><svg class="fig2" viewBox="0 0 360 205" width="340" height="194" aria-label="Interactive blackboard">
+<rect x="20" y="10" width="226" height="74" rx="8" fill="none" stroke="var(--pr)"/><text x="133" y="102" text-anchor="middle" style="font-size:12px">public blackboard: everyone sees every bit</text>
+<g class="bit" style="--d:0.6s"><rect x="34" y="22" width="32" height="34" rx="4" fill="var(--pr)" opacity=".9"/><text x="50" y="45" text-anchor="middle" style="fill:#fff;font-size:18px">1</text><text x="50" y="74" text-anchor="middle" style="font-size:11px">Z₁</text></g><g class="bit" style="--d:1.2999999999999998s"><rect x="74" y="22" width="32" height="34" rx="4" fill="var(--pr)" opacity=".9"/><text x="90" y="45" text-anchor="middle" style="fill:#fff;font-size:18px">0</text><text x="90" y="74" text-anchor="middle" style="font-size:11px">Z₂</text></g><g class="bit" style="--d:2.0s"><rect x="114" y="22" width="32" height="34" rx="4" fill="var(--pr)" opacity=".9"/><text x="130" y="45" text-anchor="middle" style="fill:#fff;font-size:18px">1</text><text x="130" y="74" text-anchor="middle" style="font-size:11px">Z₁</text></g><g class="bit" style="--d:2.6999999999999997s"><rect x="154" y="22" width="32" height="34" rx="4" fill="var(--pr)" opacity=".9"/><text x="170" y="45" text-anchor="middle" style="fill:#fff;font-size:18px">1</text><text x="170" y="74" text-anchor="middle" style="font-size:11px">Z₃</text></g><g class="bit" style="--d:3.4s"><rect x="194" y="22" width="32" height="34" rx="4" fill="var(--pr)" opacity=".9"/><text x="210" y="45" text-anchor="middle" style="fill:#fff;font-size:18px">0</text><text x="210" y="74" text-anchor="middle" style="font-size:11px">Z₂</text></g><rect x="20" y="150" width="70" height="46" rx="6" fill="var(--card)" stroke="var(--rule)"/><rect class="flash" style="--d:0.6s" x="20" y="150" width="70" height="46" rx="6" fill="transparent"/><rect class="flash" style="--d:2.0s" x="20" y="150" width="70" height="46" rx="6" fill="transparent"/><text x="55" y="172" text-anchor="middle" class="lbl">machine 1</text><text x="55" y="189" text-anchor="middle">Z₁</text><line x1="55" y1="148" x2="55" y2="88" stroke="var(--rule)" stroke-dasharray="3 3"/><rect x="105" y="150" width="70" height="46" rx="6" fill="var(--card)" stroke="var(--rule)"/><rect class="flash" style="--d:1.2999999999999998s" x="105" y="150" width="70" height="46" rx="6" fill="transparent"/><rect class="flash" style="--d:3.4s" x="105" y="150" width="70" height="46" rx="6" fill="transparent"/><text x="140" y="172" text-anchor="middle" class="lbl">machine 2</text><text x="140" y="189" text-anchor="middle">Z₂</text><line x1="140" y1="148" x2="140" y2="88" stroke="var(--rule)" stroke-dasharray="3 3"/><rect x="190" y="150" width="70" height="46" rx="6" fill="var(--card)" stroke="var(--rule)"/><rect class="flash" style="--d:2.6999999999999997s" x="190" y="150" width="70" height="46" rx="6" fill="transparent"/><text x="225" y="172" text-anchor="middle" class="lbl">machine 3</text><text x="225" y="189" text-anchor="middle">Z₃</text><line x1="225" y1="148" x2="225" y2="88" stroke="var(--rule)" stroke-dasharray="3 3"/>
+<rect x="275" y="18" width="78" height="60" rx="8" fill="var(--acct)" stroke="var(--acc)"/><text x="314" y="44" text-anchor="middle" class="lbl">server</text><text x="314" y="62" text-anchor="middle">sees T</text>
+<line x1="248" y1="47" x2="272" y2="47" stroke="var(--acc)" stroke-width="2"/><path d="M266 42 L273 47 L266 52" fill="none" stroke="var(--acc)" stroke-width="2"/>
+</svg></div>
+      <div class="ln box" data-s="1" data-eq="147" data-uses="146,19" data-via="Target of III-C · Lemma 3" data-how="Statement to prove. Left: how sensitive the law of the transcript is to θ. Right: a ceiling set by the transcript&#x27;s entropy. It holds for every interactive protocol on independent blocks." data-sym="\mathrm{tr}\,J_{T,R}(\theta)::trace of the Fisher information of transcript and seeds;; T::the full transcript of bits on the blackboard;; R::all public and private random seeds;; H_\theta(T\mid R)::transcript entropy given the seeds (nats);; v,\ b::score variance proxy and Bernstein scale, from (19);; q::largest local block size;; K_B::bound on \(\mathbb E\ln^2(1/p_T)\) for B bits (Lemma 2)">\[ \mathrm{tr}\,J_{T,R}(\theta)\ \le\ 4vq\,H_\theta(T\mid R)+2b^2K_B \]</div>
+      <div class="ln" data-s="2" data-eq="148" data-uses="19" data-via="Sub-Gaussian scores, b = 0" data-how="With sub-Gaussian scores (b = 0), the sharper half of Lemma 1 halves the coefficient and removes the \(K_B\) term." data-sym="b=0::no heavy-tail correction;; 2vq::coefficient improves from \(4vq\)">\[ \mathrm{tr}\,J_{T,R}(\theta)\ \le\ 2vq\,H_\theta(T\mid R) \]</div>
+      <div class="ln" data-s="3" data-uses="" data-via="At most 2^B transcripts, so H ≤ B ln 2" data-how="A protocol with at most B bits has at most \(2^B\) leaves, so its entropy is at most \(\ln 2^B=B\ln2\) nats. Insert into (148)." data-sym="B::total bit budget;; \ln 2::one bit, measured in nats">\[ \mathrm{tr}\,J_{T,R}(\theta)\ \le\ 2vq\,B\ln 2 \]</div>
+      <div class="say" data-s="4">Machine 2 adapts to machine 1, machine 3 to both. Interaction seems to entangle the machines. <strong>Why can the information still be counted machine by machine?</strong> Answer: a fixed transcript is a <em>rectangle</em>.</div>
+    </div>
+  </div>
+  <aside class="notes">Read (147): information on the left, entropy ceiling on the right. v is the score variance proxy, b the Bernstein scale, K_B a constant from the budget. When b = 0 the coefficient improves from 4 to 2. Then pose the question about interaction.</aside>
+</section>
+
+<!-- 2 · III-C rectangle -->
+<section class="slide" data-plan="60" data-goal-eq="153" data-goal-tex="\{T=t\}=\textstyle\bigcap_i\{Z_i\in E_i\}\ \Rightarrow\ \text{blocks independent given }T" data-goal="Show that a fixed transcript is a rectangle, so interaction does not couple the machines." data-goal-next="Gives (157): cross terms cancel.">
+  <div class="hd"><span class="sec">III-C · 2 / 3</span><h2>A fixed transcript is a rectangle</h2></div>
+  <div class="body" data-rail="146,7">
+    <div class="deriv">
+      <div class="row">
+        <div class="grow">
+          <div class="note">Alice holds \(X\), Bob holds \(Y\). Bob's rule depends on Alice's bit:</div>
+          <div class="ln" data-via="Two-round protocol" data-how="A toy interactive protocol: Bob&#x27;s threshold depends on Alice&#x27;s public bit, which is allowed because the rule is chosen from public history (7)." data-sym="X,\ Y::Alice&#x27;s and Bob&#x27;s private inputs;; T_1,\ T_2::the two bits written on the board;; \mathbf 1\{\cdot\}::indicator: 1 if the condition holds" data-uses="7">\[ T_1=\mathbf 1\{X>5\},\qquad T_2=\begin{cases}\mathbf 1\{Y>3\} & T_1=1\\ \mathbf 1\{Y>7\} & T_1=0\end{cases} \]</div>
+          <div class="ln" data-s="1" data-via="Fix the transcript t = (1, 1). Red dots: every input pair that produces it" data-how="Read backwards: \(T_1=1\) forces \(X&gt;5\) and selects Bob&#x27;s rule \(\mathbf 1\{Y&gt;3\}\); then \(T_2=1\) forces \(Y&gt;3\). Every pair meeting both conditions produces the same transcript." data-sym="t::one fixed transcript;; \times::Cartesian product: any admissible X with any admissible Y">\[ \{T=(1,1)\}=\{X>5\}\times\{Y>3\} \]</div>
+          <div class="ln" data-s="2" data-eq="150" data-uses="7" data-via="In general: each machine passes its own checklist E_i (149)" data-how="Induction over rounds: if the first j−1 bits agree with t, public history selects the same sender and rule at round j, and that machine&#x27;s local test fixes bit j. This needs rule (7)." data-sym="E_i(t;r)::checklist (149): inputs of machine i that produce its bits of t;; r::a fixed seed realization;; \textstyle\bigcap_i::every machine passes its own checklist">\[ \{T=t\}=\textstyle\bigcap_{i=1}^n\{Z_i\in E_i(t;r)\}\quad(R=r) \]</div>
+          <div class="ln" data-s="3" data-eq="152" data-uses="146" data-via="Independent blocks: the probability factors" data-how="The event is an intersection of events on independent blocks, so its probability is a product. Taking \(-\ln\) turns the product into a sum." data-sym="p_i(t)::\(\mathbb P(Z_i\in E_i(t))\): machine i passes;; \ell_i(t)::local surprisal \(\ln(1/p_i(t))\);; p(t)::probability of the whole transcript">\[ p(t)=\textstyle\prod_i p_i(t),\qquad \sum_i \ell_i(t)=\ln\frac{1}{p(t)},\ \ \ell_i=\ln\frac1{p_i} \]</div>
+          <div class="ln" data-s="4" data-eq="153" data-uses="146" data-via="Conditioning on a rectangle keeps the blocks independent" data-how="Both numerator and denominator of the conditional probability factor by (152); dividing leaves one conditional law per machine." data-sym="C_i::any event about block \(Z_i\);; \mathbb P(\cdot\mid T=t)::law given the full transcript">\[ \mathbb P\big(\cap_i\{Z_i\in C_i\}\mid T=t\big)=\textstyle\prod_i\mathbb P\big(Z_i\in C_i\mid Z_i\in E_i(t)\big) \]</div>
+        </div>
+        <svg class="pic" viewBox="0 0 300 300" width="270" height="270" aria-label="Rectangle of inputs producing transcript (1,1)">
+          <line x1="30" y1="270" x2="290" y2="270" stroke="currentColor" opacity=".5"/><line x1="30" y1="270" x2="30" y2="10" stroke="currentColor" opacity=".5"/>
+          <text x="270" y="290">X</text><text x="10" y="22">Y</text>
+          <g class="pts" data-on="2"><circle class="" cx="114.4" cy="226.7" r="4"/><circle class="" cx="192.1" cy="245.3" r="4"/><circle class="in" cx="164.8" cy="175.6" r="4"/><circle class="" cx="51.3" cy="142.0" r="4"/><circle class="" cx="46.4" cy="159.5" r="4"/><circle class="" cx="54.1" cy="241.0" r="4"/><circle class="" cx="138.3" cy="66.1" r="4"/><circle class="" cx="66.9" cy="209.5" r="4"/><circle class="in" cx="186.5" cy="37.4" r="4"/><circle class="in" cx="174.6" cy="168.3" r="4"/><circle class="" cx="269.4" cy="251.4" r="4"/><circle class="in" cx="241.4" cy="193.7" r="4"/><circle class="" cx="71.8" cy="234.5" r="4"/><circle class="" cx="110.8" cy="68.7" r="4"/><circle class="" cx="80.4" cy="124.4" r="4"/><circle class="in" cx="189.2" cy="174.1" r="4"/><circle class="" cx="167.6" cy="247.6" r="4"/><circle class="" cx="51.7" cy="213.6" r="4"/><circle class="in" cx="199.1" cy="160.9" r="4"/><circle class="" cx="112.1" cy="123.4" r="4"/><circle class="" cx="145.1" cy="191.3" r="4"/><circle class="in" cx="226.2" cy="96.5" r="4"/><circle class="" cx="95.5" cy="126.1" r="4"/><circle class="in" cx="162.2" cy="54.7" r="4"/><circle class="in" cx="210.7" cy="194.1" r="4"/><circle class="" cx="270.3" cy="234.5" r="4"/><circle class="" cx="136.8" cy="82.7" r="4"/><circle class="" cx="73.6" cy="146.4" r="4"/><circle class="" cx="46.8" cy="103.8" r="4"/><circle class="in" cx="219.1" cy="126.4" r="4"/><circle class="in" cx="245.4" cy="188.0" r="4"/><circle class="in" cx="202.6" cy="121.3" r="4"/><circle class="in" cx="175.2" cy="154.2" r="4"/><circle class="in" cx="237.0" cy="38.1" r="4"/></g><g data-s="2"><rect class="grow" data-s="2" x="155" y="12" width="133" height="183" fill="var(--acct)" stroke="var(--acc)" stroke-width="2"/><text x="170" y="40" style="fill:var(--acc)">T = (1, 1)</text></g>
+          <g data-s="1"><line class="draw" data-on="1" pathLength="1000" x1="155" y1="270" x2="155" y2="10" stroke="var(--pr)" stroke-width="2"/><line class="draw" data-on="1" pathLength="1000" x1="30" y1="195" x2="290" y2="195" stroke="var(--pr)" stroke-width="2"/>
+            <text x="140" y="288">5</text><text x="12" y="200">3</text>
+            <text x="160" y="262" style="font-size:12px">X &gt; 5</text><text x="236" y="190" style="font-size:12px">Y &gt; 3</text></g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Freeze the transcript at yes, yes. Swap cards: (6,4), (10,8), any Alice card right of 5 with any Bob card above 3 gives the same transcript. That is a Cartesian product. It needs the sender and stopping rule to depend only on public history (7). Then probabilities multiply, surprisals add, and conditioning keeps independence.</aside>
+</section>
+
+<!-- 3 · III-C entropy -->
+<section class="slide" data-plan="85" data-goal-eq="147" data-goal-tex="\mathrm{tr}\,J_{T,R}\le 4vq\,H_\theta(T\mid R)+2b^2K_B" data-goal="Prove Lemma 3: turn the rectangle into an entropy bound, machine by machine." data-goal-next="III-D applies it to the private blocks.">
+  <div class="hd"><span class="sec">III-C · 3 / 3</span><h2>From the rectangle to transcript entropy</h2></div>
+  <div class="body" data-rail="150,152,153,123,139">
+    <div class="deriv">
+      <div class="ln" data-s="1" data-eq="158" data-uses="150,153" data-via="Score identity (last class) + rectangle" data-how="The score of a compressed observation is the conditional mean of the raw score (73)–(76). The raw score is \(\sum_iA_i\); by the rectangle, machine i&#x27;s conditional mean only needs its own event." data-sym="A_i::block score \(\sum_a\xi_\theta(X_{i,a})\) (154);; \xi_\theta(X)::single-sample score \(\nabla_\theta\ln p_\theta(X)\);; a_i(t)::conditional mean of \(A_i\) given the transcript">\[ \nabla_\theta\ln p_\theta(T\mid R=r)=\textstyle\sum_i a_i(T),\qquad a_i(t)=\mathbb E_\theta[A_i\mid Z_i\in E_i(t)] \]</div>
+      <div class="ln" data-s="2" data-eq="157" data-uses="153,146" data-via="Tower property; independent zero-mean block scores" data-how="Given T the blocks are independent (153), so \(\mathbb E[A_iA_j^\top\mid T]=a_ia_j^\top\) (155). Averaging over T gives \(\mathbb E[A_iA_j^\top]=\mathbb EA_i\,\mathbb EA_j^\top=0\)." data-sym="i\ne j::two different machines;; ^{\top}::transpose; \(a\,b^\top\) is an outer product">\[ \mathbb E_\theta[a_i(T)a_j(T)^{\!\top}\mid R=r]=\mathbb E_\theta[A_iA_j^{\top}\mid R=r]=0\quad(i\ne j) \]</div>
+      <div class="note" data-s="3"><strong>Same trick as \(J_Z=qI_X\) last class, now conditional on the transcript.</strong> Two machines each reveal one Bernoulli(½) bit, score \(\pm2\):
+        <table class="mini"><tr><th>transcript</th><td>00</td><td>01</td><td>10</td><td>11</td><th>average</th></tr><tr><th>\(a_1a_2\)</th><td>4</td><td>−4</td><td>−4</td><td>4</td><td class="k"><b>0</b></td></tr></table>
+        A single transcript can have a nonzero cross term; only the average vanishes.</div>
+      <div class="ln" data-s="4" data-eq="159" data-uses="157" data-via="Square (158); cross terms vanish on average" data-how="Fisher information is \(\mathbb E\|\text{score}\|^2\). Expanding gives squared norms plus cross terms \(a_i^\top a_j\), which have mean zero by (157). No extra factor n appears." data-sym="J_{T\mid R=r}::Fisher information of T at a fixed seed r">\[ \mathrm{tr}\,J_{T|R=r}(\theta)=\mathbb E\Big\|\textstyle\sum_i a_i(T)\Big\|^2=\sum_i\mathbb E\|a_i(T)\|^2 \]</div>
+      <div class="ln" data-s="5" data-eq="160" data-uses="123" data-via="Lemma 1 with p = p_i(t): a rare event allows a large score shift" data-how="Intuition: conditioning on a rarer event can shift the mean score further, but only like \(\sqrt{\ln(1/p)}\): rarity is cheap to describe yet costly in surprisal. Lemma 1 bounds a conditional score mean on an event of probability p by \(\sqrt{2vq\ln\frac1p}+b\ln\frac1p\). Square it and use \((x+y)^2\le2x^2+2y^2\)." data-sym="\ell_i(t)::\(\ln(1/p_i(t))\): how rare machine i&#x27;s event is;; q_i::machine i&#x27;s sample count">\[ \|a_i(t)\|^2\ \le\ 4vq_i\,\ell_i(t)+2b^2\,\ell_i(t)^2 \]</div>
+      <div class="ln" data-s="6" data-eq="162" data-uses="152" data-via="Average the surprisals; (152) adds them into ln 1/p(T)" data-how="Insert (160) into (159) with \(q_i\le q\) (161). The local surprisals add to \(\ln(1/p(T))\) by (152), and its mean is Shannon entropy." data-sym="H_\theta(T\mid R=r)::\(\sum_tp(t)\ln\frac1{p(t)}\) at seed r">\[ \mathbb E\textstyle\sum_i\ell_i(T)=\mathbb E\ln\frac1{p(T)}=H_\theta(T\mid R=r) \]</div>
+      <div class="note" data-s="6"><svg class="fig2" viewBox="0 0 640 74" width="640" height="74" aria-label="Surprisals add">
+<rect class="growx" data-s="6" x="10" y="20" width="241" height="28" fill="var(--pr)"/><rect class="growx" data-s="6" style="transition-delay:.5s" x="251" y="20" width="181" height="28" fill="var(--acc)" opacity=".85"/>
+<text x="131" y="39" text-anchor="middle" style="fill:#fff;font-size:13px">ℓ₁ = ln(1/0.2) = 1.61</text><text x="342" y="39" text-anchor="middle" style="fill:#fff;font-size:13px">ℓ₂ = ln(1/0.3) = 1.20</text>
+<line x1="10" y1="60" x2="432" y2="60" stroke="var(--ink)"/><text x="221" y="72" text-anchor="middle" class="lbl">ln(1/0.06) = 2.81 = surprisal of the whole transcript</text>
+<text x="10" y="13" style="font-size:12px">Alice passes w.p. 0.2, Bob w.p. 0.3: local surprisals add up</text>
+<text x="442" y="39">average over t → H(T|R)</text></svg></div>
+      <div class="ln" data-s="7" data-eq="165" data-uses="139" data-via="Σℓᵢ² ≤ (Σℓᵢ)² (163), then Lemma 2" data-how="All \(\ell_i\ge0\), so \(\sum\ell_i^2\le(\sum\ell_i)^2=\ln^2\frac1{p(T)}\). Lemma 2 bounds its mean by \(K_B\) for any protocol with at most \(2^B\) leaves." data-sym="2b^2K_B::Bernstein correction, paid once for the whole transcript">\[ \mathrm{tr}\,J_{T|R=r}(\theta)\le 4vq\,H_\theta(T\mid R=r)+2b^2K_B \]</div>
+      <div class="ln box" data-s="8" data-eq="147" data-via="Average over the seeds (166)–(167): Lemma 3 ✓" data-how="The seeds have a θ-free law, so they carry no Fisher information (166). Average (165) over R and use \(\mathbb E_RH(T\mid R=r)=H(T\mid R)\) (167)." data-sym="">\[ \mathrm{tr}\,J_{T,R}(\theta)\le 4vq\,H_\theta(T\mid R)+2b^2K_B \]</div>
+    </div>
+  </div>
+  <aside class="notes">Four moves: rectangle → conditional independence → cross terms cancel (only after averaging, a single transcript can have a nonzero cross term) → per-machine cost is its surprisal → surprisals add to ln 1/p(t) → expectation is entropy. Seeds carry no information about θ, so averaging finishes Lemma 3.</aside>
+</section>
+
+<!-- 4 · III-D partition -->
+<section class="slide" data-plan="50" data-goal-eq="172" data-goal-tex="(G,V_1,\dots,V_n)\ \text{independent}" data-goal="Overlap breaks Lemma 3&#x27;s hypothesis. Restore independence by splitting shared draws G from private blocks Vᵢ." data-goal-next="Lets us apply Lemma 3 once G is fixed (184).">
+  <div class="hd"><span class="sec">III-D · 1 / 2</span><h2>Overlap breaks independence: separate shared from private</h2></div>
+  <div class="body" data-rail="147,146">
+    <div class="deriv">
+      <div class="note">Machines draw from one pool. If \(Z_1=(X_1,X_2,X_3)\) and \(Z_2=(X_3,X_4,X_5)\), both contain \(X_3\): <strong>the blocks are dependent and Lemma 3 does not apply.</strong></div>
+      <div class="row" style="align-items:center">
+        <svg class="fig2" viewBox="0 0 600 205" width="600" height="205" aria-label="Separating shared and private samples"><g data-s="1"><rect x="430" y="22" width="150" height="70" rx="8" fill="var(--acct)" stroke="var(--acc)"/><text x="505" y="40" text-anchor="middle" class="lbl" style="fill:var(--acc)">G: shared, r = 2</text></g><g data-s="2"><rect x="425" y="120" width="160" height="70" rx="8" fill="var(--prt)" stroke="var(--pr)"/><text x="505" y="138" text-anchor="middle" class="lbl" style="fill:var(--pr)">V₁, V₂, V₃: private</text><text x="450" y="185" text-anchor="middle" style="font-size:11px">V₁</text><text x="490" y="185" text-anchor="middle" style="font-size:11px">V₂</text><text x="540" y="185" text-anchor="middle" style="font-size:11px">V₃</text></g><text x="20" y="50" class="lbl">S₁</text><line x1="70" y1="45" x2="320" y2="45" stroke="var(--rule)"/><g class="dot pv mv" data-on="2" style="--tx:350px;--ty:115px"><circle cx="100" cy="45" r="14"/><text x="100" y="50" text-anchor="middle">1</text></g><g class="dot sh mv" data-on="1" style="--tx:290px;--ty:17px"><circle cx="180" cy="45" r="14"/><text x="180" y="50" text-anchor="middle">3</text></g><g class="dot sh mv" data-on="1" style="--tx:225px;--ty:17px"><circle cx="300" cy="45" r="14"/><text x="300" y="50" text-anchor="middle">6</text></g><text x="20" y="110" class="lbl">S₂</text><line x1="70" y1="105" x2="320" y2="105" stroke="var(--rule)"/><g class="dot pv mv" data-on="2" style="--tx:350px;--ty:55px"><circle cx="140" cy="105" r="14"/><text x="140" y="110" text-anchor="middle">2</text></g><g class="dot sh mv" data-on="1" style="--tx:290px;--ty:-43px"><circle cx="180" cy="105" r="14"/><text x="180" y="110" text-anchor="middle">3</text></g><g class="dot sh mv" data-on="1" style="--tx:225px;--ty:-43px"><circle cx="300" cy="105" r="14"/><text x="300" y="110" text-anchor="middle">6</text></g><text x="20" y="170" class="lbl">S₃</text><line x1="70" y1="165" x2="320" y2="165" stroke="var(--rule)"/><g class="dot sh mv" data-on="1" style="--tx:290px;--ty:-103px"><circle cx="180" cy="165" r="14"/><text x="180" y="170" text-anchor="middle">3</text></g><g class="dot pv mv" data-on="2" style="--tx:305px;--ty:-5px"><circle cx="220" cy="165" r="14"/><text x="220" y="170" text-anchor="middle">4</text></g><g class="dot pv mv" data-on="2" style="--tx:295px;--ty:-5px"><circle cx="260" cy="165" r="14"/><text x="260" y="170" text-anchor="middle">5</text></g><text x="185" y="200" text-anchor="middle" style="font-size:12px">pool indices read by each machine</text></svg>
+        <div class="grow note" style="font-size:17px">Click: the three copies of index 3 <strong>merge into one</strong> draw. Shared values are counted once, in \(G\).</div>
+      </div>
+      <div class="ln" data-s="1" data-eq="170" data-via="Shared indices: read by at least two machines" data-how="For every pool index, count how many access sets contain it; keep the indices with count at least 2." data-sym="S_i::indices machine i can read;; \mathcal G::shared index set;; [N]::pool indices \(1,\dots,N\)">\[ \mathcal G=\{a:\textstyle\sum_i\mathbf 1\{a\in S_i\}\ge2\}=\{3,6\} \]</div>
+      <div class="ln" data-s="2" data-eq="171" data-via="Private indices and sizes" data-how="Remove every index that another machine also reads: \(\mathcal V_i=S_i\setminus\bigcup_{j\ne i}S_j\). Then count." data-sym="\mathcal V_i::indices only machine i reads;; r::number of distinct shared samples;; q::size of the largest private block;; G,\ V_i::observed values at those indices (171)">\[ \mathcal V_1=\{1\},\ \mathcal V_2=\{2\},\ \mathcal V_3=\{4,5\};\qquad r=|\mathcal G|=2,\ \ q=\max_i|\mathcal V_i|=2 \]</div>
+      <div class="ln" data-s="3" data-eq="172" data-uses="146" data-via="Disjoint indices are independent draws" data-how="Pool draws are i.i.d.; \(G,V_1,\dots,V_n\) use disjoint indices, so their joint law is a product." data-sym="\mathcal L_\theta::joint distribution under θ;; \otimes::product of independent laws;; m::samples per machine, so \(q_i\le m\)">\[ \mathcal L_\theta(G,V_1,\dots,V_n)=P_\theta^{\otimes r}\otimes\textstyle\bigotimes_i P_\theta^{\otimes q_i},\qquad 0\le q_i\le m \]</div>
+    </div>
+  </div>
+  <aside class="notes">Circle every index read twice or more: G = {3, 6}. What is left is private: V1 = {1}, V2 = {2}, V3 = {4, 5}. Shared values G and private blocks V_i use disjoint indices, so they are independent. This restores the hypothesis of Lemma 3, once G is fixed.</aside>
+</section>
+
+<!-- 5a · III-D proof strategy -->
+<section class="slide" data-plan="60">
+  <div class="hd"><span class="sec">III-D · Strategy <span class="badge nw">intuition</span></span><h2>Proving Theorem 2: introduce, condition, decompose, bound</h2></div>
+  <div class="body full"><div class="deriv"><div class="strat">
+    <div class="flow">
+      <div class="fb q"><span class="fn">?</span><div><b>Original problem</b><div class="fm">\(J_T(\theta)\preceq\ ?\)</div></div><span class="ft">hard: shared samples make the machines dependent, so Lemma 3 fails</span></div>
+      <div class="fa" data-s="1">↓</div>
+      <div class="fb" data-s="1"><span class="fn">1</span><div><b>Introduce auxiliary information \(G\)</b><div class="fm">\(J_T(\theta)\preceq J_{G,T}(\theta)\)</div></div><span class="ft">(178) information monotonicity</span></div>
+      <div class="fa" data-s="2">↓</div>
+      <div class="fb" data-s="2"><span class="fn">2</span><div><b>Decompose</b><div class="fm">\(\mathrm{tr}J_{G,T}=\mathrm{tr}J_G+\mathbb E_G\,\mathrm{tr}J_{T\mid G}\)</div></div><span class="ft">(179) Fisher chain rule</span></div>
+      <div class="fa2"><span data-s="3">↙</span><span data-s="4">↘</span></div>
+      <div class="fsplit">
+        <div class="fb sh" data-s="3"><span class="fn">3</span><div><b>Shared information</b><div class="fm">\(\mathrm{tr}J_G=r\,\mathrm{tr}I_X\le dvr\)</div></div><span class="ft">(180) r independent draws, \(I_X\preceq vI_d\)</span></div>
+        <div class="fb pv" data-s="4"><span class="fn">4</span><div><b>Condition on \(G=g\)</b><div class="fm">\(\le 4vq\,H(T\mid G,R)+2b^2K_B\)</div></div><span class="ft">(184) private blocks independent → Lemma 3</span></div>
+      </div>
+      <div class="fa2" data-s="5"><span>↘</span><span>↙</span></div>
+      <div class="fb box2" data-s="5"><span class="fn">5</span><div><b>Combine: Theorem 2</b><div class="fm">\(\mathrm{tr}J_{T,R}\le \class{k}{dvr}+4vq\,H_\theta(T\mid G,R)+2b^2K_B\)</div></div><span class="ft">(174)</span></div>
+    </div>
+    <div>
+      <table class="tech" aria-label="Techniques used">
+        <tr><th>Technique</th><th>Role in the proof</th></tr>
+        <tr data-s="1"><td>① Monotonicity</td><td>add \(G\) without losing information</td></tr>
+        <tr data-s="2"><td>② Chain rule</td><td>split joint Fisher information</td></tr>
+        <tr data-s="3"><td>③ Additivity</td><td>\(r\) independent draws: \(J_G=rI_X\)</td></tr>
+        <tr data-s="4"><td>④ Conditioning</td><td>fix the shared data \(G=g\)</td></tr>
+        <tr data-s="4"><td>④ Cond. independence</td><td>private blocks independent given \(G\)</td></tr>
+        <tr data-s="4"><td>④ Bit budget</td><td>entropy of \(T\) limits what it carries</td></tr>
+      </table>
+      <div class="say" data-s="4" style="font-size:16px;margin:4px 0"><b>Key trick:</b> the machines are dependent <em>only</em> through \(G\). Fix \(G\), and dependence becomes conditional independence.</div>
+      <div class="motto" data-s="6">Introduce → condition → decompose → bound</div>
+      <div class="say" data-s="7" style="font-size:16px;margin:4px 0">\[ \underbrace{B}_{\text{bits}}\ \Rightarrow\ \underbrace{J_T\preceq U}_{\text{III-C, III-D}}\ \Rightarrow\ \underbrace{D\ge L}_{\text{III-E}} \]</div>
+    </div>
+  </div></div></div>
+  <aside class="notes">One picture of the whole Theorem 2 proof. One click per stage. The key trick is stage 4: conditioning on G turns dependence into conditional independence.</aside>
+</section>
+
+<!-- 5 · III-D Theorem 2 -->
+<section class="slide" data-plan="95" data-goal-eq="193" data-goal-tex="\mathbb E\,\mathrm{tr}J\le dv\bar r+4vm\,h_T+2b^2K_B" data-goal="Prove Theorem 2 (174): shared samples add dvr; then average it into (193)." data-goal-next="(193) is the information ceiling that III-E starts from.">
+  <div class="hd"><span class="sec">III-D · 2 / 2</span><h2>Theorem 2, stage by stage: shared information enters additively</h2></div>
+  <div class="body" data-rail="77-79,80-84,172,147,19,Da">
+    <div class="railfig"><div style="font-weight:600;font-size:14px;margin-bottom:6px">Information budget of (174)</div>
+<div class="hb"><div class="growx" data-s="3" style="flex:0 0 34%;background:var(--acc)">dvr</div><div class="growx" data-s="4" style="flex:0 0 48%;background:var(--pr);transition-delay:.2s">4vq·H(T|G,R)</div><div class="growx" data-s="4" style="flex:0 0 18%;background:var(--mut);transition-delay:.4s">2b²K_B</div></div>
+<div class="cap">Red: shared draws, counted once, <b>added</b>. Blue: what the conversation adds on the private blocks. r = 0 → Lemma 3; q = 0 → red only.</div></div>
+    <div class="deriv">
+      <div class="ln" data-s="1" data-eq="178" data-uses="77-79" data-via="① Introduce G · information monotonicity: revealing G can only add information" data-how="Data processing (77)–(79): T is a function of (G, T), so the pair carries at least as much information. Bounding \(J_{G,T}\) bounds \(J_T\)." data-sym="\preceq::positive semidefinite order;; G::values of the shared samples">\[ J_T(\theta)\preceq J_{G,T}(\theta) \]</div>
+      <div class="ln" data-s="2" data-eq="179" data-uses="80-84" data-via="② Decompose · Fisher chain rule" data-how="Chain rule (80)–(84), stated without proof last class: information in (G, T) = information in G + expected extra information in T once G is known. Proof idea: the joint score splits as \(S_G+S_{T\mid G}\), and the cross term has mean zero, exactly like \(J_Z=qI_X\)." data-sym="J_{T\mid G}(\theta;G)::Fisher information of the conditional law of T given G;; \mathbb E_G::average over \(G\sim P_\theta^{\otimes r}\)">\[ \mathrm{tr}\,J_{G,T}=\mathrm{tr}\,J_G+\mathbb E_G\,\mathrm{tr}\,J_{T|G}(\theta;G) \]</div>
+      <div class="ln" data-s="3" data-eq="180" data-uses="172,19" data-via="③ Bound the shared part · G is r independent draws; I_X ≼ v I_d" data-how="Information adds over independent samples, so \(J_G=rI_X\). The score condition gives \(I_X\preceq vI_d\), hence trace at most dvr." data-sym="I_X(\theta)::Fisher information of one observation;; d::parameter dimension">\[ J_G=r\,I_X(\theta)\quad\Rightarrow\quad\mathrm{tr}\,J_G\le dvr \]</div>
+      <div class="ln" data-s="4" data-eq="184" data-uses="172,147" data-via="④ Condition on G = g, R = ρ · private blocks independent (182) → Lemma 3" data-how="With g fixed, the protocol is a valid protocol on independent private blocks (182)–(183) with at most \(2^B\) leaves, so Lemma 3 applies to this conditional experiment." data-sym="g,\ \rho::fixed shared values and seeds;; H_\theta(T\mid G=g,R=\rho)::transcript entropy in that conditional experiment">\[ \mathrm{tr}\,J_{T|G=g,R=\rho}\le 4vq\,H_\theta(T\mid G=g,R=\rho)+2b^2K_B \]</div>
+      <div class="ln box" data-s="5" data-eq="174" data-via="⑤ Combine · average over G, then seeds (185)–(187): Theorem 2" data-how="Average (184) over G, insert it into the chain rule (179) together with (180), then average over the seeds." data-sym="dvr::shared information, an additive term;; 4vq\,H::private information passed through communication">\[ \mathrm{tr}\,J_{T,R}(\theta)\le \class{k}{dvr}+4vq\,H_\theta(T\mid G,R)+2b^2K_B \]</div>
+      <div class="ln" data-s="6" data-eq="175" data-uses="188" data-via="q ≤ m and H(T|G,R) ≤ H(T|R)" data-how="Conditioning reduces entropy (188): \(H(T\mid R)-H(T\mid G,R)=I(T;G\mid R)\ge0\). Weaker than (174), but free of G." data-sym="I(T;G\mid R)::information the transcript carries about G">\[ \mathrm{tr}\,J_{T,R}(\theta)\le dvr+4vm\,H_\theta(T\mid R)+2b^2K_B \]</div>
+      <div class="ln" data-s="7" data-eq="35" data-uses="Da" data-via="From last class: D_a ~ Bin(n, m/N); shared means read by at least two machines" data-how="Last class: each index a is read by \(D_a\sim\mathrm{Bin}(n,m/N)\) machines, and \(\mathbb E u=N[1-(1-\frac mN)^n]\) counted indices with \(D_a\ge1\). Shared means \(D_a\ge2\): also subtract the probability of exactly one reader, then sum over the N indices." data-sym="D_a::number of machines reading index a;; m/N::chance one machine reads a given index;; \bar r::expected number of distinct shared samples">\[ \bar r=\sum_{a=1}^N\mathbb P(D_a\ge2)=N\Big[1-\big(1-\tfrac mN\big)^n-n\tfrac mN\big(1-\tfrac mN\big)^{n-1}\Big] \]</div>
+      <div class="ln box" data-s="8" data-eq="193" data-uses="35" data-via="Average over the random design (r → r̄) and the prior Θ → input to III-E" data-how="Average over the random access sets \(\mathcal S\) (r becomes \(\bar r\), given by (35)) and over the prior Θ." data-sym="\bar r::expected number of distinct shared samples;; \mathcal S::random design \((S_1,\dots,S_n)\);; \Theta::parameter drawn from the prior">\[ \mathbb E_\Theta\,\mathrm{tr}\,J_{T,\mathcal S,R}(\Theta)\le dv\bar r+4vm\,H(T\mid\Theta,\mathcal S,R)+2b^2K_B \]</div>
+      <div class="note" data-s="9"><strong>Caveat.</strong> \(G\) may be revealed to the <em>decoder</em> for this upper bound, but it is not free side information in the bit budget: its law depends on \(\Theta\).</div>
+    </div>
+  </div>
+  <aside class="notes">Two cards from last class: data processing and the chain rule. The conditional term is exactly where III-C enters: fix g, the private blocks are independent, apply Lemma 3. Point at the red dvr: the shared count adds, it does not multiply the entropy. Checks: r = 0 gives back Lemma 3; q = 0 gives only dvr. Equation (193) is what III-E starts from.</aside>
+</section>
+
+<!-- 6 · III-E overview -->
+<section class="slide E" data-plan="45" data-goal-eq="194" data-goal-tex="R_{\mathrm{BB}}\ \ge\ c\,\mathcal L\quad(220)" data-goal="Turn the information ceiling (193) into an error floor valid for every protocol." data-goal-next="Tracked through D and h_T in the next steps.">
+  <div class="hd"><span class="sec">III-E · Overview</span><h2>Turn an information ceiling into an error floor</h2></div>
+  <div class="body" data-rail="193,96-102,118,85-95">
+    <div class="deriv">
+      <div class="chain" style="margin-top:4px">
+        <div class="blk" data-s="1"><div class="no">(193) · III-D</div><h3>Fisher ceiling</h3><p>\(\mathbb E\,\mathrm{tr}J\le dv\bar r+4vm\,h_T+2b^2K_B\)</p></div>
+        <div class="blk" data-s="1"><div class="no">(96)–(102) · III-A</div><h3>van Trees</h3><p>Small risk needs large Fisher information.</p></div>
+        <div class="blk" data-s="1"><div class="no">(118) · III-A</div><h3>Bit budget</h3><p>Small risk leaves little entropy \(h_T\).</p></div>
+      </div>
+      <div class="say" data-s="2"><strong>Tug of war on \(h_T\).</strong> van Trees + (193): a small \(D\) forces \(h_T\) up. The bit budget: a small \(D\) forces \(h_T\) down. Below some \(D\) both cannot hold → <span class="k">risk floor</span>.</div>
+      <div class="ln" data-s="3" data-eq="194" data-via="The two quantities we track" data-how="Bayes mean squared error under the prior chosen for the converse, and the transcript entropy that remains once Θ, the design and the seeds are known." data-sym="D::Bayes mean squared error;; \hat\theta::the server&#x27;s estimate;; \Theta::random parameter under the prior;; h_T::\(H(T\mid\Theta,\mathcal S,R)\): residual entropy">\[ D:=\mathbb E\|\hat\theta-\Theta\|^2,\qquad h_T:=H(T\mid\Theta,\mathcal S,R) \]</div>
+      <div class="note" data-s="4" style="margin-top:6px"><strong>Route:</strong> (197) van Trees → (198) budget → (202) \(\ln m\) cancels → (203) combine → (206) \(t+\ln t\) form → (212) invert → (219) drop \((B+1)^2\) → <span class="k">(220)</span>.</div>
+    </div>
+  </div>
+  <aside class="notes">This slide is the map for the next eight. Capital Θ: the parameter is now random under the prior chosen for the converse. h_T is the transcript entropy that remains after we know Θ, the design and the seeds.</aside>
+</section>
+
+<!-- 7 · III-E step 1 -->
+<section class="slide E" data-plan="45" data-trail="197" data-goal-eq="197" data-goal-tex="\frac{d^2}{D}\le Am\,h_T+Q" data-goal="A first risk floor, written in terms of the residual entropy h_T." data-goal-next="h_T is still unknown: bound it with the bit budget (198).">
+  <div class="hd"><span class="sec">III-E · Step 1 <span class="badge old">recap</span></span><h2>van Trees with the Theorem 2 ceiling</h2></div>
+  <div class="body" data-rail="193,96-102,85-95">
+    <div class="deriv">
+      <div class="ln" data-s="1" data-eq="195" data-uses="193" data-via="Start: (193), with h_T as shorthand" data-how="Rename \(H(T\mid\Theta,\mathcal S,R)=h_T\) in (193)." data-sym="h_T::residual transcript entropy;; \mathbb E_\Theta::average over the prior">\[ \mathbb E_\Theta\,\mathrm{tr}\,J_{T,\mathcal S,R}(\Theta)\le dv\bar r+4vm\,h_T+2b^2K_B \]</div>
+      <div class="ln" data-s="2" data-eq="196" data-uses="85-95" data-via="Name the pieces; 4π²d is the prior's Fisher trace" data-how="Collect everything that does not multiply \(h_T\) into Q, and add the prior&#x27;s Fisher trace \(J_\pi=4\pi^2d\) from (85)–(95), which van Trees needs." data-sym="A::coefficient of \(m\,h_T\);; Q::constant part: shared + Bernstein + prior">\[ A:=4v,\qquad Q:=\underbrace{dv\bar r}_{\text{shared}}+\underbrace{2b^2K_B}_{\text{Bernstein}}+\underbrace{4\pi^2d}_{\text{prior}} \]</div>
+      <div class="ln box" data-s="3" data-eq="197" data-uses="96-102" data-via="van Trees was proved last class: just plug (195) + prior into its denominator" data-how="van Trees: \(D\ge d^2/(\mathbb E\,\mathrm{tr}J+J_\pi)\). Replacing \(\mathbb E\,\mathrm{tr}J\) by its upper bound (195) enlarges the denominator, so the lower bound stays valid." data-sym="d^2/D::information that a risk of D requires">\[ D\ \ge\ \frac{d^2}{Am\,h_T+Q}\qquad\Longleftrightarrow\qquad \frac{d^2}{D}\ \le\ Am\,h_T+Q \]</div>
+      <div class="note" data-s="4"><strong>Check:</strong> \(d=2,\ Am\,h_T+Q=200\Rightarrow D\ge 4/200=0.02\). A claim \(D=0.01\) would need \(400\le200\). ✗</div>
+      <div class="say" data-s="5">Less information → larger floor. But (197) still contains the unknown \(h_T\). <strong>Next: the bit budget bounds \(h_T\).</strong></div>
+    </div>
+  </div>
+  <aside class="notes">Point at the ledger: (193) from III-D, van Trees and the prior constants from III-A. Equation (197) is the first risk floor. The equivalent form d²/D ≤ ... is the one we will keep using.</aside>
+</section>
+
+<!-- 8 · III-E step 2 -->
+<section class="slide E" data-plan="120" data-trail="198" data-goal-eq="198" data-goal-tex="\frac{h_T}{d}\le\frac Bd\ln2+c_\pi+\tfrac12\ln\frac Dd" data-goal="An upper bound on h_T from the bit budget: the opposite pull to (197)." data-goal-next="Simplified to (202), then combined with (197).">
+  <div class="hd"><span class="sec">III-E · Step 2 <span class="badge nw">new</span></span><h2>The bit budget limits the residual entropy \(h_T\)</h2></div>
+  <div class="body" data-rail="117,85-95,115">
+    <div class="railfig"><div style="font-weight:600;font-size:14px;margin-bottom:6px">Splitting the budget \(B\ln2\)</div>
+<div class="hb"><div class="splitI" data-on="6" style="flex:0 0 45%;background:var(--pr)">locate Θ: I(Θ;T|W)</div><div class="splitH" data-on="6" style="flex:1 1 auto;background:var(--acc)">h_T</div></div>
+<div class="cap" data-s="6">Smaller D → locating Θ costs more bits → less room for h_T.</div></div>
+    <div class="deriv">
+      <div class="ln" data-s="1" data-eq="117" data-uses="117" data-via="Split the transcript entropy, W = (𝒮, R)" data-how="Chain rule of entropy (117): \(H(T\mid W)=I(\Theta;T\mid W)+H(T\mid\Theta,W)\)." data-sym="W::\((\mathcal S,R)\): parameter-free side information;; I(\Theta;T\mid W)::information the transcript carries about Θ">\[ H(T\mid W)=\underbrace{I(\Theta;T\mid W)}_{\text{locate }\Theta}+\underbrace{h_T}_{\text{residual}} \]</div>
+      <div class="ln" data-s="2" data-via="At most 2^B leaves: the budget in nats" data-how="A transcript of at most B bits takes at most \(2^B\) values, so its entropy is at most \(B\ln2\)." data-sym="B=nk::total bits, k bits per machine">\[ H(T\mid W)\le B\ln 2 \]</div>
+      <div class="ln" data-s="3" data-uses="85-95" data-via="Gaussian maximises entropy at a given MSE" data-how="\(I=h(\Theta)-h(\Theta\mid T,W)\). Given MSE D, the conditional differential entropy is at most that of an isotropic Gaussian, \(\frac d2\ln(2\pi eD/d)\)." data-sym="h(\Theta)::differential entropy of the prior;; D/d::error variance per coordinate">\[ I(\Theta;T\mid W)\ \ge\ h(\Theta)-\tfrac d2\ln\!\big(2\pi e\,D/d\big) \]</div>
+      <div class="ln" data-s="4" data-eq="118" data-via="Subtract: budget − information needed" data-how="Combine the three lines: \(h_T=H(T\mid W)-I\le B\ln2-\big[h(\Theta)-\frac d2\ln(2\pi eD/d)\big]\)." data-sym="">\[ h_T\le B\ln2-h(\Theta)+\tfrac d2\ln\!\big(2\pi e\,D/d\big) \]</div>
+      <div class="ln box" data-s="5" data-eq="198" data-uses="85-95" data-via="Divide by d; h(Θ) = d(ln 2 − 1)" data-how="Divide by d, use the prior&#x27;s entropy \(h=d(\ln2-1)\) (85)–(95), and split \(\frac12\ln\frac{2\pi eD}{d}=\frac12\ln(2\pi e)+\frac12\ln\frac Dd\)." data-sym="c_\pi::constant from the prior;; B/d::bits per coordinate">\[ \frac{h_T}{d}\le \frac Bd\ln2+c_\pi+\tfrac12\ln\frac Dd,\qquad c_\pi:=1-\ln2+\tfrac12\ln(2\pi e)\ \ (199) \]</div>
+      <div class="say" data-s="6">Read the right side: \(\tfrac Bd\ln2\) is the budget per coordinate. As \(D\downarrow\), \(\tfrac12\ln(D/d)\downarrow\): <strong>precision eats the budget</strong>, leaving less room for \(h_T\). This is the force opposing (197).</div>
+    </div>
+  </div>
+  <aside class="notes">This is the III-A budget (118), rederived in three lines so the audience sees where each term comes from. The constant c_pi only depends on the chosen prior. Stress the last line: it is the other side of the tug of war.</aside>
+</section>
+
+<!-- 9 · III-E step 3 -->
+<section class="slide E" data-plan="110" data-trail="202" data-goal-eq="202" data-goal-tex="\frac{h_T}{d}\le s\ln2+c_\pi+\tfrac12\ln x" data-goal="Rewrite (198) in the units x and s, so that the ln m terms cancel." data-goal-next="Substituted into (197) in Step 4.">
+  <div class="hd"><span class="sec">III-E · Step 3 <span class="badge nw">key idea</span></span><h2>The localization scale \(\tfrac12\ln m\) cancels</h2></div>
+  <div class="body" data-rail="198,30,200">
+    <div class="railfig"><div style="font-weight:600;font-size:14px">Bits per coordinate, \(B/d=10\), \(m=256\)</div>
+<div class="cells" data-on="2"><i class="l" style="transition-delay:0.00s"></i><i class="l" style="transition-delay:0.08s"></i><i class="l" style="transition-delay:0.16s"></i><i class="l" style="transition-delay:0.24s"></i><i class="s" style="transition-delay:0.32s"></i><i class="s" style="transition-delay:0.40s"></i><i class="s" style="transition-delay:0.48s"></i><i class="s" style="transition-delay:0.56s"></i><i class="s" style="transition-delay:0.64s"></i><i class="s" style="transition-delay:0.72s"></i></div>
+<div class="cap"><span style="color:var(--mut);font-weight:600">grey</span>: localize to one machine's precision, \(	frac12\log_2 256=4\) bits. <span class="k" style="font-weight:600">red</span>: surplus \(s=6\) bits left to refine.</div></div>
+    <div class="deriv">
+      <div class="ln" data-s="1" data-eq="200" data-via="Error relative to one machine's scale d/m" data-how="\(d/m\) is the MSE of one machine averaging m Gaussian samples; x measures D in those units." data-sym="x::normalized risk; \(x&lt;1\) is better than one machine alone">\[ x:=\frac{mD}{d}=\frac{D}{d/m} \]</div>
+      <div class="ln" data-s="2" data-eq="30" data-uses="30" data-via="Localization surplus: budget minus localization cost" data-how="Definition (30) from II-C: bits per coordinate minus \(\frac12\log_2m\), the bits needed to localize θ to one machine&#x27;s precision." data-sym="s::localization surplus, bits per coordinate;; \tfrac12\log_2 m::localization cost;; s_+::positive part of s">\[ s=\frac Bd-\tfrac12\log_2 m,\qquad s_+=\max\{s,0\}\qquad(d{=}1,m{=}256,B{=}10\Rightarrow s=6) \]</div>
+      <div class="ln" data-s="3" data-eq="201" data-uses="30,200" data-via="Rewrite the two terms of (198)" data-how="Multiply (30) by ln 2: \(\frac Bd\ln2=s\ln2+\frac12\ln m\). From (200), \(D/d=x/m\), so \(\ln\frac Dd=\ln x-\ln m\)." data-sym="\log_2 m\cdot\ln2::\(=\ln m\)">\[ \frac Bd\ln2=s\ln2+\class{k}{\tfrac12\ln m},\qquad \tfrac12\ln\frac Dd=\tfrac12\ln x-\class{k}{\tfrac12\ln m} \]</div>
+      <div class="ln" data-s="4" data-uses="198" data-via="Substitute (201) into (198)" data-how="Replace both terms of (198) with their rewritten forms." data-sym="">\[ \frac{h_T}{d}\le s\ln2+\class{k}{\tfrac12\ln m}+c_\pi+\tfrac12\ln x-\class{k}{\tfrac12\ln m} \]</div>
+      <div class="ln box" data-s="5" data-eq="202" data-via="The two red terms cancel" data-how="\(+\frac12\ln m-\frac12\ln m=0\): the bits spent on localization exactly match the local precision scale." data-sym="">\[ \frac{h_T}{d}\le s\ln2+c_\pi+\tfrac12\ln x \]</div>
+      <div class="note" data-s="6"><strong>Numbers:</strong> \(d=1,m=16,B=4,D=\tfrac1{32}\Rightarrow s=2,\ x=\tfrac12\). (198): \(4\ln2+\tfrac12\ln\tfrac1{32}=1.5\ln2\). (202): \(2\ln2+\tfrac12\ln\tfrac12=1.5\ln2\). ✓</div>
+      <div class="say" data-s="7">What controls refinement is not the budget \(B\) but the <span class="k">surplus \(s\)</span> left after paying \(\tfrac12\log_2 m\) bits per coordinate to localize.</div>
+    </div>
+  </div>
+  <aside class="notes">This is the step worth doing slowly. d/m is the error of one machine with m samples. Saying the error relative to that scale is x, the ln m from the budget and the ln m from the normalization cancel. The surplus s may be negative here; the positive part comes later.</aside>
+</section>
+
+<!-- E · Tug of war picture -->
+<section class="slide E" data-plan="60" data-trail="203">
+  <div class="hd"><span class="sec">III-E · The picture <span class="badge nw">intuition</span></span><h2>Two constraints on \(h_T\) meet at a risk floor</h2></div>
+  <div class="body full"><div class="deriv"><div class="row">
+    <svg class="fig2" viewBox="0 0 720 360" width="720" height="360" aria-label="Tug of war between van Trees and the bit budget">
+<defs><clipPath id="cp"><rect x="60" y="20" width="640" height="310"/></clipPath></defs>
+<rect class="fade" data-on="4" data-s="3" x="60" y="20" width="152.5" height="310" fill="var(--acct)"/>
+<rect data-s="4" x="60" y="20" width="96.4" height="310" fill="var(--acct)"/>
+<line x1="60" y1="330" x2="705" y2="330" stroke="currentColor" opacity=".5"/><line x1="60" y1="330" x2="60" y2="15" stroke="currentColor" opacity=".5"/>
+<line x1="60" y1="261.1" x2="700" y2="261.1" stroke="var(--rule)" stroke-dasharray="4 4"/>
+<text x="700" y="350" text-anchor="end">normalized risk x = mD/d  →  larger error</text><text x="66" y="350">smaller error</text>
+<text x="14" y="24">h_T / d</text>
+<g clip-path="url(#cp)">
+<path class="draw" data-on="1" pathLength="1000" d="M60.0,-117.8 L62.1,-117.8 L64.3,-117.8 L66.4,-104.2 L68.5,-84.7 L70.7,-67.0 L72.8,-51.0 L74.9,-36.4 L77.1,-23.0 L79.2,-10.7 L81.3,0.6 L83.5,11.1 L85.6,20.8 L87.7,29.9 L89.9,38.4 L92.0,46.3 L94.1,53.7 L96.3,60.6 L98.4,67.2 L100.5,73.3 L102.7,79.2 L104.8,84.7 L106.9,89.9 L109.1,94.8 L111.2,99.5 L113.3,104.0 L115.5,108.3 L117.6,112.3 L119.7,116.2 L121.9,119.9 L124.0,123.4 L126.1,126.8 L128.3,130.0 L130.4,133.2 L132.5,136.1 L134.7,139.0 L136.8,141.8 L138.9,144.4 L141.1,147.0 L143.2,149.4 L145.3,151.8 L147.5,154.1 L149.6,156.3 L151.7,158.4 L153.9,160.5 L156.0,162.5 L158.1,164.4 L160.3,166.3 L162.4,168.1 L164.5,169.9 L166.7,171.6 L168.8,173.2 L170.9,174.8 L173.1,176.4 L175.2,177.9 L177.3,179.3 L179.5,180.8 L181.6,182.2 L183.7,183.5 L185.9,184.8 L188.0,186.1 L190.1,187.3 L192.3,188.6 L194.4,189.7 L196.5,190.9 L198.7,192.0 L200.8,193.1 L202.9,194.2 L205.1,195.2 L207.2,196.3 L209.3,197.3 L211.5,198.2 L213.6,199.2 L215.7,200.1 L217.9,201.0 L220.0,201.9 L222.1,202.8 L224.3,203.6 L226.4,204.5 L228.5,205.3 L230.7,206.1 L232.8,206.9 L234.9,207.6 L237.1,208.4 L239.2,209.1 L241.3,209.8 L243.5,210.5 L245.6,211.2 L247.7,211.9 L249.9,212.6 L252.0,213.2 L254.1,213.9 L256.3,214.5 L258.4,215.1 L260.5,215.7 L262.7,216.3 L264.8,216.9 L266.9,217.5 L269.1,218.1 L271.2,218.6 L273.3,219.2 L275.5,219.7 L277.6,220.2 L279.7,220.7 L281.9,221.2 L284.0,221.7 L286.1,222.2 L288.3,222.7 L290.4,223.2 L292.5,223.7 L294.7,224.1 L296.8,224.6 L298.9,225.0 L301.1,225.5 L303.2,225.9 L305.3,226.3 L307.5,226.8 L309.6,227.2 L311.7,227.6 L313.9,228.0 L316.0,228.4 L318.1,228.8 L320.3,229.2 L322.4,229.5 L324.5,229.9 L326.7,230.3 L328.8,230.6 L330.9,231.0 L333.1,231.3 L335.2,231.7 L337.3,232.0 L339.5,232.4 L341.6,232.7 L343.7,233.0 L345.9,233.4 L348.0,233.7 L350.1,234.0 L352.3,234.3 L354.4,234.6 L356.5,234.9 L358.7,235.2 L360.8,235.5 L362.9,235.8 L365.1,236.1 L367.2,236.4 L369.3,236.7 L371.5,237.0 L373.6,237.2 L375.7,237.5 L377.9,237.8 L380.0,238.0 L382.1,238.3 L384.3,238.6 L386.4,238.8 L388.5,239.1 L390.7,239.3 L392.8,239.6 L394.9,239.8 L397.1,240.1 L399.2,240.3 L401.3,240.5 L403.5,240.8 L405.6,241.0 L407.7,241.2 L409.9,241.4 L412.0,241.7 L414.1,241.9 L416.3,242.1 L418.4,242.3 L420.5,242.5 L422.7,242.7 L424.8,243.0 L426.9,243.2 L429.1,243.4 L431.2,243.6 L433.3,243.8 L435.5,244.0 L437.6,244.2 L439.7,244.4 L441.9,244.6 L444.0,244.7 L446.1,244.9 L448.3,245.1 L450.4,245.3 L452.5,245.5 L454.7,245.7 L456.8,245.8 L458.9,246.0 L461.1,246.2 L463.2,246.4 L465.3,246.5 L467.5,246.7 L469.6,246.9 L471.7,247.0 L473.9,247.2 L476.0,247.4 L478.1,247.5 L480.3,247.7 L482.4,247.9 L484.5,248.0 L486.7,248.2 L488.8,248.3 L490.9,248.5 L493.1,248.6 L495.2,248.8 L497.3,248.9 L499.5,249.1 L501.6,249.2 L503.7,249.4 L505.9,249.5 L508.0,249.7 L510.1,249.8 L512.3,249.9 L514.4,250.1 L516.5,250.2 L518.7,250.4 L520.8,250.5 L522.9,250.6 L525.1,250.8 L527.2,250.9 L529.3,251.0 L531.5,251.2 L533.6,251.3 L535.7,251.4 L537.9,251.5 L540.0,251.7 L542.1,251.8 L544.3,251.9 L546.4,252.0 L548.5,252.2 L550.7,252.3 L552.8,252.4 L554.9,252.5 L557.1,252.6 L559.2,252.7 L561.3,252.9 L563.5,253.0 L565.6,253.1 L567.7,253.2 L569.9,253.3 L572.0,253.4 L574.1,253.5 L576.3,253.6 L578.4,253.8 L580.5,253.9 L582.7,254.0 L584.8,254.1 L586.9,254.2 L589.1,254.3 L591.2,254.4 L593.3,254.5 L595.5,254.6 L597.6,254.7 L599.7,254.8 L601.9,254.9 L604.0,255.0 L606.1,255.1 L608.3,255.2 L610.4,255.3 L612.5,255.4 L614.7,255.5 L616.8,255.6 L618.9,255.7 L621.1,255.8 L623.2,255.9 L625.3,256.0 L627.5,256.0 L629.6,256.1 L631.7,256.2 L633.9,256.3 L636.0,256.4 L638.1,256.5 L640.3,256.6 L642.4,256.7 L644.5,256.8 L646.7,256.8 L648.8,256.9 L650.9,257.0 L653.1,257.1 L655.2,257.2 L657.3,257.3 L659.5,257.3 L661.6,257.4 L663.7,257.5 L665.9,257.6 L668.0,257.7 L670.1,257.7 L672.3,257.8 L674.4,257.9 L676.5,258.0 L678.7,258.1 L680.8,258.1 L682.9,258.2 L685.1,258.3 L687.2,258.4 L689.3,258.4 L691.5,258.5 L693.6,258.6 L695.7,258.7 L697.9,258.7 L700.0,258.8" fill="none" stroke="var(--acc)" stroke-width="3"/>
+<g class="mv" data-on="4" style="--tx:0px;--ty:-48.2px"><path class="draw" data-on="2" pathLength="1000" d="M60.0,257.6 L62.1,255.5 L64.3,253.5 L66.4,251.6 L68.5,249.8 L70.7,248.1 L72.8,246.5 L74.9,244.9 L77.1,243.4 L79.2,242.0 L81.3,240.7 L83.5,239.4 L85.6,238.1 L87.7,236.9 L89.9,235.7 L92.0,234.6 L94.1,233.5 L96.3,232.4 L98.4,231.4 L100.5,230.4 L102.7,229.4 L104.8,228.4 L106.9,227.5 L109.1,226.6 L111.2,225.7 L113.3,224.9 L115.5,224.0 L117.6,223.2 L119.7,222.4 L121.9,221.7 L124.0,220.9 L126.1,220.1 L128.3,219.4 L130.4,218.7 L132.5,218.0 L134.7,217.3 L136.8,216.7 L138.9,216.0 L141.1,215.3 L143.2,214.7 L145.3,214.1 L147.5,213.5 L149.6,212.9 L151.7,212.3 L153.9,211.7 L156.0,211.1 L158.1,210.6 L160.3,210.0 L162.4,209.5 L164.5,208.9 L166.7,208.4 L168.8,207.9 L170.9,207.4 L173.1,206.9 L175.2,206.4 L177.3,205.9 L179.5,205.4 L181.6,204.9 L183.7,204.5 L185.9,204.0 L188.0,203.5 L190.1,203.1 L192.3,202.6 L194.4,202.2 L196.5,201.8 L198.7,201.3 L200.8,200.9 L202.9,200.5 L205.1,200.1 L207.2,199.7 L209.3,199.3 L211.5,198.9 L213.6,198.5 L215.7,198.1 L217.9,197.7 L220.0,197.3 L222.1,196.9 L224.3,196.6 L226.4,196.2 L228.5,195.8 L230.7,195.5 L232.8,195.1 L234.9,194.8 L237.1,194.4 L239.2,194.1 L241.3,193.7 L243.5,193.4 L245.6,193.0 L247.7,192.7 L249.9,192.4 L252.0,192.1 L254.1,191.7 L256.3,191.4 L258.4,191.1 L260.5,190.8 L262.7,190.5 L264.8,190.2 L266.9,189.8 L269.1,189.5 L271.2,189.2 L273.3,188.9 L275.5,188.6 L277.6,188.3 L279.7,188.1 L281.9,187.8 L284.0,187.5 L286.1,187.2 L288.3,186.9 L290.4,186.6 L292.5,186.4 L294.7,186.1 L296.8,185.8 L298.9,185.5 L301.1,185.3 L303.2,185.0 L305.3,184.7 L307.5,184.5 L309.6,184.2 L311.7,184.0 L313.9,183.7 L316.0,183.5 L318.1,183.2 L320.3,182.9 L322.4,182.7 L324.5,182.5 L326.7,182.2 L328.8,182.0 L330.9,181.7 L333.1,181.5 L335.2,181.2 L337.3,181.0 L339.5,180.8 L341.6,180.5 L343.7,180.3 L345.9,180.1 L348.0,179.8 L350.1,179.6 L352.3,179.4 L354.4,179.2 L356.5,178.9 L358.7,178.7 L360.8,178.5 L362.9,178.3 L365.1,178.1 L367.2,177.8 L369.3,177.6 L371.5,177.4 L373.6,177.2 L375.7,177.0 L377.9,176.8 L380.0,176.6 L382.1,176.4 L384.3,176.2 L386.4,176.0 L388.5,175.8 L390.7,175.6 L392.8,175.4 L394.9,175.2 L397.1,175.0 L399.2,174.8 L401.3,174.6 L403.5,174.4 L405.6,174.2 L407.7,174.0 L409.9,173.8 L412.0,173.6 L414.1,173.4 L416.3,173.2 L418.4,173.0 L420.5,172.8 L422.7,172.7 L424.8,172.5 L426.9,172.3 L429.1,172.1 L431.2,171.9 L433.3,171.7 L435.5,171.6 L437.6,171.4 L439.7,171.2 L441.9,171.0 L444.0,170.8 L446.1,170.7 L448.3,170.5 L450.4,170.3 L452.5,170.2 L454.7,170.0 L456.8,169.8 L458.9,169.6 L461.1,169.5 L463.2,169.3 L465.3,169.1 L467.5,169.0 L469.6,168.8 L471.7,168.6 L473.9,168.5 L476.0,168.3 L478.1,168.1 L480.3,168.0 L482.4,167.8 L484.5,167.7 L486.7,167.5 L488.8,167.3 L490.9,167.2 L493.1,167.0 L495.2,166.9 L497.3,166.7 L499.5,166.6 L501.6,166.4 L503.7,166.2 L505.9,166.1 L508.0,165.9 L510.1,165.8 L512.3,165.6 L514.4,165.5 L516.5,165.3 L518.7,165.2 L520.8,165.0 L522.9,164.9 L525.1,164.7 L527.2,164.6 L529.3,164.4 L531.5,164.3 L533.6,164.2 L535.7,164.0 L537.9,163.9 L540.0,163.7 L542.1,163.6 L544.3,163.4 L546.4,163.3 L548.5,163.2 L550.7,163.0 L552.8,162.9 L554.9,162.7 L557.1,162.6 L559.2,162.5 L561.3,162.3 L563.5,162.2 L565.6,162.0 L567.7,161.9 L569.9,161.8 L572.0,161.6 L574.1,161.5 L576.3,161.4 L578.4,161.2 L580.5,161.1 L582.7,161.0 L584.8,160.8 L586.9,160.7 L589.1,160.6 L591.2,160.4 L593.3,160.3 L595.5,160.2 L597.6,160.1 L599.7,159.9 L601.9,159.8 L604.0,159.7 L606.1,159.5 L608.3,159.4 L610.4,159.3 L612.5,159.2 L614.7,159.0 L616.8,158.9 L618.9,158.8 L621.1,158.7 L623.2,158.6 L625.3,158.4 L627.5,158.3 L629.6,158.2 L631.7,158.1 L633.9,157.9 L636.0,157.8 L638.1,157.7 L640.3,157.6 L642.4,157.5 L644.5,157.3 L646.7,157.2 L648.8,157.1 L650.9,157.0 L653.1,156.9 L655.2,156.8 L657.3,156.6 L659.5,156.5 L661.6,156.4 L663.7,156.3 L665.9,156.2 L668.0,156.1 L670.1,155.9 L672.3,155.8 L674.4,155.7 L676.5,155.6 L678.7,155.5 L680.8,155.4 L682.9,155.3 L685.1,155.2 L687.2,155.0 L689.3,154.9 L691.5,154.8 L693.6,154.7 L695.7,154.6 L697.9,154.5 L700.0,154.4" fill="none" stroke="var(--pr)" stroke-width="3"/></g>
+<path data-s="4" d="M60.0,257.6 L62.1,255.5 L64.3,253.5 L66.4,251.6 L68.5,249.8 L70.7,248.1 L72.8,246.5 L74.9,244.9 L77.1,243.4 L79.2,242.0 L81.3,240.7 L83.5,239.4 L85.6,238.1 L87.7,236.9 L89.9,235.7 L92.0,234.6 L94.1,233.5 L96.3,232.4 L98.4,231.4 L100.5,230.4 L102.7,229.4 L104.8,228.4 L106.9,227.5 L109.1,226.6 L111.2,225.7 L113.3,224.9 L115.5,224.0 L117.6,223.2 L119.7,222.4 L121.9,221.7 L124.0,220.9 L126.1,220.1 L128.3,219.4 L130.4,218.7 L132.5,218.0 L134.7,217.3 L136.8,216.7 L138.9,216.0 L141.1,215.3 L143.2,214.7 L145.3,214.1 L147.5,213.5 L149.6,212.9 L151.7,212.3 L153.9,211.7 L156.0,211.1 L158.1,210.6 L160.3,210.0 L162.4,209.5 L164.5,208.9 L166.7,208.4 L168.8,207.9 L170.9,207.4 L173.1,206.9 L175.2,206.4 L177.3,205.9 L179.5,205.4 L181.6,204.9 L183.7,204.5 L185.9,204.0 L188.0,203.5 L190.1,203.1 L192.3,202.6 L194.4,202.2 L196.5,201.8 L198.7,201.3 L200.8,200.9 L202.9,200.5 L205.1,200.1 L207.2,199.7 L209.3,199.3 L211.5,198.9 L213.6,198.5 L215.7,198.1 L217.9,197.7 L220.0,197.3 L222.1,196.9 L224.3,196.6 L226.4,196.2 L228.5,195.8 L230.7,195.5 L232.8,195.1 L234.9,194.8 L237.1,194.4 L239.2,194.1 L241.3,193.7 L243.5,193.4 L245.6,193.0 L247.7,192.7 L249.9,192.4 L252.0,192.1 L254.1,191.7 L256.3,191.4 L258.4,191.1 L260.5,190.8 L262.7,190.5 L264.8,190.2 L266.9,189.8 L269.1,189.5 L271.2,189.2 L273.3,188.9 L275.5,188.6 L277.6,188.3 L279.7,188.1 L281.9,187.8 L284.0,187.5 L286.1,187.2 L288.3,186.9 L290.4,186.6 L292.5,186.4 L294.7,186.1 L296.8,185.8 L298.9,185.5 L301.1,185.3 L303.2,185.0 L305.3,184.7 L307.5,184.5 L309.6,184.2 L311.7,184.0 L313.9,183.7 L316.0,183.5 L318.1,183.2 L320.3,182.9 L322.4,182.7 L324.5,182.5 L326.7,182.2 L328.8,182.0 L330.9,181.7 L333.1,181.5 L335.2,181.2 L337.3,181.0 L339.5,180.8 L341.6,180.5 L343.7,180.3 L345.9,180.1 L348.0,179.8 L350.1,179.6 L352.3,179.4 L354.4,179.2 L356.5,178.9 L358.7,178.7 L360.8,178.5 L362.9,178.3 L365.1,178.1 L367.2,177.8 L369.3,177.6 L371.5,177.4 L373.6,177.2 L375.7,177.0 L377.9,176.8 L380.0,176.6 L382.1,176.4 L384.3,176.2 L386.4,176.0 L388.5,175.8 L390.7,175.6 L392.8,175.4 L394.9,175.2 L397.1,175.0 L399.2,174.8 L401.3,174.6 L403.5,174.4 L405.6,174.2 L407.7,174.0 L409.9,173.8 L412.0,173.6 L414.1,173.4 L416.3,173.2 L418.4,173.0 L420.5,172.8 L422.7,172.7 L424.8,172.5 L426.9,172.3 L429.1,172.1 L431.2,171.9 L433.3,171.7 L435.5,171.6 L437.6,171.4 L439.7,171.2 L441.9,171.0 L444.0,170.8 L446.1,170.7 L448.3,170.5 L450.4,170.3 L452.5,170.2 L454.7,170.0 L456.8,169.8 L458.9,169.6 L461.1,169.5 L463.2,169.3 L465.3,169.1 L467.5,169.0 L469.6,168.8 L471.7,168.6 L473.9,168.5 L476.0,168.3 L478.1,168.1 L480.3,168.0 L482.4,167.8 L484.5,167.7 L486.7,167.5 L488.8,167.3 L490.9,167.2 L493.1,167.0 L495.2,166.9 L497.3,166.7 L499.5,166.6 L501.6,166.4 L503.7,166.2 L505.9,166.1 L508.0,165.9 L510.1,165.8 L512.3,165.6 L514.4,165.5 L516.5,165.3 L518.7,165.2 L520.8,165.0 L522.9,164.9 L525.1,164.7 L527.2,164.6 L529.3,164.4 L531.5,164.3 L533.6,164.2 L535.7,164.0 L537.9,163.9 L540.0,163.7 L542.1,163.6 L544.3,163.4 L546.4,163.3 L548.5,163.2 L550.7,163.0 L552.8,162.9 L554.9,162.7 L557.1,162.6 L559.2,162.5 L561.3,162.3 L563.5,162.2 L565.6,162.0 L567.7,161.9 L569.9,161.8 L572.0,161.6 L574.1,161.5 L576.3,161.4 L578.4,161.2 L580.5,161.1 L582.7,161.0 L584.8,160.8 L586.9,160.7 L589.1,160.6 L591.2,160.4 L593.3,160.3 L595.5,160.2 L597.6,160.1 L599.7,159.9 L601.9,159.8 L604.0,159.7 L606.1,159.5 L608.3,159.4 L610.4,159.3 L612.5,159.2 L614.7,159.0 L616.8,158.9 L618.9,158.8 L621.1,158.7 L623.2,158.6 L625.3,158.4 L627.5,158.3 L629.6,158.2 L631.7,158.1 L633.9,157.9 L636.0,157.8 L638.1,157.7 L640.3,157.6 L642.4,157.5 L644.5,157.3 L646.7,157.2 L648.8,157.1 L650.9,157.0 L653.1,156.9 L655.2,156.8 L657.3,156.6 L659.5,156.5 L661.6,156.4 L663.7,156.3 L665.9,156.2 L668.0,156.1 L670.1,155.9 L672.3,155.8 L674.4,155.7 L676.5,155.6 L678.7,155.5 L680.8,155.4 L682.9,155.3 L685.1,155.2 L687.2,155.0 L689.3,154.9 L691.5,154.8 L693.6,154.7 L695.7,154.6 L697.9,154.5 L700.0,154.4" fill="none" stroke="var(--pr)" stroke-width="1.5" stroke-dasharray="4 5" opacity=".5"/>
+</g>
+<g data-s="1"><text x="100" y="77" class="lbl" style="fill:var(--acc)">  needed (van Trees + (193))</text></g>
+<g data-s="2"><text x="475" y="194" class="lbl" style="fill:var(--pr)">allowed (bit budget)</text></g>
+<g data-s="3"><g class="mv" data-on="4" style="--tx:-56.1px;--ty:0px"><line x1="212.5" y1="20" x2="212.5" y2="330" stroke="var(--acc)" stroke-width="2" stroke-dasharray="6 4"/><text x="218.5" y="320" class="lbl" style="fill:var(--acc)">risk floor</text></g>
+<text x="68" y="292" class="lbl" style="fill:var(--acc)">no protocol</text><text x="68" y="310" class="lbl" style="fill:var(--acc)">reaches here</text></g>
+<g data-s="4"><text x="475" y="108" class="lbl" style="fill:var(--pr)">more surplus s</text></g>
+</svg>
+    <div class="grow">
+      <div class="say" data-s="1" style="font-size:17px"><b class="k">Red, from (197):</b> to reach a small error, the transcript must keep a lot of entropy \(h_T\). It blows up like \(1/x\).</div>
+      <div class="say" data-s="2" style="font-size:17px"><b class="p">Blue, from (202):</b> the bit budget allows only \(s\ln2+c_\pi+\tfrac12\ln x\), which falls to \(-\infty\) as \(x\to0\).</div>
+      <div class="say" data-s="3" style="font-size:17px">Both must hold. Left of the crossing, <b>needed &gt; allowed</b>: impossible. The crossing is the floor in (212).</div>
+      <div class="say" data-s="4" style="font-size:17px">More surplus \(s\) lifts blue and moves the floor left, but only logarithmically. Steps 4–6 compute this crossing.</div>
+    </div></div></div></div>
+  <aside class="notes">This is the whole of III-E in one picture. The red curve is van Trees with the Theorem 2 ceiling; the blue curve is the entropy budget after the ln m cancellation. Click 4 shows the effect of more bits. The curves are illustrative, not to scale.</aside>
+</section>
+
+<!-- 10 · III-E step 4 -->
+<section class="slide E" data-plan="70" data-trail="203,206" data-goal-eq="206" data-goal-tex="t+\ln t\le 2s\ln2+2c_\pi+\ln\tfrac2A+\tfrac{2Q}{Amd}" data-goal="Merge (197) and (202) into one inequality in a single variable t ∝ 1/D." data-goal-next="Solved for t in Step 5.">
+  <div class="hd"><span class="sec">III-E · Step 4</span><h2>Combine the two bounds, then change variables</h2></div>
+  <div class="body" data-rail="197,202,200">
+    <div class="deriv">
+      <div class="ln box" data-s="1" data-eq="203" data-uses="197,202" data-via="Substitute (202) into (197)" data-how="The right side of (197) increases with \(h_T\), so replacing \(h_T\) by its upper bound \(d[\dots]\) from (202) keeps the inequality." data-sym="">\[ \frac{d^2}{D}\le Am\,h_T+Q\le Amd\Big[s\ln2+c_\pi+\tfrac12\ln x\Big]+Q \]</div>
+      <div class="ln" data-s="2" data-uses="200" data-via="D = dx/m on the left" data-how="From (200), \(D=dx/m\), so \(d^2/D=d^2m/(dx)=dm/x\)." data-sym="">\[ \frac{d^2}{D}=\frac{dm}{x} \]</div>
+      <div class="ln" data-s="3" data-eq="204" data-via="Multiply by 2/(Amd)" data-how="\(\frac{dm}{x}\cdot\frac{2}{Amd}=\frac{2}{Ax}\); every term on the right is multiplied by \(\frac2{Amd}\)." data-sym="">\[ \frac{2}{Ax}\le 2s\ln2+2c_\pi+\ln x+\frac{2Q}{Amd} \]</div>
+      <div class="ln" data-s="4" data-eq="205" data-via="New variable (not the transcript t)" data-how="Set \(t=2/(Ax)\). Then \(x=2/(At)\) and \(D=dx/m=2d/(Amt)\)." data-sym="t::auxiliary positive number, inversely proportional to D">\[ t:=\frac{2}{Ax},\qquad x=\frac{2}{At},\qquad D=\frac{2d}{Amt}\qquad(t\uparrow\ \Leftrightarrow\ D\downarrow) \]</div>
+      <div class="ln box" data-s="5" data-eq="206" data-via="ln x = ln(2/A) − ln t, move it left" data-how="Substitute \(\ln x=\ln\frac2A-\ln t\) into (204) and add \(\ln t\) to both sides." data-sym="">\[ t+\ln t\ \le\ 2s\ln2+2c_\pi+\ln\frac2A+\frac{2Q}{Amd} \]</div>
+      <div class="say" data-s="6">(203) mixes \(1/D\) and \(\ln D\). In the variable \(t\) it reads \(t+\ln t\le\) const. <strong>A lower bound on \(D\) is now an upper bound on \(t\).</strong></div>
+    </div>
+  </div>
+  <aside class="notes">Left side is the information that reciprocal risk demands; right side is what communication and samples allow. The rest is algebra to isolate D. Mention that this t is a positive real number, not the transcript.</aside>
+</section>
+
+<!-- 11 · III-E step 5 -->
+<section class="slide E" data-plan="40" data-trail="212" data-goal-eq="212" data-goal-tex="D\gtrsim\frac{d}{m(1+s_+)+\bar r+(B+1)^2}" data-goal="Solve for t, and so obtain an explicit lower bound on D." data-goal-next="The extra (B+1)² is removed in Step 6.">
+  <div class="hd"><span class="sec">III-E · Step 5</span><h2>Collect the scales and invert</h2></div>
+  <div class="body" data-rail="206,196,139,205">
+    <div class="railfig"><div style="font-weight:600;font-size:14px">Why \(t+\ln t\le C_1F\) caps \(t\)</div>
+<svg class="fig2" viewBox="0 0 290 190" width="100%" aria-label="t plus ln t is increasing">
+<defs><clipPath id="cq"><rect x="30" y="15" width="255" height="155"/></clipPath></defs>
+<rect data-s="5" class="growx" x="30" y="15" width="136.6" height="155" fill="var(--acct)"/>
+<line x1="30" y1="170" x2="285" y2="170" stroke="currentColor" opacity=".5"/><line x1="30" y1="170" x2="30" y2="12" stroke="currentColor" opacity=".5"/>
+<line x1="30" y1="111.9" x2="285" y2="111.9" stroke="var(--rule)" stroke-dasharray="3 3"/>
+<g clip-path="url(#cq)"><path class="draw" data-on="4" pathLength="1000" d="M30.0,168.9 L31.2,162.1 L32.5,156.9 L33.8,152.7 L35.0,149.1 L36.2,145.9 L37.5,143.1 L38.8,140.6 L40.0,138.3 L41.2,136.1 L42.5,134.1 L43.8,132.3 L45.0,130.5 L46.2,128.8 L47.5,127.2 L48.8,125.7 L50.0,124.3 L51.2,122.9 L52.5,121.5 L53.8,120.2 L55.0,118.9 L56.2,117.7 L57.5,116.5 L58.8,115.4 L60.0,114.2 L61.3,113.1 L62.5,112.1 L63.7,111.0 L65.0,110.0 L66.2,109.0 L67.5,108.0 L68.8,107.0 L70.0,106.1 L71.2,105.1 L72.5,104.2 L73.8,103.3 L75.0,102.4 L76.2,101.5 L77.5,100.7 L78.8,99.8 L80.0,99.0 L81.2,98.1 L82.5,97.3 L83.8,96.5 L85.0,95.7 L86.2,94.9 L87.5,94.1 L88.8,93.3 L90.0,92.6 L91.2,91.8 L92.5,91.1 L93.8,90.3 L95.0,89.6 L96.2,88.8 L97.5,88.1 L98.7,87.4 L100.0,86.7 L101.2,86.0 L102.5,85.3 L103.8,84.6 L105.0,83.9 L106.2,83.2 L107.5,82.5 L108.8,81.8 L110.0,81.1 L111.2,80.5 L112.5,79.8 L113.8,79.1 L115.0,78.5 L116.3,77.8 L117.5,77.2 L118.8,76.5 L120.0,75.9 L121.2,75.2 L122.5,74.6 L123.7,74.0 L125.0,73.3 L126.3,72.7 L127.5,72.1 L128.8,71.4 L130.0,70.8 L131.2,70.2 L132.5,69.6 L133.8,69.0 L135.0,68.4 L136.2,67.8 L137.5,67.2 L138.8,66.6 L140.0,66.0 L141.2,65.4 L142.5,64.8 L143.8,64.2 L145.0,63.6 L146.2,63.0 L147.5,62.4 L148.8,61.9 L150.0,61.3 L151.2,60.7 L152.5,60.1 L153.8,59.5 L155.0,59.0 L156.2,58.4 L157.5,57.8 L158.8,57.3 L160.0,56.7 L161.2,56.1 L162.5,55.6 L163.8,55.0 L165.0,54.5 L166.2,53.9 L167.5,53.3 L168.7,52.8 L170.0,52.2 L171.2,51.7 L172.5,51.1 L173.8,50.6 L175.0,50.0 L176.2,49.5 L177.5,48.9 L178.8,48.4 L180.0,47.9 L181.3,47.3 L182.5,46.8 L183.8,46.2 L185.0,45.7 L186.2,45.2 L187.5,44.6 L188.8,44.1 L190.0,43.6 L191.2,43.0 L192.5,42.5 L193.8,42.0 L195.0,41.5 L196.2,40.9 L197.5,40.4 L198.7,39.9 L200.0,39.4 L201.2,38.8 L202.5,38.3 L203.8,37.8 L205.0,37.3 L206.3,36.8 L207.5,36.2 L208.8,35.7 L210.0,35.2 L211.2,34.7 L212.5,34.2 L213.8,33.7 L215.0,33.2 L216.2,32.7 L217.5,32.1 L218.8,31.6 L220.0,31.1 L221.2,30.6 L222.5,30.1 L223.7,29.6 L225.0,29.1 L226.2,28.6 L227.5,28.1 L228.8,27.6 L230.0,27.1 L231.2,26.6 L232.5,26.1 L233.8,25.6 L235.0,25.1 L236.2,24.6 L237.5,24.1 L238.8,23.6 L240.0,23.1 L241.2,22.6 L242.5,22.1 L243.8,21.6 L245.0,21.1 L246.2,20.6 L247.5,20.1 L248.7,19.6 L250.0,19.1 L251.2,18.7 L252.5,18.2 L253.8,17.7 L255.0,17.2 L256.2,16.7 L257.5,16.2 L258.8,15.7 L260.0,15.2 L261.2,14.7 L262.5,14.3 L263.8,13.8 L265.0,13.3 L266.2,12.8 L267.5,12.3 L268.8,11.8 L270.0,11.4 L271.2,10.9 L272.5,10.4 L273.8,9.9 L275.0,9.4 L276.2,9.0 L277.5,8.5 L278.8,8.0 L280.0,7.5" fill="none" stroke="var(--pr)" stroke-width="2.5"/></g>
+<g data-s="4"><line class="draw" data-on="4" pathLength="1000" x1="30" y1="53.8" x2="285" y2="53.8" stroke="var(--acc)" stroke-width="2"/><text x="240" y="47.8" style="fill:var(--acc)">C₁F</text><text x="229" y="43" style="fill:var(--pr)">t + ln t</text></g>
+<g data-s="5"><line x1="166.6" y1="53.8" x2="166.6" y2="170" stroke="var(--acc)" stroke-dasharray="4 3"/><text x="162.6" y="185" text-anchor="end" style="fill:var(--acc)">t ≤ C₂F</text></g>
+<text x="282" y="185" text-anchor="end">t</text></svg>
+<div class="cap">Increasing curve under a level line → \(t\) is capped. Small \(t\) (ln t &lt; 0) is covered by \(F\ge1\).</div></div>
+    <div class="deriv">
+      <div class="ln" data-s="1" data-eq="207" data-uses="196" data-via="Expand the last term of (206)" data-how="Divide each piece of Q (196) by \(\frac{Amd}{2}=2vmd\)." data-sym="\bar r/(2m)::shared observations;; b^2K_B/(vmd)::Bernstein tail;; 2\pi^2/(vm)::prior information">\[ \frac{2Q}{Amd}=\underbrace{\frac{\bar r}{2m}}_{\text{shared}}+\underbrace{\frac{b^2K_B}{vmd}}_{\text{Bernstein}}+\underbrace{\frac{2\pi^2}{vm}}_{\text{prior}} \]</div>
+      <div class="ln" data-s="2" data-eq="208" data-uses="139" data-via="Lemma 2 constant" data-how="Lemma 2 gives \(K_B\le C_K(B+1)^2\), from \(\int_a^\infty2xe^{a-x}dx=2a+2\)." data-sym="C_K::absolute constant">\[ K_B\le C_K(B+1)^2\qquad(C_K=2\text{ suffices}) \]</div>
+      <div class="ln" data-s="3" data-eq="209" data-via="One positive number for all scales" data-how="Each term on the right of (206) is at most a constant times one of these four pieces." data-sym="F::collected scale, always at least 1">\[ F:=1+s_++\frac{\bar r}{m}+\frac{(B+1)^2}{m}\ \ \ge 1 \]</div>
+      <div class="ln" data-s="4" data-eq="210" data-uses="206" data-via="Constants absorbed, s ≤ s₊" data-how="Use \(s\le s_+\), (207) and (208); the constants \(2c_\pi\) and \(\ln\frac2A\) are at most a constant times \(1\le F\)." data-sym="C_1::constant independent of N, m, n">\[ t+\ln t\le C_1F \]</div>
+      <div class="ln" data-s="5" data-eq="211" data-via="t ≥ 1: ln t ≥ 0 so t ≤ C₁F · t &lt; 1: t &lt; 1 ≤ F" data-how="If \(t\ge1\), then \(\ln t\ge0\) and \(t\le t+\ln t\le C_1F\). If \(t&lt;1\), then \(t&lt;1\le F\). Take \(C_2=\max(C_1,1)\)." data-sym="C_2::constant covering both cases">\[ t\le C_2F \]</div>
+      <div class="ln box" data-s="6" data-eq="212" data-uses="205" data-via="Back to D = 2d/(Amt)" data-how="D decreases in t; insert \(t\le C_2F\) and expand \(mF=m(1+s_+)+\bar r+(B+1)^2\)." data-sym="\gtrsim::at least, up to a fixed positive constant">\[ D=\frac{2d}{Amt}\ge\frac{2d}{AC_2\,mF}\ \gtrsim\ \frac{d}{m(1+s_+)+\bar r+\class{k}{(B+1)^2}} \]</div>
+      <div class="say" data-s="7">Three scales set the floor: samples × surplus, shared count \(\bar r\), and the Bernstein term <span class="k">\((B+1)^2\)</span>, which the theorem does not contain. It must go.</div>
+    </div>
+  </div>
+  <aside class="notes">The case split in (211) handles ln t being negative. ≳ means up to a fixed positive constant. Point at the red (B+1)^2: the next step removes it.</aside>
+</section>
+
+<!-- 12 · III-E step 6 -->
+<section class="slide E" data-plan="80" data-trail="219" data-goal-eq="219" data-goal-tex="R_{\mathrm{BB}}\gtrsim\frac{d}{m(1+s_+)+\bar r}" data-goal="Remove the Bernstein correction (B+1)², in two regimes, and pass from Bayes to minimax." data-goal-next="This is the fourth term of (220).">
+  <div class="hd"><span class="sec">III-E · Step 6</span><h2>Remove the \((B+1)^2\) correction: two regimes</h2></div>
+  <div class="body" data-rail="212,107,30">
+    <div class="railfig"><div style="font-weight:600;font-size:14px">Two regimes in the \((n,m)\) plane</div>
+<svg class="fig2" viewBox="0 0 290 200" width="100%" aria-label="Regimes m above and below n squared">
+<polygon data-s="1" points="35,170 280,20 35,20" fill="var(--prt)"/>
+<polygon data-s="3" points="35,170 280,20 280,170" fill="var(--acct)"/>
+<line class="draw" data-on="1" pathLength="1000" x1="35" y1="170" x2="280" y2="20" stroke="var(--ink)" stroke-width="2"/>
+<line x1="35" y1="170" x2="285" y2="170" stroke="currentColor" opacity=".5"/><line x1="35" y1="170" x2="35" y2="12" stroke="currentColor" opacity=".5"/>
+<text x="282" y="186" text-anchor="end">n (log)</text><text x="6" y="16">m</text>
+<text x="200" y="40" style="font-size:13px">m = n²</text>
+<g data-s="1"><text x="45" y="45" class="lbl" style="fill:var(--pr)">Case A: m ≥ n²</text><text x="45" y="63" style="font-size:12.5px">(B+1)² ≤ (k+1)² m</text><text x="45" y="79" style="font-size:12.5px">absorbed by m</text></g>
+<g data-s="3"><text x="150" y="128" class="lbl" style="fill:var(--acc)">Case B: m &lt; n²</text><text x="150" y="146" style="font-size:12.5px">s ≥ nk/(2d): large</text><text x="150" y="162" style="font-size:12.5px">d/(nm) dominates</text></g>
+</svg></div>
+    <div class="deriv">
+      <div class="ln" data-eq="213" data-uses="212" data-via="Target. Dropping a positive term from the denominator needs proof" data-how="Removing \((B+1)^2\) makes the denominator smaller and the bound stronger, so it must be justified." data-sym="">\[ D\gtrsim\frac{d}{m(1+s_+)+\bar r} \]</div>
+      <div class="ln" data-s="1" data-eq="214" data-via="Case A, m ≥ n². B = nk" data-how="\(B+1=nk+1\le(k+1)n\); square it, then use \(n^2\le m\)." data-sym="k::bits per machine">\[ (B+1)^2=(nk+1)^2\le(k+1)^2n^2\le(k+1)^2m \]</div>
+      <div class="ln" data-s="2" data-eq="215" data-uses="212" data-via="Absorb: constant factor for fixed k, so (212) ⇒ (213)" data-how="\((B+1)^2\le(k+1)^2m\le(k+1)^2[m(1+s_+)+\bar r]\); add the remaining terms." data-sym="">\[ m(1+s_+)+\bar r+(B+1)^2\le\big[1+(k+1)^2\big]\big[m(1+s_+)+\bar r\big] \]</div>
+      <div class="ln" data-s="3" data-eq="216–217" data-uses="30" data-via="Case B, m &lt; n²: ½ log₂ m &lt; log₂ n" data-how="\(m&lt;n^2\Rightarrow\frac12\log_2m&lt;\log_2n\). For fixed d and k, \(\log_2n\le\frac{nk}{2d}\) once \(n\ge n_0\)." data-sym="n_0::depends on (d, k); source of \(n_{\rm L}\) in Theorem 1">\[ s=\frac{nk}{d}-\tfrac12\log_2m\ \ge\ \frac{nk}{d}-\log_2 n\ \ge\ \frac{nk}{2d}>0\quad(n\ge n_0) \]</div>
+      <div class="ln" data-s="4" data-eq="218" data-uses="107" data-via="Target term is dominated by the sample-size floor (107)" data-how="\(s_+\ge s\ge\frac{nk}{2d}\) gives the two inequalities; (107) already proves risk \(\gtrsim d/(nm)\), which is at least a constant times the target." data-sym="">\[ \big[m(1+s_+)+\bar r\big]^{-1}\le(ms)^{-1}\le\frac{2d}{k}(nm)^{-1},\qquad R_{\mathrm{BB}}\gtrsim\frac{d}{nm} \]</div>
+      <div class="ln box" data-s="5" data-eq="219" data-via="Both cases. Bayes risk ≤ worst-case risk, for every protocol ⇒ minimax" data-how="Each regime gives the target. For any protocol the worst-case risk is at least its Bayes risk under the prior; then take the infimum over protocols." data-sym="R_{\mathrm{BB}}::minimax risk over admissible blackboard protocols">\[ R_{\mathrm{BB}}(N,m,n)\ \gtrsim\ \frac{d}{m(1+s_+)+\bar r} \]</div>
+    </div>
+  </div>
+  <aside class="notes">Case A: many local samples, so the Bernstein term is at most a constant times m. Case B: the surplus grows linearly in n, so the refinement term is already smaller than d/(nm), which III-A proved. Case B does not delete the term algebraically; it switches proof route. n0 depends on (d,k) and is where n_L in Theorem 1 comes from.</aside>
+</section>
+
+<!-- 13 · III-E main converse -->
+<section class="slide E" data-plan="80" data-trail="220" data-goal-eq="220" data-goal-tex="R_{\mathrm{BB}}\ge c\,d\max\{\dots\}=c\,\mathcal L" data-goal="Assemble the main converse: combine (219) with the three III-A floors." data-goal-next="Compare it with the achievable envelope (the gap through r̄).">
+  <div class="hd"><span class="sec">III-E · Result</span><h2>The main converse (220): take the largest of four floors</h2></div>
+  <div class="body" data-rail="107,115,219">
+    <div class="deriv">
+      <div class="ln box" data-s="1" data-eq="220" data-uses="107,115,219" data-via="Combine (219) with the three III-A floors" data-how="Each of the four floors holds on its own, so the risk is at least their maximum." data-sym="c::constant independent of N, m, n;; \mathcal L::lower envelope defined in II-C">\[ R_{\mathrm{BB}}\ \ge\ c\,d\max\Big\{N^{-1},\ (nm)^{-1},\ 2^{-2B/d},\ \big[m(1+s_+)+\bar r\big]^{-1}\Big\}=c\,\mathcal L \]</div>
+      <div class="terms" data-s="2">
+        <div class="term"><span class="chip">(107)</span>\(d/N\)<b>Pool size</b><span class="m">only \(N\) independent samples exist</span></div>
+        <div class="term"><span class="chip">(107)</span>\(d/(nm)\)<b>Total access</b><span class="m">machines read at most \(nm\)</span></div>
+        <div class="term"><span class="chip">(115)</span>\(d\,2^{-2B/d}\)<b>Bit precision</b><span class="m">\(B\) bits describe \(\theta\)</span></div>
+        <div class="term"><span class="chip" style="background:var(--acc);color:#fff">(219)</span>\(\frac{d}{m(1+s_+)+\bar r}\)<b>Refinement</b><span class="m">surplus + shared information</span></div>
+      </div>
+      <div class="bars" data-s="3" aria-label="Example: four floors">
+        <div class="note" style="padding:0 0 4px">Every estimator must satisfy all four, so the binding one is the max:</div>
+        <div class="bar"><span>pool size</span><div class="tr"><i style="--w:20%"></i></div><span>0.01</span></div>
+        <div class="bar"><span>total access</span><div class="tr"><i style="--w:40%"></i></div><span>0.02</span></div>
+        <div class="bar" data-on="4"><span>bit precision</span><div class="tr"><i style="--w:100%"></i></div><span>0.05</span></div>
+        <div class="bar"><span>refinement</span><div class="tr"><i style="--w:60%"></i></div><span>0.03</span></div>
+      </div>
+      <div class="say" data-s="5">Open question: the achievable envelope differs from \(\mathcal L\) in the fourth term through \(\bar r\), so a gap remains in some overlap regimes.</div>
+    </div>
+  </div>
+  <aside class="notes">This is the equation to know by heart. Four separate constraints, not four errors added. c does not depend on N, m, n. The example shows that the error must be at least 0.05. End with the honest gap.</aside>
+</section>
+
+<!-- 14 · III-E Gaussian -->
+<section class="slide E" data-plan="0" data-trail="220" data-goal-eq="230" data-goal-tex="D\ge\frac{d}{m\,W_0(e^{z})}" data-goal="Gaussian case: the same floor with every constant explicit." data-goal-next="Backup material; it supports (220).">
+  <div class="hd"><span class="sec">III-E · Backup <span class="badge old">optional</span></span><h2>Gaussian means: explicit constants via Lambert \(W\)</h2></div>
+  <div class="body" data-rail="177,96-102,118">
+    <div class="deriv">
+      <div class="ln" data-s="1" data-eq="221" data-uses="177" data-via="v = 1, b = 0: no Bernstein term, coefficient 2" data-how="Gaussian score \(\xi=X-\theta\): \(v=1,\ b=0\). Theorem 2 in the form (177), averaged as in (193)." data-sym="">\[ \mathbb E_\Theta\,\mathrm{tr}\,J_{T,\mathcal S,R}\le d\bar r+2m\,h_T \]</div>
+      <div class="ln" data-s="2" data-eq="222" data-uses="96-102" data-via="van Trees, as in (197)" data-how="The same van Trees step, with prior trace \(4\pi^2d\)." data-sym="">\[ \frac{d^2}{D}\le d\bar r+2m\,h_T+4\pi^2d \]</div>
+      <div class="ln" data-s="3" data-eq="223–224" data-via="t := d/(mD), divide by md" data-how="Divide (222) by md and set \(t=d/(mD)\), a different normalization from (205)." data-sym="t::\(=d/(mD)=1/x\)">\[ t\le\frac{\bar r}{m}+\frac{2h_T}{d}+\frac{4\pi^2}{m} \]</div>
+      <div class="ln" data-s="4" data-eq="227" data-uses="118" data-via="Budget (118); 2 − 2ln2 + ln 2πe = ln(πe³/2) (226)" data-how="Insert \(\frac{2h_T}{d}\le2s\ln2+2-2\ln2+\ln(2\pi e)-\ln t\) (225), which is (118) rewritten with s and t." data-sym="z::the right-hand side">\[ t+\ln t\le z:=2s\ln2+\frac{\bar r}{m}+\ln\frac{\pi e^3}{2}+\frac{4\pi^2}{m} \]</div>
+      <div class="ln" data-s="5" data-eq="228–229" data-via="Exponentiate; W₀ inverts te^t (W₀(e) = 1)" data-how="\(te^t\) is increasing for \(t&gt;0\), so \(te^t\le e^z\) gives \(t\le W_0(e^z)\)." data-sym="W_0::principal Lambert W, the inverse of \(y=te^t\)">\[ te^t\le e^z\ \Rightarrow\ t\le W_0(e^z),\qquad W_0(y)e^{W_0(y)}=y \]</div>
+      <div class="ln box" data-s="6" data-eq="230" data-via="Substitute t = d/(mD)" data-how="\(D=d/(mt)\ge d/(m\,W_0(e^z))\), with \(e^z=\frac{\pi e^3}{2}\exp[\dots]\)." data-sym="">\[ D\ \ge\ \frac{d}{m\,W_0\!\Big(\frac{\pi e^3}{2}\exp\big[2s\ln2+\bar r/m+4\pi^2/m\big]\Big)} \]</div>
+    </div>
+  </div>
+  <aside class="notes">Same proof, no hidden constant. Lambert W only does the last algebraic inversion; the statistics came from the rectangle, the additive shared term, and the entropy budget. This is a non-asymptotic Bayes bound and therefore also bounds Gaussian minimax risk.</aside>
+</section>
+
+<!-- 15 · Summary -->
+<section class="slide" data-plan="30">
+  <div class="hd"><span class="sec">Summary</span><h2>The proof in three steps</h2></div>
+  <div class="body full">
+    <div class="deriv">
+      <div class="ln box" data-s="1" data-eq="147" data-via="III-C · rectangles keep blocks independent; surprisals add to entropy">\[ \mathrm{tr}\,J_{T,R}\le 4vq\,H_\theta(T\mid R)+2b^2K_B \]</div>
+      <div class="ln box" data-s="2" data-eq="174" data-via="III-D · split off shared draws; count each distinct sample once">\[ \mathrm{tr}\,J_{T,R}\le dvr+4vq\,H_\theta(T\mid G,R)+2b^2K_B \]</div>
+      <div class="ln box" data-s="3" data-eq="220" data-via="III-E · (197) van Trees + (202) budget → (212) → (219)">\[ R_{\mathrm{BB}}(N,m,n)\ \ge\ c\,\mathcal L \]</div>
+      <div class="say" data-s="4" style="margin-top:14px">More machines and more bits do not automatically mean more information, especially when the machines' data overlap. Thank you.</div>
+    </div>
+  </div>
+  <aside class="notes">“The challenge in this converse is that machines can share observations and communicate interactively. III-C controls information through transcript entropy, III-D separates shared observations, III-E turns the information ceiling into an error floor for every protocol.”</aside>
+</section>
+
+</div></div>
+
+<div id="notes"></div>
+<aside id="pv" aria-label="Presenter script">
+  <div id="pvh"></div>
+  <div id="scr"></div>
+  <div id="pvmsg"></div>
+</aside>
+<div id="hud">
+  <button id="bp" aria-label="Previous step">←</button>
+  <button id="bn" aria-label="Next step">→</button>
+  <span id="ctr"></span>
+  <div id="prog"></div>
+  <button id="bpv" aria-label="Toggle presenter mode">Presenter (P)</button>
+  <button id="baw" class="opt" aria-label="Open audience window">Audience window</button>
+  <button id="ba" class="opt" aria-label="Show all annotations">Labels</button>
+  <button id="bt" class="opt" aria-label="Toggle speaker notes">Notes</button>
+</div>
+
+<script>
+{
+const R=String.raw;
+const SC=[{"s": ["Good morning, everyone. Today I present Sections III-C to III-E: the converse, that is, the lower bound. The question is simple: no matter how cleverly the machines communicate, how small can the estimation error be?", "The argument has three steps. First, III-C: for independent blocks, Lemma 3 says an interactive transcript can carry Fisher information only in proportion to its entropy.", "Second, III-D: when machines share samples, Theorem 2 splits off the shared draws. They add a separate term, d v r, instead of multiplying the entropy.", "Third, III-E: we combine this with van Trees and the bit budget, and obtain an error floor that holds for every protocol.", "This is the goal. »R B B of N, m, n is at least c d times the maximum of four terms: one over N, one over n m, two to the minus two B over d, and one over the quantity m times one plus s plus, plus r bar. This equals c times script L.«"], "n": "Before we start, let me connect to last class, so we know which tools we already have.", "b": ["", "Toolbox from last class"]}, {"s": ["Last class we built a toolbox, and I will reuse it.", "On the left, results already proved. The score of a compressed message is the average score of the inputs that could have produced it. For independent samples the cross terms vanish, so »J Z equals q times I X.« Data processing. The score condition gives »I X is at most v times the identity.« And van Trees with the sine-squared prior. I only cite these by equation number. They appear in the panel ‘Equations used’ on the right of each slide, tagged ‘last class’.", "On the right, what is new today: the Fisher chain rule, which was only stated last time; Lemmas 1 and 2, which I explain by intuition; the rectangle argument; shared samples; and the bit budget.", "One more point. The converse allows interaction, a blackboard, while the achievable scheme does not. That is fine, because »R B B is at most R N I.« A lower bound for the larger class and an upper bound for the smaller class sandwich both."], "n": "So let us start with III-C, where machines may interact but their data are independent.", "b": ["Last class: III-A", "III-C: independent blocks"]}, {"s": ["Here is the setting. Each machine i holds its own block Z i, with at most q samples, and the blocks are independent. Watch the animation: machine one writes a bit, machine two reads it and replies, machine three uses both. Everything is public. The server sees the whole transcript T.", "The goal of III-C is Lemma 3. »The trace of J sub T comma R at theta is at most four v q times H sub theta of T given R, plus two b squared K sub B.« Left side: how much the transcript tells us about theta. Right side: a ceiling set by the entropy of the transcript.", "If the score is sub-Gaussian, b equals zero and the bound is sharper. »The trace of J T R is at most two v q times H of T given R.«", "And with at most B bits, the entropy is at most B ln 2. »The trace is at most two v q B ln two.« So information grows at most linearly in the number of bits.", "But here is the puzzle. The machines react to one another; interaction seems to entangle them. Why can we still count information machine by machine? The answer is one picture: a rectangle."], "n": "Let me show that rectangle with just two machines.", "b": ["Toolbox", "Why interaction does not entangle: rectangles"]}, {"s": ["Alice holds X, Bob holds Y. Alice sends whether X exceeds five. Bob's rule depends on her bit. »T one is the indicator that X exceeds five. T two is the indicator that Y exceeds three if T one equals one, and that Y exceeds seven if T one equals zero.«", "Now freeze the transcript at yes, yes, and read it backwards. Alice's yes forces X greater than five, and it also selects Bob's rule. Bob's yes forces Y greater than three. »The event T equals one, one is the set X greater than five, times the set Y greater than three.« The red dots are all the input pairs that produce this transcript.", "That set is a rectangle: any admissible input of Alice combines with any admissible input of Bob. In general, with the seeds fixed, each machine passes its own checklist. »The event T equals t is the intersection over i of the events Z i in E i of t and r.« This uses one rule of the model, equation seven: who speaks next depends only on the public history.", "Because the blocks are independent, probabilities multiply. »p of t equals the product over i of p i of t, and the sum of the local surprisals ell i equals ln of one over p of t.« For example, Alice passes with probability 0.2, Bob with 0.3, so this transcript has probability 0.06.", "And conditioning on a rectangle keeps the blocks independent. »The probability that every Z i lies in C i, given T equals t, is the product over i of the probability that Z i lies in C i given Z i in E i of t.« This is the key fact for the next slide."], "n": "Now we use this independence to bound the Fisher information of the transcript.", "b": ["Lemma 3 (147) is the target", "Rectangle → entropy"]}, {"s": ["Now we turn the rectangle into an entropy bound, in four moves.", "Move one: the score identity from last class. »The gradient of log p of T given R equals the sum over i of a i of T, where a i of t is the conditional mean of the block score A i, given Z i in E i of t.« Thanks to the rectangle, machine i only needs its own event.", "Move two: cross terms. »For i not equal to j, the expectation of a i times a j transpose equals the expectation of A i times A j transpose, which is zero.« Given T, the blocks are independent; then the tower property removes the conditioning.", "This is the same trick as J Z equals q I X from last class, now conditional on the transcript. Look at the table: two machines each reveal a fair bit, with score plus or minus two. Transcript zero-zero gives four, zero-one gives minus four. A single transcript has a nonzero cross term; only the average is zero.", "So when we square the score, only the diagonal survives. »The trace of J T given R equals r equals the expected squared norm of the sum of the a i, which equals the sum of their expected squared norms.« No extra factor n.", "Move three: Lemma 1 bounds each machine by how rare its event is. »The squared norm of a i of t is at most four v q i ell i of t, plus two b squared ell i of t squared.« Intuition: a rare event can shift the mean score more, but only like the square root of ln one over p.", "Move four: add up. »The expected sum of the ell i equals the expected ln of one over p of T, which is the entropy H of T given R equals r.« The bar shows it: Alice's surprisal plus Bob's is the surprisal of the whole transcript; average it and you get entropy.", "The quadratic term is handled by Lemma 2. »The trace of J T given R equals r is at most four v q H of T given R equals r, plus two b squared K B.«", "Finally, the seeds carry no information about theta, so we average over them. »The trace of J T comma R is at most four v q H of T given R, plus two b squared K B.« That is Lemma 3."], "n": "So far the blocks were independent. In our problem, machines draw from a common pool and may share samples. That is III-D.", "b": ["(150)–(153) rectangle", "Lemma 3 proved → overlapping samples"]}, {"s": ["Here machines one, two and three all read sample three, so their blocks are dependent and Lemma 3 does not apply directly. The idea: separate the shared samples from the private ones.", "First, the shared indices: those read by at least two machines. »Script G is the set of indices a such that the number of machines reading a is at least two.« Here it is three and six. Watch index three: three copies merge into one draw.", "What remains is private. »V one is one, V two is two, V three is four and five. r, the number of distinct shared samples, equals two; q, the largest private block, equals two.«", "Different indices are independent draws, so »the joint law of G and V one through V n is P theta to the power r, times the product over i of P theta to the power q i.« Once we fix G, the private blocks are independent again, which is exactly the hypothesis of Lemma 3."], "n": "Now we use this split. Before the algebra, here is the strategy of the proof of Theorem 2 in one picture.", "b": ["Lemma 3 needs independence", "Proof strategy for Theorem 2"]}, {"s": ["Before the algebra, here is the strategy of the proof in one picture. The question: how much Fisher information can the transcript carry? »J T of theta is at most what?« Bounding this directly is hard, because shared samples make the machines dependent, and Lemma 3 needs independence.", "Stage one: introduce auxiliary information. We hand the shared data G to the decoder for free. Revealing more can never reduce information, so »J T is at most J of G comma T.« We made the problem bigger, but easier.", "Stage two: decompose. The chain rule splits the joint information into two pieces. »The trace of J G T equals the trace of J G, plus the average over G of the trace of J T given G.« Information in the shared data, plus what the transcript adds once the shared data are known.", "Stage three: bound the shared piece. G is just r independent samples, so »the trace of J G equals r times the trace of I X, which is at most d v r.«", "Stage four is the key trick: condition on G. The machines were dependent only because they share G. Once G equals g is fixed, the private blocks are independent, and the protocol is a valid protocol on independent blocks. So Lemma 3 applies, and the communication constraint enters through the entropy: »the conditional trace is at most four v q H of T given G and R, plus two b squared K B.«", "Stage five: combine the two bounds. »The trace of J T R is at most d v r, plus four v q H theta of T given G and R, plus two b squared K B.« That is Theorem 2. The shared part is added once; it does not multiply the entropy.", "In one line: introduce auxiliary information, condition, decompose, and bound. The table on the right lists the tool used at each stage.", "And this is where it sits in the big picture. »B implies J T at most U, which implies the error D is at least L.« Limited bits give limited information, and limited information gives limited accuracy. III-C and III-D give the information bound U; III-E turns it into the error bound L."], "n": "Now let us go through the same five stages with the exact formulas.", "b": ["G, Vᵢ independent (172)", "Theorem 2, stage by stage"]}, {"s": ["Now the same five stages with the exact formulas. The numbers ① to ⑤ on each line match the strategy slide. Keep an eye on the bar on the right: it shows how the information splits.", "Stage one, introduce G. First, give the shared values G to the decoder for free. That can only increase information; this is data processing from last class. »J T is at most J of G comma T, in the positive semidefinite order.«", "Stage two, decompose with the chain rule. »The trace of J G T equals the trace of J G, plus the expected trace of J T given G.« Information in G, plus what T adds once G is known. The proof idea is the same as before: the joint score splits into two parts whose cross term has mean zero.", "Stage three, the shared part. The first part is easy, because G is r independent draws. »J G equals r times I X, so its trace is at most d v r.« That is the red segment of the bar.", "Stage four, condition on G. For the second part, fix G equals g and the seeds. The private blocks are now independent, and the protocol is a valid protocol on them, so Lemma 3 applies. »The trace of J T given G equals g and R equals rho is at most four v q H of T given the same, plus two b squared K B.« That is the blue segment.", "Stage five, combine. Average over G and the seeds, and we have Theorem 2. »The trace of J T R is at most d v r, plus four v q H of T given G and R, plus two b squared K B.« The key word is additive: shared samples add d v r once; they do not multiply the entropy.", "For later use we relax it. Conditioning reduces entropy, and q is at most m. »The trace is at most d v r, plus four v m H of T given R, plus two b squared K B.«", "The design is random, so r is random. Its mean, r bar, extends what we computed last class. Each index is read by D a machines, which is binomial with n trials and probability m over N. Last class we counted D a at least one; shared means D a at least two. »r bar equals the sum over a of the probability that D a is at least two, which equals N times: one, minus one minus m over N to the n, minus n m over N times one minus m over N to the n minus one.«", "Averaging over the design and the prior gives the inequality that III-E starts from. »The prior average of the trace of J T S R is at most d v r bar, plus four v m H of T given Theta, S and R, plus two b squared K B.«", "One caveat: we gave G to the decoder only to bound information. G is not free side information in the bit budget, because its law depends on Theta."], "n": "We now have an information ceiling. III-E turns it into an error floor.", "b": ["Strategy: introduce, condition, decompose, bound", "(193) feeds III-E"]}, {"s": ["III-E. We need three ingredients.", "From III-D, the Fisher ceiling, equation 193. From last class, van Trees and the bit budget.", "They pull in opposite directions on one quantity, h T. Van Trees says: a small error needs a lot of information, so h T must be large. The bit budget says: a small error uses up the bits for locating theta, so h T must be small. Below some error both cannot hold. That is the floor.", "These are the two quantities we track. »D is the expected squared norm of theta hat minus Theta. h T is the entropy of T given Theta, the design S and the seeds R.« Capital Theta, because the parameter is now random under the prior.", "The route is shown on the strip at the top of every following slide: van Trees, budget, cancellation, combine, the t plus ln t form, invert, remove a correction, and the main converse."], "n": "Step one: put the ceiling into van Trees.", "b": ["(193) from III-D", "Step 1: van Trees"]}, {"s": ["Step one is a recap, because van Trees was proved last class.", "Start from 193, now with the short name h T. »The prior average of the trace of J is at most d v r bar, plus four v m h T, plus two b squared K B.«", "Name the pieces. »A equals four v. Q equals d v r bar plus two b squared K B plus four pi squared d.« Q collects the shared term, the Bernstein term and the prior's Fisher information.", "Plug this into the denominator of van Trees. »D is at least d squared over A m h T plus Q. Equivalently, d squared over D is at most A m h T plus Q.«", "A sanity check: with d equal to two and the denominator equal to 200, D is at least 0.02. Claiming D equals 0.01 would need 400 to be at most 200, which is impossible.", "But h T is still unknown. We need a second inequality for it."], "n": "That second inequality is the bit budget, which is new today.", "b": ["(193) + van Trees", "h_T unknown → bit budget"]}, {"s": ["The bit budget was not covered last class, so I derive it in three lines. The bar on the right shows the idea.", "Split the transcript entropy, with W the design and the seeds. »H of T given W equals I of Theta and T given W, plus h T.« The first part locates Theta; the second is the residual.", "The total is limited by the bits. »H of T given W is at most B ln two.«", "Locating Theta to error D costs information. Among all distributions with a given mean squared error, the Gaussian has the largest entropy, so »I of Theta and T given W is at least h of Theta, minus d over two times ln of two pi e D over d.«", "Subtract. »h T is at most B ln two, minus h of Theta, plus d over two ln of two pi e D over d.« This is equation 118.", "Divide by d and use the entropy of the prior, d times ln two minus one. »h T over d is at most B over d ln two, plus c pi, plus one half ln of D over d, where c pi equals one minus ln two plus one half ln two pi e.«", "Read the right side. As D gets smaller, one half ln D over d gets smaller. Precision eats the budget. Watch the bar: locating Theta takes more, and less is left for h T. This is the force that opposes van Trees."], "n": "Before combining the two, one algebraic step makes the bound very clean.", "b": ["(197) needs a bound on h_T", "Simplify (198)"]}, {"s": ["This is the step I find most illuminating.", "Measure the error in units of one machine. »x equals m D over d.« d over m is the error of one machine averaging m samples, so x less than one means better than one machine alone.", "Define the localization surplus. »s equals B over d minus one half log base two of m. s plus is the maximum of s and zero.« The bar on the right: with ten bits per coordinate and m equal to 256, four bits only localize theta to one machine's precision; six bits are surplus.", "Rewrite both terms of 198. »B over d ln two equals s ln two plus one half ln m. And one half ln of D over d equals one half ln x minus one half ln m.«", "Substitute. »h T over d is at most s ln two, plus one half ln m, plus c pi, plus one half ln x, minus one half ln m.«", "The two red terms cancel. »h T over d is at most s ln two, plus c pi, plus one half ln x.« This is equation 202.", "A numerical check: d equals one, m equals sixteen, B equals four, D equals one over thirty-two. Both forms give one point five ln two.", "The message: what controls refinement is not the budget B itself, but the surplus s left after paying for localization."], "n": "We now have two bounds on h T. Before the algebra, here is a picture of how they meet.", "b": ["(198)", "Picture: (197) vs (202)"]}, {"s": ["The horizontal axis is the normalized error x. The vertical axis is h T per coordinate.", "The red curve comes from 197: the entropy needed to reach error x. It blows up like one over x as x goes to zero.", "The blue curve comes from 202: the entropy the budget allows. It falls to minus infinity like one half ln x.", "Every protocol must satisfy both: needed at most allowed. Left of the crossing, red is above blue, so no protocol can be there. The crossing is the risk floor.", "More surplus s lifts the blue curve and moves the floor to the left, but only logarithmically. The next three steps compute this crossing exactly."], "n": "So let us combine the two bounds.", "b": ["(197) and (202)", "Compute the crossing"]}, {"s": ["Now we compute the crossing.", "Substitute 202 into 197. »d squared over D is at most A m h T plus Q, which is at most A m d times, s ln two plus c pi plus one half ln x, plus Q.«", "Rewrite the left side with x. »d squared over D equals d m over x.«", "Multiply both sides by two over A m d. »Two over A x is at most two s ln two, plus two c pi, plus ln x, plus two Q over A m d.«", "Change variables. »t equals two over A x, so x equals two over A t, and D equals two d over A m t.« Note that t goes up exactly when D goes down.", "Move ln t to the left. »t plus ln t is at most two s ln two, plus two c pi, plus ln of two over A, plus two Q over A m d.«", "So a lower bound on D is now an upper bound on t."], "n": "Next we collect the scales on the right and solve for t.", "b": ["(197) + (202)", "Solve for t"]}, {"s": ["Collect the right side into one number.", "Expand the last term. »Two Q over A m d equals r bar over two m, plus b squared K B over v m d, plus two pi squared over v m.« Shared, Bernstein, prior.", "Lemma 2 gives »K B is at most C K times B plus one, squared.«", "Collect everything. »F equals one plus s plus, plus r bar over m, plus B plus one squared over m.« F is at least one.", "So »t plus ln t is at most C one F.« Look at the plot on the right: t plus ln t is increasing, and it lies under a level line.", "Therefore t is capped. »t is at most C two F.« If t is at least one, ln t is nonnegative. If t is less than one, then t is less than one, which is at most F.", "Go back to D. »D equals two d over A m t, which is at least two d over A C two m F, which is at least, up to a constant, d over the quantity m times one plus s plus, plus r bar, plus B plus one squared.«", "Three scales set the floor. But the red term, B plus one squared, is not in the theorem. It must go."], "n": "Removing it needs two cases.", "b": ["(206)", "Remove (B+1)²"]}, {"s": ["This is the target. »D is at least, up to a constant, d over m times one plus s plus, plus r bar.« Dropping a positive term from the denominator makes the bound stronger, so we must justify it. There are two regimes, shown on the right.", "Case A: m at least n squared. With B equal to n k: »B plus one squared equals n k plus one squared, which is at most k plus one squared times n squared, which is at most k plus one squared times m.«", "So the correction is a constant times m and is absorbed. »m times one plus s plus, plus r bar, plus B plus one squared, is at most one plus k plus one squared, times m times one plus s plus, plus r bar.«", "Case B: m less than n squared. Then one half log m is less than log n, so »s equals n k over d minus one half log two m, which is at least n k over d minus log two n, which is at least n k over two d, for n large enough.« The surplus grows linearly in n.", "Then the target term is small: »one over m times one plus s plus, plus r bar, is at most one over m s, which is at most two d over k times one over n m.« And the floor d over n m was already proved last class. So this case is covered by a different route.", "Both cases give »R B B of N, m, n is at least, up to a constant, d over m times one plus s plus, plus r bar.« Since Bayes risk under any prior is at most the worst-case risk, this holds for the minimax risk."], "n": "Now we can assemble the main theorem.", "b": ["(212)", "Assemble (220)"]}, {"s": ["This is the main result of Section III.", "»R B B is at least c d times the maximum of: one over N, one over n m, two to the minus two B over d, and one over m times one plus s plus, plus r bar. This equals c times script L.«", "Each term is a separate constraint. d over N: the pool has only N independent samples. d over n m: the machines read at most n m samples. d times two to the minus two B over d: B bits can describe theta only so precisely. And the fourth, from today's proof: refinement, limited by the surplus and by shared information.", "Why the maximum? Every estimator must satisfy all four at once.", "If the four floors are 0.01, 0.02, 0.05 and 0.03, the error is at least 0.05.", "One honest remark: the achievable envelope differs from this one in the fourth term, through r bar. So in some overlap regimes a gap remains, an open question."], "n": "(If time is short, click quickly through the Gaussian backup slide.) To summarize the whole proof:", "b": ["(107), (115), (219)", "Summary"]}, {"s": ["Backup. For Gaussian means we can keep every constant.", "»The averaged trace is at most d r bar plus two m h T.« Here v equals one and b equals zero.", "»d squared over D is at most d r bar, plus two m h T, plus four pi squared d.«", "Set t equal to d over m D and divide by m d. »t is at most r bar over m, plus two h T over d, plus four pi squared over m.«", "Use the budget. »t plus ln t is at most z, which equals two s ln two, plus r bar over m, plus ln of pi e cubed over two, plus four pi squared over m.«", "Exponentiate. »t e to the t is at most e to the z, so t is at most W zero of e to the z,« where W zero, the Lambert W function, inverts t e to the t.", "»D is at least d over m times W zero of: pi e cubed over two, times exp of two s ln two plus r bar over m plus four pi squared over m.« No hidden constant."], "n": "Let me summarize.", "b": ["(220), explicit constants", "Summary"]}, {"s": ["The proof in three steps.", "III-C: a fixed transcript is a rectangle, so blocks stay independent and surprisals add up to entropy. »The trace of J is at most four v q H plus two b squared K B.«", "III-D: introduce the shared data G, condition on it, decompose, and bound; each distinct sample is counted once. »The trace is at most d v r, plus four v q H of T given G and R, plus two b squared K B.«", "III-E: van Trees plus the bit budget, the ln m cancellation, and two regimes give »R B B is at least c times script L.«", "The take-away: more machines and more bits do not automatically mean more information, especially when the data overlap. Thank you. I am happy to take questions."], "n": "", "b": ["Three steps", ""]}];
+const EQ={
+ '7':['Public-history rule','II',R`\text{sender, rule, stop} = f(t^{\ell-1},\ \text{seeds})`],
+ '19':['Score condition','II',R`\xi_\theta(X):\ \text{variance proxy } v,\ \text{Bernstein } b`],
+ '146':['Independent blocks','III-C',R`Z_i=(X_{i,1},\dots,X_{i,q_i}),\ q_i\le q`],
+ '35':['Expected shared count','II',R`\bar r=N\big[1-(1-\tfrac mN)^n-n\tfrac mN(1-\tfrac mN)^{n-1}\big]`],
+ 'Da':['Access count','III-A',R`D_a\sim\mathrm{Bin}(n,m/N)`],
+ '30':['Localization surplus','II',R`s=\tfrac Bd-\tfrac12\log_2 m,\ s_+=\max\{s,0\}`],
+ '77-79':['Data processing','III-A',R`J_T\preceq J_Z`],
+ '80-84':['Fisher chain rule','III-A',R`J_{G,T}=J_G+\mathbb E\,J_{T|G}`],
+ '85-95':['Prior constants','III-A',R`h(\pi)=d(\ln2-1),\ J_\pi=4\pi^2d`],
+ '96-102':['van Trees (trace)','III-A',R`D\ge\dfrac{d^2}{\mathbb E\,\mathrm{tr}J+J_\pi}`],
+ '107':['Sample-size floor','III-A',R`R_{\mathrm{BB}}\gtrsim d\max\{N^{-1},(nm)^{-1}\}`],
+ '115':['Bit-precision floor','III-A',R`D\ge\tfrac{2d}{\pi e^3}2^{-2B/d}`],
+ '117':['Entropy split','III-A',R`H(T|W)=I(\Theta;T|W)+h_T`],
+ '118':['Entropy budget','III-A',R`h_T\le B\ln2-h(\pi)+\tfrac d2\ln\tfrac{2\pi eD}{d}`],
+ '123':['Lemma 1','III-B',R`\|\mathbb E[A_q|E]\|\le\sqrt{2vq\ln\tfrac1p}+b\ln\tfrac1p`],
+ '139':['Lemma 2','III-B',R`\mathbb E\ln^2\tfrac1{p_T(T)}\le K_B`],
+ '147':['Lemma 3','III-C',R`\mathrm{tr}J_{T,R}\le4vqH_\theta(T|R)+2b^2K_B`],
+ '150':['Rectangle identity','III-C',R`\{T=t\}=\cap_i\{Z_i\in E_i(t;r)\}`],
+ '152':['Factorization','III-C',R`p(t)=\prod_ip_i(t),\ \sum_i\ell_i=\ln\tfrac1{p(t)}`],
+ '153':['Conditional independence','III-C',R`\text{given }T=t:\ Z_i\text{ still independent}`],
+ '157':['Cross terms vanish','III-C',R`\mathbb E[a_ia_j^\top]=0`],
+ '172':['Shared/private product law','III-D',R`P_\theta^{\otimes r}\otimes\textstyle\bigotimes_iP_\theta^{\otimes q_i}`],
+ '177':['Theorem 2, Gaussian','III-D',R`\mathrm{tr}J\le dr+2q\,H_\theta(T|G,R)`],
+ '188':['Conditioning reduces entropy','III-D',R`H(T|G,R)\le H(T|R)`],
+ '193':['Averaged Theorem 2','III-D',R`\mathbb E\,\mathrm{tr}J\le dv\bar r+4vm\,h_T+2b^2K_B`],
+ '196':['Constants A, Q','III-E',R`A=4v,\ Q=dv\bar r+2b^2K_B+4\pi^2d`],
+ '197':['Risk via van Trees','III-E',R`\tfrac{d^2}{D}\le Am\,h_T+Q`],
+ '198':['Budget per coordinate','III-E',R`\tfrac{h_T}{d}\le\tfrac Bd\ln2+c_\pi+\tfrac12\ln\tfrac Dd`],
+ '200':['Normalized risk','III-E',R`x=mD/d`],
+ '202':['After cancellation','III-E',R`\tfrac{h_T}{d}\le s\ln2+c_\pi+\tfrac12\ln x`],
+ '205':['Change of variable','III-E',R`t=\tfrac2{Ax},\ D=\tfrac{2d}{Amt}`],
+ '206':['t + ln t form','III-E',R`t+\ln t\le2s\ln2+2c_\pi+\ln\tfrac2A+\tfrac{2Q}{Amd}`],
+ '212':['Floor with (B+1)²','III-E',R`D\gtrsim\tfrac{d}{m(1+s_+)+\bar r+(B+1)^2}`],
+ '219':['Refinement floor','III-E',R`R_{\mathrm{BB}}\gtrsim\tfrac{d}{m(1+s_+)+\bar r}`]
+};
+const esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const LBL={Da:'Dₐ'};const lab=k=>LBL[k]||'('+k.replace('-','–')+')';
+const OLD=new Set(['19','77-79','85-95','96-102','107','Da']),STATED=new Set(['80-84']),NEWK=new Set(['115','117','118','123','139']);
+const TRAIL=[['197','van Trees'],['198','budget'],['202','cancel'],['203','combine'],['206','t + ln t'],['212','invert'],['219','drop (B+1)²'],['220','converse']];
+const slides=[...document.querySelectorAll('.slide')];
+slides.forEach(x=>{const h=x.querySelector('h1,h2');if(h)h.dataset.tex=h.textContent});
+const stage=document.getElementById('stage'),view=document.getElementById('view');
+
+/* build lines, rails, trails */
+for(const sl of slides){
+  for(const ln of sl.querySelectorAll('.ln')){
+    const uses=(ln.dataset.uses||'').split(',').filter(Boolean);
+    const via=document.createElement('div');via.className='via';
+    via.innerHTML='<b>↓</b>'+(ln.dataset.via?'<span></span>':'')+uses.map(u=>`<span class="chip" data-k="${u}">${lab(u)}</span>`).join('');
+    if(ln.dataset.via) via.querySelector('span').textContent=ln.dataset.via;
+    ln.prepend(via);
+    if(ln.dataset.how||ln.dataset.sym){
+      const a=document.createElement('div');a.className='ann';
+      let h='';
+      if(ln.dataset.how)h+=`<p class="how"><b>How it comes · </b>${esc(ln.dataset.how)}</p>`;
+      const sy=(ln.dataset.sym||'').split(';;').map(x=>x.trim()).filter(Boolean);
+      if(sy.length)h+='<div class="sh">Symbols</div><div class="sy">'+sy.map(x=>{const [t,d]=x.split('::');return `<div><span class="t">\\(${esc(t.trim())}\\)</span><span class="d">${esc((d||'').trim())}</span></div>`}).join('')+'</div>';
+      a.innerHTML=h;ln.append(a);
+    }
+    if(ln.dataset.eq){const t=document.createElement('span');t.className='tag';t.textContent=lab(ln.dataset.eq);ln.append(t)}
+  }
+  const body=sl.querySelector('.body[data-rail]');
+  if(body){
+    const rail=document.createElement('aside');rail.className='rail';
+    rail.innerHTML='<div class="rh">Equations used</div>'+body.dataset.rail.split(',').map(k=>{const e=EQ[k];return `<div class="card" data-k="${k}"><span class="src">${e[1]}</span><span class="no">${lab(k)}</span> ${e[0]}${OLD.has(k)?'<span class="badge old">last class ✓</span>':STATED.has(k)?'<span class="badge old">stated last class</span>':NEWK.has(k)?'<span class="badge nw">new</span>':''}<div class="ct">\\(${e[2]}\\)</div></div>`}).join('');
+    body.append(rail);
+    const rf=body.querySelector('.railfig');if(rf)rail.insertBefore(rf,rail.firstChild);
+    if(sl.dataset.goal){const g=document.createElement('div');g.className='goal';g.innerHTML=`<div class="gh"><span>Current goal · target ${lab(sl.dataset.goalEq)}</span><i>in progress</i></div><div class="gt">\\(${esc(sl.dataset.goalTex)}\\)</div>${esc(sl.dataset.goal)}<div class="gn"><b>Then:</b> ${esc(sl.dataset.goalNext)}</div>`;rail.insertBefore(g,rail.firstChild)}
+  }
+  if(sl.dataset.trail){
+    const here=sl.dataset.trail.split(',');const last=TRAIL.findIndex(x=>x[0]===here[here.length-1]);
+    const tr=document.createElement('div');tr.className='trail';
+    tr.innerHTML=TRAIL.map((x,i)=>`<span class="${here.includes(x[0])?'here':i<last?'done':''}">${lab(x[0])} ${x[1]}</span>`).join('<i>→</i>');
+    sl.querySelector('.hd').after(tr);
+  }
+  {const i=slides.indexOf(sl),b=SC[i]&&SC[i].b;if(b&&(b[0]||b[1])){const d=document.createElement('div');d.className='bridge';d.innerHTML=`<span>${b[0]?'← from <b>'+esc(b[0])+'</b>':''}</span><span>${b[1]?'next → <b>'+esc(b[1])+'</b>':''}</span>`;sl.append(d)}}
+  sl.max=Math.max(0,...[...sl.querySelectorAll('[data-s],[data-on]')].map(e=>+(e.dataset.s||e.dataset.on)));
+}
+
+/* progress bar segments */
+const total=slides.reduce((a,s)=>a+ +s.dataset.plan,0);
+let cum=0;const ends=slides.map(s=>cum+=+s.dataset.plan);
+const prog=document.getElementById('prog');
+prog.innerHTML=slides.map((s,i)=>`<i style="width:${s.dataset.plan/total*100}%;background:${s.classList.contains('E')?'var(--acc)':'var(--pr)'};opacity:.25"></i>`).join('');
+
+let cur=0,step=0;
+const AUD=location.hash==='#audience';if(AUD)document.body.classList.add('audience');
+let bc=null;try{bc=new BroadcastChannel('converse-deck')}catch(e){}
+let aud=null,remote=false,hasPresenter=false;
+
+function render(){
+  slides.forEach((s,i)=>s.classList.toggle('act',i===cur));
+  const sl=slides[cur];
+  const used=new Set(),seen=new Set();
+  for(const e of sl.querySelectorAll('[data-s]')){
+    const s=+e.dataset.s;e.classList.toggle('hid',step<s);e.classList.toggle('cur',s===step&&step>0);
+  }
+  for(const ln of sl.querySelectorAll('.ln:not([data-s])'))ln.classList.toggle('cur',step===0);
+  for(const e of sl.querySelectorAll('[data-on]'))e.classList.toggle('on',step>=+e.dataset.on);
+  for(const ln of sl.querySelectorAll('.ln')){
+    const s=+(ln.dataset.s||0);const u=(ln.dataset.uses||'').split(',').filter(Boolean);
+    if(s<=step)u.forEach(k=>seen.add(k));
+    if(s===step)u.forEach(k=>used.add(k));
+  }
+  for(const c of sl.querySelectorAll('.card')){
+    const k=c.dataset.k;const onSlide=[...sl.querySelectorAll('.ln')].some(l=>(l.dataset.uses||'').split(',').includes(k));
+    c.classList.toggle('use',used.has(k));c.classList.toggle('seen',seen.has(k)||!onSlide);
+  }
+  const gl=sl.querySelector('.goal');if(gl){const tgt=[...sl.querySelectorAll('.ln')].find(l=>l.dataset.eq===sl.dataset.goalEq&&+(l.dataset.s||0)<=step);const ok=!!tgt&&!(sl.dataset.goalEq==='194');gl.classList.toggle('done',ok);gl.querySelector('.gh i').textContent=ok?'✓ reached':'in progress';}
+  const c=sl.querySelector('.ln.cur');
+  setTimeout(()=>{if(c){const d=c.closest('.deriv');if(d){const top=c.offsetTop-d.offsetTop;if(top+c.offsetHeight>d.scrollTop+d.clientHeight||top<d.scrollTop)d.scrollTo({top:Math.max(0,top-d.clientHeight+c.offsetHeight+16),behavior:'smooth'})}}
+  else{const d=sl.querySelector('.deriv');if(d&&step===0)d.scrollTop=0}},380);
+  document.getElementById('ctr').textContent=`${cur+1}/${slides.length} · step ${step}/${sl.max}`;
+  [...prog.children].forEach((b,i)=>b.style.opacity=i<cur?.9:i===cur?.6:.2);
+  const n=sl.querySelector('aside.notes');document.getElementById('notes').textContent=n?n.textContent:'';
+  if(!AUD){try{history.replaceState(null,'','#s'+cur)}catch(e){}}
+  pres();
+  if(!remote)send({t:'deck',cur,step});
+  remote=false;
+}
+function send(m){try{bc&&bc.postMessage(m)}catch(e){}try{if(aud&&!aud.closed)aud.postMessage(m,'*')}catch(e){}try{if(AUD&&window.opener)window.opener.postMessage(m,'*')}catch(e){}}
+function fmtS(t){return esc(t).replace(/»(.*?)«/g,'<span class="read">$1</span>')}
+let pvBuilt=-1;
+function pres(){
+  if(!document.body.classList.contains('presenter'))return;
+  const d=SC[cur]||{s:[],n:''};const sl=slides[cur];
+  document.getElementById('pvh').innerHTML=`Slide ${cur+1} / ${slides.length} · click ${step} of ${sl.max}<b>${esc(sl.querySelector('h1,h2').dataset.tex||sl.querySelector('h1,h2').textContent)}</b>`;
+  if(sl.dataset.goal)document.getElementById('pvh').insertAdjacentHTML('beforeend',`<div style="margin-top:4px;font-size:14px;color:var(--acc)">Goal ${lab(sl.dataset.goalEq)}: ${esc(sl.dataset.goal)}</div>`);
+  try{if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([document.getElementById('pvh')])}catch(e){}
+  const scr=document.getElementById('scr');
+  if(pvBuilt!==cur){
+    scr.innerHTML=d.s.map((t,i)=>{const eqs=[...sl.querySelectorAll('.ln')].filter(l=>+(l.dataset.s||0)===i&&l.dataset.eq).map(l=>'('+l.dataset.eq+')');return `<div class="st" data-i="${i}"><span class="kk">${i===0?'On entering the slide':'Click '+i}${eqs.length?' · shows '+eqs.join(' '):''}</span>${fmtS(t)}</div>`}).join('')+(d.n?`<div class="tr">${fmtS(d.n)}</div>`:'');
+    pvBuilt=cur;scr.scrollTop=0;
+  }
+  scr.querySelectorAll('.st').forEach(e=>{const i=+e.dataset.i;e.classList.toggle('now',i===step);e.classList.toggle('done',i<step)});
+  const now=scr.querySelector('.st.now');if(now)now.scrollIntoView({block:'center',behavior:'smooth'});
+  else if(step>=d.s.length){const tr=scr.querySelector('.tr');tr&&tr.scrollIntoView({block:'center'})}
+}
+function onMsg(m){if(!m||typeof m!=='object')return;
+  if(m.t==='deck'&&AUD){remote=true;cur=Math.min(m.cur,slides.length-1);step=m.step;render()}
+  else if(m.t==='nav'&&!AUD){m.d>0?next():prev()}
+  else if(m.t==='hello'&&!AUD){send({t:'deck',cur,step})}}
+if(bc)bc.onmessage=e=>onMsg(e.data);
+addEventListener('message',e=>onMsg(e.data));
+function next(){if(AUD&&hasPresenter){send({t:'nav',d:1});return}if(step<slides[cur].max)step++;else if(cur<slides.length-1){cur++;step=0}render()}
+function prev(){if(AUD&&hasPresenter){send({t:'nav',d:-1});return}if(step>0)step--;else if(cur>0){cur--;step=slides[cur].max}render()}
+
+function fit(){const W=view.clientWidth,H=view.clientHeight;const s=Math.min(W/1280,H/720);
+  stage.style.transform=`translate(${(W-1280*s)/2}px,${(H-720*s)/2}px) scale(${s})`}
+addEventListener('resize',fit);fit();
+
+stage.addEventListener('click',e=>{if(e.target.closest('.deriv')&&getSelection().toString())return;next()});
+stage.addEventListener('contextmenu',e=>{e.preventDefault();prev()});
+document.getElementById('bn').onclick=next;document.getElementById('bp').onclick=prev;
+document.getElementById('bpv').onclick=()=>{document.body.classList.toggle('presenter');pvBuilt=-1;fit();pres()};
+document.getElementById('baw').onclick=()=>{
+  const msg=document.getElementById('pvmsg');
+  try{aud=window.open(location.href.split('#')[0]+'#audience','converse-audience');}catch(e){aud=null}
+  if(!aud){msg.textContent='This viewer blocked a second window. Download the HTML file and open it in Chrome, then click Audience window again.';}
+  else{msg.textContent='Audience window opened: drag it to the projector and press F11 for full screen. Keep clicking here.';setTimeout(()=>send({t:'deck',cur,step}),600)}
+  document.body.classList.add('presenter');pvBuilt=-1;fit();pres();
+};document.getElementById('ba').onclick=()=>document.body.classList.toggle('allann');
+document.getElementById('bt').onclick=()=>document.getElementById('notes').classList.toggle('show');
+addEventListener('keydown',e=>{
+  if(['ArrowRight',' ','PageDown','Enter','ArrowDown'].includes(e.key)){e.preventDefault();next()}
+  else if(['ArrowLeft','PageUp','Backspace','ArrowUp'].includes(e.key)){e.preventDefault();prev()}
+  else if(e.key==='n'||e.key==='N')document.getElementById('notes').classList.toggle('show');
+  else if(e.key==='a'||e.key==='A')document.body.classList.toggle('allann');
+  else if(e.key==='p'||e.key==='P'){document.getElementById('bpv').click()}
+  else if(e.key==='Home'){cur=0;step=0;render()}
+  else if(e.key==='End'){cur=slides.length-1;step=slides[cur].max;render()}
+});
+const h=/^#s(\d+)$/.exec(location.hash);if(h)cur=Math.min(+h[1],slides.length-1);
+if(AUD){addEventListener('message',e=>{if(e.data&&e.data.t==='deck')hasPresenter=true});if(bc)bc.addEventListener('message',e=>{if(e.data&&e.data.t==='deck')hasPresenter=true});send({t:'hello'})}
+render();
+}
+</script>
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global',displayAlign:'left',displayIndent:'0.4em'}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg-full.js"></script>
+</body>
+</html>
