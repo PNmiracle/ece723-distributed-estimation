@@ -940,7 +940,7 @@ function render(){
       let tgt=span<=avail?top-gh-Math.max(8,(avail-span)/2):top-gh-8;if(span>avail&&us.length){const ut=us[0].offsetTop-rl.offsetTop,us2=bot-ut;tgt=us2<=avail?bot-rl.clientHeight+8:ut-gh-8}rl.scrollTo({top:Math.max(0,tgt),behavior:'smooth'})},60)}}
   const gl=sl.querySelector('.goal');if(gl){const tgt=[...sl.querySelectorAll('.ln')].find(l=>l.dataset.eq===sl.dataset.goalEq&&+(l.dataset.s||0)<=step);const ok=!!tgt&&!(sl.dataset.goalEq==='194');gl.classList.toggle('done',ok);gl.querySelector('.gh i').textContent=ok?'✓ reached':'in progress';}
   const c=sl.querySelector('.ln.cur');
-  setTimeout(()=>{if(c){const d=c.closest('.deriv');if(d){const top=c.offsetTop-d.offsetTop;if(top+c.offsetHeight>d.scrollTop+d.clientHeight||top<d.scrollTop)d.scrollTo({top:Math.max(0,c.offsetHeight>d.clientHeight-20?top-6:top-d.clientHeight+c.offsetHeight+16),behavior:'smooth'})}}
+  setTimeout(()=>{if(c){const d=c.closest('.deriv');if(d)d.scrollTo({top:derivTarget(sl,c,d),behavior:'smooth'})}
   else{const d=sl.querySelector('.deriv');if(d&&step===0)d.scrollTop=0}},380);
   document.getElementById('ctr').textContent=`${cur+1}/${slides.length} · step ${step}/${sl.max}`;
   [...prog.children].forEach((b,i)=>b.style.opacity=i<cur?.9:i===cur?.6:.2);
@@ -1033,6 +1033,21 @@ function scheduleFlows(){flowReady=false;clearTimeout(flowT);const ov=slides[cur
 document.querySelectorAll('.deriv,.rail').forEach(e=>e.addEventListener('scroll',()=>{if(flowReady&&e.closest('.slide')===slides[cur])requestAnimationFrame(()=>drawFlows(false))},{passive:true}));
 addEventListener('resize',()=>{if(flowReady)drawFlows(false)});
 addEventListener('mjx-ready',()=>{mjxReady=true;fitMath(slides[cur]);scheduleFlows()});
+
+/* left-panel scroll: new formula near the top, with the lines its arrows come from still visible above it */
+function texTags(t){const o=new Set();(t||'').replace(/\\class\{t([A-Z])\}/g,(_,x)=>o.add(x));return o}
+function derivTarget(sl,c,d){
+  const lines=[...sl.querySelectorAll('.ln')],idx=lines.indexOf(c);
+  const prev=lines.slice(0,idx).reverse().filter(l=>!l.classList.contains('hid')&&l.closest('.deriv')===d);
+  const srcs=new Set();const sp=kv(c.dataset.srcs);
+  texTags(c._tex).forEach(t=>{const l=sp[t]?prev.find(x=>x.dataset.eq===sp[t]):prev.find(x=>texTags(x._tex).has(t));if(l)srcs.add(l)});
+  if(c.dataset.cancel&&prev[0])srcs.add(prev[0]);
+  if((c.dataset.from||'').split(';;').some(x=>x.trim().startsWith('above:'))&&prev[0])srcs.add(prev[0]);
+  const curTop=c.offsetTop-d.offsetTop,hd=c.querySelector(':scope>.lhd'),curBot=curTop+(hd?hd.offsetHeight:c.offsetHeight)+8;
+  let top=curTop-6;
+  if(srcs.size){const st=Math.min(...[...srcs].map(l=>l.offsetTop-d.offsetTop))-6;top=Math.max(st,curBot-d.clientHeight)}
+  return Math.max(0,top);
+}
 function fit(){const W=view.clientWidth,H=view.clientHeight;const s=Math.min(W/1280,H/720);
   stage.style.transform=`translate(${(W-1280*s)/2}px,${(H-720*s)/2}px) scale(${s})`}
 addEventListener('resize',fit);fit();
