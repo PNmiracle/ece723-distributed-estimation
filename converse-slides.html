@@ -59,7 +59,7 @@ h2{font-size:32px;line-height:1.1;margin:0;font-weight:600;text-wrap:balance}
 .card .no{color:var(--pr);font-weight:600}
 .card.use .no{color:var(--acc)}
 .card .src{float:right;color:var(--mut);font-size:13px}
-.card .ct{margin-top:3px;font-size:16px;overflow-x:auto;overflow-y:hidden}
+.card .ct{margin-top:3px;font-size:16px;overflow-x:auto;overflow-y:hidden;white-space:nowrap}
 .ann{max-height:0;opacity:0;overflow:hidden;transition:max-height .35s,opacity .3s,margin .3s;border-left:2px solid var(--acc);padding-left:12px;margin-left:4px}
 .ln.cur .ann,body.allann .ann{max-height:420px;opacity:1;margin:4px 0 6px 4px}
 body.allann .ln:not(.cur) .ann{border-left-color:var(--rule)}
@@ -873,7 +873,7 @@ function render(){
   [...prog.children].forEach((b,i)=>b.style.opacity=i<cur?.9:i===cur?.6:.2);
   const n=sl.querySelector('aside.notes');document.getElementById('notes').textContent=n?n.textContent:'';
   if(!AUD){try{history.replaceState(null,'','#s'+cur)}catch(e){}}
-  pres();scheduleFlows();
+  pres();fitMath(sl);scheduleFlows();
   if(!remote)send({t:'deck',cur,step});
   remote=false;
 }
@@ -905,6 +905,15 @@ function next(){if(AUD&&hasPresenter){send({t:'nav',d:1});return}if(step<slides[
 function prev(){if(AUD&&hasPresenter){send({t:'nav',d:-1});return}if(step>0)step--;else if(cur>0){cur--;step=slides[cur].max}render()}
 
 
+
+/* shrink formulas that are wider than their box (cards, goal box, derivation lines) */
+let mjxReady=false;
+function fitMath(sl){
+  if(!mjxReady||!sl)return;
+  const fit=(m,avail)=>{m.style.fontSize='';const w=m.getBoundingClientRect().width;if(!w||!avail)return;if(w>avail){m.style.fontSize=Math.max(50,Math.floor(avail/w*100*0.97))+'%'}};
+  sl.querySelectorAll('.card .ct, .goal .gt').forEach(b=>{const m=b.querySelector('mjx-container');if(m){const cs=getComputedStyle(b);fit(m,b.getBoundingClientRect().width-(parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight))*(b.getBoundingClientRect().width/b.offsetWidth||1))}});
+  sl.querySelectorAll('.ln').forEach(l=>{const m=l.querySelector(':scope>mjx-container');if(m){const r=l.getBoundingClientRect(),k=r.width/l.offsetWidth||1;fit(m,r.width-96*k)}});
+}
 /* term-flow overlay: boxes + arrows showing where each tagged term comes from */
 const PAL={"A": "#c1121f", "B": "#0b4f8a", "C": "#1a7f4b", "D": "#b26a00", "E": "#7b3fa0", "F": "#0f7c86", "G": "#c2185b", "H": "#6d4c41", "I": "#3949ab", "J": "#827717", "K": "#5e35b1", "L": "#00838f", "M": "#ef6c00", "Q": "#455a64", "S": "#ad1457", "T": "#e65100"};const NS='http://www.w3.org/2000/svg';let flowT=0,flowReady=false;
 function tagsIn(el){const m={};el.querySelectorAll('mjx-container g[class]').forEach(g=>g.classList.forEach(c=>{const x=/^t([A-Z])$/.exec(c);if(x)(m[x[1]]=m[x[1]]||[]).push(g)}));return m}
@@ -955,7 +964,7 @@ function drawFlows(anim){
 function scheduleFlows(){flowReady=false;clearTimeout(flowT);const ov=slides[cur]&&slides[cur].querySelector(':scope>svg.flow');if(ov)ov.innerHTML='';flowT=setTimeout(()=>{drawFlows(true);flowReady=true},900)}
 document.querySelectorAll('.deriv,.rail').forEach(e=>e.addEventListener('scroll',()=>{if(flowReady&&e.closest('.slide')===slides[cur])requestAnimationFrame(()=>drawFlows(false))},{passive:true}));
 addEventListener('resize',()=>{if(flowReady)drawFlows(false)});
-addEventListener('mjx-ready',()=>scheduleFlows());
+addEventListener('mjx-ready',()=>{mjxReady=true;fitMath(slides[cur]);scheduleFlows()});
 function fit(){const W=view.clientWidth,H=view.clientHeight;const s=Math.min(W/1280,H/720);
   stage.style.transform=`translate(${(W-1280*s)/2}px,${(H-720*s)/2}px) scale(${s})`}
 addEventListener('resize',fit);fit();
