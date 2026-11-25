@@ -223,6 +223,13 @@ svg.flow .ghost{opacity:0;animation:fly 1s ease-in-out both}
 .moves span b{font-weight:700}.moves span i{font-style:normal;font-weight:400;color:var(--mut)}
 .moves span.an{opacity:0;animation:fin .35s ease-out forwards}
 .ln:not(.cur) .moves{display:none}
+svg.flow{mix-blend-mode:multiply}
+:root[data-theme=dark] svg.flow{mix-blend-mode:screen}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) svg.flow{mix-blend-mode:screen}}
+svg.flow .hlw{stroke-width:8;stroke-opacity:.22;stroke-linecap:round}
+svg.flow .hlc{stroke-width:1.6;stroke-opacity:.85}
+svg.flow .hlw.an,svg.flow .hlc.an{stroke-dasharray:1000;stroke-dashoffset:1000;animation:fdraw .8s ease-out forwards}
+svg.flow .hlh{opacity:.9}svg.flow .hlh.an{opacity:0;animation:fin .3s ease-out forwards}
 .hid{visibility:hidden;opacity:0}
 [data-s]{transition:opacity .3s}
 .grow[data-s],.growx[data-s],.hb>div.growx{transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .3s}
@@ -947,8 +954,12 @@ function drawFlows(anim){
     if(sg){const g=sg[sg.length-1];const s=clip(R(g),g),tr=clip(R(tgs[0]),tgs[0]);
       if(src.classList.contains('ln'))src.classList.add('src');
       if(!s.off)h+=`<rect class="bx${anim?' an':''}" x="${s.x-2}" y="${s.y-2}" width="${s.w+4}" height="${s.h+4}" rx="5" fill="none" stroke="${col}" stroke-width="1.6" stroke-dasharray="5 3"/>`;
-      if(anim){const dx=s.x-tr.x,dy=s.y-tr.y,kx=(s.w+4)/(tr.w+4),ky=(s.h+4)/(tr.h+4);
-        h+=`<rect class="ghost" style="transform-origin:${tr.x-2}px ${tr.y-2}px;--from:translate(${dx}px,${dy}px) scale(${kx},${ky});animation-delay:${0.1+k*0.6}s" x="${tr.x-2}" y="${tr.y-2}" width="${tr.w+4}" height="${tr.h+4}" rx="5" fill="${col}" fill-opacity=".35" stroke="${col}" stroke-width="2"/>`}
+      {let x1,y1,x2,y2,c1x,c1y,c2x,c2y;const t2=tr;
+        if(s.x>t2.x+t2.w+20){x1=s.x-4;y1=s.y+s.h/2;x2=t2.x+t2.w+6;y2=t2.y+t2.h/2;const dx=Math.max(30,(x1-x2)*.45);c1x=x1-dx;c1y=y1;c2x=x2+dx;c2y=y2}
+        else if(s.y+s.h<=t2.y+2){x1=s.x+s.w/2;y1=s.y+s.h+3;x2=t2.x+t2.w/2;y2=t2.y-5;const dy=Math.max(20,(y2-y1)*.5);c1x=x1;c1y=y1+dy;c2x=x2;c2y=y2-dy}
+        else{x1=s.x+s.w/2;y1=s.y-3;x2=t2.x+t2.w/2;y2=t2.y+t2.h+5;const dy=Math.max(20,(y1-y2)*.5);c1x=x1;c1y=y1-dy;c2x=x2;c2y=y2+dy}
+        const ang=Math.atan2(y2-c2y,x2-c2x),A=n=>[x2-9*Math.cos(ang+n),y2-9*Math.sin(ang+n)],p1=A(.45),p2=A(-.45),d=`M${x1},${y1} C${c1x},${c1y} ${c2x},${c2y} ${x2},${y2}`,dl=anim?` style="animation-delay:${0.1+k*0.5}s"`:'';
+        h+=`<path class="hlw${anim?' an':''}"${dl} d="${d}" pathLength="1000" fill="none" stroke="${col}"/><path class="hlc${anim?' an':''}"${dl} d="${d}" pathLength="1000" fill="none" stroke="${col}"/><path class="hlh${anim?' an':''}"${anim?` style="animation-delay:${0.1+k*0.5+.7}s"`:''} d="M${x2},${y2} L${p1[0]},${p1[1]} L${p2[0]},${p2[1]}Z" fill="${col}"/>`;}
       from=src.classList.contains('ln')?(src.dataset.eq?`from (${src.dataset.eq}) above`:'from the line above'):`from ${lab(src.dataset.k)} at right`;
     }
     if(mv[t]||from)pills.push(`<span class="${anim?'an':''}" style="--c:${col};animation-delay:${0.1+k*0.6}s"><b>●</b> ${esc(mv[t]||'')}${from?` <i>${esc(from)}</i>`:''}</span>`);
