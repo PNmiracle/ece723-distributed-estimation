@@ -235,6 +235,8 @@ svg.flow .hlh{opacity:.9}svg.flow .hlh.an{opacity:0;animation:fin .3s ease-out f
 .ann .sy .t{color:var(--pr);overflow-x:auto;overflow-y:hidden}
 .ann .sy .d{color:var(--ink);opacity:.85}
 .ann .sh .shn{font-weight:400;color:var(--mut);font-size:12px}
+.ln.cur>.lhd{position:sticky;top:0;z-index:3;margin:-3px -78px 0 -14px;padding:3px 78px 4px 14px;border-radius:8px 8px 0 0;background:linear-gradient(var(--acct),var(--acct)),var(--bg);box-shadow:0 7px 8px -7px rgba(0,0,0,.18)}
+.ln.box.cur>.lhd{margin-top:-4px}
 .hid{visibility:hidden;opacity:0}
 [data-s]{transition:opacity .3s}
 .grow[data-s],.growx[data-s],.hb>div.growx{transition:transform .8s cubic-bezier(.2,.7,.2,1),opacity .3s}
@@ -822,6 +824,7 @@ for(const sl of slides){
     via.innerHTML='<b>↓</b>'+(fr.length?'<span class="fromw">from</span>'+fr.map(f=>`<span class="chip ${f.cls}" title="${esc(f.loc)}">${esc(f.lab)}</span>`).join('<span class="plus">+</span>')+'<span class="plus">·</span>':'')+(ln.dataset.via?'<span class="op"></span>':'');
     if(ln.dataset.via) via.querySelector('.op').textContent=ln.dataset.via;
     ln.prepend(via);
+    {const hd=document.createElement('div');hd.className='lhd';while(ln.firstChild)hd.append(ln.firstChild);ln.append(hd)}
     if(ln.dataset.how||ln.dataset.sym||fr.length||steps.length||pws.length||ln._tex){
       const a=document.createElement('div');a.className='ann';
       let h='';
@@ -839,7 +842,7 @@ for(const sl of slides){
        if(why)h+=`<p class="pwy"><b>Why it matters · </b>${esc(why)}${ub.length?' <span class="ub">→ used next by '+ub.map(u=>'('+esc(u)+')').join(' ')+'</span>':''}</p>`;}
       a.innerHTML=h;ln.append(a);
     }
-    if(ln.dataset.moves||ln.dataset.cancel){const st=document.createElement('div');st.className='moves';const an=ln.querySelector(':scope>.ann');an?ln.insertBefore(st,an):ln.append(st);st.innerHTML=Object.values(kv(ln.dataset.moves)).map(t=>`<span style="--c:var(--mut)">${esc(t)}</span>`).join('')+(ln.dataset.cancel?'<span style="--c:#c1121f">✕ +½ ln m − ½ ln m = 0</span>':'')}
+    if(ln.dataset.moves||ln.dataset.cancel){const st=document.createElement('div');st.className='moves';ln.querySelector(':scope>.lhd').append(st);st.innerHTML=Object.values(kv(ln.dataset.moves)).map(t=>`<span style="--c:var(--mut)">${esc(t)}</span>`).join('')+(ln.dataset.cancel?'<span style="--c:#c1121f">✕ +½ ln m − ½ ln m = 0</span>':'')}
     if(ln.dataset.eq){const t=document.createElement('span');t.className='tag';t.textContent=lab(ln.dataset.eq);ln.append(t)}
   }
   const body=sl.querySelector('.body[data-rail]');
@@ -944,7 +947,7 @@ function fitMath(sl){
   if(!mjxReady||!sl)return;
   const fit=(m,avail)=>{m.style.fontSize='';const w=m.getBoundingClientRect().width;if(!w||!avail)return;if(w>avail){m.style.fontSize=Math.max(50,Math.floor(avail/w*100*0.97))+'%'}};
   sl.querySelectorAll('.card .ct, .goal .gt').forEach(b=>{const m=b.querySelector('mjx-container');if(m){const cs=getComputedStyle(b);fit(m,b.getBoundingClientRect().width-(parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight))*(b.getBoundingClientRect().width/b.offsetWidth||1))}});
-  sl.querySelectorAll('.ln').forEach(l=>{const m=l.querySelector(':scope>mjx-container');if(m){const r=l.getBoundingClientRect(),k=r.width/l.offsetWidth||1;fit(m,r.width-96*k)}});
+  sl.querySelectorAll('.ln').forEach(l=>{const m=l.querySelector(':scope>.lhd>mjx-container');if(m){const r=l.getBoundingClientRect(),k=r.width/l.offsetWidth||1;fit(m,r.width-96*k)}});
 }
 /* term-flow overlay: boxes + arrows showing where each tagged term comes from */
 const PAL={"A": "#c1121f", "B": "#0b4f8a", "C": "#1a7f4b", "D": "#b26a00", "E": "#7b3fa0", "F": "#0f7c86", "G": "#c2185b", "H": "#6d4c41", "I": "#3949ab", "J": "#827717", "K": "#5e35b1", "L": "#00838f", "M": "#ef6c00", "Q": "#455a64", "S": "#ad1457", "T": "#e65100"};const NS='http://www.w3.org/2000/svg';let flowT=0,flowReady=false;
@@ -984,8 +987,8 @@ function drawFlows(anim){
   }
   if(ln.dataset.cancel&&prev[0]){const gs=prev[0].querySelectorAll('mjx-container g.'+ln.dataset.cancel);if(gs.length){prev[0].classList.add('src');gs.forEach(g=>{const r=clip(R(g),g);h+=`<line class="fx${anim?' an':''}" x1="${r.x-3}" y1="${r.y+r.h-2}" x2="${r.x+r.w+3}" y2="${r.y+2}" stroke="#c1121f" stroke-width="3" pathLength="1000"/>`});pills.push(`<span class="${anim?'an':''}" style="--c:#c1121f;animation-delay:${0.1+k*0.6}s"><b>✕</b> +½ ln m − ½ ln m = 0 <i>in the line above</i></span>`)}}
   ov.innerHTML=h;
-  let st=ln.querySelector(':scope>.moves');
-  if(pills.length){if(!st){st=document.createElement('div');st.className='moves';const an=ln.querySelector(':scope>.ann');an?ln.insertBefore(st,an):ln.append(st)}st.innerHTML=pills.join('')}
+  let st=ln.querySelector(':scope>.lhd>.moves');
+  if(pills.length){if(!st){st=document.createElement('div');st.className='moves';ln.querySelector(':scope>.lhd').append(st)}st.innerHTML=pills.join('')}
   else if(st)st.innerHTML='';
 }
 function scheduleFlows(){flowReady=false;clearTimeout(flowT);const ov=slides[cur]&&slides[cur].querySelector(':scope>svg.flow');if(ov)ov.innerHTML='';flowT=setTimeout(()=>{drawFlows(true);flowReady=true},900)}
