@@ -319,6 +319,8 @@ svg.pic text{font:15px Literata,serif;fill:var(--mut)}
 #jump .js{font-size:12.5px;color:var(--mut);white-space:nowrap}#jump .jt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #jump .jt mjx-container{font-size:90%!important}
 body.audience #jump{display:none!important}
+#fsgo{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:color-mix(in srgb,var(--bg) 82%,transparent);cursor:pointer;font-size:26px}
+#fsgo span{font-size:20px;color:var(--mut)}#fsgo small{font-size:15px;color:var(--mut)}#fsgo.hide{display:none}
 #notes{position:fixed;left:0;right:0;bottom:52px;max-height:32vh;overflow:auto;padding:12px 18px;background:var(--card);border-top:1px solid var(--rule);font-size:17px;display:none}
 #notes.show{display:block}
 aside.notes{display:none}
@@ -1370,6 +1372,10 @@ prog.innerHTML=slides.map((s,i)=>`<i style="width:${s.dataset.plan/total*100}%;b
 
 let cur=0,step=0;
 const AUD=location.hash==='#audience';if(AUD)document.body.classList.add('audience');
+if(AUD){const fs=document.createElement('div');fs.id='fsgo';fs.innerHTML='<b>Audience view</b><span>Click anywhere for full screen</span><small>(or press F11)</small>';document.body.append(fs);
+  const upd=()=>fs.classList.toggle('hide',!!document.fullscreenElement||(innerHeight>=screen.height-2&&innerWidth>=screen.width-2));upd();
+  addEventListener('resize',upd);document.addEventListener('fullscreenchange',upd);
+  fs.addEventListener('click',e=>{e.stopPropagation();e.preventDefault();(document.documentElement.requestFullscreen?document.documentElement.requestFullscreen({navigationUI:'hide'}):Promise.reject()).catch(()=>{}).finally(upd)},true);}
 let bc=null;try{bc=new BroadcastChannel('converse-deck')}catch(e){}
 let aud=null,remote=false,hasPresenter=false;
 
@@ -1410,7 +1416,7 @@ function render(){
   if(!remote)send({t:'deck',cur,step});
   remote=false;
 }
-function send(m){try{bc&&bc.postMessage(m)}catch(e){}try{if(aud&&!aud.closed)aud.postMessage(m,'*')}catch(e){}try{if(AUD&&window.opener)window.opener.postMessage(m,'*')}catch(e){}}
+function send(m){if(AUD){try{if(window.opener&&!window.opener.closed){window.opener.postMessage(m,'*');return}}catch(e){}try{bc&&bc.postMessage(m)}catch(e){}return}try{bc&&bc.postMessage(m)}catch(e){}try{if(aud&&!aud.closed)aud.postMessage(m,'*')}catch(e){}}
 function fmtS(t){return esc(t).replace(/»(.*?)«/g,'<span class="read">$1</span>')}
 let pvBuilt=-1;
 function pres(){
@@ -1520,11 +1526,15 @@ stage.addEventListener('click',e=>{if(e.target.closest('.deriv')&&getSelection()
 stage.addEventListener('contextmenu',e=>{e.preventDefault();prev()});
 document.getElementById('bn').onclick=next;document.getElementById('bp').onclick=prev;
 document.getElementById('bpv').onclick=()=>{document.body.classList.toggle('presenter');pvBuilt=-1;fit();pres();setTimeout(()=>{if(flowReady)drawFlows(false)},120)};
-document.getElementById('baw').onclick=()=>{
-  const msg=document.getElementById('pvmsg');
-  try{aud=window.open(location.href.split('#')[0]+'#audience','converse-audience');}catch(e){aud=null}
+document.getElementById('baw').onclick=async()=>{
+  const msg=document.getElementById('pvmsg');let feat='',ext=null;
+  /* Chrome/Edge Window Management API: find the extended display and open the audience window there, full screen */
+  try{if('getScreenDetails' in window){const sd=await window.getScreenDetails();const here=sd.currentScreen;
+    ext=sd.screens.find(x=>x!==here&&!x.isPrimary)||sd.screens.find(x=>x!==here)||null;
+    if(ext)feat=`popup,fullscreen,left=${ext.availLeft},top=${ext.availTop},width=${ext.availWidth},height=${ext.availHeight}`;}}catch(e){ext=null}
+  try{aud=window.open(location.href.split('#')[0]+'#audience','converse-audience',feat);}catch(e){aud=null}
   if(!aud){msg.textContent='This viewer blocked a second window. Download the HTML file and open it in Chrome, then click Audience window again.';}
-  else{msg.textContent='Audience window opened: drag it to the projector and press F11 for full screen. Keep clicking here.';setTimeout(()=>send({t:'deck',cur,step}),600)}
+  else{msg.textContent=ext?`Audience window opened on the other display (${ext.label||'extended screen'}). If it is not full screen yet, click it once. Keep clicking here.`:'Only one display found (or screen access was not allowed): drag the audience window to the projector and click it once for full screen.';setTimeout(()=>send({t:'deck',cur,step}),600)}
   document.body.classList.add('presenter');pvBuilt=-1;fit();pres();
 };document.getElementById('bf').onclick=()=>document.body.classList.toggle('noflow');
 document.getElementById('ba').onclick=()=>document.body.classList.toggle('allann');
