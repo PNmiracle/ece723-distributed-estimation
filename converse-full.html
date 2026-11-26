@@ -1176,6 +1176,83 @@ const EQ={
  '219':['Refinement floor','III-E',R`R_{\mathrm{BB}}\gtrsim\tfrac{d}{m(1+s_+)+\bar r}`]
 };
 const esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+// mx(text): escape plain text and wrap math-looking runs in \( \) as TeX
+const MX=(()=>{
+const MCH=/[∫ρφψωεαβγκτχᵃ~=≤≥<>≲≳≍≈≼⪯·×÷√∞∑Σ∈⊆^_|‖⇒⇔→θΘπλμξℓηνσδΔ₀-₉⁰¹²³⁴-⁹ᵢⁿ₊̄̂−𝓛⟂]/;
+const PROD=new Set(['md','nk','qv','vq','dv','nm','mD','ms','mF','dx','dm','dvr','vmd','Amd','Amt','qI_X','vqH','2vqH','bλ','bη']);
+const FN=/^(sin|cos|cot|ln|log|log₂|exp|max|min|sup|inf|tr|E)$/;
+const OPS=/^(\+|−|-|=|≤|≥|<|>|≲|≳|·|×|÷|\/|⇒|→|⇔|≈|≍|∈)$/;
+const REF=/^\(?\(\d+[a-z]?\)(?:[–-]\(?\d+\)?)?[,.;:]?\)?$|^\(\d+[–-]\d+\)[,.;:]?$/;
+const esc=x=>x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function core(t){return t.replace(/^[,.;:!?]+|[,.;:!?]+$/g,'')}
+function single(t){return /^\(?[A-Za-zθΘπλμξℓη][,.;:)]*$/.test(t)}
+function isMath(tok,prev,next){
+  const c=core(tok);if(!c)return false;
+  if(REF.test(tok))return false;
+  if(/^[A-Za-z]{3,}[²³]$/.test(c)||/^\S+-[a-z]{3,}$/.test(c))return false;
+  if(/[()]/.test(c)&&/^[A-Za-z0-9,]{0,4}[()][A-Za-z0-9,()]{0,6}$/.test(c)&&/[A-Za-z0-9]/.test(c))return /,/.test(c)&&/^\(/.test(c)?'m':'op';
+  if(/^\d+(\.\d+)?$/.test(c))return 'num';
+  if(OPS.test(c))return 'op';
+  if(FN.test(c))return 'fn';
+  if(MCH.test(c)&&!/^[A-Za-z]{3,}[’']s$/.test(c))return 'm';
+  if(/^\(?[A-Za-z]\)?$/.test(c)||/^[A-Za-z]\)$/.test(c)){
+    if(/^[aAI]$/.test(c.replace(/[()]/g,''))){return 'weak'}
+    return 'm';
+  }
+  if(/^[A-Za-z]_?[A-Za-z0-9{}]*[_^][A-Za-z0-9{}+\-]+/.test(c))return 'm';
+  if(/^[A-Za-z]{1,2}_?[A-Za-z0-9]*\([^()]*\)$/.test(c)&&c.length<=12)return 'm';
+  if(/[\/½\[\]…]/.test(c)&&/^[0-9A-Za-z½\/()\[\]{}+…*^_]+$/.test(c)&&!/^[A-Za-z]{4,}\/[A-Za-z]{3,}$/.test(c))return 'm';
+  if(/^[0-9]+[A-Za-z]{1,4}$/.test(c))return 'm';
+  if(PROD.has(c))return 'm';
+  return false;
+}
+function totex(s){
+  let t=s;
+  t=t.replace(/√\(([^()]*)\)/g,'\\sqrt{$1}').replace(/√([A-Za-zℓ0-9]+)/g,'\\sqrt{$1}');
+  t=t.replace(/([a-zA-Zθ])\u0304/g,'\\bar $1').replace(/([a-zA-Zθ])\u0302/g,'\\hat $1');
+  t=t.replace(/log₂/g,'\\log_2 ');
+  t=t.replace(/[₀-₉]+/g,m=>'_{'+[...m].map(c=>c.charCodeAt(0)-8320).join('')+'}');
+  t=t.replace(/½/g,'\\tfrac12 ');
+  const SUP={'⁰':0,'¹':1,'²':2,'³':3,'⁴':4,'⁵':5,'⁶':6,'⁷':7,'⁸':8,'⁹':9};
+  t=t.replace(/[⁰¹²³⁴-⁹]+/g,m=>'^{'+[...m].map(c=>SUP[c]).join('')+'}');
+  t=t.replace(/ᵢ/g,'_i').replace(/ⁿ/g,'^n').replace(/₊/g,'_+');
+  const R={'~':'\\sim ','≤':'\\le ','≥':'\\ge ','≲':'\\lesssim ','≳':'\\gtrsim ','≍':'\\asymp ','≈':'\\approx ','⪯':'\\preceq ','≼':'\\preceq ','·':'\\cdot ','×':'\\times ','÷':'\\div ','−':'-','⇒':'\\Rightarrow ','⇔':'\\Leftrightarrow ','→':'\\to ','∞':'\\infty ','Σ':'\\textstyle\\sum ','∑':'\\textstyle\\sum ','∈':'\\in ','⊆':'\\subseteq ','‖':'\\|','θ':'\\theta ','Θ':'\\Theta ','π':'\\pi ','λ':'\\lambda ','μ':'\\mu ','ξ':'\\xi ','ℓ':'\\ell ','η':'\\eta ','ν':'\\nu ','σ':'\\sigma ','δ':'\\delta ','Δ':'\\Delta ','𝓛':'\\mathcal L ','⟂':'\\perp ','∫':'\\int ','ρ':'\\rho ','φ':'\\varphi ','ψ':'\\psi ','ω':'\\omega ','ε':'\\varepsilon ','α':'\\alpha ','β':'\\beta ','γ':'\\gamma ','κ':'\\kappa ','τ':'\\tau ','χ':'\\chi '};
+  t=t.replace(/([A-Za-z\u03b8\u03bb])\*/g,'$1^*');
+  t=t.replace(/ᵃ/g,'^a');
+  t=t.replace(/_([A-Za-z0-9]{2,})/g,'_{$1}');
+  t=t.replace(/[~≤≥≲≳≍≈⪯≼·×÷−⇒⇔→∞Σ∑∈⊆‖θΘπλμξℓηνσδΔ𝓛⟂∫ρφψωεαβγκτχ]/g,c=>R[c]);
+  t=t.replace(/(^|[^\\a-zA-Z])(sin|cos|cot|ln|log|exp|max|min|sup|inf)(?![a-zA-Z])/g,'$1\\$2 ');
+  t=t.replace(/(^|[^\\a-zA-Z])tr(?![a-zA-Z])/g,'$1\\mathrm{tr}\\,');
+  t=t.replace(/\|/g,'\\mid ').replace(/\\\\mid /g,'\\|');
+  t=t.replace(/\\\| ?/g,'\\|');
+  return t;
+}
+return function mx(text){
+  if(!text)return '';
+  if(/\\\(|\\\[/.test(text))return esc(text);
+  const toks=text.split(/(\s+)/);const words=toks.filter((x,i)=>i%2===0);
+  const kind=words.map((w,i)=>isMath(w,words[i-1],words[i+1]));
+  // resolve weak ('a','A','I') and lone numbers/ops/fns: math only next to strong math
+  const strong=i=>kind[i]==='m';
+  const fin=kind.map((k,i)=>{
+    if(k==='m')return true;
+    if(k==='weak'&&(/^(Case|Floor|Lemma|Theorem|Step|Part|Section)$/.test(words[i-1]||'')||/[:,;.]$/.test(words[i])))return false;
+    if(k==='weak')return (strong(i+1)||kind[i+1]==='op')||(i>0&&(kind[i-1]==='op'||kind[i-1]==='fn'))||(i===words.length-1&&i>0&&!/^[A-Z]/.test(words[i]));
+    if(k==='num'||k==='op'||k==='fn'){let a=i-1,b=i+1;while(a>=0&&kind[a]&&kind[a]!=='m'&&kind[a]!=='weak')a--;while(b<words.length&&kind[b]&&kind[b]!=='m'&&kind[b]!=='weak')b++;return (a>=0&&(kind[a]==='m'))||(b<words.length&&kind[b]==='m')}
+    return false});
+  // build output
+  let out='',buf=[];const flush=()=>{if(!buf.length)return;let s=buf.join(' ');let pre='',post='';
+    const m1=/^([(“"]*)/.exec(s);pre=m1[1];s=s.slice(pre.length);const m2=/([,.;:!?”"]*)$/.exec(s);post=m2[1];s=s.slice(0,s.length-post.length);
+    // balance parentheses: keep unmatched trailing ')' outside
+    while(s.endsWith(')')&&(s.match(/\(/g)||[]).length<(s.match(/\)/g)||[]).length){post=')'+post;s=s.slice(0,-1)}
+    if(pre==='('&&(s.match(/\)/g)||[]).length>(s.match(/\(/g)||[]).length){s='('+s;pre=''}
+    if(/^\d+$/.test(s)){out+=esc(pre+s+post);buf=[];return}
+    out+=esc(pre)+'\\('+esc(totex(s))+'\\)'+esc(post);buf=[]};
+  words.forEach((w,i)=>{if(fin[i]&&/[,.;:]$/.test(w)&&/[A-Za-z0-9)\]}²³\u0304]$/.test(w.slice(0,-1))&&i<words.length-1){buf.push(w);flush();out+=' ';return}if(fin[i])buf.push(w);else{flush();out+=(out&&!out.endsWith(' ')?' ':'')+esc(w)+' '} if(fin[i]&&i===words.length-1)flush()});
+  flush();
+  return out.replace(/ +/g,' ').replace(/ (\\\()/g,' $1').trim();
+}})();
+const typeset=el=>{try{if(el&&window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([el]).then(()=>{if(typeof fitMath==='function'){}})}catch(e){}};
 const LBL={Da:'Dₐ'};const lab=k=>LBL[k]||'('+k.replace('-','–')+')';
 const TAGN={"1": "The data pool", "2": "Random lists", "3": "Visible ≤ min{N, nm}", "4": "Labelled local data", "5": "One-shot message", "6": "Non-interactive transcript", "7": "Public turn-taking", "8": "One bit per turn", "9": "Budget B = nk", "10": "Entropy ≤ B ln 2", "11": "The decoder", "12": "Minimax target", "13": "Interaction can only help", "14": "Score & Fisher info", "15": "Score has mean 0", "16": "Why the mean is 0", "17": "Message law", "18": "Message score", "19": "Bernstein condition", "20": "One direction", "21": "Curvature ≤ v", "22": "≤ dv per sample", "23": "Block: v → qv", "30": "Surplus s, bit floor a_B", "31": "a_B = 2^(−2s)/m", "32": "Visit count D_a", "33": "Shared count r", "34": "D_a is binomial", "35": "Mean shared r̄", "36": "Four-floor envelope", "40": "The converse", "73": "Message law (any input)", "74": "Differentiate the law", "75": "Score identity", "76": "Information adds: qI_X", "77": "S_Z and S_T", "78": "Jensen squeeze", "79": "Data processing", "80": "Scores add", "81": "Extra score has mean 0", "82": "No cross term", "83": "Information chain rule", "84": "Chain rule (trace)", "85": "Sine² prior", "86": "Prior information J_π", "88": "Prior score = cot", "89": "J_π = 4π²d", "94": "Log-sine average", "95": "Prior entropy", "96": "Bayes risk D", "97": "Joint score Q", "98": "Parts give 1", "99": "Cauchy–Schwarz", "100": "Total information", "101": "van Trees", "102": "Minimax ≥ Bayes", "103": "Index missed", "104": "Mean visible E U", "105": "≤ dv per visible draw", "106": "Average the design", "107": "Floors d/N, d/(nm)", "108": "Error given the record", "109": "Gaussian max-entropy", "110": "Jensen on the log", "111": "Information needed", "112": "Design reveals nothing", "113": "Information ≤ B ln 2", "114": "Needed ≤ available", "115": "Bit floor", "116": "Residual h_T", "117": "Entropy split", "118": "h_T budget", "119": "Block score A_q", "120": "Block Bernstein", "121": "Lemma 1: shift ≲ √ℓ", "122": "Lemma 1, squared", "123": "Lemma 1, b = 0", "124": "Names ℓ, μ_E", "126": "Look along μ_E", "127": "Pay 1/p", "128": "Tilted inequality", "130": "Divide by λ", "131": "Best tilt λ*", "133": "Plug in λ*", "135": "Square it", "136": "Average → entropy", "137": "b = 0: 2vqH", "138": "Surprisal L_T", "140": "Few rare messages", "141": "Tail bound", "142": "Layer cake", "143": "Split at B ln 2", "139": "Lemma 2: ≤ K_B", "145": "Lemma 2 given W", "147": "Lemma 3", "148": "Lemma 3, b = 0", "150": "Rectangle", "152": "Product of p_i", "153": "Conditional independence", "158": "Score = Σ a_i", "157": "Cross terms vanish", "159": "Information = Σ E‖a_i‖²", "160": "Per-machine cap", "162": "Surprisal → entropy", "165": "Lemma 3 at seed r", "170": "Shared set G", "171": "Private sets, r, q", "172": "Shared ⟂ private", "178": "Reveal G", "179": "Chain-rule split", "180": "Shared ≤ dvr", "184": "Lemma 3 given G", "174": "Theorem 2", "175": "Theorem 2, G-free", "193": "Theorem 2, averaged", "194": "D and h_T", "195": "Ceiling in h_T", "196": "Constants A, Q", "197": "van Trees floor", "198": "Budget per coordinate", "200": "Normalized risk x", "201": "Two rewrites", "202": "½ ln m cancels", "203": "Two bounds meet", "204": "Scaled form", "205": "Variable t", "206": "t + ln t form", "207": "Three scales", "208": "K_B ≲ (B+1)²", "209": "Scale F", "210": "t + ln t ≤ C₁F", "211": "Cap: t ≤ C₂F", "212": "Floor with (B+1)²", "213": "Target floor", "214": "Case A", "215": "(B+1)² absorbed", "216–217": "Surplus ≥ nk/(2d)", "218": "Case B: ≲ d/(nm)", "219": "Fourth floor", "220": "Main converse", "221": "Gaussian ceiling", "222": "Gaussian van Trees", "223–224": "Normalized t", "227": "t + ln t ≤ z", "228–229": "Lambert W cap", "230": "Explicit Gaussian floor"};
 const OLD=new Set([]),STATED=new Set([]),NEWK=new Set(['115','117','118','123','139']);
@@ -1237,13 +1314,13 @@ for(const sl of slides){
     const steps=STEPS[si+'.'+li]||[];const pws=(ln.dataset.eq||'').split('–').map(e=>PW[e.trim()]).filter(Boolean);
     const via=document.createElement('div');via.className='via';
     via.innerHTML='<b>↓</b>'+(fr.length?'<span class="fromw">from</span>'+fr.map(f=>`<span class="chip ${f.cls}" title="${esc(f.loc)}">${esc(f.lab)}</span>`).join('<span class="plus">+</span>')+'<span class="plus">·</span>':'')+(ln.dataset.via?'<span class="op"></span>':'');
-    if(ln.dataset.via) via.querySelector('.op').textContent=ln.dataset.via;
+    if(ln.dataset.via) via.querySelector('.op').innerHTML=MX(ln.dataset.via);
     ln.prepend(via);
     {const hd=document.createElement('div');hd.className='lhd';while(ln.firstChild)hd.append(ln.firstChild);ln.append(hd);const r=READ[si+'.'+li];if(r){const d=document.createElement('div');d.className='rd';d.innerHTML='<b>Read:</b> ';d.append(document.createTextNode(r));hd.append(d)}}
     if(ln.dataset.how||ln.dataset.sym||fr.length||steps.length||pws.length||ln._tex){
       const a=document.createElement('div');a.className='ann';
       let h='';
-      if(fr.length)h+='<div class="sh">Where it comes from</div><div class="wf">'+fr.map(f=>`<div class="wfr"><span class="chip ${f.cls}">${esc(f.lab)}</span><span class="wn">${esc(f.name)}</span><span class="wl">${esc(f.loc)}</span>${f.role?`<span class="wr">— ${esc(f.role)}</span>`:''}</div>`).join('')+'</div>';
+      if(fr.length)h+='<div class="sh">Where it comes from</div><div class="wf">'+fr.map(f=>`<div class="wfr"><span class="chip ${f.cls}">${esc(f.lab)}</span><span class="wn">${MX(f.name)}</span><span class="wl">${esc(f.loc)}</span>${f.role?`<span class="wr">— ${MX(f.role)}</span>`:''}</div>`).join('')+'</div>';
       {const sy=symsFor(ln);const nk=sy.filter(o=>o.key).length;if(sy.length)h+=`<div class="sh">Symbols in this formula <span class="shn">(${sy.length}${nk?`; ${nk} key ones first, highlighted`:''}; each explained even if seen before)</span></div><div class="sy">`+sy.map(o=>`<div${o.key?' class="key"':''}><span class="t">\\(${esc(o[0])}\\)</span><span class="d">${o.key?'<i class="kb">key</i>':''}${hl(esc(o[1]))}</span></div>`).join('')+'</div>';}
       if(pws.length&&pws[0].where)h+=`<p class="pwo"><b>In the paper · </b>${pws.map(p=>hl(esc(p.where||''))).join(' ')}</p>`;
       const plain=pws.map(p=>(p.what?`<mark class="gist">${hl(esc(p.what))}</mark>`:'')+(p.says?` <span class="more">${hl(esc(p.says))}</span>`:'')).join(' ');
@@ -1257,8 +1334,8 @@ for(const sl of slides){
        if(why)h+=`<p class="pwy"><b>Why it matters · </b>${hl(esc(why))}${ub.length?' <span class="ub">→ used next by '+ub.map(u=>'('+esc(u)+')').join(' ')+'</span>':''}</p>`;}
       a.innerHTML=h;ln.append(a);
     }
-    if(ln.dataset.moves||ln.dataset.cancel){const st=document.createElement('div');st.className='moves';ln.querySelector(':scope>.lhd').append(st);st.innerHTML=Object.values(kv(ln.dataset.moves)).map(t=>`<span style="--c:var(--mut)">${esc(t)}</span>`).join('')+(ln.dataset.cancel?'<span style="--c:#c1121f">✕ +½ ln m − ½ ln m = 0</span>':'')}
-    if(ln.dataset.eq){const t=document.createElement('span');t.className='tag';t.innerHTML=`<b>${esc(lab(ln.dataset.eq))}</b><small>${esc(TAGN[ln.dataset.eq]||nmOf(ln.dataset.eq)||'')}</small>`;ln.querySelector(':scope>.lhd').append(t)}
+    if(ln.dataset.moves||ln.dataset.cancel){const st=document.createElement('div');st.className='moves';ln.querySelector(':scope>.lhd').append(st);st.innerHTML=Object.values(kv(ln.dataset.moves)).map(t=>`<span style="--c:var(--mut)">${MX(t)}</span>`).join('')+(ln.dataset.cancel?'<span style="--c:#c1121f">✕ +½ ln m − ½ ln m = 0</span>':'')}
+    if(ln.dataset.eq){const t=document.createElement('span');t.className='tag';t.innerHTML=`<b>${esc(lab(ln.dataset.eq))}</b><small>${MX(TAGN[ln.dataset.eq]||nmOf(ln.dataset.eq)||'')}</small>`;ln.querySelector(':scope>.lhd').append(t)}
   }
   const body=sl.querySelector('.body[data-rail]');
   if(body){
@@ -1269,11 +1346,11 @@ for(const sl of slides){
     rail.innerHTML='<div class="rh">Inputs used on this slide <span class="lg"><span class="chip s-here">this slide</span><span class="chip s-today">earlier in this deck</span><span class="chip s-old">III-A / paper</span><span class="chip s-fact">fact / assumption</span></span></div>';
     items.forEach(f=>{const c=document.createElement('div');c.className='card';c.dataset.k=f.key;
       const badge=f.k&&OLD.has(f.k)?'<span class="badge old">III-A ✓</span>':f.k&&STATED.has(f.k)?'<span class="badge old">stated in III-A</span>':f.k&&NEWK.has(f.k)?'<span class="badge nw">new</span>':'';
-      c.innerHTML=`<div class="cm"><span class="chip ${f.cls}">${esc(f.lab)}</span> <b>${esc(f.name)}</b>${badge}</div><div class="cl">${esc(f.loc.replace('this slide, above','this slide'))}</div>`+(f.tex?`<div class="ct">\\(${esc(f.tex)}\\)</div>`:'');
+      c.innerHTML=`<div class="cm"><span class="chip ${f.cls}">${esc(f.lab)}</span> <b>${MX(f.name)}</b>${badge}</div><div class="cl">${esc(f.loc.replace('this slide, above','this slide'))}</div>`+(f.tex?`<div class="ct">\\(${esc(f.tex)}\\)</div>`:'');
       rail.append(c)});
     body.append(rail);
     const rf=body.querySelector('.railfig');if(rf)rail.insertBefore(rf,rail.firstChild);
-    if(sl.dataset.goal){const g=document.createElement('div');g.className='goal';g.innerHTML=`<div class="gh"><span>Current goal · target ${lab(sl.dataset.goalEq)}</span><i>in progress</i></div><div class="gt">\\(${esc(sl.dataset.goalTex)}\\)</div><span class="gd">${esc(sl.dataset.goal)}</span><div class="gn"><b>Then:</b> ${esc(sl.dataset.goalNext)}</div>`;rail.insertBefore(g,rail.firstChild)}
+    if(sl.dataset.goal){const g=document.createElement('div');g.className='goal';g.innerHTML=`<div class="gh"><span>Current goal · target ${lab(sl.dataset.goalEq)}</span><i>in progress</i></div><div class="gt">\\(${esc(sl.dataset.goalTex)}\\)</div><span class="gd">${MX(sl.dataset.goal)}</span><div class="gn"><b>Then:</b> ${MX(sl.dataset.goalNext)}</div>`;rail.insertBefore(g,rail.firstChild)}
   }
   if(sl.dataset.trail){
     const here=sl.dataset.trail.split(',');const last=TRAIL.findIndex(x=>x[0]===here[here.length-1]);
@@ -1340,7 +1417,7 @@ function pres(){
   if(!document.body.classList.contains('presenter'))return;
   const d=SC[cur]||{s:[],n:''};const sl=slides[cur];
   document.getElementById('pvh').innerHTML=`Slide ${cur+1} / ${slides.length} · click ${step} of ${sl.max}<b>${(h=>h.dataset.tex?esc(h.dataset.tex):(h.querySelector('mjx-container')?h.innerHTML:esc(h.textContent)))(sl.querySelector('h1,h2'))}</b>`;
-  if(sl.dataset.goal)document.getElementById('pvh').insertAdjacentHTML('beforeend',`<div style="margin-top:4px;font-size:14px;color:var(--acc)">Goal ${lab(sl.dataset.goalEq)}: ${esc(sl.dataset.goal)}</div>`);
+  if(sl.dataset.goal)document.getElementById('pvh').insertAdjacentHTML('beforeend',`<div style="margin-top:4px;font-size:14px;color:var(--acc)">Goal ${lab(sl.dataset.goalEq)}: ${MX(sl.dataset.goal)}</div>`);
   try{if(window.MathJax&&MathJax.typesetPromise)MathJax.typesetPromise([document.getElementById('pvh')])}catch(e){}
   const scr=document.getElementById('scr');
   if(pvBuilt!==cur){
@@ -1406,13 +1483,13 @@ function drawFlows(anim){
         h+=`<path class="hlw${anim?' an':''}"${dl} d="${d}" pathLength="1000" fill="none" stroke="${col}"/><path class="hlc${anim?' an':''}"${dl} d="${d}" pathLength="1000" fill="none" stroke="${col}"/><path class="hlh${anim?' an':''}"${anim?` style="animation-delay:${0.1+k*0.5+.7}s"`:''} d="M${x2},${y2} L${p1[0]},${p1[1]} L${p2[0]},${p2[1]}Z" fill="${col}"/>`;}
       from=src.classList.contains('ln')?(src.dataset.eq?`from (${src.dataset.eq}) above`:(src===prev[0]?'from the line above':`from “${src.dataset.via||'a line'}” above`)):`from ${lab(src.dataset.k)} at right`;
     }
-    if(mv[t]||from)pills.push(`<span class="${anim?'an':''}" style="--c:${col};animation-delay:${0.1+k*0.6}s"><b>●</b> ${esc(mv[t]||'')}${from?` <i>${esc(from)}</i>`:''}</span>`);
+    if(mv[t]||from)pills.push(`<span class="${anim?'an':''}" style="--c:${col};animation-delay:${0.1+k*0.6}s"><b>●</b> ${MX(mv[t]||'')}${from?` <i>${esc(from)}</i>`:''}</span>`);
     k++;
   }
   if(ln.dataset.cancel&&prev[0]){const gs=prev[0].querySelectorAll('mjx-container g.'+ln.dataset.cancel);if(gs.length){prev[0].classList.add('src');gs.forEach(g=>{const r=clip(R(g),g);h+=`<line class="fx${anim?' an':''}" x1="${r.x-3}" y1="${r.y+r.h-2}" x2="${r.x+r.w+3}" y2="${r.y+2}" stroke="#c1121f" stroke-width="3" pathLength="1000"/>`});pills.push(`<span class="${anim?'an':''}" style="--c:#c1121f;animation-delay:${0.1+k*0.6}s"><b>✕</b> +½ ln m − ½ ln m = 0 <i>in the line above</i></span>`)}}
   ov.innerHTML=h;
   let st=ln.querySelector(':scope>.lhd>.moves');
-  if(pills.length){if(!st){st=document.createElement('div');st.className='moves';ln.querySelector(':scope>.lhd').append(st)}st.innerHTML=pills.join('')}
+  if(pills.length){if(!st){st=document.createElement('div');st.className='moves';ln.querySelector(':scope>.lhd').append(st)}const pk=pills.join('').replace(/ class="an"| class=""|animation-delay:[^;"]*;?/g,'');if(st._pk!==pk){st._pk=pk;st.innerHTML=pills.join('');typeset(st)}}
   else if(st)st.innerHTML='';
 }
 function scheduleFlows(){flowReady=false;clearTimeout(flowT);const ov=slides[cur]&&slides[cur].querySelector(':scope>svg.flow');if(ov)ov.innerHTML='';flowT=setTimeout(()=>{drawFlows(true);flowReady=true;keepHdr()},900)}
