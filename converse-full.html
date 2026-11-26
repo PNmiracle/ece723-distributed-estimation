@@ -319,6 +319,22 @@ svg.pic text{font:15px Literata,serif;fill:var(--mut)}
 #jump .js{font-size:12.5px;color:var(--mut);white-space:nowrap}#jump .jt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #jump .jt mjx-container{font-size:90%!important}
 body.audience #jump{display:none!important}
+/* --- presentation pointer: laser (L), spotlight (H), magnifier (Z) --- */
+#ptrL{position:absolute;left:0;top:0;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;pointer-events:none;z-index:40;display:none;
+ background:radial-gradient(circle,#fff 0 18%,#ff2a2a 30%,rgba(255,40,40,.55) 55%,rgba(255,40,40,0) 72%);box-shadow:0 0 18px 6px rgba(255,30,30,.45)}
+.ptr-laser #ptrL{display:block}
+.ptr-laser #stage,.ptr-spot #stage,.ptr-zoom #stage{cursor:none}
+.trl{position:absolute;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:rgba(255,40,40,.5);pointer-events:none;z-index:39;animation:trl .5s ease-out forwards}
+@keyframes trl{to{opacity:0;transform:scale(.3)}}
+#ptrS{position:absolute;inset:0;pointer-events:none;z-index:38;display:none;
+ background:radial-gradient(circle var(--r,130px) at var(--x,640px) var(--y,360px),rgba(0,0,0,0) 0 calc(var(--r,130px) - 18px),rgba(0,0,0,.62) var(--r,130px))}
+.ptr-spot #ptrS{display:block}
+#ptrS::after{content:"";position:absolute;left:var(--x,640px);top:var(--y,360px);width:calc(var(--r,130px)*2);height:calc(var(--r,130px)*2);margin:calc(var(--r,130px)*-1) 0 0 calc(var(--r,130px)*-1);border-radius:50%;box-shadow:0 0 0 3px rgba(255,214,0,.85),0 0 24px 4px rgba(255,214,0,.45)}
+.ptr-zoom .slide.act{transform-origin:var(--zx,640px) var(--zy,360px);transform:scale(var(--zs,2));transition:transform-origin .06s linear}
+.ptr-zoom #ptrZ{display:block}
+#ptrZ{position:absolute;left:var(--zx,640px);top:var(--zy,360px);width:26px;height:26px;margin:-13px 0 0 -13px;border:2px solid var(--acc);border-radius:50%;pointer-events:none;z-index:40;display:none}
+#bptr.on{border-color:var(--acc);color:var(--acc)}
+body.audience #ptrS::after{box-shadow:0 0 0 3px rgba(255,214,0,.85),0 0 24px 4px rgba(255,214,0,.45)}
 #fsgo{position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:color-mix(in srgb,var(--bg) 82%,transparent);cursor:pointer;font-size:26px}
 #fsgo span{font-size:20px;color:var(--mut)}#fsgo small{font-size:15px;color:var(--mut)}#fsgo.hide{display:none}
 #notes{position:fixed;left:0;right:0;bottom:52px;max-height:32vh;overflow:auto;padding:12px 18px;background:var(--card);border-top:1px solid var(--rule);font-size:17px;display:none}
@@ -1132,6 +1148,7 @@ aside.notes{display:none}
   <button id="bj" aria-label="Jump to a slide">Slides (G)</button>
   <button id="bpv" aria-label="Toggle presenter mode">Presenter (P)</button>
   <button id="baw" class="opt" aria-label="Open audience window">Audience window</button>
+  <button id="bptr" class="opt" aria-label="Pointer: laser, spotlight, magnifier">Pointer: off</button>
   <button id="bf" class="opt" aria-label="Toggle term-flow arrows">Arrows (F)</button>
   <button id="ba" class="opt" aria-label="Show all annotations">Labels</button>
   <button id="bt" class="opt" aria-label="Toggle speaker notes">Notes</button>
@@ -1435,6 +1452,7 @@ function pres(){
   else if(step>=d.s.length){const tr=scr.querySelector('.tr');tr&&tr.scrollIntoView({block:'center'})}
 }
 function onMsg(m){if(!m||typeof m!=='object')return;
+  if(m.t==='ptr'&&AUD){PTR.mode=m.m;PTR.x=m.x;PTR.y=m.y;PTR.r=m.r;PTR.zs=m.zs;ptrApply();if(m.m==='laser')trail();return}
   if(m.t==='deck'&&AUD){remote=true;cur=Math.min(m.cur,slides.length-1);step=m.step;render()}
   else if(m.t==='nav'&&!AUD){m.d>0?next():prev()}
   else if(m.t==='hello'&&!AUD){send({t:'deck',cur,step})}}
@@ -1459,6 +1477,7 @@ const PAL={"A": "#c1121f", "B": "#0b4f8a", "C": "#1a7f4b", "D": "#b26a00", "E": 
 function tagsIn(el){const m={};el.querySelectorAll('mjx-container g[class]').forEach(g=>g.classList.forEach(c=>{const x=/^t([A-Z])$/.exec(c);if(x)(m[x[1]]=m[x[1]]||[]).push(g)}));return m}
 function kv(t){const o={};(t||'').split(';;').forEach(p=>{const i=p.indexOf(':');if(i>0)o[p.slice(0,i).trim()]=p.slice(i+1).trim()});return o}
 function drawFlows(anim){
+  if(document.body.classList.contains('ptr-zoom'))return;
   const sl=slides[cur];if(!sl)return;let ov=sl.querySelector(':scope>svg.flow');
   if(!ov){ov=document.createElementNS(NS,'svg');ov.setAttribute('class','flow');ov.setAttribute('viewBox','0 0 1280 720');sl.append(ov)}
   sl.querySelectorAll('.ln.src').forEach(e=>e.classList.remove('src'));
@@ -1538,6 +1557,30 @@ document.getElementById('baw').onclick=async()=>{
   document.body.classList.add('presenter');pvBuilt=-1;fit();pres();
 };document.getElementById('bf').onclick=()=>document.body.classList.toggle('noflow');
 document.getElementById('ba').onclick=()=>document.body.classList.toggle('allann');
+/* ---------- presentation pointer: laser / spotlight / magnifier, mirrored to the audience window ---------- */
+const PTR={mode:'off',x:640,y:360,r:130,zs:2};
+['ptrL','ptrS','ptrZ'].forEach(id=>{const d=document.createElement('div');d.id=id;stage.append(d)});
+const PNAME={off:'Pointer: off',laser:'Laser (L)',spot:'Spotlight (H)',zoom:'Magnifier (Z)'};
+function ptrApply(){const b=document.body;const wasZ=b.classList.contains('ptr-zoom');setTimeout(()=>{if(wasZ&&PTR.mode!=='zoom'&&typeof flowReady!=='undefined'&&flowReady)drawFlows(false)},30);b.classList.toggle('ptr-laser',PTR.mode==='laser');b.classList.toggle('ptr-spot',PTR.mode==='spot');b.classList.toggle('ptr-zoom',PTR.mode==='zoom');
+  const L=document.getElementById('ptrL');L.style.left=PTR.x+'px';L.style.top=PTR.y+'px';
+  stage.style.setProperty('--x',PTR.x+'px');stage.style.setProperty('--y',PTR.y+'px');stage.style.setProperty('--r',PTR.r+'px');
+  stage.style.setProperty('--zx',PTR.x+'px');stage.style.setProperty('--zy',PTR.y+'px');stage.style.setProperty('--zs',PTR.zs);
+  const bt=document.getElementById('bptr');if(bt){bt.textContent=PNAME[PTR.mode];bt.classList.toggle('on',PTR.mode!=='off')}}
+let ptrRaf=0,lastTrail=0;
+function ptrSend(){if(ptrRaf)return;ptrRaf=requestAnimationFrame(()=>{ptrRaf=0;if(!AUD)send({t:'ptr',m:PTR.mode,x:PTR.x,y:PTR.y,r:PTR.r,zs:PTR.zs})})}
+function trail(){const now=performance.now();if(now-lastTrail<28)return;lastTrail=now;const t=document.createElement('div');t.className='trl';t.style.left=PTR.x+'px';t.style.top=PTR.y+'px';stage.append(t);setTimeout(()=>t.remove(),520)}
+function setPtr(m){PTR.mode=(PTR.mode===m?'off':m);ptrApply();ptrSend()}
+stage.addEventListener('mousemove',e=>{if(AUD||PTR.mode==='off')return;const r=stage.getBoundingClientRect(),k=r.width/1280;
+  let x=(e.clientX-r.left)/k,y=(e.clientY-r.top)/k;
+  if(PTR.mode==='zoom'){/* undo the zoom so the lens follows the true point */}
+  PTR.x=Math.max(0,Math.min(1280,x));PTR.y=Math.max(0,Math.min(720,y));ptrApply();if(PTR.mode==='laser')trail();ptrSend()});
+stage.addEventListener('wheel',e=>{if(AUD)return;if(PTR.mode==='spot'){e.preventDefault();PTR.r=Math.max(50,Math.min(360,PTR.r*(e.deltaY<0?1.12:1/1.12)));ptrApply();ptrSend()}
+  else if(PTR.mode==='zoom'){e.preventDefault();PTR.zs=Math.max(1.3,Math.min(4,PTR.zs*(e.deltaY<0?1.12:1/1.12)));ptrApply();ptrSend()}},{passive:false});
+document.getElementById('bptr').onclick=e=>{e.stopPropagation();const o=['off','laser','spot','zoom'];PTR.mode=o[(o.indexOf(PTR.mode)+1)%4];ptrApply();ptrSend()};
+addEventListener('keydown',e=>{if(AUD||e.ctrlKey||e.metaKey||e.altKey)return;if(document.getElementById('jump').classList.contains('show'))return;
+  const k=e.key.toLowerCase();if(k==='l')setPtr('laser');else if(k==='h')setPtr('spot');else if(k==='z')setPtr('zoom');else if(e.key==='Escape'&&PTR.mode!=='off'){PTR.mode='off';ptrApply();ptrSend()}});
+ptrApply();
+
 document.getElementById('bt').onclick=()=>document.getElementById('notes').classList.toggle('show');
 const JP=document.getElementById('jump');let jbuf='';
 function jumpTo(i){cur=Math.max(0,Math.min(slides.length-1,i));step=0;JP.classList.remove('show');jbuf='';render()}
